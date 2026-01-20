@@ -1,0 +1,1236 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Módulo 1: Archivos</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            bg: '#ffffff',
+                            alt: '#f1f5f9',
+                            title: '#003c58',
+                            accent: '#06717e',
+                            btn: '#0055ad',
+                            btnHover: '#399be2',
+                            highlight: '#0f6cbf',
+                            text: '#1e293b',
+                            lightText: '#6ea2ee',
+                            border: '#e2e8f0'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['-apple-system', 'BlinkMacSystemFont', '"Segoe UI"', 'Roboto', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Custom Animations & Styles */
+        body {
+            overflow: hidden;
+        }
+
+        .slide {
+            display: none;
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out;
+            position: absolute;
+            inset: 0;
+            padding-top: 4rem;
+            /* For Header */
+        }
+
+        .slide.active {
+            display: flex;
+            opacity: 1;
+            z-index: 10;
+        }
+
+        /* MacOS Window Styles */
+        .mac-window {
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            border: 1px solid #d1d5db;
+            border-radius: 0.75rem;
+            overflow: hidden;
+            background: #fff;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .mac-header {
+            background: #eef0f2;
+            padding: 0.75rem 1rem;
+            display: flex;
+            align-items: center;
+            border-bottom: 1px solid #d1d5db;
+        }
+
+        .mac-dots {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .mac-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+
+        .mac-red {
+            background: #ff5f57;
+            border: 1px solid #e0443e;
+        }
+
+        .mac-yellow {
+            background: #febc2e;
+            border: 1px solid #d89e24;
+        }
+
+        .mac-green {
+            background: #28c840;
+            border: 1px solid #1aab29;
+        }
+
+        /* VS Light Code Editor */
+        .vs-light {
+            background-color: #ffffff;
+            border: 1px solid #e2e8f0;
+            font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+            color: #333;
+        }
+
+        .vs-line-num {
+            color: #2b91af;
+            margin-right: 1rem;
+        }
+
+        .vs-keyword {
+            color: #0000ff;
+        }
+
+        .vs-string {
+            color: #a31515;
+        }
+
+        .vs-function {
+            color: #795e26;
+        }
+
+        .vs-comment {
+            color: #008000;
+        }
+
+        /* Finder Sidebar */
+        .finder-sidebar-item {
+            padding: 0.25rem 0.5rem;
+            border-radius: 0.25rem;
+            cursor: default;
+            display: flex;
+            gap: 0.5rem;
+            align-items: center;
+            color: #4b5563;
+        }
+
+        .finder-sidebar-item.active {
+            background-color: #cbd5e1;
+            color: #1e293b;
+        }
+
+        /* Animations */
+        @keyframes flowPulse {
+            0% {
+                transform: scale(1);
+                box-shadow: 0 0 0 0 rgba(15, 108, 191, 0.4);
+            }
+
+            70% {
+                transform: scale(1.02);
+                box-shadow: 0 0 0 10px rgba(15, 108, 191, 0);
+            }
+
+            100% {
+                transform: scale(1);
+                box-shadow: 0 0 0 0 rgba(15, 108, 191, 0);
+            }
+        }
+
+        .animate-flow {
+            animation: flowPulse 2s infinite;
+        }
+    </style>
+</head>
+
+<body class="bg-brand-bg text-brand-text h-screen w-screen relative selection:bg-brand-highlight selection:text-white">
+
+    <!-- Header (Progress) -->
+    <header
+        class="fixed top-0 left-0 right-0 h-16 bg-brand-bg/90 backdrop-blur border-b border-brand-border z-50 flex items-center justify-between px-8">
+        <h1 class="text-xl font-bold text-brand-title flex items-center gap-3">
+            <span class="text-2xl">📁</span> Módulo 1: Archivos en Python
+        </h1>
+        <div class="text-brand-accent font-medium text-lg">
+            <span id="current-slide-num">1</span> / <span id="total-slides-num">16</span>
+        </div>
+    </header>
+
+    <!-- Main Content Area -->
+    <main id="app-container" class="relative w-full h-full">
+        <!-- Slides will be injected here or defined below -->
+
+        <!-- SLIDE 1: Portada -->
+        <section class="slide active flex-col justify-center items-center text-center space-y-8" id="slide-0">
+            <div
+                class="w-32 h-32 bg-blue-100 rounded-3xl flex items-center justify-center text-6xl shadow-xl transform rotate-3">
+                📂
+            </div>
+            <h1 class="text-6xl font-extrabold text-brand-title tracking-tight">Archivos</h1>
+            <p class="text-2xl text-slate-500 font-light max-w-2xl">
+                Ubicación, lectura y escritura de datos persistentes en Python 3
+            </p>
+            <button onclick="nextSlide()"
+                class="mt-12 px-10 py-4 bg-brand-btn text-white text-xl font-bold rounded-full shadow-lg hover:bg-brand-btnHover transition-all transform hover:scale-105">
+                Comenzar la Experiencia
+            </button>
+        </section>
+
+        <!-- SLIDE 2: Introducción -->
+        <section class="slide flex-col p-12 justify-center items-center" id="slide-1">
+            <h2 class="text-5xl font-bold text-brand-title mb-12">¿Qué es un archivo?</h2>
+            <div class="flex gap-16 w-full max-w-6xl items-center">
+                <div class="w-1/2 space-y-8 text-2xl text-slate-600 leading-relaxed">
+                    <p><strong class="text-brand-accent">Persistencias:</strong> Los archivos permiten guardar datos de
+                        forma permanente en el disco duro, a diferencia de la RAM que es volátil.</p>
+                    <p>Se organizan en <span class="bg-blue-100 text-brand-title px-2 py-1 rounded">Carpetas</span> y
+                        directorios.</p>
+                </div>
+                <div class="w-1/2 mac-window h-96 bg-slate-50">
+                    <div class="mac-header">
+                        <div class="mac-dots">
+                            <div class="mac-dot mac-red"></div>
+                            <div class="mac-dot mac-yellow"></div>
+                            <div class="mac-dot mac-green"></div>
+                        </div>
+                        <span class="ml-4 text-sm text-gray-500 font-medium">Macintosh HD</span>
+                    </div>
+                    <div class="flex h-full">
+                        <div class="w-1/3 bg-slate-100 border-r border-slate-200 p-4 space-y-2">
+                            <div class="finder-sidebar-item active">🖥️ Escritorio</div>
+                            <div class="finder-sidebar-item">📄 Documentos</div>
+                            <div class="finder-sidebar-item">⬇️ Descargas</div>
+                        </div>
+                        <div class="flex-1 p-6 grid grid-cols-3 gap-4 content-start">
+                            <div
+                                class="flex flex-col items-center gap-2 p-2 hover:bg-blue-100 rounded cursor-pointer transition">
+                                <span class="text-4xl">📁</span>
+                                <span class="text-xs text-center">Proyectos</span>
+                            </div>
+                            <div
+                                class="flex flex-col items-center gap-2 p-2 hover:bg-blue-100 rounded cursor-pointer transition">
+                                <span class="text-4xl">📄</span>
+                                <span class="text-xs text-center">notas.txt</span>
+                            </div>
+                            <div
+                                class="flex flex-col items-center gap-2 p-2 hover:bg-blue-100 rounded cursor-pointer transition">
+                                <span class="text-4xl">🐍</span>
+                                <span class="text-xs text-center">main.py</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SLIDE 3: Componentes -->
+        <section class="slide flex-col pt-24 px-12 pb-12 justify-center items-center" id="slide-2">
+            <h2 class="text-5xl font-bold text-brand-title mb-16">Componentes de un Archivo</h2>
+
+            <div class="bg-white p-12 rounded-2xl shadow-2xl border border-slate-100 flex items-center justify-center space-x-2 text-6xl font-mono relative group"
+                id="path-interaction">
+                <!-- Interactive Path Parts -->
+                <span class="hover:text-red-500 hover:bg-red-50 p-2 rounded cursor-help transition relative part"
+                    data-info="Unidad">C:</span>
+                <span class="text-slate-300">\</span>
+                <span class="hover:text-orange-500 hover:bg-orange-50 p-2 rounded cursor-help transition relative part"
+                    data-info="Carpeta">Usuario</span>
+                <span class="text-slate-300">\</span>
+                <span class="hover:text-green-500 hover:bg-green-50 p-2 rounded cursor-help transition relative part"
+                    data-info="Nombre">datos</span>
+                <span class="hover:text-brand-btn hover:bg-blue-50 p-2 rounded cursor-help transition relative part"
+                    data-info="Extensión">.csv</span>
+            </div>
+
+            <div id="path-info-box"
+                class="h-24 mt-12 text-3xl font-medium text-brand-accent transition-all opacity-0 transform translate-y-4">
+                <!-- Info text injected here -->
+            </div>
+
+            <p class="text-slate-400 mt-8 text-lg">Pasa el mouse sobre las partes para identificar la estructura</p>
+        </section>
+
+        <!-- SLIDE 4 (New): Tipos de Rutas -->
+        <section class="slide flex-col pt-24 px-12 pb-12 justify-center items-center bg-slate-50/50"
+            id="slide-paths-expl">
+            <h2 class="text-5xl font-bold text-brand-title mb-12">Rutas Absolutas vs Relativas</h2>
+
+            <div class="grid grid-cols-2 gap-12 w-full max-w-6xl">
+                <!-- Absolute Card -->
+                <div
+                    class="bg-white p-8 rounded-3xl shadow-xl border border-slate-100 flex flex-col items-center text-center group hover:scale-105 transition-transform duration-500">
+                    <div
+                        class="w-20 h-20 bg-blue-100 rounded-2xl flex items-center justify-center text-4xl mb-6 shadow-inner">
+                        🌎</div>
+                    <h3 class="text-3xl font-extrabold text-blue-900 mb-4">Ruta Absoluta</h3>
+                    <p class="text-xl text-slate-500 mb-8 leading-relaxed">
+                        Es la <b>dirección completa</b> desde el origen del disco duro.<br>
+                        <span class="text-brand-accent font-medium block mt-2">No depende de dónde estemos.</span>
+                    </p>
+                    <div
+                        class="bg-slate-900 text-blue-300 font-mono p-4 rounded-xl text-sm w-full shadow-lg border border-slate-700">
+                        /Users/Programacion/Clase01/datos.txt
+                    </div>
+                </div>
+
+                <!-- Relative Card -->
+                <div
+                    class="bg-white p-8 rounded-3xl shadow-xl border border-slate-100 flex flex-col items-center text-center group hover:scale-105 transition-transform duration-500">
+                    <div
+                        class="w-20 h-20 bg-brand-alt rounded-2xl flex items-center justify-center text-4xl mb-6 shadow-inner">
+                        📍</div>
+                    <h3 class="text-3xl font-extrabold text-brand-btn mb-4">Ruta Relativa</h3>
+                    <p class="text-xl text-slate-500 mb-8 leading-relaxed">
+                        Es el <b>camino corto</b> desde nuestra carpeta actual.<br>
+                        <span class="text-brand-highlight font-medium block mt-2">Varía según el lugar de
+                            ejecución.</span>
+                    </p>
+                    <div
+                        class="bg-brand-btn text-white font-mono p-4 rounded-xl text-lg w-full shadow-lg border border-blue-400">
+                        datos.txt
+                    </div>
+                </div>
+            </div>
+
+            <p class="mt-16 text-slate-400 italic text-lg">"La ruta relativa es la que usaremos principalmente en
+                nuestros programas"</p>
+        </section>
+
+        <!-- SLIDE 5: Rutas (Explorer Custom) -->
+        <section class="slide flex-col pt-24 px-8 pb-8 items-center" id="slide-3">
+            <div class="max-w-6xl mx-auto w-full h-full flex flex-col">
+                <h2 class="text-4xl font-bold text-brand-title mb-2">Explorador de Rutas</h2>
+                <p class="text-slate-500 mb-6 text-xl">Navega por las carpetas y haz click en los archivos para entender
+                    las rutas.</p>
+
+                <div
+                    class="flex-1 bg-white border border-slate-200 rounded-xl shadow-xl flex overflow-hidden min-h-[500px]">
+
+                    <!-- Sidebar (Tree) -->
+                    <div class="w-1/3 bg-slate-50 border-r border-slate-200 flex flex-col">
+                        <div
+                            class="p-3 border-b border-slate-200 bg-slate-100/50 text-xs font-bold text-slate-400 uppercase tracking-wide flex items-center gap-2">
+                            <span class="w-2.5 h-2.5 rounded-full bg-red-400"></span>
+                            <span class="w-2.5 h-2.5 rounded-full bg-yellow-400"></span>
+                            <span class="w-2.5 h-2.5 rounded-full bg-green-400"></span>
+                            <span class="ml-auto opacity-50">Explorador</span>
+                        </div>
+                        <div class="p-4 space-y-1 overflow-y-auto" id="explorer-sidebar">
+                            <!-- Tree Items -->
+                            <div class="cursor-pointer flex items-center gap-2 p-2 rounded hover:bg-blue-100 transition-colors text-sm text-slate-700 font-mono group"
+                                onclick="navExplorer('root')">
+                                <span class="group-hover:scale-110 transition">🖥️</span> /
+                            </div>
+                            <div class="ml-4 cursor-pointer flex items-center gap-2 p-2 rounded hover:bg-blue-100 transition-colors text-sm text-slate-700 font-mono group"
+                                onclick="navExplorer('users')">
+                                <span class="group-hover:scale-110 transition">📂</span> Users
+                            </div>
+                            <div class="ml-8 cursor-pointer flex items-center gap-2 p-2 rounded hover:bg-blue-100 transition-colors text-sm text-slate-700 font-mono group"
+                                onclick="navExplorer('programacion')">
+                                <span class="group-hover:scale-110 transition">📂</span> Programación
+                            </div>
+                            <div class="ml-12 cursor-pointer flex items-center gap-2 p-2 rounded hover:bg-blue-100 transition-colors text-sm font-bold text-brand-btn font-mono bg-blue-50 group border border-blue-100 shadow-sm"
+                                onclick="navExplorer('project')">
+                                <span class="group-hover:scale-110 transition">📂</span> Clase01 <span
+                                    class="text-[10px] bg-brand-accent text-white ml-2 rounded px-1.5 py-0.5">Estas
+                                    aquí</span>
+                            </div>
+                            <div class="ml-16 cursor-pointer flex items-center gap-2 p-2 rounded hover:bg-blue-100 transition-colors text-sm text-slate-700 font-mono group"
+                                onclick="navExplorer('encuestas')">
+                                <span class="group-hover:scale-110 transition">📂</span> encuestas
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Main View (Files) -->
+                    <div class="flex-1 flex flex-col bg-white">
+                        <!-- Address Bar -->
+                        <div class="p-3 border-b border-slate-200 flex items-center gap-3 bg-white shadow-sm z-10">
+                            <button onclick="explorerUp()"
+                                class="text-slate-400 hover:text-brand-btn disabled:opacity-30 transition"
+                                id="explorer-up-btn">⬆</button>
+                            <div
+                                class="flex-1 bg-slate-100 border border-slate-200 rounded px-3 py-1.5 text-sm font-mono text-slate-600 flex items-center">
+                                <span id="address-bar">/Users/Programacion/Clase01</span>
+                            </div>
+                        </div>
+
+                        <!-- File Grid -->
+                        <div class="flex-1 p-6 bg-slate-50/30 overflow-y-auto">
+                            <div id="file-grid" class="grid grid-cols-4 gap-4 content-start">
+                                <!-- Items Injected by JS -->
+                            </div>
+                        </div>
+
+                        <!-- Info Panel (Bottom) -->
+                        <div class="h-48 bg-white border-t border-slate-200 p-6 shadow-[0_-5px_15px_rgba(0,0,0,0.02)]">
+                            <div id="selection-info" class="hidden h-full">
+                                <div class="flex gap-6 h-full items-start">
+                                    <div class="text-6xl bg-slate-50 p-4 rounded-xl border border-slate-100"
+                                        id="sel-icon">📄</div>
+                                    <div class="flex-1 flex flex-col justify-between h-full">
+                                        <div>
+                                            <h4 class="font-bold text-xl text-brand-title flex items-center gap-2">
+                                                <span id="sel-filename">archivo.txt</span>
+                                                <span class="text-xs font-normal text-slate-400 border px-1 rounded"
+                                                    id="sel-type">ARCHIVO</span>
+                                            </h4>
+                                        </div>
+
+                                        <div class="grid grid-cols-1 gap-3 w-full">
+                                            <div
+                                                class="bg-slate-50 px-4 py-2 rounded-lg border border-slate-200 flex items-center gap-4 group hover:border-brand-highlight/30 transition">
+                                                <span
+                                                    class="text-xs font-bold text-slate-500 uppercase w-24 tracking-wider">Ruta
+                                                    Absoluta</span>
+                                                <code
+                                                    class="text-sm font-mono text-slate-700 break-all select-all flex-1"
+                                                    id="sel-abs">/...</code>
+                                            </div>
+                                            <div
+                                                class="bg-brand-alt/50 px-4 py-2 rounded-lg border border-blue-200 flex items-center gap-4 group hover:bg-blue-50 transition">
+                                                <span
+                                                    class="text-xs font-bold text-brand-btn uppercase w-24 tracking-wider">Ruta
+                                                    Relativa</span>
+                                                <code
+                                                    class="text-lg font-bold font-mono text-brand-btn select-all flex-1"
+                                                    id="sel-rel">...</code>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="no-selection"
+                                class="h-full flex flex-col items-center justify-center text-slate-300 gap-2">
+                                <div class="text-4xl">👆</div>
+                                <div class="font-medium">Selecciona un archivo para inspeccionar sus rutas</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SLIDE 5: Transición -->
+        <section class="slide flex-col justify-center items-center bg-brand-alt" id="slide-4">
+            <h1 class="text-6xl font-light text-brand-title mb-6">Uso en Python</h1>
+            <div class="w-24 h-1 bg-brand-accent rounded-full"></div>
+            <p class="mt-6 text-xl text-slate-500">Funciones nativas para manipulación de archivos</p>
+        </section>
+
+        <!-- SLIDE 6: Leer Archivos (Open) -->
+        <section class="slide flex-col p-12 items-center justify-center" id="slide-5">
+            <h2 class="text-4xl font-bold text-brand-title mb-12">La función <span class="font-mono">open()</span></h2>
+
+            <div class="w-full max-w-4xl vs-light p-8 rounded-xl shadow-lg text-2xl mb-12 relative overflow-hidden">
+                <div class="code-line">
+                    <span class="vs-keyword">variable</span> = <span class="vs-function">open</span>(<span
+                        class="vs-string" id="code-path">"archivo.txt"</span>, <span class="vs-string"
+                        id="code-mode">"r"</span>)
+                </div>
+                <!-- Tooltips -->
+                <div class="absolute top-2 right-4 text-xs text-slate-400 font-sans">Sintaxis Python</div>
+            </div>
+
+            <div class="grid grid-cols-4 gap-6 w-full max-w-5xl">
+                <button onclick="setMode('r')"
+                    class="mode-btn p-6 rounded-xl border-2 border-slate-200 hover:border-brand-btn hover:bg-blue-50 transition text-center group active-mode"
+                    data-mode="r">
+                    <div class="text-3xl font-bold text-brand-title mb-2">r</div>
+                    <div class="text-sm text-slate-500 group-hover:text-brand-text">Lectura (Read)</div>
+                    <div class="text-xs text-brand-accent mt-2 opacity-0 group-hover:opacity-100 transition">Por defecto
+                    </div>
+                </button>
+                <button onclick="setMode('w')"
+                    class="mode-btn p-6 rounded-xl border-2 border-slate-200 hover:border-red-500 hover:bg-red-50 transition text-center group"
+                    data-mode="w">
+                    <div class="text-3xl font-bold text-red-700 mb-2">w</div>
+                    <div class="text-sm text-slate-500 group-hover:text-brand-text">Escritura (Write)</div>
+                    <div class="text-xs text-red-500 mt-2 opacity-0 group-hover:opacity-100 transition">Sobrescribe todo
+                    </div>
+                </button>
+                <button onclick="setMode('a')"
+                    class="mode-btn p-6 rounded-xl border-2 border-slate-200 hover:border-green-500 hover:bg-green-50 transition text-center group"
+                    data-mode="a">
+                    <div class="text-3xl font-bold text-green-700 mb-2">a</div>
+                    <div class="text-sm text-slate-500 group-hover:text-brand-text">Anexar (Append)</div>
+                    <div class="text-xs text-green-600 mt-2 opacity-0 group-hover:opacity-100 transition">Agrega al
+                        final</div>
+                </button>
+                <button onclick="setMode('r+')"
+                    class="mode-btn p-6 rounded-xl border-2 border-slate-200 hover:border-orange-500 hover:bg-orange-50 transition text-center group"
+                    data-mode="r+">
+                    <div class="text-3xl font-bold text-orange-700 mb-2">r+</div>
+                    <div class="text-sm text-slate-500 group-hover:text-brand-text">Leer + Escribir</div>
+                    <div class="text-xs text-orange-600 mt-2 opacity-0 group-hover:opacity-100 transition">Sin borrar
+                    </div>
+                </button>
+            </div>
+
+            <div id="mode-explanation" class="mt-12 h-20 text-center text-xl text-slate-600 max-w-3xl">
+                Abre el archivo para lectura. Si no existe, lanza un error.
+            </div>
+        </section>
+
+        <!-- SLIDE 7: Cambio de Rutas (Example) -->
+        <section class="slide flex-col p-8 items-center" id="slide-6">
+            <h2 class="text-4xl font-bold text-brand-title mb-6">Ejemplos de Lectura</h2>
+            <div class="flex w-full max-w-6xl flex-1 gap-8 mb-8">
+                <!-- Mini Finder -->
+                <div class="w-1/2 mac-window flex flex-col shadow-lg">
+                    <div class="mac-header">
+                        <span class="ml-2 text-sm text-gray-500 font-bold">Proyecto Data</span>
+                    </div>
+                    <div class="bg-white p-4 grid grid-cols-2 gap-4" id="read-files-grid">
+                        <!-- Simulated Files -->
+                        <div onclick="loadFileDemo('encuesta.csv', './datos/2023/encuesta.csv', 'Juan,23,Si\nAna,21,No')"
+                            class="cursor-pointer hover:bg-blue-50 p-2 rounded flex items-center gap-3 transition group">
+                            <div class="text-3xl">📊</div>
+                            <div>
+                                <div class="text-sm font-bold text-slate-700">encuesta.csv</div>
+                                <div class="text-xs text-slate-400">./datos/2023/</div>
+                            </div>
+                        </div>
+                        <div onclick="loadFileDemo('nombres.txt', 'nombres.txt', 'Pedro\nMaria\nLuis')"
+                            class="cursor-pointer hover:bg-blue-50 p-2 rounded flex items-center gap-3 transition group">
+                            <div class="text-3xl">📄</div>
+                            <div>
+                                <div class="text-sm font-bold text-slate-700">nombres.txt</div>
+                                <div class="text-xs text-slate-400">./ (raíz)</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Code & Output -->
+                <div class="w-1/2 flex flex-col gap-4">
+                    <div class="vs-light p-6 rounded-lg shadow-inner flex-1 flex flex-col justify-center">
+                        <div class="text-sm text-slate-400 mb-2"># Código Python</div>
+                        <div class="font-mono text-lg">
+                            file = <span class="vs-function">open</span>(<span class="vs-string"
+                                id="demo-path-code">"..."</span>, <span class="vs-string">"r"</span>)<br>
+                            contenido = file.<span class="vs-function">read</span>()<br>
+                            <span class="vs-function">print</span>(contenido)<br>
+                            file.<span class="vs-function">close</span>()
+                        </div>
+                    </div>
+                    <div class="bg-slate-900 text-green-400 font-mono p-6 rounded-lg shadow-inner h-32 overflow-auto"
+                        id="demo-output">
+                        >_ Esperando selección...
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SLIDE 8: Try / Except -->
+        <section class="slide flex-col p-12 items-center justify-center" id="slide-7">
+            <h2 class="text-4xl font-bold text-brand-title mb-12">Manejo de Errores: try / except</h2>
+
+            <div class="flex gap-12 items-center">
+                <!-- Toggle -->
+                <div class="flex flex-col gap-4">
+                    <button onclick="toggleFileExistence(true)"
+                        class="px-6 py-3 rounded-lg border-2 border-slate-200 text-slate-400 hover:border-green-500 hover:text-green-500 transition"
+                        id="btn-exist-true">✅ El archivo existe</button>
+                    <button onclick="toggleFileExistence(false)"
+                        class="px-6 py-3 rounded-lg border-2 border-slate-200 text-slate-400 hover:border-red-500 hover:text-red-500 transition"
+                        id="btn-exist-false">❌ No existe</button>
+                </div>
+
+                <!-- Block Diagram Code -->
+                <div class="vs-light p-8 rounded-xl shadow-2xl text-xl w-[650px] flex flex-col gap-1">
+                    <div class="p-2 transition rounded" id="block-var">
+                        <span class="vs-keyword">rutaArchivo</span> = <span class="vs-string">"datos.txt"</span>
+                    </div>
+                    <div class="p-2 transition rounded" id="block-try">
+                        <span class="vs-keyword">try</span>:<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;archivo = <span class="vs-function">open</span>(rutaArchivo, <span
+                            class="vs-string">"r"</span>)
+                    </div>
+                    <div class="p-2 transition rounded" id="block-except">
+                        <span class="vs-keyword">except</span>:<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;<span class="vs-function">print</span>(<span class="vs-string">"El
+                            archivo no existe"</span>)
+                    </div>
+                    <div class="p-2 transition rounded" id="block-else">
+                        <span class="vs-keyword">else</span>:<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;<span class="vs-function">print</span>(<span class="vs-string">"El
+                            archivo se abrió correctamente"</span>)<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;contenido = archivo.<span class="vs-function">read</span>()<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;<span class="vs-function">print</span>(contenido)<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;archivo.<span class="vs-function">close</span>()
+                    </div>
+                </div>
+
+                <!-- Result -->
+                <div class="w-64">
+                    <div id="try-result-arrow" class="text-4xl text-slate-300 mb-4 transition-all">➜</div>
+                    <div id="try-result-msg"
+                        class="text-2xl font-bold p-4 rounded-lg bg-slate-100 text-slate-500 transition-all">
+                        Selecciona una opción
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ... (Continuing with the rest of the slides in a moment dynamically via JS if file size gets too big, but text size is fine here) ... -->
+        <!-- Just doing all slides in one go -->
+
+        <!-- SLIDE 9: FlowChart -->
+        <section class="slide flex-col items-center justify-center" id="slide-8">
+            <h2 class="text-4xl font-bold text-brand-title mb-8">Flujo Completo: try / except / else / finally</h2>
+            <div
+                class="relative w-[800px] h-[500px] bg-slate-50 rounded-xl border border-slate-200 p-8 shadow-inner flex flex-col items-center gap-4">
+                <!-- Simple Flow Representation -->
+                <div class="flow-step bg-blue-100 border-l-4 border-blue-500 p-4 w-full rounded cursor-pointer transition hover:scale-105"
+                    onclick="animateFlow(0)">
+                    <span class="font-bold text-blue-900">1. TRY</span>: Intenta abrir el archivo
+                </div>
+
+                <div class="flex w-full gap-4">
+                    <div class="w-1/2 flex flex-col gap-2">
+                        <div class="text-center text-xs text-red-500 font-bold uppercase">Si falla</div>
+                        <div class="flow-step bg-red-50 border-l-4 border-red-500 p-4 rounded h-full cursor-pointer transition hover:scale-105"
+                            onclick="animateFlow(1)">
+                            <span class="font-bold text-red-900">2. EXCEPT</span>: Captura el error (ej. archivo no
+                            existe)
+                        </div>
+                    </div>
+                    <div class="w-1/2 flex flex-col gap-2">
+                        <div class="text-center text-xs text-green-500 font-bold uppercase">Si funciona</div>
+                        <div class="flow-step bg-green-50 border-l-4 border-green-500 p-4 rounded h-full cursor-pointer transition hover:scale-105"
+                            onclick="animateFlow(2)">
+                            <span class="font-bold text-green-900">3. ELSE</span>: Procesa el archivo (lee/escribe)
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flow-step bg-slate-200 border-l-4 border-slate-500 p-4 w-full rounded mt-2 cursor-pointer transition hover:scale-105"
+                    onclick="animateFlow(3)">
+                    <span class="font-bold text-slate-800">4. FINALLY</span>: Cierra el archivo (f.close) siempre
+                </div>
+
+                <p class="text-center text-slate-400 mt-4">Haz clic en los bloques para ver detalles</p>
+                <div id="flow-details" class="mt-2 text-lg font-bold text-brand-accent h-8"></div>
+            </div>
+        </section>
+
+        <!-- SLIDE 10: try/except execution -->
+        <section class="slide flex-col p-12 items-center" id="slide-9">
+            <h2 class="text-4xl font-bold text-brand-title mb-6">¿Qué bloque se ejecuta?</h2>
+            <div class="grid grid-cols-2 gap-12 w-full max-w-6xl">
+                <div class="vs-light p-6 rounded-lg shadow text-lg leading-loose">
+                    <span class="vs-keyword">try</span>:<br>
+                    &nbsp;&nbsp;archivo = <span class="vs-function">open</span>("poema.txt")<br>
+                    <span class="vs-keyword">except</span>:<br>
+                    &nbsp;&nbsp;<span class="vs-function">print</span>("Error")<br>
+                    <span class="vs-keyword">else</span>:<br>
+                    &nbsp;&nbsp;<span class="vs-function">print</span>("Abierto con éxito")<br>
+                </div>
+                <div class="flex flex-col gap-4 justify-center">
+                    <button class="p-4 bg-white border shadow text-left hover:bg-slate-50 transition"
+                        onclick="simExec(true)">
+                        <div class="font-bold">Caso 1: El archivo EXISTE</div>
+                        <div class="text-slate-500 text-sm">El "try" funciona correctamente</div>
+                    </button>
+                    <button class="p-4 bg-white border shadow text-left hover:bg-slate-50 transition"
+                        onclick="simExec(false)">
+                        <div class="font-bold">Caso 2: El archivo NO EXISTE</div>
+                        <div class="text-slate-500 text-sm">El "try" falla al intentar abrir</div>
+                    </button>
+
+                    <div class="mt-4 bg-slate-900 text-white font-mono p-4 rounded h-24 flex items-center"
+                        id="exec-console">
+                        >_
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SLIDE 11: Read(N) -->
+        <section class="slide flex-col p-12 items-center" id="slide-10">
+            <h2 class="text-4xl font-bold text-brand-title mb-8">Leer por Caracteres: <span
+                    class="font-mono text-brand-btn">read(N)</span></h2>
+
+            <div
+                class="w-full max-w-4xl bg-white rounded-xl shadow-lg border border-slate-200 overflow-hidden flex flex-col">
+                <div
+                    class="bg-slate-100 p-2 border-b text-xs uppercase font-bold text-slate-500 tracking-wider text-center">
+                    Contenido del Archivo (Memoria)</div>
+                <div class="p-8 text-4xl font-mono tracking-widest break-all relative bg-white"
+                    id="char-stream-container">
+                    <!-- Content -->
+                    <span id="char-stream-text" class="text-slate-300">Hola_Mundo_Python</span>
+                    <!-- Cursor -->
+                    <div id="read-cursor"
+                        class="absolute top-8 left-8 w-0.5 h-10 bg-red-500 animate-pulse transition-all duration-500">
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-12 flex gap-8 items-center">
+                <button onclick="readChars(5)"
+                    class="px-8 py-4 bg-brand-btn text-white rounded-full font-bold shadow-lg hover:bg-brand-btnHover transition hover:-translate-y-1 active:translate-y-0">
+                    file.read(5)
+                </button>
+                <div class="vs-light p-4 rounded w-64 text-center border">
+                    Buffer: "<span id="read-buffer" class="font-bold text-brand-accent"></span>"
+                </div>
+            </div>
+            <p class="mt-4 text-slate-400">Lee N caracteres y mueve el puntero.</p>
+        </section>
+
+        <!-- SLIDE 12: Readline -->
+        <section class="slide flex-col p-12 items-center" id="slide-11">
+            <h2 class="text-4xl font-bold text-brand-title mb-6">Leer Línea a Línea: <span
+                    class="font-mono text-brand-btn">readline()</span></h2>
+
+            <div class="flex gap-8 w-full max-w-6xl">
+                <div class="w-1/2 vs-light p-6 rounded-lg text-lg">
+                    <span class="vs-keyword">while</span> <span class="vs-keyword">True</span>:<br>
+                    &nbsp;&nbsp;linea = archivo.<span class="vs-function">readline</span>()<br>
+                    &nbsp;&nbsp;<span class="vs-keyword">if not</span> linea: <span class="vs-keyword">break</span><br>
+                    &nbsp;&nbsp;<span class="vs-function">print</span>(linea)
+                </div>
+
+                <div class="w-1/2 bg-white border p-6 rounded-lg shadow-lg relative">
+                    <div class="absolute -left-4 top-4 bg-brand-accent text-white text-xs px-2 py-1 rounded">Archivo.txt
+                    </div>
+                    <div class="space-y-4 font-mono text-xl mt-6 text-slate-300" id="poem-lines">
+                        <div class="line-item p-2 transition">En los archivos guardo,</div>
+                        <div class="line-item p-2 transition">secretos de mi código,</div>
+                        <div class="line-item p-2 transition">para leerlos luego.</div>
+                    </div>
+                </div>
+            </div>
+
+            <button onclick="readLineNext()"
+                class="mt-12 px-8 py-4 bg-brand-highlight text-white rounded-full font-bold shadow-lg hover:bg-blue-600 transition">
+                Ejecutar Loop (Siguiente Línea)
+            </button>
+            <div class="mt-4 font-mono bg-slate-900 text-green-400 p-4 rounded w-full max-w-2xl text-center"
+                id="readline-output">
+                >_
+            </div>
+        </section>
+
+        <!-- SLIDE 13: Readlines (List) -->
+        <section class="slide flex-col p-12 items-center" id="slide-12">
+            <h2 class="text-4xl font-bold text-brand-title mb-8">Leer Todo en Lista: <span
+                    class="font-mono text-brand-btn">readlines()</span></h2>
+
+            <div class="bg-brand-alt p-8 rounded-full shadow-inner mb-12">
+                <code
+                    class="text-2xl font-mono text-slate-700">lista = archivo.<span class="vs-function">readlines</span>()</code>
+            </div>
+
+            <button onclick="showReadlines()"
+                class="px-8 py-3 bg-brand-btn text-white rounded hover:bg-brand-btnHover transition mb-8 shadow-md">
+                Ver Resultado
+            </button>
+
+            <div class="w-full max-w-4xl bg-white p-6 rounded-xl shadow-xl min-h-[200px] flex items-center justify-center border border-slate-200"
+                id="readlines-container">
+                <span class="text-slate-400">Click para cargar la lista...</span>
+            </div>
+        </section>
+
+        <!-- SLIDE 14: Escritura Write -->
+        <section class="slide flex-col p-12 items-center" id="slide-13">
+            <h2 class="text-4xl font-bold text-brand-title mb-8"><span class="font-mono text-brand-btn">write()</span> y
+                Sobrescritura</h2>
+
+            <div class="flex gap-16 items-center">
+                <div class="mac-window w-80 h-96 shadow-lg relative">
+                    <div class="mac-header"><span class="text-xs">notas.txt</span></div>
+                    <div class="p-4 font-mono text-sm whitespace-pre-wrap text-slate-600" id="write-file-content">
+                        Contenido Original...
+                        Información importante.
+                        No borrar.</div>
+                    <div class="absolute inset-0 bg-red-100/50 flex items-center justify-center opacity-0 pointer-events-none transition duration-500"
+                        id="write-flash">
+                        <span class="bg-red-600 text-white px-4 py-2 rounded font-bold">¡SOBRESCRITO!</span>
+                    </div>
+                </div>
+
+                <div class="flex flex-col gap-4">
+                    <div class="vs-light p-4 rounded border text-lg">
+                        f = <span class="vs-function">open</span>("notas.txt", <span class="vs-string">"w"</span>)<br>
+                        f.<span class="vs-function">write</span>(<span class="vs-string">"¡Hola Nuevo!"</span>)
+                    </div>
+                    <button onclick="performWrite()"
+                        class="px-6 py-3 bg-red-600 text-white rounded font-bold hover:bg-red-700 shadow-lg transition">
+                        Ejecutar Write ("w")
+                    </button>
+                    <button onclick="resetWrite()"
+                        class="text-slate-400 text-sm hover:text-brand-btn underline">Resetear Archivo</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- SLIDE 15: Modes Comparison -->
+        <section class="slide flex-col p-12 items-center" id="slide-14">
+            <h2 class="text-4xl font-bold text-brand-title mb-6">Modos de Escritura</h2>
+
+            <div class="grid grid-cols-3 gap-8 w-full max-w-6xl h-96">
+                <!-- W Block -->
+                <div
+                    class="bg-white border hover:border-red-500 p-6 rounded-xl shadow hover:shadow-xl transition group flex flex-col">
+                    <div class="text-6xl text-center mb-4">🆕</div>
+                    <h3 class="text-2xl font-bold text-center text-red-600 mb-2">"w"</h3>
+                    <p class="text-center text-slate-500 mb-4">Escritura / Sobrescritura</p>
+                    <div
+                        class="flex-1 bg-slate-50 rounded p-4 text-sm text-slate-400 font-mono relative overflow-hidden">
+                        <div class="absolute top-2 left-2 text-xs bg-red-100 text-red-800 px-1 rounded">Borrando...
+                        </div>
+                        <div class="mt-6 text-red-900 font-bold">Nuevo Contenido</div>
+                    </div>
+                </div>
+
+                <!-- A Block -->
+                <div
+                    class="bg-white border hover:border-green-500 p-6 rounded-xl shadow hover:shadow-xl transition group flex flex-col">
+                    <div class="text-6xl text-center mb-4">➕</div>
+                    <h3 class="text-2xl font-bold text-center text-green-600 mb-2">"a"</h3>
+                    <p class="text-center text-slate-500 mb-4">Append (Anexar)</p>
+                    <div
+                        class="flex-1 bg-slate-50 rounded p-4 text-sm text-slate-400 font-mono flex flex-col justify-end">
+                        <div>Contenido Viejo</div>
+                        <div class="text-green-600 font-bold border-t border-dashed border-green-300 pt-2 mt-2">Agregado
+                            al final</div>
+                    </div>
+                </div>
+
+                <!-- R+ Block -->
+                <div
+                    class="bg-white border hover:border-brand-btn p-6 rounded-xl shadow hover:shadow-xl transition group flex flex-col">
+                    <div class="text-6xl text-center mb-4">✏️</div>
+                    <h3 class="text-2xl font-bold text-center text-brand-btn mb-2">"r+"</h3>
+                    <p class="text-center text-slate-500 mb-4">Lectura + Escritura</p>
+                    <div class="flex-1 bg-slate-50 rounded p-4 text-sm text-slate-400 font-mono">
+                        <div><span class="bg-blue-100 text-blue-800">Modifica</span> contenido</div>
+                        <div class="mt-2 text-xs">Sin borrar lo anterior, el puntero se coloca al inicio.</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-12">
+                <button onclick="location.reload()" class="text-brand-accent hover:underline">Reiniciar Experiencia
+                    ↻</button>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Navigation Controls -->
+    <nav class="fixed bottom-8 right-8 flex gap-4 z-50">
+        <button onclick="prevSlide()"
+            class="w-14 h-14 bg-white text-brand-btn text-2xl font-bold rounded-full shadow-lg border border-slate-200 hover:bg-slate-50 transition flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed"
+            id="prev-btn">
+            ←
+        </button>
+        <button onclick="nextSlide()"
+            class="w-14 h-14 bg-brand-btn text-white text-2xl font-bold rounded-full shadow-lg hover:bg-brand-btnHover transition flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed"
+            id="next-btn">
+            →
+        </button>
+    </nav>
+
+    <script>
+        /* --- CORE LOGIC --- */
+        let currentSlide = 0;
+        const totalSlides = 16;
+        const slides = document.querySelectorAll('.slide');
+
+        // Init
+        updateSlideVisibility();
+
+        // Navigation
+        function updateSlideVisibility() {
+            slides.forEach((s, i) => {
+                if (i === currentSlide) {
+                    s.classList.add('active');
+                    // Trigger animations/reset if needed
+                } else {
+                    s.classList.remove('active');
+                }
+            });
+            // Update Header Counter
+            document.getElementById('current-slide-num').innerText = currentSlide + 1;
+
+            // Button States
+            document.getElementById('prev-btn').disabled = currentSlide === 0;
+            document.getElementById('next-btn').disabled = currentSlide === totalSlides - 1;
+
+            // Explorer Render
+            if (currentSlide === 3) renderExplorer();
+        }
+
+        function nextSlide() {
+            if (currentSlide < totalSlides - 1) {
+                currentSlide++;
+                updateSlideVisibility();
+            }
+        }
+
+        function prevSlide() {
+            if (currentSlide > 0) {
+                currentSlide--;
+                updateSlideVisibility();
+            }
+        }
+
+        // Keyboard Nav
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'Enter') nextSlide();
+            if (e.key === 'ArrowLeft') prevSlide();
+        });
+
+        /* --- INTERACTIVE FUNCTIONS --- */
+
+        // Slide 3: Path Tooltips Highlight
+        // (Handled via CSS hover logic mainly, but could add sounds/more visual feedback)
+        const parts = document.querySelectorAll('.part');
+        const infoBox = document.getElementById('path-info-box');
+        parts.forEach(p => {
+            p.addEventListener('mouseenter', () => {
+                infoBox.innerText = p.dataset.info;
+                infoBox.classList.remove('opacity-0', 'translate-y-4');
+            });
+            p.addEventListener('mouseleave', () => {
+                infoBox.classList.add('opacity-0', 'translate-y-4');
+            });
+        });
+
+        /* --- EXPLORER LOGIC (Mac Style) --- */
+        const fileStructure = {
+            'root': { path: '/', items: [{ name: 'Users', type: 'folder', target: 'users' }, { name: 'System', type: 'folder', target: null }] },
+            'users': { path: '/Users', items: [{ name: 'Programación', type: 'folder', target: 'programacion' }, { name: 'Shared', type: 'folder', target: null }] },
+            'programacion': { path: '/Users/Programacion', items: [{ name: 'Clase01', type: 'folder', target: 'project', special: true }, { name: 'Desktop', type: 'folder', target: null }] },
+            'project': {
+                path: '/Users/Programacion/Clase01', items: [
+                    { name: 'encuestas', type: 'folder', target: 'encuestas' },
+                    { name: 'main.py', type: 'script' },
+                    { name: 'datos.txt', type: 'file' }
+                ]
+            },
+            'encuestas': {
+                path: '/Users/Programacion/Clase01/encuestas', items: [
+                    { name: 'enero.csv', type: 'file' },
+                    { name: 'febrero.csv', type: 'file' }
+                ]
+            }
+        };
+
+        let currentExplorerDir = 'project';
+        const CWD_PATH = '/Users/Programacion/Clase01';
+
+        function navExplorer(dirKey) {
+            if (!fileStructure[dirKey]) return;
+            currentExplorerDir = dirKey;
+            renderExplorer();
+            clearSelection();
+        }
+
+        function explorerUp() {
+            const current = fileStructure[currentExplorerDir].path;
+            if (current === '/') return;
+            const parts = current.split('/').filter(p => p);
+            parts.pop();
+            const parentPath = '/' + parts.join('/');
+            const parentKey = Object.keys(fileStructure).find(k => fileStructure[k].path === (parentPath === '' ? '/' : parentPath));
+            if (parentKey) navExplorer(parentKey);
+            else if (current === '/Users') navExplorer('root');
+        }
+
+        function renderExplorer() {
+            const data = fileStructure[currentExplorerDir];
+            const grid = document.getElementById('file-grid');
+            const addrBar = document.getElementById('address-bar');
+            const upBtn = document.getElementById('explorer-up-btn');
+
+            if (!grid) return;
+
+            addrBar.textContent = data.path;
+            if (upBtn) upBtn.disabled = currentExplorerDir === 'root';
+            grid.innerHTML = '';
+
+            data.items.forEach(item => {
+                const el = document.createElement('div');
+                el.className = 'flex flex-col items-center gap-2 p-4 bg-white border border-slate-100 rounded-xl shadow-sm hover:shadow-md hover:bg-blue-50 cursor-pointer transition relative group';
+
+                if (item.type === 'folder') {
+                    el.innerHTML = `
+                        <div class="text-5xl text-blue-400 mb-1 transition transform group-hover:scale-110">📁</div>
+                        <span class="text-xs font-bold text-center text-slate-600 w-full truncate">${item.name}</span>
+                    `;
+                    el.onclick = () => {
+                        if (item.target) navExplorer(item.target);
+                    };
+                } else {
+                    let iconHtml = '<div class="text-5xl text-slate-300 mb-1 transition transform group-hover:scale-110">📄</div>';
+                    if (item.type === 'script') {
+                        iconHtml = `<div class="relative transition transform group-hover:scale-110 mb-1"><span class="text-5xl text-yellow-500 drop-shadow-sm">📜</span><span class="absolute -bottom-1 -right-1 text-[10px] uppercase font-black bg-blue-600 text-white px-1 py-0.5 rounded shadow">PY</span></div>`;
+                    }
+                    el.innerHTML = `
+                        ${iconHtml}
+                        <span class="text-xs font-bold text-center text-slate-600 w-full truncate">${item.name}</span>
+                    `;
+                    el.onclick = () => selectFile(item);
+                }
+                grid.appendChild(el);
+            });
+        }
+
+        function selectFile(item) {
+            document.getElementById('no-selection').classList.add('hidden');
+            document.getElementById('selection-info').classList.remove('hidden');
+
+            document.getElementById('sel-filename').innerText = item.name;
+            const dir = fileStructure[currentExplorerDir].path;
+            const cleanDir = dir === '/' ? '' : dir;
+            const abs = `${cleanDir}/${item.name}`;
+            document.getElementById('sel-abs').innerText = abs;
+
+            // Rel Path Logic
+            let rel = "";
+            if (abs.startsWith(CWD_PATH)) {
+                if (abs === CWD_PATH) rel = ".";
+                else {
+                    const sub = abs.substring(CWD_PATH.length);
+                    rel = sub.startsWith('/') ? sub.substring(1) : sub;
+                }
+            } else {
+                // Simplified traversal for others
+                if (currentExplorerDir === 'dante') rel = `../${item.name}`;
+                else if (currentExplorerDir === 'users') rel = `../../${item.name}`;
+                else rel = `../../../${item.name}`;
+            }
+            document.getElementById('sel-rel').innerText = rel;
+
+            document.getElementById('sel-icon').innerText = item.type === 'script' ? '📜' : '📄';
+            document.getElementById('sel-type').innerText = item.type === 'script' ? 'SCRIPT PYTHON' : 'ARCHIVO';
+        }
+
+        function clearSelection() {
+            const info = document.getElementById('selection-info');
+            const no = document.getElementById('no-selection');
+            if (info) info.classList.add('hidden');
+            if (no) no.classList.remove('hidden');
+        }
+
+        // Init Explorer
+        renderExplorer();
+
+        // Slide 6: Modes
+        function setMode(m) {
+            document.querySelectorAll('.mode-btn').forEach(b => b.classList.remove('ring-2', 'ring-brand-accent', 'bg-slate-50', 'bg-white'));
+            const btn = document.querySelector(`button[data-mode="${m}"]`);
+            // Highlight logic handled by CSS hover mostly, adding active state
+            document.getElementById('code-mode').innerText = `"${m}"`;
+
+            let text = "";
+            if (m === 'r') text = "Abre el archivo para lectura. Si no existe, lanza error.";
+            if (m === 'w') text = "Abre para escritura. Si existe, LO BORRA. Si no, lo crea.";
+            if (m === 'a') text = "Abre para anexar (append). Escribe al final sin borrar. Crea si no existe.";
+            if (m === 'r+') text = "Leer y Escribir. El puntero inicia al principio. No borra pero sobrescribe caracteres.";
+
+            document.getElementById('mode-explanation').innerText = text;
+        }
+
+        // Slide 7: Demo Load
+        function loadFileDemo(filename, relativePath, content) {
+            document.getElementById('demo-path-code').innerText = `"${relativePath}"`;
+            const output = document.getElementById('demo-output');
+
+            output.innerHTML = `<span class="text-yellow-400">Leyendo ${filename}...</span><br>`;
+            setTimeout(() => {
+                output.innerHTML += `> Contenido cargado:<br><br>`;
+                output.innerHTML += `<span class="text-white bg-slate-800 p-1 block">${content.replace(/\n/g, '<br>')}</span>`;
+            }, 600);
+        }
+
+        // Slide 8: Try Except Toggle
+        function toggleFileExistence(exists) {
+            document.getElementById('btn-exist-true').className = exists ?
+                "px-6 py-3 rounded-lg border-2 border-green-500 bg-green-50 text-green-700 font-bold" :
+                "px-6 py-3 rounded-lg border-2 border-slate-200 text-slate-400 opacity-50";
+
+            document.getElementById('btn-exist-false').className = !exists ?
+                "px-6 py-3 rounded-lg border-2 border-red-500 bg-red-50 text-red-700 font-bold" :
+                "px-6 py-3 rounded-lg border-2 border-slate-200 text-slate-400 opacity-50";
+
+            const arrow = document.getElementById('try-result-arrow');
+            const msg = document.getElementById('try-result-msg');
+            const blVar = document.getElementById('block-var');
+            const blTry = document.getElementById('block-try');
+            const blExc = document.getElementById('block-except');
+            const blElse = document.getElementById('block-else');
+
+            // Reset
+            [blVar, blTry, blExc, blElse].forEach(el => el.classList.remove('bg-green-100', 'border-green-300', 'bg-red-100', 'border-red-100', 'border-red-300'));
+
+            if (exists) {
+                blVar.classList.add('bg-green-100', 'border-green-300');
+                setTimeout(() => {
+                    blTry.classList.add('bg-green-100', 'border-green-300');
+                    setTimeout(() => {
+                        blElse.classList.add('bg-green-100', 'border-green-300');
+                    }, 400);
+                }, 300);
+
+                arrow.classList.replace('text-red-500', 'text-green-500');
+                arrow.classList.replace('text-slate-300', 'text-green-500');
+
+                msg.innerText = "¡Ubicado! Se ejecuta el 'else'.";
+                msg.className = "text-2xl font-bold p-4 rounded-lg bg-green-100 text-green-700 transition-all";
+            } else {
+                blVar.classList.add('bg-red-100', 'border-red-300');
+                setTimeout(() => {
+                    blTry.classList.add('bg-red-100', 'border-red-300');
+                    setTimeout(() => {
+                        blExc.classList.add('bg-red-100', 'border-red-300');
+                    }, 400);
+                }, 300);
+
+                arrow.classList.replace('text-green-500', 'text-red-500');
+                arrow.classList.replace('text-slate-300', 'text-red-500');
+
+                msg.innerText = "No se halló. Se ejecuta 'except'.";
+                msg.className = "text-2xl font-bold p-4 rounded-lg bg-red-100 text-red-700 transition-all";
+            }
+        }
+
+        // Slide 9: Flow Animation
+        function animateFlow(step) {
+            const details = document.getElementById('flow-details');
+            if (step === 0) details.innerText = "1. Se intenta ejecutar el código...";
+            if (step === 1) details.innerText = "2. Si hay error, salta aquí inmediatamente.";
+            if (step === 2) details.innerText = "3. Si todo salió bien, pasa por aquí.";
+            if (step === 3) details.innerText = "4. Pase lo que pase, esto se ejecuta al final.";
+        }
+
+        // Slide 10: Exec Simulation
+        function simExec(exists) {
+            const cons = document.getElementById('exec-console');
+            cons.innerHTML = ">_<br>";
+            if (exists) {
+                setTimeout(() => cons.innerHTML += "Intentando abrir... OK<br>", 300);
+                setTimeout(() => cons.innerHTML += "<span class='text-green-400'>Abierto con éxito</span><br>", 800);
+            } else {
+                setTimeout(() => cons.innerHTML += "Intentando abrir... <span class='text-red-500'>ERROR</span><br>", 300);
+                setTimeout(() => cons.innerHTML += "<span class='text-yellow-400'>Error</span> (capturado)<br>", 800);
+            }
+        }
+
+        // Slide 11: Read Chars
+        let cursorPerc = 0;
+        let charIndex = 0;
+        const text = "Hola_Mundo_Python";
+        function readChars(n) {
+            // reset if end
+            if (charIndex >= text.length) {
+                charIndex = 0;
+                document.getElementById('read-buffer').innerText = "";
+            }
+
+            const chunk = text.substr(charIndex, n);
+            charIndex += n;
+            document.getElementById('read-buffer').innerText = chunk;
+
+            // Move Cursor Visual
+            // Calculate approx position (rem based logic hardcoded for demo)
+            const leftBase = 2; // rem
+            const charWidth = 1.6; // approx rem per char in mono 4xl
+            const newPos = leftBase + (charIndex * 0.6); // adjusted factor for visual fit
+
+            // Just update text highlighting for better precision
+            const container = document.getElementById('char-stream-text');
+            const p1 = text.substr(0, charIndex);
+            const p2 = text.substr(charIndex);
+            container.innerHTML = `<span class="bg-brand-highlight text-white">${p1}</span>${p2}`;
+        }
+
+        // Slide 12: ReadLine Loop
+        let lineStep = 0;
+        function readLineNext() {
+            const lines = document.querySelectorAll('.line-item');
+            const out = document.getElementById('readline-output');
+
+            if (lineStep < lines.length) {
+                lines.forEach(l => l.classList.remove('bg-yellow-200', 'text-slate-900'));
+                lines[lineStep].classList.add('bg-yellow-200', 'text-slate-900');
+
+                out.innerText = `> Leído: "${lines[lineStep].innerText.trim()}\\n"`;
+                lineStep++;
+            } else {
+                lines.forEach(l => l.classList.remove('bg-yellow-200', 'text-slate-900'));
+                out.innerText = `> (String vacío) -> Break Loop`;
+                lineStep = 0;
+            }
+        }
+
+        // Slide 13: Readlines
+        function showReadlines() {
+            const c = document.getElementById('readlines-container');
+            c.innerHTML = `
+                <div class="text-left font-mono text-lg">
+                    <span class="text-brand-btn">[</span><br>
+                    &nbsp;&nbsp;<span class="text-green-600">"Línea 1\\n"</span>,<br>
+                    &nbsp;&nbsp;<span class="text-green-600">"Línea 2\\n"</span>,<br>
+                    &nbsp;&nbsp;<span class="text-green-600">"Línea 3"</span><br>
+                    <span class="text-brand-btn">]</span>
+                </div>
+            `;
+        }
+
+        // Slide 14: Write
+        function performWrite() {
+            const content = document.getElementById('write-file-content');
+            const flash = document.getElementById('write-flash');
+
+            flash.classList.remove('opacity-0', 'pointer-events-none');
+            flash.classList.add('opacity-100');
+
+            setTimeout(() => {
+                flash.classList.remove('opacity-100');
+                flash.classList.add('opacity-0');
+                content.innerText = "¡Hola Nuevo!";
+                content.classList.add('text-red-600', 'font-bold');
+            }, 800);
+        }
+        function resetWrite() {
+            const content = document.getElementById('write-file-content');
+            content.innerText = "Contenido Original...\nInformación importante.\nNo borrar.";
+            content.classList.remove('text-red-600', 'font-bold');
+        }
+
+    </script>
+</body>
+
+</html>
