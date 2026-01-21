@@ -845,7 +845,7 @@
         </section>
 
         <!-- SLIDE 13: read() y read(N) -->
-        <section class="slide flex-col pt-24 px-12 items-center" id="slide-10">
+        <section class="slide flex-col pt-24 px-12 items-center" id="slide-13">
             <h2 class="text-4xl font-bold text-brand-title mb-8">Método <code
                     class="bg-blue-50 px-2 rounded">read()</code>: Todo o por partes</h2>
 
@@ -904,7 +904,7 @@
         </section>
 
         <!-- SLIDE 14: Readline -->
-        <section class="slide flex-col pt-24 px-12 pb-12 items-center" id="slide-11">
+        <section class="slide flex-col pt-24 px-12 pb-12 items-center" id="slide-14">
             <h2 class="text-4xl font-bold text-brand-title mb-6">Lectura de Párrafos: <span
                     class="font-mono text-brand-btn">readline()</span></h2>
 
@@ -979,148 +979,246 @@
             </div>
         </section>
 
-        <!-- SLIDE 15: Readlines (List) -->
-        <section class="slide flex-col pt-24 px-12 pb-12 items-center" id="slide-12">
-            <h2 class="text-4xl font-bold text-brand-title mb-8">Archivo a Lista: <span
+        <!-- SLIDE 15: Readlines (List) Simulation -->
+        <section class="slide flex-col pt-24 px-12 pb-12 items-center" id="slide-15">
+            <h2 class="text-4xl font-bold text-brand-title mb-6">Archivo a Lista: <span
                     class="font-mono text-brand-btn">readlines()</span></h2>
 
-            <p class="text-xl text-slate-500 mb-12 text-center max-w-3xl">
-                Este método lee <b>todas las líneas</b> y las guarda automáticamente en una <b>lista de Python</b>.
-            </p>
-
-            <div class="flex gap-12 items-center justify-center w-full max-w-6xl mb-12">
-                <!-- File Representation -->
-                <div class="w-1/3 flex flex-col items-center">
-                    <div class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-4">datos.txt</div>
-                    <div class="vs-light p-6 rounded-2xl border-2 border-slate-100 shadow-lg w-full font-mono text-sm space-y-2 relative overflow-hidden"
-                        id="rl-file-lines">
-                        <div class="rl-file-item border-l-2 border-blue-400 pl-2 py-1 transition-all">Párrafo 1: Intro a
-                            Python</div>
-                        <div class="rl-file-item border-l-2 border-blue-400 pl-2 py-1 transition-all">Párrafo 2: Manejo
-                            de archivos</div>
-                        <div class="rl-file-item border-l-2 border-blue-400 pl-2 py-1 transition-all">Párrafo 3: Cierre
-                            de recursos</div>
+            <div class="flex gap-8 w-full max-w-6xl mb-8">
+                <!-- Code Editor Style -->
+                <div class="w-1/2 vs-light p-6 rounded-lg text-lg font-mono leading-relaxed"
+                    id="readlines-code-container">
+                    <div id="rls-line-1" class="px-2 rounded transition-colors whitespace-nowrap"><span
+                            class="vs-variable">archivoParrafos</span> = <span class="vs-string">"datos.txt"</span>
                     </div>
+                    <div class="h-2"></div>
+                    <div id="rls-line-2" class="px-2 rounded transition-colors whitespace-nowrap"><span
+                            class="vs-keyword">try</span>:</div>
+                    <div id="rls-line-3" class="px-2 rounded transition-colors whitespace-nowrap">
+                        &nbsp;&nbsp;&nbsp;&nbsp;<span class="vs-variable">textoParrafo</span> = <span
+                            class="vs-function">open</span>(archivoParrafos, <span class="vs-string">"r"</span>)</div>
+                    <div id="rls-line-4" class="px-2 rounded transition-colors whitespace-nowrap"><span
+                            class="vs-keyword">except</span>:</div>
+                    <div id="rls-line-5" class="px-2 rounded transition-colors whitespace-nowrap">
+                        &nbsp;&nbsp;&nbsp;&nbsp;<span class="vs-function">print</span>(<span class="vs-string">f"Hubo un
+                            error al abrir el archivo"</span>)</div>
+                    <div id="rls-line-6" class="px-2 rounded transition-colors whitespace-nowrap"><span
+                            class="vs-keyword">else</span>:</div>
+                    <div id="rls-line-7" class="px-2 rounded transition-colors whitespace-nowrap">
+                        &nbsp;&nbsp;&nbsp;&nbsp;<span class="vs-variable">lineas</span> = textoParrafo.<span
+                            class="vs-function">readlines</span>()</div>
+                    <div id="rls-line-8" class="px-2 rounded transition-colors whitespace-nowrap">
+                        &nbsp;&nbsp;&nbsp;&nbsp;textoParrafo.<span class="vs-function">close</span>()</div>
+                    <div class="h-2"></div>
+                    <div id="rls-line-9" class="px-2 rounded transition-colors whitespace-nowrap">
+                        &nbsp;&nbsp;&nbsp;&nbsp;<span class="vs-function">print</span>(lineas)</div>
                 </div>
 
-                <!-- Action Arrow -->
-                <div class="flex flex-col items-center gap-4">
-                    <div class="text-4xl animate-bounce-x">➡️</div>
-                    <button onclick="transformToLines()"
-                        class="px-8 py-3 bg-brand-btn text-white rounded-full font-bold shadow-lg hover:shadow-2xl transition hover:-translate-y-1 active:translate-y-0">
-                        Transformar
-                    </button>
-                </div>
+                <!-- Result Area -->
+                <div class="w-1/2 flex flex-col gap-6">
+                    <!-- Memory Representation -->
+                    <div class="bg-white border p-6 rounded-xl shadow-lg relative flex-1 min-h-[220px]">
+                        <div class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-4">Memoria / Variable
+                            <span class="text-blue-600">lineas</span>
+                        </div>
+                        <div class="vs-light p-4 rounded-xl border-2 border-brand-btn/20 shadow-inner font-mono text-sm min-h-[140px] flex items-center justify-center transition-all bg-slate-50"
+                            id="rl-list-container">
+                            <span class="italic text-slate-400">[ ... ]</span>
+                        </div>
+                    </div>
 
-                <!-- List Representation -->
-                <div class="w-1/2 flex flex-col items-center">
-                    <div class="text-xs font-bold text-brand-btn uppercase tracking-widest mb-4">Variable: <span
-                            class="vs-variable text-blue-800">lineas</span></div>
-                    <div class="vs-light p-6 rounded-2xl border-2 border-brand-btn/30 shadow-xl w-full font-mono text-lg min-h-[160px] flex items-center justify-center italic text-slate-400 transition-all"
-                        id="rl-list-container">
-                        [ ... ]
+                    <!-- Console -->
+                    <div class="bg-slate-900 text-green-400 p-4 rounded font-mono text-xs h-32" id="readlines-output">
+                        >_
                     </div>
                 </div>
             </div>
 
-            <div
-                class="mt-8 bg-indigo-50 border border-indigo-100 p-6 rounded-2xl flex items-center gap-6 max-w-4xl shadow-sm">
-                <div class="text-4xl">🔬</div>
-                <p class="text-slate-600 text-lg leading-relaxed">
-                    <b>Ojo con el Salto de Línea:</b> Cada elemento de la lista incluirá el caracter invisible <code
-                        class="bg-blue-100 px-1 rounded font-bold text-blue-900">\n</code> al final, excepto
-                    (generalmente) la última línea.
-                </p>
+            <div class="flex gap-6 items-center">
+                <button onclick="readLinesStep()"
+                    class="px-10 py-4 bg-brand-btn text-white rounded-full font-bold shadow-lg hover:bg-brand-btnHover transition hover:-translate-y-1">
+                    ▶️ Ejecutar Paso
+                </button>
                 <button onclick="resetReadlinesDemo()"
-                    class="text-sm text-indigo-400 hover:underline ml-auto">Reiniciar</button>
-            </div>
-        </section>
+                    class="px-6 py-4 bg-slate-100 text-slate-600 rounded-full font-bold hover:bg-slate-200 transition">
+                    Reiniciar
+                </button>
 
-        <!-- SLIDE 14: Escritura Write -->
-        <section class="slide flex-col pt-24 px-12 pb-12 items-center" id="slide-13">
-            <h2 class="text-4xl font-bold text-brand-title mb-8"><span class="font-mono text-brand-btn">write()</span> y
-                Sobrescritura</h2>
-
-            <div class="flex gap-16 items-center">
-                <div class="mac-window w-80 h-96 shadow-lg relative">
-                    <div class="mac-header"><span class="text-xs">notas.txt</span></div>
-                    <div class="p-4 font-mono text-sm whitespace-pre-wrap text-slate-600" id="write-file-content">
-                        Contenido Original...
-                        Información importante.
-                        No borrar.</div>
-                    <div class="absolute inset-0 bg-red-100/50 flex items-center justify-center opacity-0 pointer-events-none transition duration-500"
-                        id="write-flash">
-                        <span class="bg-red-600 text-white px-4 py-2 rounded font-bold">¡SOBRESCRITO!</span>
-                    </div>
-                </div>
-
-                <div class="flex flex-col gap-4">
-                    <div class="vs-light p-4 rounded border text-lg">
-                        f = <span class="vs-function">open</span>("notas.txt", <span class="vs-string">"w"</span>)<br>
-                        f.<span class="vs-function">write</span>(<span class="vs-string">"¡Hola Nuevo!"</span>)
-                    </div>
-                    <button onclick="performWrite()"
-                        class="px-6 py-3 bg-red-600 text-white rounded font-bold hover:bg-red-700 shadow-lg transition">
-                        Ejecutar Write ("w")
-                    </button>
-                    <button onclick="resetWrite()"
-                        class="text-slate-400 text-sm hover:text-brand-btn underline">Resetear Archivo</button>
+                <div
+                    class="ml-12 bg-indigo-50 border border-indigo-100 p-4 rounded-xl flex items-center gap-4 max-w-md">
+                    <div class="text-2xl">💡</div>
+                    <p class="text-slate-600 text-xs leading-tight">
+                        <b>readlines()</b> crea una lista con todos los elementos de una sola vez. Cada elemento incluye
+                        el
+                        <code class="bg-blue-100 px-1 rounded font-bold text-blue-900">\n</code> al final.
+                    </p>
                 </div>
             </div>
         </section>
 
-        <!-- SLIDE 15: Modes Comparison -->
-        <section class="slide flex-col pt-24 px-12 pb-12 items-center" id="slide-14">
-            <h2 class="text-4xl font-bold text-brand-title mb-6">Modos de Escritura</h2>
+        <!-- SLIDE 16: Modes Comparison -->
+        <section class="slide flex-col pt-24 px-12 pb-12 items-center" id="slide-16">
+            <h2 class="text-4xl font-bold text-brand-title mb-6">Modos de Apertura (Escritura)</h2>
 
             <div class="grid grid-cols-3 gap-8 w-full max-w-6xl h-96">
                 <!-- W Block -->
                 <div
-                    class="bg-white border hover:border-red-500 p-6 rounded-xl shadow hover:shadow-xl transition group flex flex-col">
-                    <div class="text-6xl text-center mb-4">🆕</div>
-                    <h3 class="text-2xl font-bold text-center text-red-600 mb-2">"w"</h3>
-                    <p class="text-center text-slate-500 mb-4">Escritura / Sobrescritura</p>
+                    class="bg-white border-2 border-slate-100 hover:border-red-400 p-8 rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col">
+                    <div class="flex justify-between items-start mb-6">
+                        <div class="text-xs font-black bg-red-100 text-red-600 px-2 py-1 rounded tracking-tighter">
+                            [REEMPLAZA]</div>
+                        <span class="text-4xl font-mono font-black text-red-600">"w"</span>
+                    </div>
+                    <h3 class="text-xl font-bold text-slate-800 mb-2">Write</h3>
+                    <p class="text-sm text-slate-500 mb-6 leading-relaxed">Sobrescribe el archivo. Si no existe, lo
+                        crea.
+                    </p>
+
                     <div
-                        class="flex-1 bg-slate-50 rounded p-4 text-sm text-slate-400 font-mono relative overflow-hidden">
-                        <div class="absolute top-2 left-2 text-xs bg-red-100 text-red-800 px-1 rounded">
-                            Borrando...
-                        </div>
-                        <div class="mt-6 text-red-900 font-bold">Nuevo Contenido</div>
+                        class="flex-1 bg-slate-50 rounded-xl p-4 font-mono relative border border-slate-100 flex flex-col">
+                        <div class="text-slate-400 line-through decoration-red-500 decoration-2 text-sm">Contenido
+                            previo...</div>
+                        <div class="text-red-600 font-bold text-sm">Nuevo contenido</div>
                     </div>
                 </div>
 
                 <!-- A Block -->
                 <div
-                    class="bg-white border hover:border-green-500 p-6 rounded-xl shadow hover:shadow-xl transition group flex flex-col">
-                    <div class="text-6xl text-center mb-4">➕</div>
-                    <h3 class="text-2xl font-bold text-center text-green-600 mb-2">"a"</h3>
-                    <p class="text-center text-slate-500 mb-4">Append (Anexar)</p>
+                    class="bg-white border-2 border-slate-100 hover:border-green-400 p-8 rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col">
+                    <div class="flex justify-between items-start mb-6">
+                        <div class="text-xs font-black bg-green-100 text-green-600 px-2 py-1 rounded tracking-tighter">
+                            [ANEXA]</div>
+                        <span class="text-4xl font-mono font-black text-green-600">"a"</span>
+                    </div>
+                    <h3 class="text-xl font-bold text-slate-800 mb-2">Append</h3>
+                    <p class="text-sm text-slate-500 mb-6 leading-relaxed">Agrega al final sin borrar. Si no existe, lo
+                        crea.</p>
+
                     <div
-                        class="flex-1 bg-slate-50 rounded p-4 text-sm text-slate-400 font-mono flex flex-col justify-end">
-                        <div>Contenido Viejo</div>
-                        <div class="text-green-600 font-bold border-t border-dashed border-green-300 pt-2 mt-2">
-                            Agregado
-                            al final</div>
+                        class="flex-1 bg-slate-50 rounded-xl p-4 font-mono flex flex-col border border-slate-100 text-sm">
+                        <div class="text-slate-600 font-medium">Contenido previo...</div>
+                        <div class="text-slate-600 mb-2 font-medium">Contenido previo...</div>
+                        <div class="text-green-600 font-bold">
+                            Nuevo contenido anexado
+                        </div>
                     </div>
                 </div>
 
                 <!-- R+ Block -->
                 <div
-                    class="bg-white border hover:border-brand-btn p-6 rounded-xl shadow hover:shadow-xl transition group flex flex-col">
-                    <div class="text-6xl text-center mb-4">✏️</div>
-                    <h3 class="text-2xl font-bold text-center text-brand-btn mb-2">"r+"</h3>
-                    <p class="text-center text-slate-500 mb-4">Lectura + Escritura</p>
-                    <div class="flex-1 bg-slate-50 rounded p-4 text-sm text-slate-400 font-mono">
-                        <div><span class="bg-blue-100 text-blue-800">Modifica</span> contenido</div>
-                        <div class="mt-2 text-xs">Sin borrar lo anterior, el puntero se coloca al inicio.</div>
+                    class="bg-white border-2 border-slate-100 hover:border-brand-btn p-8 rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col">
+                    <div class="flex justify-between items-start mb-6">
+                        <div class="text-xs font-black bg-blue-100 text-blue-600 px-2 py-1 rounded tracking-tighter">
+                            [ACTUALIZA]</div>
+                        <span class="text-4xl font-mono font-black text-blue-600">"r+"</span>
+                    </div>
+                    <h3 class="text-xl font-bold text-slate-800 mb-2">Read+</h3>
+                    <p class="text-sm text-slate-500 mb-6 leading-relaxed">Lectura y escritura. El puntero inicia al
+                        principio.</p>
+
+                    <div
+                        class="flex-1 bg-slate-50 rounded-xl p-4 font-mono border border-slate-100 flex flex-col gap-2 text-sm">
+                        <div class="flex items-center gap-1">
+                            <span class="bg-blue-600 text-white px-1 rounded-sm text-[8px] animate-pulse">|</span>
+                            <span class="text-blue-800 font-bold">Modificando...</span>
+                        </div>
+                        <div class="text-slate-700 leading-relaxed">
+                            Contenido <span
+                                class="text-blue-600 font-bold underline decoration-blue-200">actualizado</span> que no
+                            se borra
+                            <span class="text-blue-600 font-bold underline decoration-blue-200">automáticamente</span>.
+                            <span class="text-blue-600 font-bold block mt-1">Datos extra añadidos...</span>
+                        </div>
                     </div>
                 </div>
             </div>
 
-            <div class="mt-12">
-                <button onclick="location.reload()" class="text-brand-accent hover:underline">Reiniciar
-                    Experiencia
-                    ↻</button>
+            <div class="mt-12 text-slate-400 text-sm italic">
+                La elección del modo determina si preservamos o reemplazamos la información.
+            </div>
+        </section>
+
+        <!-- SLIDE 17: Escritura e Interacción -->
+        <section class="slide flex-col pt-24 px-12 pb-12 items-center" id="slide-17">
+            <h2 class="text-4xl font-bold text-brand-title mb-4">Interactuando con <span
+                    class="font-mono text-brand-btn">.write()</span></h2>
+
+            <p class="text-slate-600 max-w-2xl text-center mb-8">
+                El método <code class="bg-slate-100 px-1 rounded">.write(texto)</code> permite insertar información en
+                un archivo.
+                Sin embargo, el resultado final depende de <strong>cómo abrimos</strong> el archivo (el modo).
+            </p>
+
+            <div class="flex gap-12 items-start w-full max-w-6xl">
+                <!-- File Preview -->
+                <div class="w-1/3 flex flex-col gap-4">
+                    <div class="text-xs font-bold text-slate-400 uppercase tracking-widest text-center">Estado del
+                        Archivo</div>
+                    <div class="mac-window h-80 shadow-lg relative">
+                        <div class="mac-header"><span class="text-xs">notas.txt</span></div>
+                        <div class="p-4 font-mono text-sm whitespace-pre-wrap text-slate-600 bg-white h-full overflow-y-auto"
+                            id="write-file-content">Contenido Original...
+                            Información importante.
+                            No borrar.</div>
+                        <div class="absolute inset-0 flex items-center justify-center opacity-0 pointer-events-none transition duration-500"
+                            id="write-flash">
+                            <span id="flash-label" class="text-white px-4 py-2 rounded font-bold shadow-2xl"></span>
+                        </div>
+                    </div>
+                    <button onclick="resetWrite()"
+                        class="text-slate-400 text-xs hover:text-brand-btn underline text-center">Restaurar
+                        Original</button>
+                </div>
+
+                <!-- Controls & Code -->
+                <div class="flex-1 flex flex-col gap-6">
+                    <!-- Config Panel -->
+                    <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm flex flex-col gap-6">
+                        <div class="flex items-center gap-8">
+                            <div class="flex flex-col gap-2">
+                                <label class="text-xs font-bold text-slate-400 uppercase">Modo de Apertura</label>
+                                <div class="flex bg-slate-100 p-1 rounded-lg">
+                                    <button onclick="setWriteMode('w')" id="btn-mode-w"
+                                        class="write-mode-btn bg-white text-brand-btn shadow-sm px-4 py-2 rounded-md font-mono font-bold transition">"w"</button>
+                                    <button onclick="setWriteMode('a')" id="btn-mode-a"
+                                        class="write-mode-btn text-slate-500 px-4 py-2 rounded-md font-mono font-bold transition">"a"</button>
+                                    <button onclick="setWriteMode('r+')" id="btn-mode-r"
+                                        class="write-mode-btn text-slate-500 px-4 py-2 rounded-md font-mono font-bold transition">"r+"</button>
+                                </div>
+                            </div>
+                            <div class="flex-1 flex flex-col gap-2">
+                                <label class="text-xs font-bold text-slate-400 uppercase">Texto a escribir</label>
+                                <input type="text" id="write-input" value="¡Hola Nuevo!" oninput="updateWriteUI()"
+                                    class="w-full bg-slate-50 border border-slate-200 rounded-lg px-4 py-2 font-mono text-sm focus:ring-2 focus:ring-brand-btn outline-none">
+                            </div>
+                        </div>
+
+                        <!-- Dynamic Code -->
+                        <div class="vs-light p-4 rounded-xl border border-slate-100 font-mono text-sm">
+                            <span class="vs-variable">f</span> = <span class="vs-function">open</span>(<span
+                                class="vs-string">"notas.txt"</span>, <span class="vs-string"
+                                id="code-mode">"w"</span>)<br>
+                            <span class="vs-variable">f</span>.<span class="vs-function">write</span>(<span
+                                class="vs-string">"<span id="code-text">¡Hola Nuevo!</span>"</span>)<br>
+                            <span class="vs-variable">f</span>.<span class="vs-function">close</span>()
+                        </div>
+
+                        <button onclick="performWrite()" id="exec-write-btn"
+                            class="w-full py-4 bg-red-600 text-white rounded-xl font-bold shadow-lg hover:shadow-xl transition flex items-center justify-center gap-2">
+                            <span>⚡ Ejecutar .write()</span>
+                        </button>
+                    </div>
+
+                    <!-- Explanatory Tooltip -->
+                    <div id="mode-explanation"
+                        class="bg-blue-50 border border-blue-100 p-4 rounded-xl flex gap-4 items-center">
+                        <div class="text-2xl" id="mode-icon">🚀</div>
+                        <p class="text-slate-600 text-sm leading-snug" id="mode-text-desc">
+                            El modo <strong>"w"</strong> borrará todo el contenido actual y escribirá el nuevo texto
+                            desde cero.
+                        </p>
+                    </div>
+                </div>
             </div>
         </section>
 
@@ -1580,54 +1678,145 @@
             });
         }
 
-        // Slide 15: Readlines Transformation
-        function transformToLines() {
-            const container = document.getElementById('rl-list-container');
-            container.classList.remove('italic', 'text-slate-400');
-            container.innerHTML = `
-                <div class="flex flex-col gap-1 w-full scale-in text-left">
-                    <div class="flex items-center">
-                        <span class="vs-keyword text-blue-800">[</span>
-                    </div>
-                    <div class="pl-8 flex items-center gap-2">
-                        <span class="vs-string">"Párrafo 1: Intro a Python\\n"</span>,
-                        <span class="text-[10px] bg-slate-100 px-1 rounded text-slate-400">índice 0</span>
-                    </div>
-                    <div class="pl-8 flex items-center gap-2">
-                        <span class="vs-string">"Párrafo 2: Manejo de archivos\\n"</span>,
-                        <span class="text-[10px] bg-slate-100 px-1 rounded text-slate-400">índice 1</span>
-                    </div>
-                    <div class="pl-8 flex items-center gap-2">
-                        <span class="vs-string">"Párrafo 3: Cierre de recursos"</span>
-                        <span class="text-[10px] bg-slate-100 px-1 rounded text-slate-400">índice 2</span>
-                    </div>
-                    <div class="flex items-center">
-                        <span class="vs-keyword text-blue-800">]</span>
-                    </div>
-                </div>
-            `;
+        // Slide 15: Readlines Step Logic
+        let rlsState = 0;
+        const rlsContent = [
+            "Párrafo 1: Introducción a Python.\\n",
+            "Párrafo 2: Manejo de archivos externos.\\n",
+            "Párrafo 3: Cierre de recursos."
+        ];
 
-            // Subtle animation on file items
-            document.querySelectorAll('.rl-file-item').forEach((item, i) => {
-                setTimeout(() => {
-                    item.classList.add('bg-blue-100', 'translate-x-4', 'opacity-50', 'text-slate-400');
-                }, i * 150);
-            });
+        function readLinesStep() {
+            const codeLines = document.querySelectorAll('#readlines-code-container > div[id^="rls-line-"]');
+            const listContainer = document.getElementById('rl-list-container');
+            const output = document.getElementById('readlines-output');
+
+            const highlightCode = (lineId) => {
+                codeLines.forEach(l => l.classList.remove('bg-indigo-100', 'border-l-4', 'border-indigo-500', 'font-black'));
+                const el = document.getElementById(`rls-line-${lineId}`);
+                if (el) el.classList.add('bg-indigo-100', 'border-l-4', 'border-indigo-500', 'font-black');
+            };
+
+            switch (rlsState) {
+                case 0: highlightCode(1); output.innerText = "> _"; rlsState = 1; break;
+                case 1: highlightCode(2); rlsState = 2; break;
+                case 2: highlightCode(3); rlsState = 3; break;
+                case 3: highlightCode(6); rlsState = 4; break;
+                case 4: // THE TRANSFORMATION
+                    highlightCode(7);
+                    listContainer.classList.remove('italic', 'text-slate-400');
+                    listContainer.innerHTML = `
+                        <div class="flex flex-col gap-1 w-full scale-in text-left">
+                            <span class="vs-keyword text-blue-800">[</span>
+                            <div class="pl-4"><span class="vs-string">"${rlsContent[0]}"</span>,</div>
+                            <div class="pl-4"><span class="vs-string">"${rlsContent[1]}"</span>,</div>
+                            <div class="pl-4"><span class="vs-string">"${rlsContent[2]}"</span></div>
+                            <span class="vs-keyword text-blue-800">]</span>
+                        </div>
+                    `;
+                    rlsState = 5;
+                    break;
+                case 5: highlightCode(8); rlsState = 6; break;
+                case 6: highlightCode(9);
+                    output.innerText = "> ['Párrafo 1...', 'Párrafo 2...', 'Párrafo 3...']";
+                    rlsState = 7; break;
+                default: resetReadlinesDemo(); break;
+            }
         }
 
         function resetReadlinesDemo() {
-            const container = document.getElementById('rl-list-container');
-            container.classList.add('italic', 'text-slate-400');
-            container.innerHTML = '[ ... ]';
-            document.querySelectorAll('.rl-file-item').forEach(item => {
-                item.classList.remove('bg-blue-100', 'translate-x-4', 'opacity-50', 'text-slate-400');
-            });
+            rlsState = 0;
+            const output = document.getElementById('readlines-output');
+            const listContainer = document.getElementById('rl-list-container');
+
+            output.innerText = "> _";
+            listContainer.classList.add('italic', 'text-slate-400');
+            listContainer.innerHTML = '<span class="italic text-slate-400">[ ... ]</span>';
+
+            document.querySelectorAll('#readlines-code-container > div').forEach(l => l.classList.remove('bg-indigo-100', 'border-l-4', 'border-indigo-500', 'font-black'));
         }
 
-        // Slide 14: Write
+        // Slide 17: Interactive Write Logic
+        let currentWriteMode = 'w';
+        const originalFileContent = "Contenido Original...\nInformación importante.\nNo borrar.";
+        let currentFileContent = originalFileContent;
+
+        function setWriteMode(mode) {
+            currentWriteMode = mode;
+
+            // Update buttons
+            document.querySelectorAll('.write-mode-btn').forEach(btn => {
+                btn.classList.remove('bg-white', 'text-brand-btn', 'shadow-sm', 'active');
+                btn.classList.add('text-slate-500');
+            });
+
+            const activeBtn = document.getElementById(`btn-mode-${mode === 'r+' ? 'r' : mode}`);
+            activeBtn.classList.remove('text-slate-500');
+            activeBtn.classList.add('bg-white', 'text-brand-btn', 'shadow-sm', 'active');
+
+            // Update execution button color
+            const execBtn = document.getElementById('exec-write-btn');
+            if (mode === 'w') execBtn.className = "w-full py-4 bg-red-600 text-white rounded-xl font-bold shadow-lg transition flex items-center justify-center gap-2";
+            if (mode === 'a') execBtn.className = "w-full py-4 bg-green-600 text-white rounded-xl font-bold shadow-lg transition flex items-center justify-center gap-2";
+            if (mode === 'r+') execBtn.className = "w-full py-4 bg-blue-600 text-white rounded-xl font-bold shadow-lg transition flex items-center justify-center gap-2";
+
+            updateWriteUI();
+        }
+
+        function updateWriteUI() {
+            const inputVal = document.getElementById('write-input').value;
+            const codeModeEl = document.getElementById('code-mode');
+            const codeTextEl = document.getElementById('code-text');
+
+            if (codeModeEl) codeModeEl.innerText = `"${currentWriteMode}"`;
+            if (codeTextEl) codeTextEl.innerText = inputVal;
+
+            const desc = document.getElementById('mode-text-desc');
+            const icon = document.getElementById('mode-icon');
+
+            if (currentWriteMode === 'w') {
+                icon.innerText = "⚠️";
+                desc.innerHTML = 'Modo <strong>"w"</strong>: Borra TODO y escribe el nuevo texto.';
+            } else if (currentWriteMode === 'a') {
+                icon.innerText = "➕";
+                desc.innerHTML = 'Modo <strong>"a"</strong>: Mantiene lo anterior y añade al final.';
+            } else {
+                icon.innerText = "✏️";
+                desc.innerHTML = 'Modo <strong>"r+"</strong>: Mantiene lo anterior pero sobreescribe desde el inicio.';
+            }
+        }
+
         function performWrite() {
-            const content = document.getElementById('write-file-content');
+            const inputText = document.getElementById('write-input').value;
+            const contentEl = document.getElementById('write-file-content');
             const flash = document.getElementById('write-flash');
+            const label = document.getElementById('flash-label');
+
+            let newContent = "";
+            let flashColor = "";
+            let flashText = "";
+
+            if (currentWriteMode === 'w') {
+                newContent = inputText;
+                flashColor = "bg-red-600";
+                flashText = "¡SOBREESCRITO!";
+            } else if (currentWriteMode === 'a') {
+                newContent = currentFileContent + (currentFileContent.endsWith('\n') ? '' : '\n') + inputText;
+                flashColor = "bg-green-600";
+                flashText = "¡ANEXADO!";
+            } else if (currentWriteMode === 'r+') {
+                // Simplified r+ logic: replace from start
+                const prefix = inputText;
+                const suffix = currentFileContent.substring(Math.min(inputText.length, currentFileContent.length));
+                newContent = prefix + suffix;
+                flashColor = "bg-blue-600";
+                flashText = "¡ACTUALIZADO!";
+            }
+
+            label.innerText = flashText;
+            label.className = `text-white px-4 py-2 rounded font-bold shadow-2xl ${flashColor}`;
+            flash.style.backgroundColor = currentWriteMode === 'w' ? 'rgba(254, 226, 226, 0.5)' :
+                currentWriteMode === 'a' ? 'rgba(220, 252, 231, 0.5)' : 'rgba(219, 234, 254, 0.5)';
 
             flash.classList.remove('opacity-0', 'pointer-events-none');
             flash.classList.add('opacity-100');
@@ -1635,15 +1824,33 @@
             setTimeout(() => {
                 flash.classList.remove('opacity-100');
                 flash.classList.add('opacity-0');
-                content.innerText = "¡Hola Nuevo!";
-                content.classList.add('text-red-600', 'font-bold');
-            }, 800);
+                currentFileContent = newContent;
+
+                // Highlight changes in display
+                if (currentWriteMode === 'w') {
+                    contentEl.innerHTML = `<span class="text-red-600 font-bold">${newContent}</span>`;
+                } else if (currentWriteMode === 'a') {
+                    const lines = newContent.split('\n');
+                    const lastLine = lines[lines.length - 1];
+                    const prev = lines.slice(0, -1).join('\n');
+                    contentEl.innerHTML = `<span class="text-slate-400">${prev}\n</span><span class="text-green-600 font-bold">${lastLine}</span>`;
+                } else {
+                    const updated = newContent.substring(0, inputText.length);
+                    const rest = newContent.substring(inputText.length);
+                    contentEl.innerHTML = `<span class="text-blue-600 font-bold">${updated}</span><span class="text-slate-400">${rest}</span>`;
+                }
+            }, 600);
         }
+
         function resetWrite() {
-            const content = document.getElementById('write-file-content');
-            content.innerText = "Contenido Original...\nInformación importante.\nNo borrar.";
-            content.classList.remove('text-red-600', 'font-bold');
+            currentFileContent = originalFileContent;
+            const contentEl = document.getElementById('write-file-content');
+            contentEl.innerText = currentFileContent;
+            contentEl.className = "p-4 font-mono text-sm whitespace-pre-wrap text-slate-600 bg-white h-full overflow-y-auto";
         }
+
+        // Initialize Slide 17
+        setWriteMode('w');
 
     </script>
 </body>
