@@ -365,7 +365,7 @@
                         </div>
                     </div>
                     <div class="flex gap-4">
-                        <div class="w-48 bg-white p-4 rounded-2xl shadow-sm border border-slate-200">
+                        <div class="w-48 bg-white p-4 rounded-2xl shadow-sm border border-slate-200 relative">
                             <div class="flex justify-between items-center mb-2">
                                 <span class="text-slate-500 font-bold uppercase text-[10px] tracking-wider">Tiempo
                                     Total</span>
@@ -374,10 +374,9 @@
                             <div class="timer-progress relative">
                                 <div id="global-timer-bar" class="timer-fill" style="width: 100%; background: #22c55e;">
                                 </div>
-                                <!-- Area for floating text -->
-                                <div id="bonus-area" class="absolute top-0 right-0 w-full h-full pointer-events-none">
-                                </div>
                             </div>
+                            <!-- Area for floating text, now outside overflow hidden -->
+                            <div id="bonus-area" class="absolute top-0 right-0 w-full h-full pointer-events-none"></div>
                         </div>
                         <div class="w-48 bg-white p-4 rounded-2xl shadow-sm border border-slate-200">
                             <div class="flex justify-between items-center mb-2">
