@@ -252,6 +252,45 @@
         .animate-exit #stickman-svg {
             animation: waddle 0.3s ease-in-out infinite;
         }
+
+        /* Queue Animation */
+        @keyframes queueAdvance {
+            0% {
+                transform: translateX(0);
+            }
+
+            50% {
+                opacity: 0;
+            }
+
+            100% {
+                transform: translateX(9rem) scale(0.9);
+                opacity: 0;
+            }
+        }
+
+        .animate-queue-move {
+            animation: queueAdvance 1s ease-in-out forwards;
+        }
+
+        .fade-out-item {
+            opacity: 0 !important;
+            transition: opacity 0.5s ease-out;
+        }
+
+        .new-item-enter {
+            animation: fadeIn 0.5s ease-in forwards;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 0.4;
+            }
+        }
     </style>
 </head>
 
@@ -592,6 +631,9 @@
 
             bubble.classList.remove('opacity-0', 'translate-x-4');
 
+            // Animate Queue: Advance one step
+            updateQueue();
+
             document.getElementById('request-text').innerText = `"${currentQuestion.request}"`;
             renderProducts(currentQuestion.options);
             startTimer();
@@ -637,6 +679,76 @@
             });
 
             window.shopListenersReady = true;
+        }
+
+        function updateQueue() {
+            const queue = document.getElementById('stickman-queue');
+            const items = queue.children;
+
+            // 1. Identify the one leaving (Right-most / Last Child visually?)
+            // Note: In standard flow, last child is right-most.
+            // But we want the head of the line (closest to counter) to disappear.
+            // If queue is [A, B], B is right-most (closest).
+            const headOfLine = items[items.length - 1];
+
+            if (headOfLine) {
+                headOfLine.classList.add('fade-out-item');
+                // Remove after animation
+                setTimeout(() => {
+                    headOfLine.remove();
+                }, 500);
+            }
+
+            // 2. Add new person at the back (Left)
+            // We want smooth slide:
+            // Current State: [New(placeholder), A] -> [New, A] -> Slide Right.
+
+            // Create New Stickman
+            const newStickman = document.createElement('div');
+            newStickman.className = 'w-32 h-48 transform scale-75 opacity-0'; // Start hidden
+            newStickman.innerHTML = `
+                <svg viewBox="0 0 100 150" class="w-full h-full">
+                    <line x1="50" y1="50" x2="50" y2="100" stroke="#1e293b" stroke-width="4" />
+                    <line x1="50" y1="65" x2="25" y2="85" stroke="#1e293b" stroke-width="4" stroke-linecap="round" />
+                    <line x1="50" y1="65" x2="75" y2="85" stroke="#1e293b" stroke-width="4" stroke-linecap="round" />
+                    <line x1="50" y1="100" x2="30" y2="140" stroke="#1e293b" stroke-width="4" stroke-linecap="round" />
+                    <line x1="50" y1="100" x2="70" y2="140" stroke="#1e293b" stroke-width="4" stroke-linecap="round" />
+                     <circle cx="50" cy="30" r="20" fill="white" stroke="#1e293b" stroke-width="4" />
+                    <g><circle cx="43" cy="25" r="2" fill="#1e293b" /><circle cx="57" cy="25" r="2" fill="#1e293b" /></g>
+                     <path d="M 40 38 Q 50 38 60 38" stroke="#1e293b" stroke-width="2" fill="transparent" stroke-linecap="round" />
+                </svg>
+            `;
+
+            // Insert at the beginning (Left)
+            queue.prepend(newStickman);
+
+            // 3. Animate Slide
+            // To prevent layout jump, we ideally start with margin-left: -9rem?
+            // Or we just animate the container sliding.
+            // Let's rely on the previous logic: Container shifts right.
+
+            queue.classList.remove('animate-queue-move');
+            void queue.offsetWidth;
+
+            // Pre-correction: If we prepend, everything shifts right instantly by 1 unit.
+            // We need to offset that instantly.
+            queue.style.transform = 'translateX(-9rem)';
+
+            requestAnimationFrame(() => {
+                // Slide to 0 (which is visually 1 unit right from -9rem)
+                queue.style.transition = 'transform 1s ease-in-out';
+                queue.style.transform = 'translateX(0)';
+
+                // Fade in the new guy
+                newStickman.classList.remove('opacity-0');
+                newStickman.classList.add('new-item-enter', 'opacity-40');
+            });
+
+            // Cleanup style after transition
+            setTimeout(() => {
+                queue.style.transition = '';
+                queue.style.transform = '';
+            }, 1000);
         }
 
         function handleDelivery(code) {
