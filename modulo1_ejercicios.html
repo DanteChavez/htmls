@@ -141,6 +141,63 @@
             background: rgba(6, 113, 126, 0.1) !important;
             border: 2px dashed #06717e !important;
         }
+
+        /* Feedback Animations */
+        @keyframes flashGreen {
+            0% {
+                filter: drop-shadow(0 0 0 rgba(74, 222, 128, 0));
+            }
+
+            50% {
+                filter: drop-shadow(0 0 20px rgba(74, 222, 128, 0.8));
+            }
+
+            100% {
+                filter: drop-shadow(0 0 0 rgba(74, 222, 128, 0));
+            }
+        }
+
+        @keyframes flashRed {
+            0% {
+                filter: drop-shadow(0 0 0 rgba(248, 113, 113, 0));
+            }
+
+            50% {
+                filter: drop-shadow(0 0 20px rgba(248, 113, 113, 0.8));
+            }
+
+            100% {
+                filter: drop-shadow(0 0 0 rgba(248, 113, 113, 0));
+            }
+        }
+
+        .flash-success {
+            animation: flashGreen 0.5s ease-out;
+        }
+
+        .flash-success line,
+        .flash-success circle,
+        .flash-success path {
+            stroke: #22c55e !important;
+        }
+
+        .flash-success circle[fill="#1e293b"] {
+            fill: #22c55e !important;
+        }
+
+        .flash-error {
+            animation: flashRed 0.5s ease-out;
+        }
+
+        .flash-error line,
+        .flash-error circle,
+        .flash-error path {
+            stroke: #ef4444 !important;
+        }
+
+        .flash-error circle[fill="#1e293b"] {
+            fill: #ef4444 !important;
+        }
     </style>
 </head>
 
@@ -182,10 +239,15 @@
             <div class="flex-1 flex flex-col p-8 relative">
                 <!-- Top UI: Score and Timer -->
                 <div class="flex justify-between items-center mb-8">
-                    <div class="bg-white px-6 py-3 rounded-2xl shadow-sm border border-slate-200">
-                        <span class="text-slate-500 font-bold uppercase text-xs tracking-wider">Clientes
-                            Satisfechos</span>
-                        <div class="text-3xl font-black text-brand-title" id="shop-score">0</div>
+                    <div class="flex gap-4">
+                        <div class="bg-white px-6 py-3 rounded-2xl shadow-sm border border-slate-200">
+                            <span class="text-slate-500 font-bold uppercase text-xs tracking-wider">Satisfechos</span>
+                            <div class="text-3xl font-black text-brand-accent" id="shop-score">0</div>
+                        </div>
+                        <div class="bg-white px-6 py-3 rounded-2xl shadow-sm border border-slate-200">
+                            <span class="text-slate-500 font-bold uppercase text-xs tracking-wider">Insatisfechos</span>
+                            <div class="text-3xl font-black text-red-500" id="shop-score-dissatisfied">0</div>
+                        </div>
                     </div>
                     <div class="w-64 bg-white p-4 rounded-2xl shadow-sm border border-slate-200">
                         <div class="flex justify-between items-center mb-2">
@@ -360,6 +422,7 @@
         ];
 
         let shopScore = 0;
+        let shopScoreDissatisfied = 0;
         let shopTimer = null;
         let shopTimeLeft = 15;
         let currentQuestion = null;
@@ -387,9 +450,12 @@
 
         function initShopGame() {
             shopScore = 0;
+            shopScoreDissatisfied = 0;
             usedQuestions = [];
             document.getElementById('shop-score').innerText = shopScore;
+            document.getElementById('shop-score-dissatisfied').innerText = shopScoreDissatisfied;
             document.getElementById('game-over').classList.add('hidden');
+            setupShopListeners();
             nextCustomer();
         }
 
@@ -406,6 +472,10 @@
             // Animate Customer Arrival
             const customer = document.getElementById('customer-area');
             const bubble = document.getElementById('bubble-area');
+            // Reset Flash
+            const stickman = document.getElementById('stickman-svg');
+            stickman.classList.remove('flash-success', 'flash-error');
+
             customer.classList.remove('opacity-0', 'translate-y-4');
             bubble.classList.remove('opacity-0', 'translate-x-4');
 
@@ -418,8 +488,10 @@
             const list = document.getElementById('product-list');
             list.innerHTML = '';
 
-            // To ensurevariety, we combine with some static ones if options < 3
-            options.forEach(opt => {
+            // Shuffle options for display (without affecting original array)
+            const shuffledOptions = [...options].sort(() => Math.random() - 0.5);
+
+            shuffledOptions.forEach(opt => {
                 const card = document.createElement('div');
                 card.className = 'product-card bg-brand-alt border-2 border-slate-100 p-4 rounded-xl font-mono text-sm font-bold text-brand-title shadow-sm hover:border-brand-accent hover:shadow-md';
                 card.draggable = true;
@@ -433,8 +505,11 @@
                 card.addEventListener('dragend', () => card.classList.remove('dragging'));
                 list.appendChild(card);
             });
+        }
 
-            // Make customer area a drop zone
+        function setupShopListeners() {
+            if (window.shopListenersReady) return;
+
             const dropTarget = document.getElementById('customer-area');
             dropTarget.addEventListener('dragover', (e) => {
                 e.preventDefault();
@@ -447,20 +522,27 @@
                 const droppedCode = e.dataTransfer.getData('text/plain');
                 handleDelivery(droppedCode);
             });
+
+            window.shopListenersReady = true;
         }
 
         function handleDelivery(code) {
             clearInterval(shopTimer);
+            const stickman = document.getElementById('stickman-svg');
             if (code === currentQuestion.correct) {
                 shopScore++;
                 document.getElementById('shop-score').innerText = shopScore;
                 setStickmanExpression('happy');
+                stickman.classList.add('flash-success');
                 setTimeout(() => {
                     exitCustomer();
                     setTimeout(nextCustomer, 500);
                 }, 1000);
             } else {
+                shopScoreDissatisfied++;
+                document.getElementById('shop-score-dissatisfied').innerText = shopScoreDissatisfied;
                 setStickmanExpression('sad');
+                stickman.classList.add('flash-error');
                 setTimeout(() => {
                     exitCustomer();
                     setTimeout(nextCustomer, 500);
@@ -491,6 +573,10 @@
 
         function handleTimeout() {
             setStickmanExpression('sad');
+            document.getElementById('stickman-svg').classList.add('flash-error');
+            shopScoreDissatisfied++;
+            document.getElementById('shop-score-dissatisfied').innerText = shopScoreDissatisfied;
+
             setTimeout(() => {
                 document.getElementById('final-score').innerText = shopScore;
                 document.getElementById('game-over').classList.remove('hidden');
@@ -523,9 +609,13 @@
 
             // Start shop game if on slide 1 (zero-indexed)
             if (currentSlide === 1) {
-                initShopGame();
+                if (!window.gameActive) {
+                    initShopGame();
+                    window.gameActive = true;
+                }
             } else {
                 clearInterval(shopTimer);
+                window.gameActive = false;
             }
 
             // Update Buttons
