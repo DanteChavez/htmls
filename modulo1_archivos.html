@@ -209,7 +209,7 @@
             <span class="text-2xl">📁</span> Módulo 1: Archivos en Python
         </h1>
         <div class="text-brand-accent font-medium text-lg">
-            <span id="current-slide-num">1</span> / <span id="total-slides-num">17</span>
+            <span id="current-slide-num">1</span> / <span id="total-slides-num">18</span>
         </div>
     </header>
 
@@ -1165,36 +1165,40 @@
                             <span id="flash-label" class="text-white px-4 py-2 rounded font-bold shadow-2xl"></span>
                         </div>
                     </div>
-                    <button onclick="resetWrite()"
-                        class="text-slate-400 text-xs hover:text-brand-btn underline text-center">Restaurar
-                        Original</button>
+                    <div class="flex justify-center">
+                        <button onclick="resetWrite()"
+                            class="bg-slate-100 text-slate-600 px-6 py-2 rounded-lg font-bold hover:bg-slate-200 transition text-xs shadow-sm border border-slate-200">
+                            Restaurar Archivo Original
+                        </button>
+                    </div>
                 </div>
 
                 <!-- Controls & Code -->
                 <div class="flex-1 flex flex-col gap-6">
                     <!-- Config Panel -->
                     <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm flex flex-col gap-6">
-                        <div class="flex items-center gap-8">
-                            <div class="flex flex-col gap-2">
+                        <div class="flex flex-col gap-4">
+                            <div class="flex items-center gap-4">
                                 <label class="text-xs font-bold text-slate-400 uppercase">Modo de Apertura</label>
                                 <div class="flex bg-slate-100 p-1 rounded-lg">
                                     <button onclick="setWriteMode('w')" id="btn-mode-w"
-                                        class="write-mode-btn bg-white text-brand-btn shadow-sm px-4 py-2 rounded-md font-mono font-bold transition">"w"</button>
+                                        class="write-mode-btn bg-white text-brand-btn shadow-sm px-6 py-2 rounded-md font-mono font-bold transition">"w"</button>
                                     <button onclick="setWriteMode('a')" id="btn-mode-a"
-                                        class="write-mode-btn text-slate-500 px-4 py-2 rounded-md font-mono font-bold transition">"a"</button>
+                                        class="write-mode-btn text-slate-500 px-6 py-2 rounded-md font-mono font-bold transition">"a"</button>
                                     <button onclick="setWriteMode('r+')" id="btn-mode-r"
-                                        class="write-mode-btn text-slate-500 px-4 py-2 rounded-md font-mono font-bold transition">"r+"</button>
+                                        class="write-mode-btn text-slate-500 px-6 py-2 rounded-md font-mono font-bold transition">"r+"</button>
                                 </div>
                             </div>
-                            <div class="flex-1 flex flex-col gap-2">
+
+                            <div class="flex flex-col gap-2">
                                 <label class="text-xs font-bold text-slate-400 uppercase">Texto a escribir</label>
-                                <input type="text" id="write-input" value="¡Hola Nuevo!" oninput="updateWriteUI()"
-                                    class="w-full bg-slate-50 border border-slate-200 rounded-lg px-4 py-2 font-mono text-sm focus:ring-2 focus:ring-brand-btn outline-none">
+                                <textarea id="write-input" oninput="updateWriteUI()" rows="3"
+                                    class="w-full bg-slate-50 border border-slate-200 rounded-lg px-4 py-2 font-mono text-sm focus:ring-2 focus:ring-brand-btn outline-none resize-none">¡Hola Nuevo!</textarea>
                             </div>
                         </div>
 
                         <!-- Dynamic Code -->
-                        <div class="vs-light p-4 rounded-xl border border-slate-100 font-mono text-sm">
+                        <div class="vs-light p-4 rounded-xl border border-slate-100 font-mono text-xs">
                             <span class="vs-variable">f</span> = <span class="vs-function">open</span>(<span
                                 class="vs-string">"notas.txt"</span>, <span class="vs-string"
                                 id="code-mode">"w"</span>)<br>
@@ -1204,21 +1208,60 @@
                         </div>
 
                         <button onclick="performWrite()" id="exec-write-btn"
-                            class="w-full py-4 bg-red-600 text-white rounded-xl font-bold shadow-lg hover:shadow-xl transition flex items-center justify-center gap-2">
-                            <span>⚡ Ejecutar .write()</span>
+                            class="w-full py-4 bg-red-600 text-white rounded-xl font-bold shadow-lg hover:shadow-xl transition">
+                            Ejecutar .write()
                         </button>
                     </div>
 
                     <!-- Explanatory Tooltip -->
                     <div id="mode-explanation"
                         class="bg-blue-50 border border-blue-100 p-4 rounded-xl flex gap-4 items-center">
-                        <div class="text-2xl" id="mode-icon">🚀</div>
+                        <div
+                            class="w-10 h-10 bg-white rounded-full flex items-center justify-center text-xl font-bold text-brand-btn shadow-sm">
+                            i</div>
                         <p class="text-slate-600 text-sm leading-snug" id="mode-text-desc">
                             El modo <strong>"w"</strong> borrará todo el contenido actual y escribirá el nuevo texto
                             desde cero.
                         </p>
                     </div>
                 </div>
+            </div>
+        </section>
+
+        <!-- SLIDE 18: Fin del Módulo -->
+        <section class="slide flex-col justify-center items-center text-center p-12" id="slide-18">
+            <div class="mac-window w-full max-w-2xl p-12 shadow-2xl bg-white flex flex-col items-center">
+                <div
+                    class="w-24 h-24 bg-green-100 text-green-600 rounded-full flex items-center justify-center text-5xl mb-8 animate-bounce">
+                    ✓
+                </div>
+                <h2 class="text-5xl font-extrabold text-brand-title mb-6">¡Módulo 1 Completado!</h2>
+                <p class="text-xl text-slate-500 mb-10 leading-relaxed">
+                    Has dominado los conceptos fundamentales para el manejo de archivos en Python.
+                </p>
+
+                <div
+                    class="grid grid-cols-2 gap-4 w-full text-left bg-slate-50 p-8 rounded-2xl border border-slate-100">
+                    <div class="flex items-center gap-3">
+                        <span
+                            class="w-6 h-6 bg-brand-btn text-white rounded-full flex items-center justify-center text-xs font-bold">1</span>
+                        <span class="text-slate-700 font-medium">Apertura y Cierre</span>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <span
+                            class="w-6 h-6 bg-brand-btn text-white rounded-full flex items-center justify-center text-xs font-bold">2</span>
+                        <span class="text-slate-700 font-medium">Lectura (Read/Lines)</span>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <span
+                            class="w-6 h-6 bg-brand-btn text-white rounded-full flex items-center justify-center text-xs font-bold">3</span>
+                        <span class="text-slate-700 font-medium">Modos de Escritura</span>
+                    </div>
+                </div>
+
+                <p class="mt-12 text-slate-400 font-mono text-sm tracking-tighter">
+                    Python Programación I - 2026
+                </p>
             </div>
         </section>
 
@@ -1241,7 +1284,7 @@
     <script>
         /* --- CORE LOGIC --- */
         let currentSlide = 0;
-        const totalSlides = 17;
+        const totalSlides = 18;
         const slides = document.querySelectorAll('.slide');
 
         // Init
@@ -1758,7 +1801,9 @@
             const execBtn = document.getElementById('exec-write-btn');
             if (mode === 'w') execBtn.className = "w-full py-4 bg-red-600 text-white rounded-xl font-bold shadow-lg transition flex items-center justify-center gap-2";
             if (mode === 'a') execBtn.className = "w-full py-4 bg-green-600 text-white rounded-xl font-bold shadow-lg transition flex items-center justify-center gap-2";
-            if (mode === 'r+') execBtn.className = "w-full py-4 bg-blue-600 text-white rounded-xl font-bold shadow-lg transition flex items-center justify-center gap-2";
+            if (mode === 'w') execBtn.className = "w-full py-4 bg-red-600 text-white rounded-xl font-bold shadow-lg transition";
+            if (mode === 'a') execBtn.className = "w-full py-4 bg-green-600 text-white rounded-xl font-bold shadow-lg transition";
+            if (mode === 'r+') execBtn.className = "w-full py-4 bg-blue-600 text-white rounded-xl font-bold shadow-lg transition";
 
             updateWriteUI();
         }
@@ -1772,17 +1817,13 @@
             if (codeTextEl) codeTextEl.innerText = inputVal;
 
             const desc = document.getElementById('mode-text-desc');
-            const icon = document.getElementById('mode-icon');
 
             if (currentWriteMode === 'w') {
-                icon.innerText = "⚠️";
-                desc.innerHTML = 'Modo <strong>"w"</strong>: Borra TODO y escribe el nuevo texto.';
+                desc.innerHTML = 'Modo <strong>"w"</strong>: Borra TODO y escribe el nuevo texto desde el inicio.';
             } else if (currentWriteMode === 'a') {
-                icon.innerText = "➕";
-                desc.innerHTML = 'Modo <strong>"a"</strong>: Mantiene lo anterior y añade al final.';
+                desc.innerHTML = 'Modo <strong>"a"</strong>: Mantiene lo anterior y añade al final absoluto.';
             } else {
-                icon.innerText = "✏️";
-                desc.innerHTML = 'Modo <strong>"r+"</strong>: Mantiene lo anterior pero sobreescribe desde el inicio.';
+                desc.innerHTML = `Modo <strong>"r+"</strong>: Mantiene lo anterior y sobreescribe parte del inicio con el nuevo texto.`;
             }
         }
 
@@ -1795,22 +1836,28 @@
             let newContent = "";
             let flashColor = "";
             let flashText = "";
+            let highlightedHTML = "";
 
             if (currentWriteMode === 'w') {
                 newContent = inputText;
                 flashColor = "bg-red-600";
                 flashText = "¡SOBREESCRITO!";
+                highlightedHTML = `<span class="text-red-600 font-bold">${newContent}</span>`;
             } else if (currentWriteMode === 'a') {
                 newContent = currentFileContent + (currentFileContent.endsWith('\n') ? '' : '\n') + inputText;
                 flashColor = "bg-green-600";
                 flashText = "¡ANEXADO!";
+                const lines = newContent.split('\n');
+                const lastLine = lines[lines.length - 1];
+                const prev = lines.slice(0, -1).join('\n');
+                highlightedHTML = `<span class="text-slate-400">${prev}\n</span><span class="text-green-600 font-bold">${lastLine}</span>`;
             } else if (currentWriteMode === 'r+') {
-                // Simplified r+ logic: replace from start
                 const prefix = inputText;
                 const suffix = currentFileContent.substring(Math.min(inputText.length, currentFileContent.length));
                 newContent = prefix + suffix;
                 flashColor = "bg-blue-600";
                 flashText = "¡ACTUALIZADO!";
+                highlightedHTML = `<span class="text-blue-600 font-bold underline decoration-blue-200">${prefix}</span><span class="text-slate-400">${suffix}</span>`;
             }
 
             label.innerText = flashText;
@@ -1825,20 +1872,7 @@
                 flash.classList.remove('opacity-100');
                 flash.classList.add('opacity-0');
                 currentFileContent = newContent;
-
-                // Highlight changes in display
-                if (currentWriteMode === 'w') {
-                    contentEl.innerHTML = `<span class="text-red-600 font-bold">${newContent}</span>`;
-                } else if (currentWriteMode === 'a') {
-                    const lines = newContent.split('\n');
-                    const lastLine = lines[lines.length - 1];
-                    const prev = lines.slice(0, -1).join('\n');
-                    contentEl.innerHTML = `<span class="text-slate-400">${prev}\n</span><span class="text-green-600 font-bold">${lastLine}</span>`;
-                } else {
-                    const updated = newContent.substring(0, inputText.length);
-                    const rest = newContent.substring(inputText.length);
-                    contentEl.innerHTML = `<span class="text-blue-600 font-bold">${updated}</span><span class="text-slate-400">${rest}</span>`;
-                }
+                contentEl.innerHTML = highlightedHTML;
             }, 600);
         }
 
@@ -1847,10 +1881,12 @@
             const contentEl = document.getElementById('write-file-content');
             contentEl.innerText = currentFileContent;
             contentEl.className = "p-4 font-mono text-sm whitespace-pre-wrap text-slate-600 bg-white h-full overflow-y-auto";
+            updateWriteUI();
         }
 
         // Initialize Slide 17
         setWriteMode('w');
+        document.getElementById('write-file-content').innerText = currentFileContent;
 
     </script>
 </body>
