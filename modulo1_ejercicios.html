@@ -139,7 +139,8 @@
 
         .drop-zone-active {
             background: rgba(6, 113, 126, 0.1) !important;
-            border: 2px dashed #06717e !important;
+            border-color: #06717e !important;
+            border-style: dashed !important;
         }
 
         /* Feedback Animations */
@@ -197,6 +198,59 @@
 
         .flash-error circle[fill="#1e293b"] {
             fill: #ef4444 !important;
+        }
+
+        /* Walking Animations */
+        @keyframes waddle {
+
+            0%,
+            100% {
+                transform: rotate(-3deg);
+            }
+
+            50% {
+                transform: rotate(3deg);
+            }
+        }
+
+        @keyframes enterShop {
+            0% {
+                transform: translateX(-300px) scale(0.6);
+                opacity: 0;
+            }
+
+            100% {
+                transform: translateX(0) scale(1);
+                opacity: 1;
+            }
+        }
+
+        @keyframes exitShop {
+            0% {
+                transform: translateX(0) scale(1);
+                opacity: 1;
+            }
+
+            100% {
+                transform: translateX(300px) scale(1);
+                opacity: 0;
+            }
+        }
+
+        .animate-enter {
+            animation: enterShop 1s ease-out forwards;
+        }
+
+        .animate-enter #stickman-svg {
+            animation: waddle 0.3s ease-in-out 3;
+        }
+
+        .animate-exit {
+            animation: exitShop 1s ease-in forwards;
+        }
+
+        .animate-exit #stickman-svg {
+            animation: waddle 0.3s ease-in-out infinite;
         }
     </style>
 </head>
@@ -262,9 +316,58 @@
                 </div>
 
                 <!-- Mid: Customer and Speech Bubble -->
-                <div class="flex-1 flex items-end justify-center gap-12 pb-12">
+                <div class="flex-1 flex items-center justify-center gap-12 pb-12 relative">
+
+                    <!-- Background Queue (Visual Only) -->
+                    <!-- Background Queue (Visual Only) -->
+                    <div id="stickman-queue" class="absolute left-0 bottom-24 flex gap-4 opacity-40 z-0">
+                        <!-- Stickman 1 -->
+                        <div class="w-32 h-48 transform scale-75">
+                            <svg viewBox="0 0 100 150" class="w-full h-full">
+                                <line x1="50" y1="50" x2="50" y2="100" stroke="#1e293b" stroke-width="4" />
+                                <line x1="50" y1="65" x2="25" y2="85" stroke="#1e293b" stroke-width="4"
+                                    stroke-linecap="round" />
+                                <line x1="50" y1="65" x2="75" y2="85" stroke="#1e293b" stroke-width="4"
+                                    stroke-linecap="round" />
+                                <line x1="50" y1="100" x2="30" y2="140" stroke="#1e293b" stroke-width="4"
+                                    stroke-linecap="round" />
+                                <line x1="50" y1="100" x2="70" y2="140" stroke="#1e293b" stroke-width="4"
+                                    stroke-linecap="round" />
+                                <circle cx="50" cy="30" r="20" fill="white" stroke="#1e293b" stroke-width="4" />
+                                <g>
+                                    <circle cx="43" cy="25" r="2" fill="#1e293b" />
+                                    <circle cx="57" cy="25" r="2" fill="#1e293b" />
+                                </g>
+                                <path d="M 40 38 Q 50 38 60 38" stroke="#1e293b" stroke-width="2" fill="transparent"
+                                    stroke-linecap="round" />
+                            </svg>
+                        </div>
+                        <!-- Stickman 2 -->
+                        <div class="w-32 h-48 transform scale-75 hidden md:block">
+                            <svg viewBox="0 0 100 150" class="w-full h-full">
+                                <line x1="50" y1="50" x2="50" y2="100" stroke="#1e293b" stroke-width="4" />
+                                <line x1="50" y1="65" x2="25" y2="85" stroke="#1e293b" stroke-width="4"
+                                    stroke-linecap="round" />
+                                <line x1="50" y1="65" x2="75" y2="85" stroke="#1e293b" stroke-width="4"
+                                    stroke-linecap="round" />
+                                <line x1="50" y1="100" x2="30" y2="140" stroke="#1e293b" stroke-width="4"
+                                    stroke-linecap="round" />
+                                <line x1="50" y1="100" x2="70" y2="140" stroke="#1e293b" stroke-width="4"
+                                    stroke-linecap="round" />
+                                <circle cx="50" cy="30" r="20" fill="white" stroke="#1e293b" stroke-width="4" />
+                                <g>
+                                    <circle cx="43" cy="25" r="2" fill="#1e293b" />
+                                    <circle cx="57" cy="25" r="2" fill="#1e293b" />
+                                </g>
+                                <path d="M 40 38 Q 50 38 60 38" stroke="#1e293b" stroke-width="2" fill="transparent"
+                                    stroke-linecap="round" />
+                            </svg>
+                        </div>
+                    </div>
+
                     <!-- Stickman -->
-                    <div id="customer-area" class="w-48 transition-all duration-500 transform translate-y-4 opacity-0">
+                    <div id="customer-area"
+                        class="w-48 z-10 opacity-0 border-2 border-transparent rounded-2xl transition-colors">
                         <div id="stickman-svg" class="w-full h-64">
                             <svg viewBox="0 0 100 150" class="w-full h-full drop-shadow-lg">
                                 <!-- Body -->
@@ -297,7 +400,7 @@
 
                     <!-- Speech Bubble / Request -->
                     <div id="bubble-area"
-                        class="flex-1 max-w-lg transition-all duration-500 transform translate-x-4 opacity-0">
+                        class="flex-1 max-w-lg transition-all duration-500 transform translate-x-4 opacity-0 -mt-24">
                         <div
                             class="speech-bubble p-8 border-2 border-slate-100 min-h-[140px] flex items-center justify-center">
                             <p id="request-text" class="text-2xl font-medium text-brand-title leading-tight">
@@ -472,11 +575,21 @@
             // Animate Customer Arrival
             const customer = document.getElementById('customer-area');
             const bubble = document.getElementById('bubble-area');
-            // Reset Flash
+            // Reset Flash and Animations
             const stickman = document.getElementById('stickman-svg');
             stickman.classList.remove('flash-success', 'flash-error');
 
-            customer.classList.remove('opacity-0', 'translate-y-4');
+            customer.classList.remove('animate-exit'); // Ensure exit class is gone
+            void customer.offsetWidth; // Trigger reflow to restart animation
+
+            customer.classList.remove('opacity-0', 'translate-y-4'); // Remove legacy classes if present
+            customer.classList.add('animate-enter');
+
+            setTimeout(() => {
+                // Optional: Remove animation class if needed, but 'forwards' keeps final state
+                // customer.classList.remove('animate-enter');
+            }, 1000);
+
             bubble.classList.remove('opacity-0', 'translate-x-4');
 
             document.getElementById('request-text').innerText = `"${currentQuestion.request}"`;
@@ -587,7 +700,10 @@
         function exitCustomer() {
             const customer = document.getElementById('customer-area');
             const bubble = document.getElementById('bubble-area');
-            customer.classList.add('opacity-0', 'translate-y-4');
+
+            customer.classList.remove('animate-enter');
+            customer.classList.add('animate-exit');
+
             bubble.classList.add('opacity-0', 'translate-x-4');
         }
 
