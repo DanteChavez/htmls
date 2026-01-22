@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Módulo 1: Ejercicios</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            bg: '#ffffff',
+                            alt: '#f1f5f9',
+                            title: '#003c58',
+                            accent: '#06717e',
+                            btn: '#0055ad',
+                            btnHover: '#399be2',
+                            highlight: '#0f6cbf',
+                            text: '#1e293b',
+                            lightText: '#6ea2ee',
+                            border: '#e2e8f0'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['-apple-system', 'BlinkMacSystemFont', '"Segoe UI"', 'Roboto', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Custom Animations & Styles */
+        body {
+            overflow: hidden;
+        }
+
+        .slide {
+            display: none;
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out;
+            position: absolute;
+            inset: 0;
+            padding-top: 4rem;
+        }
+
+        .slide.active {
+            display: flex;
+            opacity: 1;
+            z-index: 10;
+        }
+
+        /* Animations */
+        @keyframes scaleIn {
+            from {
+                opacity: 0;
+                transform: scale(0.95);
+            }
+
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .scale-in {
+            animation: scaleIn 0.3s ease-out forwards;
+        }
+
+        /* Shop Specific Styles */
+        .shop-bg {
+            background-color: #f8fafc;
+            background-image:
+                linear-gradient(#e2e8f0 1px, transparent 1px),
+                linear-gradient(90deg, #e2e8f0 1px, transparent 1px);
+            background-size: 40px 40px;
+        }
+
+        .counter-top {
+            height: 60px;
+            background: linear-gradient(to bottom, #003c58, #002a3d);
+            border-top: 6px solid #06717e;
+        }
+
+        .product-card {
+            cursor: grab;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            user-select: none;
+        }
+
+        .product-card:active {
+            cursor: grabbing;
+            transform: scale(0.95);
+        }
+
+        .product-card.dragging {
+            opacity: 0.5;
+            transform: scale(1.05) rotate(2deg);
+        }
+
+        .speech-bubble {
+            position: relative;
+            background: #ffffff;
+            border-radius: 1.5rem;
+            filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.05));
+        }
+
+        .speech-bubble::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50px;
+            width: 0;
+            height: 0;
+            border: 20px solid transparent;
+            border-top-color: #ffffff;
+            border-bottom: 0;
+            border-left: 0;
+            margin-left: -10px;
+            margin-bottom: -20px;
+        }
+
+        .timer-progress {
+            width: 100%;
+            height: 8px;
+            background: #e2e8f0;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .timer-fill {
+            height: 100%;
+            background: #06717e;
+            transition: width 0.1s linear;
+        }
+
+        .drop-zone-active {
+            background: rgba(6, 113, 126, 0.1) !important;
+            border: 2px dashed #06717e !important;
+        }
+    </style>
+</head>
+
+<body class="bg-brand-bg text-brand-text h-screen w-screen relative selection:bg-brand-highlight selection:text-white">
+
+    <!-- Header (Progress) -->
+    <header
+        class="fixed top-0 left-0 right-0 h-16 bg-brand-bg/90 backdrop-blur border-b border-brand-border z-50 flex items-center justify-between px-8">
+        <h1 class="text-xl font-bold text-brand-title flex items-center gap-3">
+            Módulo 1: Ejercicios en Python
+        </h1>
+        <div class="text-brand-accent font-medium text-lg">
+            <span id="current-slide-num">1</span> / <span id="total-slides-num">2</span>
+        </div>
+    </header>
+
+    <!-- Main Content Area -->
+    <main id="app-container" class="relative w-full h-full">
+
+        <!-- SLIDE 1: Portada -->
+        <section class="slide active flex-col justify-center items-center text-center space-y-8" id="slide-0">
+            <div class="w-48 h-48 bg-white rounded-3xl flex items-center justify-center shadow-xl overflow-hidden p-4">
+                <img src="data:image/png;base64,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"
+                    class="w-full h-full object-contain p-2">
+            </div>
+            <h1 class="text-6xl font-extrabold text-brand-title tracking-tight">Programación<br>Módulo 1: Ejercicios
+            </h1>
+            <p class="text-2xl text-slate-500 font-medium max-w-2xl mx-auto">
+                Pon a prueba tus conocimientos sobre el manejo de archivos en Python.
+            </p>
+            <button onclick="nextSlide()"
+                class="bg-brand-btn hover:bg-brand-btnHover text-white px-10 py-5 rounded-2xl font-bold text-xl transition-all shadow-lg hover:shadow-2xl">
+                Empezar Ejercicios
+            </button>
+        </section>
+
+        <!-- SLIDE 2: Ejercicio Tienda -->
+        <section class="slide flex-col shop-bg" id="slide-1">
+            <div class="flex-1 flex flex-col p-8 relative">
+                <!-- Top UI: Score and Timer -->
+                <div class="flex justify-between items-center mb-8">
+                    <div class="bg-white px-6 py-3 rounded-2xl shadow-sm border border-slate-200">
+                        <span class="text-slate-500 font-bold uppercase text-xs tracking-wider">Clientes
+                            Satisfechos</span>
+                        <div class="text-3xl font-black text-brand-title" id="shop-score">0</div>
+                    </div>
+                    <div class="w-64 bg-white p-4 rounded-2xl shadow-sm border border-slate-200">
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="text-slate-500 font-bold uppercase text-[10px] tracking-wider">Tiempo del
+                                Pedido</span>
+                            <span class="font-mono font-bold text-brand-accent" id="timer-text">15s</span>
+                        </div>
+                        <div class="timer-progress">
+                            <div id="timer-bar" class="timer-fill" style="width: 100%;"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Mid: Customer and Speech Bubble -->
+                <div class="flex-1 flex items-end justify-center gap-12 pb-12">
+                    <!-- Stickman -->
+                    <div id="customer-area" class="w-48 transition-all duration-500 transform translate-y-4 opacity-0">
+                        <div id="stickman-svg" class="w-full h-64">
+                            <svg viewBox="0 0 100 150" class="w-full h-full drop-shadow-lg">
+                                <!-- Body -->
+                                <line x1="50" y1="50" x2="50" y2="100" stroke="#1e293b" stroke-width="4" />
+                                <!-- Arms -->
+                                <line id="arm-l" x1="50" y1="65" x2="25" y2="85" stroke="#1e293b" stroke-width="4"
+                                    stroke-linecap="round" />
+                                <line id="arm-r" x1="50" y1="65" x2="75" y2="85" stroke="#1e293b" stroke-width="4"
+                                    stroke-linecap="round" />
+                                <!-- Legs -->
+                                <line x1="50" y1="100" x2="30" y2="140" stroke="#1e293b" stroke-width="4"
+                                    stroke-linecap="round" />
+                                <line x1="50" y1="100" x2="70" y2="140" stroke="#1e293b" stroke-width="4"
+                                    stroke-linecap="round" />
+                                <!-- Head -->
+                                <circle cx="50" cy="30" r="20" fill="white" stroke="#1e293b" stroke-width="4" />
+                                <!-- Face: Eyes -->
+                                <g id="eyes">
+                                    <circle cx="43" cy="25" r="2" fill="#1e293b" />
+                                    <circle cx="57" cy="25" r="2" fill="#1e293b" />
+                                </g>
+                                <!-- Face: Mouth -->
+                                <path id="mouth" d="M 40 38 Q 50 38 60 38" stroke="#1e293b" stroke-width="2"
+                                    fill="transparent" stroke-linecap="round" />
+                            </svg>
+                        </div>
+                        <div class="text-center mt-4 font-bold text-slate-400 uppercase text-[10px] tracking-widest">
+                            Cliente</div>
+                    </div>
+
+                    <!-- Speech Bubble / Request -->
+                    <div id="bubble-area"
+                        class="flex-1 max-w-lg transition-all duration-500 transform translate-x-4 opacity-0">
+                        <div
+                            class="speech-bubble p-8 border-2 border-slate-100 min-h-[140px] flex items-center justify-center">
+                            <p id="request-text" class="text-2xl font-medium text-brand-title leading-tight">
+                                "¡Hola! Estoy buscando algo..."
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- NEW: Products Container integrated in viewport -->
+                <div class="mt-auto mb-12 flex flex-col items-center">
+                    <span class="text-slate-400 font-bold uppercase text-[10px] tracking-widest mb-4">Selecciona y
+                        Arrastra la Respuesta</span>
+                    <div id="product-list"
+                        class="flex gap-4 p-4 rounded-3xl bg-white shadow-2xl border border-slate-100">
+                        <!-- Products will be injected here -->
+                    </div>
+                </div>
+
+                <!-- Game Over Overlay -->
+                <div id="game-over"
+                    class="absolute inset-0 bg-white/90 backdrop-blur flex-col items-center justify-center z-50 hidden">
+                    <h3 class="text-5xl font-black text-brand-title mb-2">¡Tiempo Agotado!</h3>
+                    <p class="text-slate-500 mb-8 text-xl">Atendiste a <span id="final-score"
+                            class="font-bold text-brand-accent">0</span> clientes.</p>
+                    <button onclick="resetGame()"
+                        class="bg-brand-btn text-white px-8 py-4 rounded-2xl font-bold text-xl hover:scale-105 transition-transform active:scale-95 shadow-xl">
+                        Intentar de nuevo
+                    </button>
+                    <button onclick="prevSlide()" class="mt-4 text-slate-400 font-bold hover:text-slate-600">Volver al
+                        inicio</button>
+                </div>
+            </div>
+
+            <!-- Bottom: Simple Counter background -->
+            <div class="counter-top mt-auto"></div>
+        </section>
+
+    </main>
+
+    <!-- Navigation Overlay (Bottom Right) -->
+    <div class="fixed bottom-8 right-8 flex gap-3 z-50">
+        <button onclick="prevSlide()" id="prev-btn"
+            class="w-14 h-14 bg-white border border-slate-200 rounded-full flex items-center justify-center text-brand-title shadow-lg hover:bg-slate-50 transition-all opacity-50 cursor-not-allowed">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+            </svg>
+        </button>
+        <button onclick="nextSlide()" id="next-btn"
+            class="w-14 h-14 bg-brand-btn text-white rounded-full flex items-center justify-center shadow-lg hover:bg-brand-btnHover transition-all">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+            </svg>
+        </button>
+    </div>
+
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const totalSlides = slides.length;
+
+        // --- Shop Game Logic ---
+        const shopQuestions = [
+            // --- PREGUNTAS NORMALES (25) - Conceptos básicos del PPT ---
+
+            { id: 1, request: "Necesito guardar información en un disco duro para que no se borre al apagar el PC. ¿Cómo se llama este concepto?", correct: "Persistencia de datos", options: ["Persistencia de datos", "Memoria RAM", "Variables volátiles", "Procesamiento temporal"] },
+            { id: 2, request: "En Python, quiero abrir un archivo llamado 'notas.txt' solo para leer su contenido. ¿Qué función uso?", correct: 'open("notas.txt", "r")', options: ['open("notas.txt", "w")', 'open("notas.txt", "r")', 'read("notas.txt")', 'file.open("notas.txt")'] },
+            { id: 3, request: "Tengo una ruta que empieza con 'C:/Usuarios/...'. ¿Qué tipo de ruta es esta?", correct: "Ruta absoluta", options: ["Ruta absoluta", "Ruta relativa", "Ruta de script", "Ruta dinámica"] },
+            { id: 4, request: "Mi archivo 'datos.csv' está en la misma carpeta que mi script. ¿Cómo lo referencio?", correct: "Ruta relativa", options: ["Ruta relativa", "Ruta absoluta", "Ruta completa", "Ruta raíz"] },
+            { id: 5, request: "Quiero abrir un archivo para escribir en él, pero si ya existe, quiero borrar todo y empezar de cero. ¿Qué modo uso?", correct: '"w"', options: ['"w"', '"r"', '"a"', '"r+"'] },
+            { id: 6, request: "Necesito agregar una línea nueva al final de mi bitácora sin borrar lo anterior. ¿Qué modo elijo?", correct: '"a"', options: ['"a"', '"w"', '"r"', '"w+"'] },
+            { id: 7, request: "¿Qué método debo llamar siempre al finalizar de trabajar con un archivo para liberar recursos?", correct: "close()", options: ["close()", "end()", "exit()", "finish()"] },
+            { id: 8, request: "Quiero leer el archivo completo y obtener una lista donde cada elemento es una línea. ¿Qué método uso?", correct: "readlines()", options: ["readlines()", "read()", "readline()", "scan()"] },
+            { id: 9, request: "Solo necesito leer los primeros 5 caracteres de un archivo. ¿Cómo lo hago?", correct: "archivo.read(5)", options: ["archivo.read(5)", "archivo.readline(5)", "archivo.chars(5)", "archivo.get(5)"] },
+            { id: 10, request: "Estoy leyendo un archivo línea por línea con un while. ¿Qué devuelve 'readline()' cuando llega al final del archivo?", correct: '"" (string vacío)', options: ['"" (string vacío)', 'None', 'False', 'EOF'] },
+            { id: 11, request: "Para evitar problemas con tildes y caracteres especiales, ¿qué parámetro opcional debo agregar al abrir el archivo?", correct: 'encoding="utf-8"', options: ['encoding="utf-8"', 'format="text"', 'mode="special"', 'charset="latin"'] },
+            { id: 12, request: "¿Cuál es la ventaja principal de usar la estructura 'with open(...) as ...'?", correct: "Cierra el archivo automáticamente", options: ["Cierra el archivo automáticamente", "Abre el archivo más rápido", "Permite leer binarios", "Mejora la encriptación"] },
+            { id: 13, request: "Si uso el modo 'r+', ¿qué puedo hacer con el archivo?", correct: "Leer y escribir sin borrar", options: ["Leer y escribir sin borrar", "Solo leer", "Solo escribir borrando", "Solo agregar al final"] },
+            { id: 14, request: "En el bloque 'try-except-else' para archivos, ¿dónde debería poner el código que procesa los datos si el archivo abrió bien?", correct: "En el bloque else", options: ["En el bloque else", "En el bloque try", "En el bloque except", "Fuera de la estructura"] },
+            { id: 15, request: "¿Qué caracter utiliza Python preferentemente como separador de carpetas en las rutas, incluso en Windows?", correct: "/", options: ["/", "\\", "|", ":"] },
+            { id: 16, request: "Quiero escribir la frase 'Hola Mundo' dentro de mi archivo objeto 'miArchivo'.", correct: 'miArchivo.write("Hola Mundo")', options: ['miArchivo.write("Hola Mundo")', 'miArchivo.print("Hola Mundo")', 'miArchivo.input("Hola Mundo")', 'write(miArchivo, "Hola Mundo")'] },
+            { id: 17, request: "¿Qué permiten identificar las extensiones de un archivo (como .docx o .py)?", correct: "La aplicación que lo abre", options: ["La aplicación que lo abre", "El tamaño del archivo", "El dueño del archivo", "La fecha de creación"] },
+            { id: 18, request: "Si tengo una carpeta 'datos' dentro de la carpeta de mi script, y dentro un archivo 'info.txt'. ¿Cuál es la ruta relativa?", correct: '"datos/info.txt"', options: ['"datos/info.txt"', '"C:/datos/info.txt"', '"/info.txt"', '"./info.txt/datos"'] },
+            { id: 19, request: "¿Qué pasa si intento abrir con modo 'r' un archivo que no existe?", correct: "Genera un error (excepción)", options: ["Genera un error (excepción)", "Crea el archivo vacío", "Devuelve None", "Abre el siguiente archivo disponible"] },
+            { id: 20, request: "¿Qué pasa si intento abrir con modo 'w' un archivo que no existe?", correct: "Lo crea automáticamente", options: ["Lo crea automáticamente", "Genera un error", "Pide confirmación", "No hace nada"] },
+            { id: 21, request: "Según el PPT, ¿cuál es un formato común para guardar datos de planillas de cálculo?", correct: ".csv", options: [".csv", ".doc", ".ppt", ".pdf"] },
+            { id: 22, request: "Si leo un archivo con `read()` sin argumentos, ¿qué obtengo?", correct: "Todo el contenido en un solo string", options: ["Todo el contenido en un solo string", "La primera línea", "Una lista de caracteres", "Un error de memoria"] },
+            { id: 23, request: "¿Qué carácter especial representa el salto de línea al escribir en un archivo?", correct: "\\n", options: ["\\n", "\\t", "/n", "Wait"] },
+            { id: 24, request: "En la estructura `try: ... except: ...`, ¿cuándo se ejecuta el código dentro del `except`?", correct: "Cuando ocurre un error al abrir", options: ["Cuando ocurre un error al abrir", "Siempre", "Cuando el archivo se cierra", "Cuando la lectura termina"] },
+            { id: 25, request: "Para procesar un archivo línea por línea usando un ciclo `for`, ¿sobre qué objeto itero?", correct: "Sobre el objeto archivo", options: ["Sobre el objeto archivo", "Sobre el nombre del archivo", "Sobre os.path", "Sobre la ruta"] },
+
+            // --- PREGUNTAS DIFÍCILES (20) - Aplicación, Lógica y Casos de borde ---
+
+            { id: 26, request: "Estoy en 'C:/Proyectos/Python'. Quiero abrir 'datos.csv' que está en 'C:/Proyectos/Datos'. ¿Cuál es la ruta relativa correcta?", correct: '"../Datos/datos.csv"', options: ['"../Datos/datos.csv"', '"./Datos/datos.csv"', '"Datos/datos.csv"', '"/Datos/datos.csv"'] },
+            { id: 27, request: "Ejecuté `f = open('data.txt', 'r')` y luego `contenido = f.read()`. Si vuelvo a ejecutar `f.read()` inmediatamente, ¿qué obtengo?", correct: '"" (string vacío)', options: ['"" (string vacío)', 'El contenido nuevamente', 'La primera línea', 'Un error'] },
+            { id: 28, request: "Tengo una lista `nombres = ['Ana', 'Bob']`. Quiero escribirlos en un archivo, cada uno en una línea. ¿Qué lógica dentro del for es correcta?", correct: 'f.write(nombre + "\\n")', options: ['f.write(nombre + "\\n")', 'f.write(nombre)', 'f.writeline(nombre)', 'f.print(nombre)'] },
+            { id: 29, request: "Si uso `readlines()` en un archivo que tiene 3 líneas de texto, y luego hago `len(resultado)`, ¿qué número obtengo?", correct: "3", options: ["3", "1", "La cantidad de caracteres", "0"] },
+            { id: 30, request: "Quiero leer un archivo CSV donde los datos están separados por punto y coma. Al leer una línea, ¿qué método de string me sirve para separar los datos?", correct: '.split(";")', options: ['.split(";")', '.separate(";")', '.cut(";")', '.divide(";")'] },
+            { id: 31, request: "Si abro un archivo con `open('doc.txt', 'w')` y ocurre un corte de luz antes de `close()`, ¿qué es lo más probable que pase?", correct: "El archivo puede quedar vacío o corrupto", options: ["El archivo puede quedar vacío o corrupto", "Se guarda todo automáticamente", "Python recupera el archivo", "Se crea una copia de seguridad"] },
+            { id: 32, request: "Tengo un archivo con números: '10\\n20\\n'. Si hago `suma = int(f.readline()) + int(f.readline())`, ¿cuánto vale suma?", correct: "30", options: ["30", "1020", "Error de conversión", "10"] },
+            { id: 33, request: "Estás diseñando una función que guarda puntajes. ¿Por qué usarías el modo 'a' en lugar de 'w'?", correct: "Para mantener el historial de puntajes previos", options: ["Para mantener el historial de puntajes previos", "Porque es más rápido", "Porque 'w' no permite escribir números", "Para leer los puntajes antes de escribir"] },
+            { id: 34, request: "Si ejecuto: `with open('test.txt', 'r') as f: texto = f.read()`, ¿puedo usar la variable `texto` después de salir del bloque `with`?", correct: "Sí, la variable persiste en memoria", options: ["Sí, la variable persiste en memoria", "No, se destruye con el with", "Solo si cierro f manualmente", "Depende del tamaño del archivo"] },
+            { id: 35, request: "Mira este código: `try: f=open('x.txt','r') except: print('A') else: print('B')`. Si 'x.txt' NO existe, ¿qué se imprime?", correct: "A", options: ["A", "B", "A y B", "Ninguna, da error fatal"] },
+            { id: 36, request: "Tienes la ruta absoluta 'C:/Users/Alumno/Tarea/fin.py'. Si tu script está en esa carpeta, ¿cuál es la ruta relativa más simple a 'fin.py'?", correct: '"fin.py"', options: ['"fin.py"', '"./Tarea/fin.py"', '"/fin.py"', '"C:/fin.py"'] },
+            { id: 37, request: "Al leer líneas con `readlines()`, cada string termina con '\\n'. ¿Qué método de string elimina ese espacio blanco extra?", correct: ".strip()", options: [".strip()", ".clean()", ".remove('\\n')", ".delete()"] },
+            { id: 38, request: "Si quiero escribir los números del 1 al 10 en un archivo, pero `write` solo acepta strings, ¿qué debo hacer?", correct: "Convertir el número a string con str()", options: ["Convertir el número a string con str()", "Usar f.write_int()", "Python lo convierte solo", "Usar modo binario"] },
+            { id: 39, request: "Estás depurando. ¿Por qué pondrías el `open()` dentro de un `try` pero el procesamiento de datos en el `else`?", correct: "Para separar el error de apertura de los errores de lógica", options: ["Para separar el error de apertura de los errores de lógica", "Porque es obligatorio en Python", "Para que el archivo se cierre solo", "Para que el código sea más rápido"] },
+            { id: 40, request: "Si mi archivo tiene 100 caracteres y hago `f.read(10)` tres veces, ¿en qué posición queda el cursor de lectura?", correct: "30", options: ["30", "10", "0", "100"] },
+            { id: 41, request: "Tengo un archivo 'log.txt'. Quiero leer su contenido y luego agregar una firma al final. ¿Cuál es la secuencia correcta?", correct: "Abrir 'r', leer, cerrar. Abrir 'a', escribir, cerrar.", options: ["Abrir 'r', leer, cerrar. Abrir 'a', escribir, cerrar.", "Abrir 'w', leer, escribir.", "Abrir 'r', escribir, cerrar.", "Abrir 'a', leer, escribir."] },
+            { id: 42, request: "Si usas `for linea in archivo:`, ¿qué problema podrías tener si las líneas son muy largas y no usas `strip()` al imprimir?", correct: "Se imprimen saltos de línea dobles", options: ["Se imprimen saltos de línea dobles", "Se corta el texto", "Da error de memoria", "El ciclo no termina"] },
+            { id: 43, request: "¿Cuál es la diferencia clave entre `read(1)` y `readline()`?", correct: "read(1) lee un caracter, readline() hasta el enter", options: ["read(1) lee un caracter, readline() hasta el enter", "read(1) lee una línea, readline() todo", "Son lo mismo", "readline() es para escribir"] },
+            { id: 44, request: "Al trabajar con rutas en Windows, ¿por qué es mejor usar `/` o strings crudos (r'ruta') en Python?", correct: "Para evitar que \\ se interprete como escape", options: ["Para evitar que \\ se interprete como escape", "Porque Windows no lee \\", "Para que sea compatible con Mac solamente", "Es una regla de PEP8"] },
+            { id: 45, request: "Si quiero validar que un archivo existe antes de abrirlo para no usar try-except, ¿qué módulo estándar debería investigar (aunque no sea el foco principal)?", correct: "os.path", options: ["os.path", "sys.file", "io.check", "file.exists"] },
+
+            // --- PREGUNTAS EXTREMAS (5) - Más allá del PPT ---
+
+            { id: 46, request: "Estoy leyendo un archivo antiguo en Windows que tiene 'Ñ' y tildes, pero `utf-8` me da error. ¿Qué codificación pruebo?", correct: 'encoding="cp1252" o "latin-1"', options: ['encoding="cp1252" o "latin-1"', 'encoding="ascii"', 'encoding="utf-16"', 'encoding="base64"'] },
+            { id: 47, request: "Ya leí todo el archivo pero necesito volver a leerlo desde el principio sin cerrarlo. ¿Qué método investigo?", correct: "seek(0)", options: ["seek(0)", "reset()", "pointer(0)", "rewind()"] },
+            { id: 48, request: "Necesito saber en qué posición exacta (byte) está mi cursor de lectura actualmente. ¿Qué método uso?", correct: "tell()", options: ["tell()", "where()", "position()", "index()"] },
+            { id: 49, request: "Quiero forzar que los datos se guarden en el disco físico INMEDIATAMENTE sin cerrar el archivo. ¿Qué método busco?", correct: "flush()", options: ["flush()", "save()", "push()", "write_now()"] },
+            { id: 50, request: "Si necesito abrir una imagen o un archivo de audio para copiarlo bit a bit, los modos de texto no sirven. ¿Qué flag añado al modo?", correct: '"b" (ej: "rb", "wb")', options: ['"b" (ej: "rb", "wb")', '"x" (ej: "rx", "wx")', '"img"', '"bin"'] }
+        ];
+
+        let shopScore = 0;
+        let shopTimer = null;
+        let shopTimeLeft = 15;
+        let currentQuestion = null;
+        let usedQuestions = [];
+
+        function setStickmanExpression(state) {
+            const mouth = document.getElementById('mouth');
+            const armL = document.getElementById('arm-l');
+            const armR = document.getElementById('arm-r');
+
+            if (state === 'happy') {
+                mouth.setAttribute('d', 'M 40 35 Q 50 45 60 35');
+                armL.setAttribute('y2', '55');
+                armR.setAttribute('y2', '55');
+            } else if (state === 'sad') {
+                mouth.setAttribute('d', 'M 40 42 Q 50 32 60 42');
+                armL.setAttribute('y2', '85');
+                armR.setAttribute('y2', '85');
+            } else {
+                mouth.setAttribute('d', 'M 40 38 Q 50 38 60 38');
+                armL.setAttribute('y2', '85');
+                armR.setAttribute('y2', '85');
+            }
+        }
+
+        function initShopGame() {
+            shopScore = 0;
+            usedQuestions = [];
+            document.getElementById('shop-score').innerText = shopScore;
+            document.getElementById('game-over').classList.add('hidden');
+            nextCustomer();
+        }
+
+        function nextCustomer() {
+            setStickmanExpression('neutral');
+            if (usedQuestions.length === shopQuestions.length) {
+                usedQuestions = []; // Reset if all seen
+            }
+
+            const available = shopQuestions.filter(q => !usedQuestions.includes(q.id));
+            currentQuestion = available[Math.floor(Math.random() * available.length)];
+            usedQuestions.push(currentQuestion.id);
+
+            // Animate Customer Arrival
+            const customer = document.getElementById('customer-area');
+            const bubble = document.getElementById('bubble-area');
+            customer.classList.remove('opacity-0', 'translate-y-4');
+            bubble.classList.remove('opacity-0', 'translate-x-4');
+
+            document.getElementById('request-text').innerText = `"${currentQuestion.request}"`;
+            renderProducts(currentQuestion.options);
+            startTimer();
+        }
+
+        function renderProducts(options) {
+            const list = document.getElementById('product-list');
+            list.innerHTML = '';
+
+            // To ensurevariety, we combine with some static ones if options < 3
+            options.forEach(opt => {
+                const card = document.createElement('div');
+                card.className = 'product-card bg-brand-alt border-2 border-slate-100 p-4 rounded-xl font-mono text-sm font-bold text-brand-title shadow-sm hover:border-brand-accent hover:shadow-md';
+                card.draggable = true;
+                card.innerText = opt;
+
+                card.addEventListener('dragstart', (e) => {
+                    e.dataTransfer.setData('text/plain', opt);
+                    card.classList.add('dragging');
+                });
+
+                card.addEventListener('dragend', () => card.classList.remove('dragging'));
+                list.appendChild(card);
+            });
+
+            // Make customer area a drop zone
+            const dropTarget = document.getElementById('customer-area');
+            dropTarget.addEventListener('dragover', (e) => {
+                e.preventDefault();
+                dropTarget.classList.add('drop-zone-active');
+            });
+            dropTarget.addEventListener('dragleave', () => dropTarget.classList.remove('drop-zone-active'));
+            dropTarget.addEventListener('drop', (e) => {
+                e.preventDefault();
+                dropTarget.classList.remove('drop-zone-active');
+                const droppedCode = e.dataTransfer.getData('text/plain');
+                handleDelivery(droppedCode);
+            });
+        }
+
+        function handleDelivery(code) {
+            clearInterval(shopTimer);
+            if (code === currentQuestion.correct) {
+                shopScore++;
+                document.getElementById('shop-score').innerText = shopScore;
+                setStickmanExpression('happy');
+                setTimeout(() => {
+                    exitCustomer();
+                    setTimeout(nextCustomer, 500);
+                }, 1000);
+            } else {
+                setStickmanExpression('sad');
+                setTimeout(() => {
+                    exitCustomer();
+                    setTimeout(nextCustomer, 500);
+                }, 1000);
+            }
+        }
+
+        function startTimer() {
+            clearInterval(shopTimer);
+            shopTimeLeft = 15;
+            updateTimerUI();
+
+            shopTimer = setInterval(() => {
+                shopTimeLeft -= 0.1;
+                if (shopTimeLeft <= 0) {
+                    clearInterval(shopTimer);
+                    handleTimeout();
+                }
+                updateTimerUI();
+            }, 100);
+        }
+
+        function updateTimerUI() {
+            const perc = (shopTimeLeft / 15) * 100;
+            document.getElementById('timer-bar').style.width = `${perc}%`;
+            document.getElementById('timer-text').innerText = `${Math.ceil(shopTimeLeft)}s`;
+        }
+
+        function handleTimeout() {
+            setStickmanExpression('sad');
+            setTimeout(() => {
+                document.getElementById('final-score').innerText = shopScore;
+                document.getElementById('game-over').classList.remove('hidden');
+                document.getElementById('game-over').classList.add('flex');
+            }, 1000);
+        }
+
+        function exitCustomer() {
+            const customer = document.getElementById('customer-area');
+            const bubble = document.getElementById('bubble-area');
+            customer.classList.add('opacity-0', 'translate-y-4');
+            bubble.classList.add('opacity-0', 'translate-x-4');
+        }
+
+        function resetGame() {
+            initShopGame();
+        }
+
+        function updateSlideVisibility() {
+            slides.forEach((slide, index) => {
+                slide.classList.remove('active');
+                if (index === currentSlide) {
+                    slide.classList.add('active');
+                }
+            });
+
+            // Update Progress
+            document.getElementById('current-slide-num').innerText = currentSlide + 1;
+            document.getElementById('total-slides-num').innerText = totalSlides;
+
+            // Start shop game if on slide 1 (zero-indexed)
+            if (currentSlide === 1) {
+                initShopGame();
+            } else {
+                clearInterval(shopTimer);
+            }
+
+            // Update Buttons
+            const prevBtn = document.getElementById('prev-btn');
+            const nextBtn = document.getElementById('next-btn');
+
+            if (currentSlide === 0) {
+                prevBtn.classList.add('opacity-50', 'cursor-not-allowed');
+                prevBtn.disabled = true;
+            } else {
+                prevBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+                prevBtn.disabled = false;
+            }
+
+            if (currentSlide === totalSlides - 1) {
+                nextBtn.classList.add('opacity-50', 'cursor-not-allowed');
+                nextBtn.disabled = true;
+            } else {
+                nextBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+                nextBtn.disabled = false;
+            }
+        }
+
+        function nextSlide() {
+            if (currentSlide < totalSlides - 1) {
+                currentSlide++;
+                updateSlideVisibility();
+            }
+        }
+
+        function prevSlide() {
+            if (currentSlide > 0) {
+                currentSlide--;
+                updateSlideVisibility();
+            }
+        }
+
+        // Keyboard Support
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight' || e.key === ' ') nextSlide();
+            if (e.key === 'ArrowLeft') prevSlide();
+        });
+
+        // Initialize
+        updateSlideVisibility();
+    </script>
+</body>
+
+</html>
