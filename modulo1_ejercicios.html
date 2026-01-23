@@ -615,6 +615,7 @@
         let shopTimer = null;
         let shopTimeLeft = 15;
         let shopStreak = 0;
+        let maxStreak = 0; // NEW: Track maximum streak
 
         let globalTimer = null;
         let globalTimeTotal = 120; // 2 minutes
@@ -648,6 +649,7 @@
             shopScore = 0;
             shopScoreDissatisfied = 0;
             shopStreak = 0;
+            maxStreak = 0; // Reset max streak
             usedQuestions = [];
             document.getElementById('shop-score').innerText = shopScore;
             document.getElementById('shop-score-dissatisfied').innerText = shopScoreDissatisfied;
@@ -829,6 +831,10 @@
                 showBonusAnimation();
 
                 shopStreak++;
+                if (shopStreak > maxStreak) {
+                    maxStreak = shopStreak; // Update max streak
+                }
+
                 if (shopStreak > 0 && shopStreak % 5 === 0) {
                     showStreakAnimation(shopStreak);
                 }
@@ -920,11 +926,25 @@
             return '#ef4444'; // Red
         }
 
-        function endGameTotal() {
+        function endGameTotal(title = "¡Se acabó el tiempo global!") {
             clearInterval(shopTimer);
             clearInterval(globalTimer);
-            document.getElementById('final-score').innerText = shopScore;
-            document.getElementById('game-over').querySelector('h3').innerText = "¡Se acabó el tiempo global!";
+
+            const totalCustomers = shopScore + shopScoreDissatisfied;
+            let precision = 0;
+            if (totalCustomers > 0) {
+                precision = ((shopScore / totalCustomers) * 100).toFixed(1);
+            }
+
+            // Update Final Score Text with new formatting
+            const scoreContainer = document.querySelector('#game-over p');
+            scoreContainer.innerHTML = `
+                Atendiste a <span class="font-bold text-brand-accent">${shopScore}</span> clientes satisfactoriamente de <span class="font-bold">${totalCustomers}</span> clientes totales<br>
+                Precisión: <span class="font-bold text-blue-500">${precision}%</span><br>
+                Mejor Racha: <span class="font-bold text-orange-500">${maxStreak}</span>
+            `;
+
+            document.getElementById('game-over').querySelector('h3').innerText = title;
             document.getElementById('game-over').classList.remove('hidden');
             document.getElementById('game-over').classList.add('flex');
         }

@@ -84,6 +84,39 @@
             border-radius: 50%;
         }
 
+        .mac-window {
+            border-radius: 0.75rem;
+            overflow: hidden;
+            border: 1px solid #cbd5e1;
+            display: flex;
+            flex-direction: column;
+            background: white;
+        }
+
+        .mac-header {
+            background: #e2e8f0;
+            padding: 0.75rem 1rem;
+            border-bottom: 1px solid #cbd5e1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        /* Mac Traffic Light Icons via Pseudo-element */
+        .mac-header::before {
+            content: '';
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 0.75rem;
+            height: 0.75rem;
+            border-radius: 50%;
+            background: #ff5f56;
+            box-shadow: 1.25rem 0 0 #ffbd2e, 2.5rem 0 0 #27c93f;
+        }
+
         .mac-red {
             background: #ff5f57;
             border: 1px solid #e0443e;
@@ -986,19 +1019,23 @@
                 </div>
 
                 <!-- File Preview -->
-                <div class="w-1/2 bg-white border p-6 rounded-lg shadow-lg relative flex flex-col">
-                    <div class="absolute left-4 top-4 bg-brand-accent text-white text-xs px-2 py-1 rounded">datos.txt
-                    </div>
-                    <div class="space-y-4 font-mono text-xl mt-6 text-slate-400" id="poem-lines">
-                        <div class="line-item p-2 rounded transition-all">Párrafo 1: Introducción a Python.</div>
-                        <div class="line-item p-2 rounded transition-all">Párrafo 2: Manejo de archivos externos.</div>
-                        <div class="line-item p-2 rounded transition-all">Párrafo 3: Cierre de recursos.</div>
+                <div class="w-1/2 flex flex-col gap-6">
+                    <!-- File Preview (Mac Style) -->
+                    <div class="mac-window shadow-lg relative flex flex-col bg-white flex-1 min-h-[250px]">
+                        <div class="mac-header"><span class="text-xs">datos.txt</span></div>
+                        <div class="p-6 space-y-2 font-mono text-lg text-slate-400 overflow-y-auto" id="poem-lines">
+                            <div class="line-item p-1 rounded transition-all">Párrafo 1: Introducción a Python.</div>
+                            <div class="line-item p-1 rounded transition-all">Párrafo 2: Manejo de archivos externos.
+                            </div>
+                            <div class="line-item p-1 rounded transition-all">Párrafo 3: Cierre de recursos.</div>
+                        </div>
                     </div>
 
-                    <div class="mt-auto pt-8 border-t border-slate-100 flex flex-col gap-2">
-                        <span class="text-xs font-bold text-slate-400 uppercase tracking-widest">Consola /
+                    <!-- Console -->
+                    <div class="flex flex-col gap-2">
+                        <span class="text-xs font-bold text-slate-400 uppercase tracking-widest pl-1">Consola /
                             Pantalla</span>
-                        <div class="bg-slate-900 text-green-400 p-4 rounded font-mono text-sm min-h-[80px]"
+                        <div class="bg-slate-900 text-green-400 p-4 rounded font-mono text-sm h-40 shadow-inner overflow-y-auto"
                             id="readline-output">
                             >_
                         </div>
@@ -1297,7 +1334,7 @@
                 </div>
 
                 <p class="mt-12 text-slate-400 font-mono text-sm tracking-tighter">
-                    Python Programación I - 2026
+                    Programación I - Universidad de Valparaíso - 2026
                 </p>
             </div>
         </section>
