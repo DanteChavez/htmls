@@ -320,14 +320,34 @@
 
     <!-- Header (Progress) -->
     <header
-        class="fixed top-0 left-0 right-0 h-16 bg-brand-bg/90 backdrop-blur border-b border-brand-border z-50 flex items-center justify-between px-8">
-        <h1 class="text-xl font-bold text-brand-title flex items-center gap-3">
+        class="fixed top-0 left-0 right-0 h-16 bg-white border-b border-brand-border z-50 flex items-center justify-between px-8 overflow-hidden">
+        <!-- Global Timer Bar Background -->
+
+        <h1 class="text-xl font-bold text-brand-title flex items-center gap-3 z-10">
             Módulo 1: Ejercicios en Python
         </h1>
-        <div class="text-brand-accent font-medium text-lg">
+        <div class="text-brand-accent font-medium text-lg z-10 flex gap-4 items-center">
             <span id="current-slide-num">1</span> / <span id="total-slides-num">2</span>
         </div>
     </header>
+
+    <!-- Global Timer Bar (Below Header) -->
+    <div class="fixed top-16 left-0 right-0 h-6 bg-slate-200 z-50 shadow-md hidden">
+        <div id="global-timer-bar" class="h-full bg-green-500 transition-all duration-1000 ease-linear relative"
+            style="width: 100%;">
+        </div>
+    </div>
+
+    <!-- Centered Digital Timer below bar -->
+    <div class="fixed top-24 left-0 right-0 z-40 flex justify-center pointer-events-none">
+        <div id="global-timer-display"
+            class="bg-white/80 backdrop-blur px-4 py-1 rounded-b-xl border border-t-0 border-slate-200 shadow-sm relative hidden">
+            <div class="font-mono font-black text-2xl text-brand-title tracking-widest" id="global-timer-text">2:00
+            </div>
+            <!-- Bonus Area relative to timer text -->
+            <div id="bonus-area" class="absolute -right-12 top-0 w-24 h-24"></div>
+        </div>
+    </div>
 
     <!-- Main Content Area -->
     <main id="app-container" class="relative w-full h-full">
@@ -364,35 +384,25 @@
                             <div class="text-3xl font-black text-red-500" id="shop-score-dissatisfied">0</div>
                         </div>
                     </div>
-                    <div class="flex gap-4">
-                        <div class="w-48 bg-white p-4 rounded-2xl shadow-sm border border-slate-200 relative">
-                            <div class="flex justify-between items-center mb-2">
-                                <span class="text-slate-500 font-bold uppercase text-[10px] tracking-wider">Tiempo
-                                    Total</span>
-                                <span class="font-mono font-bold text-brand-title" id="global-timer-text">2:00</span>
-                            </div>
-                            <div class="timer-progress relative">
-                                <div id="global-timer-bar" class="timer-fill" style="width: 100%; background: #22c55e;">
-                                </div>
-                            </div>
-                            <!-- Area for floating text, now outside overflow hidden -->
-                            <div id="bonus-area" class="absolute top-0 right-0 w-full h-full pointer-events-none"></div>
-                        </div>
-                        <div class="w-48 bg-white p-4 rounded-2xl shadow-sm border border-slate-200">
-                            <div class="flex justify-between items-center mb-2">
-                                <span
-                                    class="text-slate-500 font-bold uppercase text-[10px] tracking-wider">Cliente</span>
-                                <span class="font-mono font-bold text-brand-accent" id="timer-text">15s</span>
-                            </div>
-                            <div class="timer-progress">
-                                <div id="timer-bar" class="timer-fill" style="width: 100%;"></div>
-                            </div>
-                        </div>
-                    </div>
                 </div>
 
                 <!-- Mid: Customer and Speech Bubble -->
                 <div class="flex-1 flex items-center justify-center gap-12 pb-12 relative">
+
+                    <!-- STATIC CLIENT TIMER OVERLAY (Does not animate with customer) -->
+                    <div class="absolute top-1/2 left-1/2 -translate-x-[24rem] -translate-y-[14rem] w-48 z-20 pointer-events-none hidden"
+                        id="static-client-timer">
+                        <div class="bg-white p-2 rounded-xl shadow-sm border border-slate-200">
+                            <div class="flex justify-between items-center mb-1">
+                                <span
+                                    class="text-slate-500 font-bold uppercase text-[10px] tracking-wider">Tiempo</span>
+                                <span class="font-mono font-bold text-brand-accent" id="timer-text">15s</span>
+                            </div>
+                            <div class="timer-progress h-2">
+                                <div id="timer-bar" class="timer-fill" style="width: 100%;"></div>
+                            </div>
+                        </div>
+                    </div>
 
                     <!-- Background Queue (Visual Only) -->
                     <!-- Background Queue (Visual Only) -->
@@ -443,7 +453,7 @@
 
                     <!-- Stickman -->
                     <div id="customer-area"
-                        class="w-48 z-10 opacity-0 border-2 border-transparent rounded-2xl transition-colors">
+                        class="w-48 z-10 opacity-0 border-2 border-transparent rounded-2xl transition-colors relative">
                         <div id="stickman-svg" class="w-full h-64">
                             <svg viewBox="0 0 100 150" class="w-full h-full drop-shadow-lg">
                                 <!-- Body -->
@@ -909,17 +919,19 @@
             document.getElementById('game-over').classList.add('flex');
         }
 
-
         function showBonusAnimation() {
             const container = document.getElementById('bonus-area');
             const el = document.createElement('div');
             el.innerText = '+5s';
-            el.className = 'bonus-text right-0 -top-6';
+            el.className = 'bonus-text right-0 top-1';
             container.appendChild(el);
             setTimeout(() => el.remove(), 1000);
         }
 
         function handleTimeout() {
+            if (customerProcessing) return;
+            customerProcessing = true;
+
             setStickmanExpression('sad');
             document.getElementById('stickman-svg').classList.add('flash-error');
             shopScoreDissatisfied++;
@@ -958,12 +970,22 @@
             document.getElementById('total-slides-num').innerText = totalSlides;
 
             // Start shop game if on slide 1 (zero-indexed)
-            if (currentSlide === 1) {
+            if (currentSlide === 1) { // Shop Slide
+                // Show Timers
+                document.getElementById('global-timer-bar').parentElement.classList.remove('hidden');
+                document.getElementById('global-timer-display').classList.remove('hidden');
+                document.getElementById('static-client-timer').classList.remove('hidden');
+
                 if (!window.gameActive) {
                     initShopGame();
                     window.gameActive = true;
                 }
             } else {
+                // Hide Timers
+                document.getElementById('global-timer-bar').parentElement.classList.add('hidden');
+                document.getElementById('global-timer-display').classList.add('hidden');
+                document.getElementById('static-client-timer').classList.add('hidden');
+
                 clearInterval(shopTimer);
                 clearInterval(globalTimer);
                 window.gameActive = false;
