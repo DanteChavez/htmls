@@ -1,0 +1,1075 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Módulo 2: Bibliotecas en Python</title>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+        rel="stylesheet">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    },
+                    colors: {
+                        brand: {
+                            50: '#f0f9ff',
+                            100: '#e0f2fe',
+                            500: '#0ea5e9',
+                            600: '#0284c7',
+                            900: '#0c4a6e',
+                        },
+                        macos: {
+                            bg: '#f8fafc',
+                            window: '#ffffff',
+                            border: '#e2e8f0',
+                        }
+                    },
+                    boxShadow: {
+                        'soft': '0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03)',
+                        'floating': '0 10px 15px -3px rgba(0, 0, 0, 0.08), 0 4px 6px -2px rgba(0, 0, 0, 0.04)',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Prism.js for Syntax Highlighting -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-coy.min.css" rel="stylesheet" />
+
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <style>
+        body {
+            background-color: #f8fafc;
+            overflow: hidden;
+        }
+
+        .slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.4s ease-in-out;
+            display: flex;
+            flex-direction: column;
+            padding-top: 80px;
+            overflow-y: auto;
+        }
+
+        .slide.active {
+            opacity: 1;
+            pointer-events: auto;
+            z-index: 10;
+        }
+
+        pre[class*="language-"] {
+            border-radius: 0.5rem;
+            margin: 0;
+            padding: 1rem !important;
+            background: #fdfdfd !important;
+        }
+
+        code[class*="language-"] {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+        }
+
+        .card-hover:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+
+<body class="text-slate-800 antialiased h-screen w-screen relative">
+
+    <!-- HEADER -->
+    <header
+        class="fixed top-0 left-0 w-full h-[70px] bg-white border-b border-macos-border z-50 flex items-center justify-between px-8 shadow-sm">
+        <div class="flex items-center gap-3">
+            <div class="bg-brand-50 p-2 rounded-lg text-brand-600">
+                <i data-lucide="package" class="w-6 h-6"></i>
+            </div>
+            <div>
+                <h1 class="text-sm font-bold text-slate-900 tracking-tight">PROGRAMACIÓN I</h1>
+                <p class="text-xs text-slate-500 font-medium">Módulo 2: Bibliotecas</p>
+            </div>
+        </div>
+        <div class="flex items-center gap-4">
+            <div id="slide-indicator" class="bg-slate-100 px-4 py-1 rounded-full text-xs font-bold text-slate-600">1 /
+                11</div>
+        </div>
+    </header>
+
+    <!-- CONTENT CONTAINER -->
+    <main id="main-container" class="w-full h-full relative bg-macos-bg">
+
+        <!-- SLIDE 1: PORTADA -->
+        <section class="slide active flex items-center justify-center p-8" id="slide-1">
+            <div class="max-w-3xl text-center">
+                <div
+                    class="inline-flex items-center justify-center p-5 bg-white rounded-3xl shadow-floating mb-10 transform transition-transform hover:scale-105">
+                    <i data-lucide="library" class="w-20 h-20 text-brand-600"></i>
+                </div>
+                <h1 class="text-6xl font-black text-slate-900 tracking-tighter mb-6">Módulo 2: Bibliotecas</h1>
+                <p class="text-lg text-slate-600 font-medium max-w-xl mx-auto leading-relaxed">
+                    No reinventes la rueda. Aprende a utilizar el poder de miles de desarrolladores en tu propio código.
+                </p>
+                <div class="mt-12 flex justify-center gap-4">
+                    <button onclick="nextSlide()"
+                        class="px-10 py-4 bg-slate-900 text-white font-bold rounded-2xl hover:bg-brand-600 transition-all shadow-lg flex items-center gap-3 group">
+                        Empezar Módulo
+                        <i data-lucide="chevron-right"
+                            class="w-5 h-5 group-hover:translate-x-1 transition-transform"></i>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- SLIDE 2: ¿QUÉ ES UNA BIBLIOTECA? -->
+        <section class="slide flex flex-col items-center justify-center p-8" id="slide-2">
+            <div class="max-w-4xl w-full">
+                <h2 class="text-3xl font-black mb-10 text-slate-900 border-l-4 border-brand-500 pl-4">¿Qué es una
+                    biblioteca?</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div class="bg-white p-8 rounded-3xl shadow-soft border border-slate-100 flex flex-col gap-6">
+                        <div class="text-brand-600 bg-brand-50 w-12 h-12 rounded-xl flex items-center justify-center">
+                            <i data-lucide="info" class="w-6 h-6"></i>
+                        </div>
+                        <p class="text-lg text-slate-700 leading-relaxed font-medium">
+                            En programación, una <span class="text-brand-600 font-bold">biblioteca</span> (o library) es
+                            una colección de funciones, clases y recursos ya escritos por alguien más.
+                        </p>
+                        <ul class="space-y-4">
+                            <li class="flex items-start gap-3">
+                                <i data-lucide="check-circle-2" class="w-5 h-5 text-green-500 mt-1"></i>
+                                <span class="text-slate-600 text-sm">Resuelven problemas comunes (matemáticas, archivos,
+                                    red).</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <i data-lucide="check-circle-2" class="w-5 h-5 text-green-500 mt-1"></i>
+                                <span class="text-slate-600 text-sm">Ahorran meses de trabajo y evitan errores.</span>
+                            </li>
+                        </ul>
+                    </div>
+                    <div
+                        class="bg-slate-900 p-8 rounded-3xl shadow-floating text-white flex flex-col items-center justify-center gap-6">
+                        <div class="relative">
+                            <i data-lucide="briefcase" class="w-24 h-24 text-brand-400 opacity-20"></i>
+                            <i data-lucide="wrench"
+                                class="w-12 h-12 text-brand-400 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"></i>
+                        </div>
+                        <h3 class="text-xl font-bold">Analogía: La Caja de Herramientas</h3>
+                        <p class="text-slate-400 text-center text-sm leading-relaxed">
+                            No necesitas fabricar un martillo cada vez que quieres clavar algo. Vas a la ferretería
+                            (PyPI) y lo pides prestado para usarlo.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="slide flex flex-col items-center justify-center p-8" id="slide-3">
+            <div class="max-w-4xl w-full">
+                <h2 class="text-3xl font-black mb-6 text-slate-900 border-l-4 border-brand-500 pl-4">Cómo se usan las
+                    bibliotecas</h2>
+
+                <div class="bg-blue-50 border-l-4 border-blue-500 p-6 rounded-xl mb-10">
+                    <p class="text-blue-800 font-medium leading-relaxed italic">
+                        Al ejecutar <code class="bg-white px-1 font-mono">import math</code>, Python busca el módulo, lo
+                        carga y crea un <b>objeto</b> llamado <code class="bg-white px-1 font-mono">math</code> que
+                        contiene todas las funciones listas para usar.
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                    <div
+                        class="bg-white p-8 rounded-3xl shadow-soft border border-slate-100 flex flex-col gap-6 transition-all hover:border-brand-200">
+                        <h4 class="text-xs font-bold uppercase text-slate-400 mb-2">Editor Interactivo</h4>
+                        <div
+                            class="flex flex-wrap items-center gap-3 bg-slate-50 p-4 rounded-xl border border-slate-200 shadow-inner">
+                            <span class="font-mono text-sm text-brand-600 font-bold">math.</span>
+                            <select id="math-func"
+                                class="bg-white border-2 border-brand-100 rounded-lg px-2 py-1 font-mono text-sm focus:outline-none focus:border-brand-500 transition-all"
+                                onchange="runMathDemo()">
+                                <option value="sqrt">sqrt</option>
+                                <option value="sin">sin</option>
+                                <option value="cos">cos</option>
+                                <option value="pi">pi</option>
+                            </select>
+                            <span id="math-paren-open" class="font-mono text-sm text-brand-600 font-bold">(</span>
+                            <input type="number" id="math-input" value="16"
+                                class="w-20 bg-white border-2 border-brand-100 rounded-lg px-2 py-1 font-mono text-sm focus:outline-none focus:border-brand-500 text-center transition-all"
+                                oninput="runMathDemo()">
+                            <span id="math-paren-close" class="font-mono text-sm text-brand-600 font-bold">)</span>
+                        </div>
+                        <div
+                            class="rounded-xl overflow-hidden border border-slate-200 shadow-xl bg-white transition-all hover:shadow-2xl">
+                            <div
+                                class="bg-[#f3f3f3] px-4 py-2 flex items-center justify-between border-b border-slate-100">
+                                <div class="flex gap-1.5">
+                                    <div class="w-3 h-3 rounded-full bg-[#ff5f56] shadow-inner"></div>
+                                    <div class="w-3 h-3 rounded-full bg-[#ffbd2e] shadow-inner"></div>
+                                    <div class="w-3 h-3 rounded-full bg-[#27c93f] shadow-inner"></div>
+                                </div>
+                                <div class="text-[10px] text-slate-500 font-mono font-medium">calculo.py — VS Code</div>
+                                <div class="w-10"></div>
+                            </div>
+                            <div class="p-6 font-mono text-sm leading-relaxed">
+                                <div class="text-slate-800">
+                                    <span class="text-[#af00db]">import</span> <span
+                                        class="text-[#000000]">math</span><br><br>
+                                    <span class="text-[#008000]"># Resultado en memoria:</span><br>
+                                    <span class="text-[#001080]">res</span> = <span class="text-[#795e26]">math.<span
+                                            id="code-func">sqrt</span></span><span id="code-paren-open">(</span><span
+                                        id="res-val" class="text-[#098658] font-bold">16</span><span
+                                        id="code-paren-close">)</span><br>
+                                    <span class="text-[#795e26]">print</span>(res) <span class="text-[#008000]">#</span>
+                                    <span id="res-output" class="text-[#008000] font-bold">4.0</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="space-y-6">
+                        <div
+                            class="flex items-start gap-4 p-5 bg-white rounded-2xl border border-slate-100 shadow-sm card-hover transition-all">
+                            <div class="bg-brand-50 p-2 rounded-lg mt-1">
+                                <i data-lucide="mouse-pointer-2" class="w-5 h-5 text-brand-600"></i>
+                            </div>
+                            <p class="text-sm text-slate-600 leading-relaxed">
+                                <b>Notación de Punto:</b> Usamos <code class="bg-slate-50 px-1 font-mono">math.</code>
+                                para indicarle a Python que busque dentro del objeto que importamos.
+                            </p>
+                        </div>
+                        <div
+                            class="flex items-start gap-4 p-5 bg-white rounded-2xl border border-slate-100 shadow-sm card-hover transition-all">
+                            <div class="bg-brand-50 p-2 rounded-lg mt-1">
+                                <i data-lucide="zap" class="w-5 h-5 text-brand-600"></i>
+                            </div>
+                            <p class="text-sm text-slate-600 leading-relaxed">
+                                <b>Interactividad:</b> Selecciona una función y cambia el valor para ver cómo se
+                                comporta
+                                en tiempo real. ¡Prueba con <code class="bg-slate-50 px-1 font-mono">pi</code> para ver
+                                una constante!
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SLIDE 4: IMPORT VS FROM ... IMPORT -->
+        <section class="slide flex flex-col items-center justify-center p-8" id="slide-4">
+            <div class="max-w-5xl w-full">
+                <h2 class="text-3xl font-black mb-4 text-slate-900">Dos formas de importar</h2>
+                <p class="text-slate-500 mb-10 text-lg italic">¿Importar todo el kit de herramientas o solo el martillo
+                    que necesitas?</p>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <!-- Import Completo -->
+                    <div
+                        class="bg-white p-8 rounded-3xl border border-slate-200 shadow-soft flex flex-col h-full hover:border-brand-300 transition-colors">
+                        <div class="flex justify-between items-start mb-6">
+                            <h3 class="text-xl font-bold text-slate-900 font-mono">import math</h3>
+                        </div>
+                        <div
+                            class="rounded-xl overflow-hidden border border-slate-200 shadow-xl bg-white transition-all hover:shadow-2xl mb-6">
+                            <div
+                                class="bg-[#f3f3f3] px-4 py-2 flex items-center justify-between border-b border-slate-100">
+                                <div class="flex gap-1.5">
+                                    <div class="w-2.5 h-2.5 rounded-full bg-[#ff5f56] shadow-inner"></div>
+                                    <div class="w-2.5 h-2.5 rounded-full bg-[#ffbd2e] shadow-inner"></div>
+                                    <div class="w-2.5 h-2.5 rounded-full bg-[#27c93f] shadow-inner"></div>
+                                </div>
+                                <div class="text-[10px] text-slate-400 font-mono">completo.py — VS Code</div>
+                                <div class="w-8"></div>
+                            </div>
+                            <div class="p-6 text-sm font-mono leading-relaxed">
+                                <span class="text-[#af00db]">import</span> <span
+                                    class="text-[#000000]">math</span><br><br>
+                                <span class="text-[#795e26]">print</span>(math.<span
+                                    class="text-[#795e26]">sqrt</span>(<span class="text-[#098658]">16</span>))<br>
+                                <span class="text-[#795e26]">print</span>(math.<span
+                                    class="text-[#001080]">pi</span>)<br>
+                                <span class="text-[#795e26]">print</span>(math.<span
+                                    class="text-[#795e26]">cos</span>(<span class="text-[#098658]">0</span>))
+                            </div>
+                        </div>
+                        <div class="mt-auto space-y-4">
+                            <div class="flex items-center gap-3 text-sm">
+                                <i data-lucide="plus-circle" class="w-4 h-4 text-green-500"></i>
+                                <span class="text-slate-600 font-medium">Ordenado: Sabes de dónde viene cada
+                                    función.</span>
+                            </div>
+                            <div class="flex items-center gap-3 text-sm">
+                                <i data-lucide="minus-circle" class="w-4 h-4 text-red-400"></i>
+                                <span class="text-slate-600 font-medium">Largo: Tienes que escribir "math."
+                                    siempre.</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- From Import -->
+                    <div
+                        class="bg-white p-8 rounded-3xl border border-slate-200 shadow-soft flex flex-col h-full hover:border-brand-300 transition-colors">
+                        <div class="flex justify-between items-start mb-6">
+                            <h3 class="text-xl font-bold text-slate-900 font-mono">from math import sqrt, pi</h3>
+                        </div>
+                        <div
+                            class="rounded-xl overflow-hidden border border-slate-200 shadow-xl bg-white transition-all hover:shadow-2xl mb-6">
+                            <div
+                                class="bg-[#f3f3f3] px-4 py-2 flex items-center justify-between border-b border-slate-100">
+                                <div class="flex gap-1.5">
+                                    <div class="w-2.5 h-2.5 rounded-full bg-[#ff5f56] shadow-inner"></div>
+                                    <div class="w-2.5 h-2.5 rounded-full bg-[#ffbd2e] shadow-inner"></div>
+                                    <div class="w-2.5 h-2.5 rounded-full bg-[#27c93f] shadow-inner"></div>
+                                </div>
+                                <div class="text-[9px] text-slate-500 font-mono">directo.py — VS Code</div>
+                                <div class="w-8"></div>
+                            </div>
+                            <div class="p-6 text-sm font-mono leading-relaxed">
+                                <span class="text-[#af00db]">from</span> math <span class="text-[#af00db]">import</span>
+                                <span class="text-[#001080]">sqrt</span>, <span class="text-[#001080]">pi</span><br><br>
+                                <span class="text-[#795e26]">print</span>(<span class="text-[#795e26]">sqrt</span>(<span
+                                    class="text-[#098658]">16</span>))<br>
+                                <span class="text-[#795e26]">print</span>(<span class="text-[#001080]">pi</span>)<br>
+                                <span class="text-red-500 font-bold underline decoration-wavy">sin(0)</span> <span
+                                    class="text-red-500 italic"># ❌ ERROR: sin no importado</span>
+                            </div>
+                        </div>
+                        <div class="mt-auto space-y-4">
+                            <div class="flex items-center gap-3 text-sm">
+                                <i data-lucide="plus-circle" class="w-4 h-4 text-green-500"></i>
+                                <span class="text-slate-600 font-medium">Brevidad: Usas la función directamente.</span>
+                            </div>
+                            <div class="flex items-center gap-3 text-sm">
+                                <i data-lucide="minus-circle" class="w-4 h-4 text-red-400"></i>
+                                <span class="text-slate-600 font-medium">Riesgo: Podría confundirse con variables
+                                    tuyas.</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SLIDE 5: APODOS (AS) -->
+        <section class="slide flex flex-col items-center justify-center p-8" id="slide-5">
+            <div class="max-w-4xl w-full">
+                <h2 class="text-3xl font-black mb-4 text-slate-900">Aliasing: Ponle un apodo</h2>
+                <p class="text-slate-500 mb-10 font-medium leading-relaxed">
+                    A veces las bibliotecas tienen nombres muy largos y queremos abreviar por comodidad.
+                    De hecho, a veces es necesario importar toda la biblioteca y se necesita abreviar para que el código
+                    sea más legible y rápido de escribir.
+                </p>
+
+                <div class="bg-white rounded-3xl shadow-floating border border-slate-100 overflow-hidden">
+                    <div class="p-8 bg-slate-50 border-b border-slate-100 flex items-center justify-between">
+                        <div class="flex flex-col gap-1">
+                            <span class="text-xs font-black text-brand-600 uppercase tracking-widest">Ejemplo
+                                Conceptualmente</span>
+                            <div class="flex items-center gap-4">
+                                <span class="font-mono text-xl font-bold text-slate-800">import nombre_muy_largo
+                                    as</span>
+                                <input type="text" id="alias-input" value="n" maxlength="5"
+                                    class="w-16 bg-white border-2 border-brand-200 rounded-lg px-2 py-1 font-mono text-lg text-brand-600 focus:border-brand-500 outline-none text-center"
+                                    oninput="updateAliasDemo(this.value)">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-8 grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <div>
+                            <p class="text-sm font-bold text-slate-800 mb-4">Antes</p>
+                            <div
+                                class="rounded-xl overflow-hidden border border-slate-200 shadow-xl bg-white transition-all hover:shadow-2xl">
+                                <div
+                                    class="bg-[#f3f3f3] px-4 py-2 flex items-center justify-between border-b border-slate-100">
+                                    <div class="flex gap-1.5">
+                                        <div class="w-3 h-3 rounded-full bg-[#ff5f56] shadow-inner"></div>
+                                        <div class="w-3 h-3 rounded-full bg-[#ffbd2e] shadow-inner"></div>
+                                        <div class="w-3 h-3 rounded-full bg-[#27c93f] shadow-inner"></div>
+                                    </div>
+                                    <div class="text-[10px] text-slate-500 font-mono font-medium">viejo.py — VS Code
+                                    </div>
+                                    <div class="w-6"></div>
+                                </div>
+                                <div class="p-6 text-sm font-mono leading-relaxed text-slate-800">
+                                    <span class="text-[#af00db]">import</span> nombre_muy_largo<br><br>
+                                    nombre_muy_largo.<span class="text-[#795e26]">funcion</span>()<br>
+                                    nombre_muy_largo.<span class="text-[#795e26]">otra_func</span>()
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <p class="text-sm font-bold text-brand-600 mb-4">Después</p>
+                            <div
+                                class="rounded-xl overflow-hidden border border-slate-200 shadow-xl bg-white transition-all hover:shadow-2xl">
+                                <div
+                                    class="bg-[#f3f3f3] px-4 py-2 flex items-center justify-between border-b border-slate-100">
+                                    <div class="flex gap-1.5">
+                                        <div class="w-3 h-3 rounded-full bg-[#ff5f56] shadow-inner"></div>
+                                        <div class="w-3 h-3 rounded-full bg-[#ffbd2e] shadow-inner"></div>
+                                        <div class="w-3 h-3 rounded-full bg-[#27c93f] shadow-inner"></div>
+                                    </div>
+                                    <div class="text-[10px] text-brand-600 font-mono font-bold">moderno.py — VS Code
+                                    </div>
+                                    <div class="w-6"></div>
+                                </div>
+                                <div class="p-6 text-sm font-mono leading-relaxed" id="alias-code-container">
+                                    <div id="alias-code">
+                                        <span class="text-[#af00db]">import</span> nombre_muy_largo <span
+                                            class="text-[#af00db]">as</span> <span
+                                            class="text-[#001080] font-bold">n</span><br><br>
+                                        <span class="text-[#001080] font-bold">n</span>.<span
+                                            class="text-[#795e26]">funcion</span>()<br>
+                                        <span class="text-[#001080] font-bold">n</span>.<span
+                                            class="text-[#795e26]">otra_func</span>()
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SLIDE 6: STANDARD LIBRARY EXPLORER -->
+        <section class="slide flex flex-col items-center justify-center p-8" id="slide-6">
+            <h2 class="text-3xl font-black mb-4 text-slate-900 text-center">Prueba algunas bibliotecas que vienen
+                incluidas en Python</h2>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl w-full">
+                <!-- Math -->
+                <div class="bg-white p-6 rounded-3xl border border-slate-200 shadow-soft hover:shadow-floating transition-all group cursor-pointer"
+                    onclick="showLibInfo('math')">
+                    <div
+                        class="w-12 h-12 bg-blue-50 text-blue-600 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                        <i data-lucide="binary" class="w-6 h-6"></i>
+                    </div>
+                    <h3 class="font-bold text-lg mb-2">Módulo <span class="font-mono text-blue-600">math</span></h3>
+                    <p class="text-xs text-slate-500 leading-relaxed">Operaciones avanzadas: potencias, raíces,
+                        trigonometría y constantes como Pi.</p>
+                </div>
+
+                <!-- Random -->
+                <div class="bg-white p-6 rounded-3xl border border-slate-200 shadow-soft hover:shadow-floating transition-all group cursor-pointer"
+                    onclick="showLibInfo('random')">
+                    <div
+                        class="w-12 h-12 bg-purple-50 text-purple-600 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                        <i data-lucide="dices" class="w-6 h-6"></i>
+                    </div>
+                    <h3 class="font-bold text-lg mb-2">Módulo <span class="font-mono text-purple-600">random</span></h3>
+                    <p class="text-xs text-slate-500 leading-relaxed">Generación de azar: sorteos, juegos y simulaciones
+                        aleatorias.</p>
+                </div>
+
+                <!-- Time -->
+                <div class="bg-white p-6 rounded-3xl border border-slate-200 shadow-soft hover:shadow-floating transition-all group cursor-pointer"
+                    onclick="showLibInfo('time')">
+                    <div
+                        class="w-12 h-12 bg-amber-50 text-amber-600 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                        <i data-lucide="timer" class="w-6 h-6"></i>
+                    </div>
+                    <h3 class="font-bold text-lg mb-2">Módulo <span class="font-mono text-amber-600">time</span></h3>
+                    <p class="text-xs text-slate-500 leading-relaxed">Pausa la ejecución (sleep), mide tiempos y
+                        obtiene la hora del sistema.</p>
+                </div>
+            </div>
+
+            <div id="lib-explorer-display"
+                class="mt-4 w-full max-w-5xl bg-white border border-slate-200 rounded-3xl p-6 shadow-soft transition-all">
+                <div id="explorer-placeholder" class="text-center py-6">
+                    <p class="text-slate-400 font-mono text-sm">Escoge un módulo arriba para explorar sus funciones...
+                    </p>
+                </div>
+                <div id="explorer-content" class="hidden flex flex-col md:flex-row gap-4 items-start">
+                    <div class="w-full md:w-1/2">
+                        <div class="mb-6">
+                            <h4 id="exp-title" class="text-2xl font-black mb-2 text-slate-900 leading-tight"></h4>
+                            <p id="exp-desc" class="text-slate-500 text-sm leading-relaxed"></p>
+                        </div>
+                        <div id="func-selectors" class="flex flex-col gap-2 mb-6">
+                            <!-- Buttons for functions will be injected here -->
+                        </div>
+                        <div id="exp-interaction"
+                            class="bg-brand-50/50 p-3 rounded-2xl border border-brand-100 hidden mt-4">
+                            <h5 class="text-[10px] font-black uppercase text-brand-600 mb-3 tracking-widest">Prueba a
+                                cambiar los valores:</h5>
+                            <div id="interaction-inputs" class="flex flex-wrap gap-4 items-center">
+                                <!-- Dynamic inputs go here -->
+                            </div>
+                        </div>
+                    </div>
+                    <div
+                        class="w-full md:w-1/2 rounded-xl overflow-hidden border border-slate-200 shadow-xl bg-white transition-all">
+                        <div
+                            class="bg-[#f3f3f3] px-3 py-1.5 flex items-center justify-between border-b border-slate-100">
+                            <div class="flex gap-1">
+                                <div class="w-2 h-2 rounded-full bg-[#ff5f56] shadow-inner"></div>
+                                <div class="w-2 h-2 rounded-full bg-[#ffbd2e] shadow-inner"></div>
+                                <div class="w-2 h-2 rounded-full bg-[#27c93f] shadow-inner"></div>
+                            </div>
+                            <div id="exp-filename" class="text-[8px] text-slate-500 font-mono font-medium">demo.py — VS
+                                Code</div>
+                            <div class="w-6"></div>
+                        </div>
+                        <div class="p-6 bg-white">
+                            <pre id="exp-code"
+                                class="text-xs font-mono leading-relaxed !bg-transparent !p-0 text-slate-800"></pre>
+                            <div class="mt-4 pt-4 border-t border-slate-100 font-mono text-xs flex gap-2">
+                                <span class="text-green-600 font-bold"># Output:</span>
+                                <span id="exp-output" class="text-slate-600 italic">...</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SLIDE 7: MATH UTILITY -->
+        <section class="slide flex flex-col items-center justify-center p-8" id="slide-7">
+            <div class="max-w-5xl w-full">
+                <h2 class="text-3xl font-black mb-4 text-slate-900 text-center">¿Por qué usar <span
+                        class="font-mono text-brand-600">math</span>?</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-10 mt-12">
+                    <div class="bg-white p-8 rounded-3xl border border-slate-200">
+                        <h3 class="text-red-500 font-bold mb-4 flex items-center gap-2">
+                            <i data-lucide="x-circle" class="w-5 h-5"></i> Sin Biblioteca
+                        </h3>
+                        <p class="text-sm text-slate-600 mb-6">Tendrías que implementar algoritmos matemáticos complejos
+                            tú mismo.</p>
+                        <div class="rounded-xl overflow-hidden border border-slate-200 shadow-md bg-white">
+                            <div
+                                class="bg-slate-50 px-3 py-1 flex items-center justify-between border-b border-slate-100">
+                                <div class="flex gap-1">
+                                    <div class="w-2 h-2 rounded-full bg-slate-300"></div>
+                                    <div class="w-2 h-2 rounded-full bg-slate-300"></div>
+                                    <div class="w-2 h-2 rounded-full bg-slate-300"></div>
+                                </div>
+                                <div class="text-[8px] text-slate-400 font-mono">manual.py — VS Code</div>
+                                <div class="w-6"></div>
+                            </div>
+                            <div class="p-4 text-xs font-mono leading-relaxed text-slate-600">
+                                <span class="text-[#008000]"># 10 líneas de lógica manual</span><br>
+                                <span class="text-[#af00db]">def</span> <span
+                                    class="text-[#795e26]">raiz_cuadrada</span>(n):<br>
+                                &nbsp;&nbsp;&nbsp;&nbsp;x = n / <span class="text-[#098658]">2</span><br>
+                                &nbsp;&nbsp;&nbsp;&nbsp;<span class="text-[#af00db]">for</span> _ <span
+                                    class="text-[#af00db]">in</span> <span class="text-[#795e26]">range</span>(<span
+                                    class="text-[#098658]">10</span>):<br>
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;x = (x + n/x) / <span
+                                    class="text-[#098658]">2</span><br>
+                                &nbsp;&nbsp;&nbsp;&nbsp;<span class="text-[#af00db]">return</span> x
+                            </div>
+                        </div>
+                    </div>
+                    <div
+                        class="bg-brand-600 p-8 rounded-3xl text-white shadow-floating transform scale-105 transition-all hover:scale-110">
+                        <h3 class="font-bold mb-4 flex items-center gap-2">
+                            <i data-lucide="check-circle" class="w-5 h-5"></i> Con <span
+                                class="font-mono bg-brand-700 px-2 py-1 rounded">math</span>
+                        </h3>
+                        <p class="text-sm text-brand-100 mb-6">Obtienes precisión máxima en una línea, probada por
+                            millones.</p>
+                        <div class="rounded-xl overflow-hidden border border-brand-300 bg-brand-50 shadow-inner">
+                            <div
+                                class="bg-brand-100 px-3 py-1 flex items-center justify-between border-b border-brand-200">
+                                <div class="flex gap-1">
+                                    <div class="w-2 h-2 rounded-full bg-[#ff5f56]"></div>
+                                    <div class="w-2 h-2 rounded-full bg-[#ffbd2e]"></div>
+                                    <div class="w-2 h-2 rounded-full bg-[#27c93f]"></div>
+                                </div>
+                                <div class="text-[8px] text-brand-700 font-mono font-bold">math_opt.py — VS Code</div>
+                                <div class="w-6"></div>
+                            </div>
+                            <div class="p-4 text-xs font-mono leading-relaxed text-brand-900 font-bold">
+                                <span class="text-[#af00db]">import</span> math<br><br>
+                                <span class="text-[#001080]">res</span> = math.<span
+                                    class="text-[#795e26]">sqrt</span>(<span class="text-[#098658]">256</span>)<br>
+                                <span class="text-[#795e26]">print</span>(res) <span class="text-[#008000]">#
+                                    16.0</span>
+                            </div>
+                        </div>
+                        <div
+                            class="mt-6 bg-brand-500/50 p-3 rounded-xl border border-brand-400 text-[10px] uppercase font-black text-center">
+                            Eficiencia: Máxima | Errores: 0
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SLIDE 8: RANDOM USE CASES -->
+        <section class="slide flex flex-col items-center justify-center p-8" id="slide-8">
+            <h2 class="text-3xl font-black mb-10 text-slate-900 text-center">Usos de <span
+                    class="font-mono text-purple-600">random</span></h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-6xl w-full">
+                <div
+                    class="bg-white p-6 rounded-3xl shadow-soft hover:shadow-floating transition-all border border-slate-100 flex flex-col gap-4">
+                    <div class="bg-orange-50 text-orange-600 w-10 h-10 rounded-xl flex items-center justify-center"><i
+                            data-lucide="gamepad-2" class="w-5 h-5"></i></div>
+                    <h4 class="font-bold">Lanzar un dado</h4>
+                    <div class="rounded-lg overflow-hidden border border-slate-200 shadow-sm bg-white">
+                        <div class="bg-slate-50 px-2 py-0.5 flex items-center justify-between border-b">
+                            <div class="text-[6px] text-slate-300">● ● ●</div>
+                            <div class="text-[6px] text-slate-500 font-mono font-bold">script.py</div>
+                        </div>
+                        <div class="p-3">
+                            <pre
+                                class="!p-0 !bg-transparent !text-[10px]"><code class="language-python text-slate-700">random.<span class="text-[#795e26]">randint</span>(<span class="text-[#098658]">1, 6</span>)</code></pre>
+                        </div>
+                    </div>
+                </div>
+                <div
+                    class="bg-white p-6 rounded-3xl shadow-soft hover:shadow-floating transition-all border border-slate-100 flex flex-col gap-4">
+                    <div class="bg-blue-50 text-blue-600 w-10 h-10 rounded-xl flex items-center justify-center"><i
+                            data-lucide="user-check" class="w-5 h-5"></i></div>
+                    <h4 class="font-bold">Elegir un ganador</h4>
+                    <div class="rounded-lg overflow-hidden border border-slate-200 shadow-sm bg-white">
+                        <div class="bg-slate-50 px-2 py-0.5 flex items-center justify-between border-b">
+                            <div class="text-[6px] text-slate-300">● ● ●</div>
+                            <div class="text-[6px] text-slate-500 font-mono font-bold">sorteo.py</div>
+                        </div>
+                        <div class="p-3">
+                            <pre
+                                class="!p-0 !bg-transparent !text-[10px]"><code class="language-python text-slate-700">random.<span class="text-[#795e26]">choice</span>(estudiantes)</code></pre>
+                        </div>
+                    </div>
+                </div>
+                <div
+                    class="bg-white p-6 rounded-3xl shadow-soft hover:shadow-floating transition-all border border-slate-100 flex flex-col gap-4">
+                    <div class="bg-green-50 text-green-600 w-10 h-10 rounded-xl flex items-center justify-center"><i
+                            data-lucide="shuffle" class="w-5 h-5"></i></div>
+                    <h4 class="font-bold">Barajar cartas</h4>
+                    <div class="rounded-lg overflow-hidden border border-slate-200 shadow-sm bg-white">
+                        <div class="bg-slate-50 px-2 py-0.5 flex items-center justify-between border-b">
+                            <div class="text-[6px] text-slate-300">● ● ●</div>
+                            <div class="text-[6px] text-slate-500 font-mono font-bold">cartas.py</div>
+                        </div>
+                        <div class="p-3">
+                            <pre
+                                class="!p-0 !bg-transparent !text-[10px]"><code class="language-python text-slate-700">random.<span class="text-[#795e26]">shuffle</span>(lista)</code></pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SLIDE 9: BIBLIOTECAS EXTERNAS (PIPI) -->
+        <section class="slide flex flex-col items-center pt-10 px-8 pb-8" id="slide-9">
+            <div class="max-w-5xl w-full">
+                <h2 class="text-3xl font-black mb-10 text-slate-900">PyPI: El Universo de Python</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
+                    <div class="space-y-6">
+                        <div class="bg-white p-6 rounded-3xl border border-slate-200 shadow-soft">
+                            <h3 class="text-lg font-bold mb-4 flex items-center gap-2"><i data-lucide="box"
+                                    class="w-5 h-5 text-brand-600"></i> ¿Qué es PyPI?</h3>
+                            <p class="text-sm text-slate-600">Un almacén con más de 500k bibliotecas. Si necesitas
+                                resolver algo del mundo real, probablemente esté ahí.</p>
+                        </div>
+                        <div class="bg-slate-900 p-6 rounded-3xl text-white shadow-floating">
+                            <h3 class="text-lg font-bold mb-4 flex items-center gap-2"><i data-lucide="terminal"
+                                    class="w-5 h-5 text-green-400"></i> Instalación con PIP</h3>
+                            <p class="text-xs text-slate-400 mb-4">Usa la terminal para instalar:</p>
+                            <div class="rounded-xl overflow-hidden border border-slate-200 shadow-xl">
+                                <div class="bg-slate-100 px-3 py-1.5 flex items-center justify-between border-b">
+                                    <div class="flex gap-1.5">
+                                        <div class="w-2.5 h-2.5 rounded-full bg-[#ff5f56]"></div>
+                                        <div class="w-2.5 h-2.5 rounded-full bg-[#ffbd2e]"></div>
+                                        <div class="w-2.5 h-2.5 rounded-full bg-[#27c93f]"></div>
+                                    </div>
+                                    <div class="text-[9px] text-slate-500 font-mono">Terminal — zsh</div>
+                                    <div class="w-8"></div>
+                                </div>
+                                <div class="bg-white p-4 font-mono text-sm border-t border-slate-50">
+                                    <div class="flex gap-2">
+                                        <span class="text-brand-500 font-bold">➜</span>
+                                        <span class="text-slate-800 font-bold">pip <span
+                                                class="text-[#af00db]">install</span> <span
+                                                class="text-[#098658]">nombre-libreria</span></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <p class="text-[10px] text-slate-500 mt-4 italic">Tip: Usa requirements.txt para listar
+                                todas tus dependencias.</p>
+                        </div>
+                    </div>
+                    <div class="bg-white p-8 rounded-3xl border border-slate-200 shadow-soft">
+                        <h3 class="text-lg font-bold mb-6 italic">Librerías Populares</h3>
+                        <div class="flex flex-wrap gap-2 text-xs font-bold">
+                            <span class="bg-blue-50 text-blue-700 px-3 py-1 rounded-full">NumPy</span>
+                            <span class="bg-teal-50 text-teal-700 px-3 py-1 rounded-full">Pandas</span>
+                            <span class="bg-indigo-50 text-indigo-700 px-3 py-1 rounded-full">Matplotlib</span>
+                            <span class="bg-slate-50 text-slate-700 px-3 py-1 rounded-full">Requests</span>
+                            <span class="bg-purple-100 text-purple-700 px-3 py-1 rounded-full">OpenAI (ChatGPT)</span>
+                            <span class="bg-green-50 text-green-700 px-3 py-1 rounded-full">FastAPI</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SLIDE 10: PROFUNDIZACIÓN LIBRERÍAS POPULARES -->
+        <section class="slide flex flex-col items-center p-8" id="slide-10">
+            <h2 class="text-3xl font-black mb-10 text-slate-900">Aplicaciones Reales</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl w-full">
+                <div class="bg-white p-6 rounded-3xl border-2 border-slate-50 shadow-soft">
+                    <h3 class="font-bold flex items-center gap-2 mb-4"><i data-lucide="database"
+                            class="text-blue-600"></i> Data Science</h3>
+                    <p class="text-xs text-slate-500 mb-4">NumPy y Pandas para análisis de datos masivos.</p>
+                    <div class="rounded-lg overflow-hidden border border-slate-200 shadow-md bg-white">
+                        <div class="bg-slate-50 px-2 py-0.5 flex items-center justify-between border-b">
+                            <div class="text-[6px] text-slate-300">● ● ●</div>
+                            <div class="text-[6px] text-slate-500 font-mono font-bold">script.py</div>
+                        </div>
+                        <div class="p-3">
+                            <pre class="!p-0 !bg-transparent !text-[10px]"><code class="language-python text-slate-800">import pandas as pd
+df = pd.read_csv("data.csv")</code></pre>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-white p-6 rounded-3xl border-2 border-slate-50 shadow-soft">
+                    <h3 class="font-bold flex items-center gap-2 mb-4"><i data-lucide="globe"
+                            class="text-green-600"></i> Web/API</h3>
+                    <p class="text-xs text-slate-500 mb-4">Requests para obtener datos de internet.</p>
+                    <div class="rounded-lg overflow-hidden border border-slate-200 shadow-md bg-white">
+                        <div class="bg-slate-50 px-2 py-0.5 flex items-center justify-between border-b">
+                            <div class="text-[6px] text-slate-300">● ● ●</div>
+                            <div class="text-[6px] text-slate-500 font-mono font-bold">web.py</div>
+                        </div>
+                        <div class="p-3">
+                            <pre
+                                class="!p-0 !bg-transparent !text-[10px]"><code class="language-python text-slate-800"><span class="text-[#af00db]">import</span> requests<br>r = requests.<span class="text-[#795e26]">get</span>(url)</code></pre>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-white p-6 rounded-3xl border-2 border-slate-50 shadow-soft">
+                    <h3 class="font-bold flex items-center gap-2 mb-4"><i data-lucide="line-chart"
+                            class="text-indigo-600"></i> Gráficos</h3>
+                    <p class="text-xs text-slate-500 mb-4">Matplotlib para visualizaciones pro.</p>
+                    <div class="rounded-lg overflow-hidden border border-slate-200 shadow-md bg-white">
+                        <div class="bg-slate-50 px-2 py-0.5 flex items-center justify-between border-b">
+                            <div class="text-[6px] text-slate-300">● ● ●</div>
+                            <div class="text-[6px] text-slate-500 font-mono font-bold">plot.py</div>
+                        </div>
+                        <div class="p-3">
+                            <pre
+                                class="!p-0 !bg-transparent !text-[10px]"><code class="language-python text-slate-800"><span class="text-[#af00db]">import</span> matplotlib.pyplot <span class="text-[#af00db]">as</span> plt<br>plt.<span class="text-[#795e26]">plot</span>(x, y)</code></pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SLIDE 11: FINAL -->
+        <section class="slide flex items-center justify-center p-8 bg-slate-900" id="slide-11">
+            <div class="max-w-xl text-center">
+                <i data-lucide="check-circle" class="w-20 h-20 text-brand-500 mx-auto mb-8"></i>
+                <h2 class="text-4xl font-black text-white mb-2">Fin del Módulo 2</h2>
+                <h3 class="text-6xl font-black text-brand-500 mb-10">Librerías</h3>
+                <button onclick="currentSlide = 1; updateUI();"
+                    class="text-slate-400 font-bold hover:text-white transition-colors">Volver al inicio</button>
+            </div>
+        </section>
+
+        <!-- NAV -->
+        <div class="fixed bottom-8 right-8 flex gap-4 z-50">
+            <button onclick="prevSlide()"
+                class="bg-white border p-3 rounded-2xl shadow-soft hover:bg-slate-50 disabled:opacity-0"
+                id="btn-prev"><i data-lucide="arrow-left"></i></button>
+            <button onclick="nextSlide()"
+                class="bg-slate-900 text-white p-3 rounded-2xl shadow-floating hover:bg-slate-800 disabled:opacity-0"
+                id="btn-next"><i data-lucide="arrow-right"></i></button>
+        </div>
+
+    </main>
+
+    <script>
+        let currentSlide = 1;
+        const totalSlides = 11;
+
+        function updateUI() {
+            document.querySelectorAll('.slide').forEach((s, i) => s.classList.toggle('active', i + 1 === currentSlide));
+            document.getElementById('slide-indicator').innerText = `${currentSlide} / ${totalSlides}`;
+            document.getElementById('btn-prev').disabled = currentSlide === 1;
+            document.getElementById('btn-next').disabled = currentSlide === totalSlides;
+            lucide.createIcons();
+            Prism.highlightAll();
+        }
+
+        function nextSlide() { if (currentSlide < totalSlides) { currentSlide++; updateUI(); } }
+        function prevSlide() { if (currentSlide > 1) { currentSlide--; updateUI(); } }
+
+        function updateAliasDemo(val) {
+            val = val.trim() || 'n';
+            const codeEl = document.getElementById('alias-code');
+            if (!codeEl) return;
+
+            codeEl.innerHTML = `
+                <span class="text-[#af00db]">import</span> nombre_muy_largo <span class="text-[#af00db]">as</span> <span class="text-[#001080] font-bold">${val}</span><br><br>
+                <span class="text-[#001080] font-bold">${val}</span>.<span class="text-[#795e26]">funcion</span>()<br>
+                <span class="text-[#001080] font-bold">${val}</span>.<span class="text-[#795e26]">otra_func</span>()
+            `;
+        }
+
+        const libData = {
+            math: {
+                title: "Módulo Math",
+                desc: "Provee acceso a funciones matemáticas definidas por el estándar de C.",
+                filename: "calculos.py",
+                funcs: [
+                    {
+                        name: "math.sqrt(x)",
+                        template: "import math\nprint(math.sqrt({x}))",
+                        params: [{ id: 'x', label: 'x', type: 'number', default: 64, min: 0 }],
+                        sim: (p) => Math.sqrt(p.x).toFixed(2)
+                    },
+                    {
+                        name: "math.factorial(x)",
+                        template: "import math\nprint(math.factorial({x}))",
+                        params: [{ id: 'x', label: 'x', type: 'number', default: 5, min: 0, max: 10 }],
+                        sim: (p) => {
+                            let f = 1; for (let i = 1; i <= Math.min(p.x, 10); i++) f *= i; return f;
+                        }
+                    },
+                    {
+                        name: "math.pow(x, y)",
+                        template: "import math\nprint(math.pow({x}, {y}))",
+                        params: [{ id: 'x', label: 'x', type: 'number', default: 2 }, { id: 'y', label: 'y', type: 'number', default: 3 }],
+                        sim: (p) => Math.pow(p.x, p.y)
+                    }
+                ]
+            },
+            random: {
+                title: "Módulo Random",
+                desc: "Implementa generadores de números pseudo-aleatorios.",
+                filename: "azar.py",
+                funcs: [
+                    {
+                        name: "random.randint(a, b)",
+                        template: "import random\nprint(random.randint({a}, {b}))",
+                        params: [{ id: 'a', label: 'mín', type: 'number', default: 1 }, { id: 'b', label: 'máx', type: 'number', default: 100 }],
+                        sim: (p) => Math.floor(Math.random() * (p.b - p.a + 1)) + p.a
+                    },
+                    {
+                        name: "random.choice(seq)",
+                        template: "import random\nprint(random.choice(['{a}', '{b}', '{c}']))",
+                        params: [{ id: 'a', label: 'op1', type: 'text', default: 'Rojo' }, { id: 'b', label: 'op2', type: 'text', default: 'Azul' }, { id: 'c', label: 'op3', type: 'text', default: 'Verde' }],
+                        sim: (p) => {
+                            const arr = [p.a, p.b, p.c];
+                            return `'${arr[Math.floor(Math.random() * arr.length)]}'`;
+                        }
+                    },
+                    {
+                        name: "random.random()",
+                        template: "import random\nprint(random.random())",
+                        params: [],
+                        sim: () => Math.random().toFixed(4)
+                    }
+                ]
+            },
+            time: {
+                title: "Módulo Time",
+                desc: "Funciones para trabajar con el tiempo y pausas.",
+                filename: "reloj.py",
+                funcs: [
+                    {
+                        name: "time.ctime()",
+                        template: "import time\nprint(time.ctime())",
+                        params: [],
+                        sim: () => `'${new Date().toString().split(' GMT')[0]}'`
+                    },
+                    {
+                        name: "time.sleep(s)",
+                        template: "import time\nprint('Inicio')\ntime.sleep({s})\nprint('Fin ({s}s después)')",
+                        params: [{ id: 's', label: 'seg', type: 'number', default: 2, min: 0, max: 10 }],
+                        sim: (p) => `Inicio ... Fin (${p.s}s después)`
+                    },
+                    {
+                        name: "time.time()",
+                        template: "import time\nprint(time.time())",
+                        params: [],
+                        sim: () => Math.floor(Date.now() / 1000)
+                    }
+                ]
+            }
+        };
+
+        let currentLib = null;
+        let currentFuncIdx = 0;
+
+        function showLibInfo(lib) {
+            currentLib = lib;
+            const p = document.getElementById('explorer-placeholder');
+            const c = document.getElementById('explorer-content');
+            const t = document.getElementById('exp-title');
+            const d = document.getElementById('exp-desc');
+            const selectors = document.getElementById('func-selectors');
+            const filename = document.getElementById('exp-filename');
+
+            p.classList.add('hidden');
+            c.classList.remove('hidden');
+
+            const data = libData[lib];
+            t.innerText = data.title;
+            d.innerText = data.desc;
+            filename.innerText = `${data.filename} — VS Code`;
+
+            selectors.innerHTML = '';
+            data.funcs.forEach((f, idx) => {
+                const btn = document.createElement('button');
+                btn.className = "text-left px-4 py-2 rounded-xl border border-slate-100 bg-slate-50 text-slate-700 text-xs font-mono hover:bg-brand-50 hover:border-brand-200 transition-all flex items-center justify-between group";
+                btn.innerHTML = `<span>${f.name}</span> <i data-lucide="chevron-right" class="w-3 h-3 text-slate-300 group-hover:text-brand-500"></i>`;
+                btn.onclick = () => showFuncInfo(idx);
+                selectors.appendChild(btn);
+            });
+
+            lucide.createIcons();
+            showFuncInfo(0);
+        }
+
+        function showFuncInfo(idx) {
+            currentFuncIdx = idx;
+            const func = libData[currentLib].funcs[idx];
+            const inter = document.getElementById('exp-interaction');
+            const inputsContainer = document.getElementById('interaction-inputs');
+
+            // Interaction Inputs
+            if (func.params && func.params.length > 0) {
+                inter.classList.remove('hidden');
+                inputsContainer.innerHTML = '';
+                func.params.forEach(param => {
+                    const group = document.createElement('div');
+                    group.className = "flex items-center gap-2";
+                    group.innerHTML = `
+                        <label class="text-[10px] font-mono text-slate-400 font-bold">${param.label}:</label>
+                        <input type="${param.type}" id="param-${param.id}" value="${param.default}" 
+                               ${param.min !== undefined ? `min="${param.min}"` : ''} 
+                               ${param.max !== undefined ? `max="${param.max}"` : ''} 
+                               class="w-16 bg-white border border-brand-200 rounded px-2 py-0.5 text-xs font-mono text-brand-600 focus:border-brand-500 outline-none shadow-inner"
+                               oninput="updateLibSimulation()">
+                    `;
+                    inputsContainer.appendChild(group);
+                });
+            } else {
+                inter.classList.add('hidden');
+            }
+
+            // Highlight button
+            const btns = document.querySelectorAll('#func-selectors button');
+            btns.forEach((b, i) => {
+                if (i === idx) {
+                    b.classList.add('border-brand-500', 'bg-brand-50', 'text-brand-700', 'shadow-sm');
+                } else {
+                    b.classList.remove('border-brand-500', 'bg-brand-50', 'text-brand-700', 'shadow-sm');
+                }
+            });
+
+            updateLibSimulation();
+        }
+
+        function updateLibSimulation() {
+            const func = libData[currentLib].funcs[currentFuncIdx];
+            const cd = document.getElementById('exp-code');
+            const out = document.getElementById('exp-output');
+
+            const params = {};
+            if (func.params) {
+                func.params.forEach(p => {
+                    const el = document.getElementById(`param-${p.id}`);
+                    params[p.id] = p.type === 'number' ? parseFloat(el.value) : el.value;
+                    if (p.type === 'number' && isNaN(params[p.id])) params[p.id] = 0;
+                });
+            }
+
+            // Update internal text
+            let codeText = func.template;
+            for (let id in params) {
+                codeText = codeText.replace(new RegExp(`{${id}}`, 'g'), params[id]);
+            }
+
+            cd.textContent = codeText;
+            out.innerText = func.sim(params);
+
+            // Highlight
+            if (window.Prism) {
+                cd.className = "language-python text-xs font-mono leading-relaxed !bg-transparent !p-0 text-slate-800";
+                Prism.highlightElement(cd);
+            }
+        }
+
+        function runMathDemo() {
+            const func = document.getElementById('math-func').value;
+            const input = document.getElementById('math-input');
+            const parenOpen = document.getElementById('math-paren-open');
+            const parenClose = document.getElementById('math-paren-close');
+
+            const codeFunc = document.getElementById('code-func');
+            const resVal = document.getElementById('res-val');
+            const resOutput = document.getElementById('res-output');
+            const codeParenOpen = document.getElementById('code-paren-open');
+            const codeParenClose = document.getElementById('code-paren-close');
+
+            if (func === 'pi') {
+                input.classList.add('hidden');
+                parenOpen.classList.add('hidden');
+                parenClose.classList.add('hidden');
+                codeParenOpen.classList.add('hidden');
+                codeParenClose.classList.add('hidden');
+                resVal.classList.add('hidden');
+
+                codeFunc.innerText = 'pi';
+                resOutput.innerText = Math.PI.toFixed(5);
+            } else {
+                input.classList.remove('hidden');
+                parenOpen.classList.remove('hidden');
+                parenClose.classList.remove('hidden');
+                codeParenOpen.classList.remove('hidden');
+                codeParenClose.classList.remove('hidden');
+                resVal.classList.remove('hidden');
+
+                let val = parseFloat(input.value);
+                if (isNaN(val)) val = 0;
+
+                resVal.innerText = val;
+                codeFunc.innerText = func;
+
+                let result;
+                if (func === 'sqrt') result = val < 0 ? "Error" : Math.sqrt(val).toFixed(2);
+                if (func === 'sin') result = Math.sin(val).toFixed(4);
+                if (func === 'cos') result = Math.cos(val).toFixed(4);
+
+                resOutput.innerText = result;
+            }
+        }
+
+        window.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight') nextSlide();
+            if (e.key === 'ArrowLeft') prevSlide();
+        });
+
+        window.onload = () => {
+            updateUI();
+            runMathDemo();
+        };
+    </script>
+</body>
+
+</html>
