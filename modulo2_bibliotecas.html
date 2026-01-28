@@ -452,10 +452,10 @@
 
         <!-- SLIDE 6: STANDARD LIBRARY EXPLORER -->
         <section class="slide flex flex-col items-center justify-center p-8" id="slide-6">
-            <h2 class="text-3xl font-black mb-4 text-slate-900 text-center">Prueba algunas bibliotecas que vienen
-                incluidas en Python</h2>
+            <h2 class="text-3xl font-black mb-4 text-slate-900 text-center px-4 w-full">Prueba algunas bibliotecas que
+                vienen incluidas en Python</h2>
 
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl w-full">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-6xl w-full">
                 <!-- Math -->
                 <div class="bg-white p-6 rounded-3xl border border-slate-200 shadow-soft hover:shadow-floating transition-all group cursor-pointer"
                     onclick="showLibInfo('math')">
@@ -494,10 +494,12 @@
             </div>
 
             <div id="lib-explorer-display"
-                class="mt-4 w-full max-w-5xl bg-white border border-slate-200 rounded-3xl p-6 shadow-soft transition-all">
-                <div id="explorer-placeholder" class="text-center py-6">
-                    <p class="text-slate-400 font-mono text-sm">Escoge un módulo arriba para explorar sus funciones...
-                    </p>
+                class="mt-4 w-full max-w-6xl bg-white border border-slate-200 rounded-3xl p-6 shadow-soft transition-all h-[350px] overflow-y-auto">
+                <div id="explorer-placeholder"
+                    class="text-center py-10 flex flex-col items-center justify-center h-full">
+                    <i data-lucide="mouse-pointer-2" class="w-10 h-10 text-slate-100 mb-4 animate-bounce"></i>
+                    <p class="text-slate-400 font-mono text-xs uppercase tracking-widest">Escoge un módulo arriba para
+                        explorar algunas de sus funciones</p>
                 </div>
                 <div id="explorer-content" class="hidden flex flex-col md:flex-row gap-4 items-start">
                     <div class="w-full md:w-1/2">
