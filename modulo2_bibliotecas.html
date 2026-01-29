@@ -95,6 +95,12 @@
             transform: translateY(-4px);
             box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
         }
+
+        .deep-lib-tab.active {
+            border-color: #0ea5e9;
+            background-color: #f0f9ff;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+        }
     </style>
 </head>
 
@@ -646,7 +652,7 @@
         <!-- SLIDE 8: BIBLIOTECAS EXTERNAS (PyPI) -->
         <section class="slide flex flex-col items-center p-8" id="slide-8">
             <div class="max-w-6xl w-full">
-                <header class="flex justify-between items-end mb-8">
+                <header class="flex justify-between items-end mb-6">
                     <div>
                         <h2 class="text-4xl font-black text-slate-900 tracking-tight">PyPI: El Universo de Python</h2>
                         <p class="text-slate-500 font-medium italic">Accede a miles de soluciones creadas por la
@@ -658,7 +664,7 @@
                     </div>
                 </header>
 
-                <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 h-[550px]">
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 h-[520px]">
                     <!-- Left: Explanation & Console -->
                     <div class="lg:col-span-7 flex flex-col gap-6">
                         <!-- What is PyPI Card -->
@@ -670,37 +676,38 @@
                                 <span class="text-brand-600 font-bold">bibliotecas externas</span>.
                                 Para traer una de estas herramientas a tu computadora, usamos el comando
                                 <code
-                                    class="bg-slate-100 px-1.5 py-0.5 rounded font-mono text-brand-600 font-bold">pip</code>.
+                                    class="bg-slate-100 px-1.5 py-0.5 rounded font-mono text-brand-600 font-bold">pip install</code>.
                             </p>
                         </div>
 
-                        <!-- Interactive Terminal -->
-                        <div
-                            class="flex-1 bg-slate-900 rounded-[2.5rem] shadow-floating flex flex-col overflow-hidden border border-slate-700">
-                            <!-- Terminal Header -->
+                        <div class="flex-1 flex flex-col min-h-0">
+                            <!-- macOS Terminal Frame -->
                             <div
-                                class="bg-slate-800/50 px-6 py-3 flex items-center justify-between border-b border-slate-700">
-                                <div class="flex gap-2">
-                                    <div class="w-3 h-3 rounded-full bg-[#ff5f56]"></div>
-                                    <div class="w-3 h-3 rounded-full bg-[#ffbd2e]"></div>
-                                    <div class="w-3 h-3 rounded-full bg-[#27c93f]"></div>
-                                </div>
+                                class="bg-[#1e1e1e] rounded-2xl shadow-2xl border border-slate-700 flex flex-col h-[380px] overflow-hidden">
+                                <!-- Terminal Header -->
                                 <div
-                                    class="text-[10px] text-slate-400 font-mono flex items-center gap-2 uppercase tracking-widest">
-                                    <i data-lucide="terminal" class="w-3 h-3"></i> Terminal — bash
+                                    class="bg-[#323233] px-4 py-2 flex items-center justify-between border-b border-[#1e1e1e]">
+                                    <div class="flex gap-1.5">
+                                        <div class="w-3 h-3 rounded-full bg-[#ff5f56]"></div>
+                                        <div class="w-3 h-3 rounded-full bg-[#ffbd2e]"></div>
+                                        <div class="w-3 h-3 rounded-full bg-[#27c93f]"></div>
+                                    </div>
+                                    <div class="text-[11px] text-slate-400 flex items-center gap-2">
+                                        <i data-lucide="terminal" class="w-3 h-3"></i> Terminal — zsh
+                                    </div>
+                                    <div class="w-10"></div>
                                 </div>
-                                <div class="w-10"></div>
-                            </div>
 
-                            <!-- Terminal Body -->
-                            <div class="p-6 font-mono text-sm overflow-y-auto flex-1 custom-scrollbar text-slate-300"
-                                id="pip-console">
-                                <div id="terminal-stream" class="space-y-1 text-[12px] mb-2"></div>
-                                <div id="pip-input-line" class="flex items-center gap-2 mb-4 group">
-                                    <span class="text-green-400 font-bold shrink-0">estudiante@mackbook ∼ %</span>
-                                    <input type="text" id="pip-input" placeholder="pip install requests"
-                                        class="bg-transparent border-none outline-none text-white w-full font-mono placeholder:text-slate-700"
-                                        onkeypress="if(event.key==='Enter') runPipInstall()">
+                                <!-- Terminal Body -->
+                                <div class="p-6 font-mono text-sm overflow-y-auto flex-1 custom-scrollbar text-slate-300"
+                                    id="pip-console">
+                                    <div id="terminal-stream" class="space-y-1 text-[12px] mb-2"></div>
+                                    <div id="pip-input-line" class="flex items-center gap-2 mb-4 group">
+                                        <span class="text-green-400 font-bold shrink-0">estudiante@macbook ∼ %</span>
+                                        <input type="text" id="pip-input" placeholder="pip install requests"
+                                            class="bg-transparent border-none outline-none text-white w-full font-mono placeholder:text-slate-700"
+                                            onkeypress="if(event.key==='Enter') runPipInstall()">
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -708,7 +715,7 @@
 
                     <!-- Right: Popular List -->
                     <div
-                        class="lg:col-span-5 bg-white rounded-[2.5rem] border border-slate-200 p-8 shadow-soft flex flex-col gap-8">
+                        class="lg:col-span-5 bg-white rounded-[2.5rem] border border-slate-200 p-8 shadow-soft flex flex-col gap-4">
                         <div>
                             <h3
                                 class="font-black text-slate-900 uppercase text-xs tracking-[0.2em] mb-6 flex items-center gap-2">
@@ -716,76 +723,107 @@
                                 Populares
                             </h3>
                             <div class="grid grid-cols-1 gap-4">
+                                <!-- Matplotlib -->
                                 <div class="flex items-center gap-4 group cursor-pointer"
-                                    onclick="document.getElementById('pip-input').value='pip install requests'; runPipInstall()">
+                                    onclick="document.getElementById('pip-input').value='pip install matplotlib'; runPipInstall()">
                                     <div
-                                        class="w-10 h-10 bg-blue-50 text-blue-600 rounded-xl flex items-center justify-center shrink-0 group-hover:bg-blue-600 group-hover:text-white transition-all">
-                                        <i data-lucide="globe" class="w-5 h-5"></i>
+                                        class="w-12 h-12 bg-rose-50 text-rose-600 rounded-xl flex items-center justify-center shrink-0 group-hover:bg-rose-600 group-hover:text-white transition-all">
+                                        <i data-lucide="bar-chart-3" class="w-6 h-6"></i>
                                     </div>
                                     <div class="flex-1">
-                                        <div class="flex justify-between items-center mb-0.5">
-                                            <span class="font-bold text-slate-800">Requests</span>
-                                            <span class="text-[10px] text-slate-400 font-mono">Para APIs</span>
-                                        </div>
-                                        <div class="h-1 bg-slate-100 rounded-full overflow-hidden">
-                                            <div class="h-full bg-blue-500 w-[95%]"></div>
-                                        </div>
+                                        <div class="font-bold text-slate-900">matplotlib</div>
+                                        <div class="text-[11px] text-slate-500">Visualización de datos y gráficos
+                                            profesionales.</div>
                                     </div>
+                                    <i data-lucide="chevron-right"
+                                        class="w-4 h-4 text-slate-300 group-hover:text-rose-600 transition-colors"></i>
                                 </div>
-                                <div class="flex items-center gap-4 group cursor-pointer"
-                                    onclick="document.getElementById('pip-input').value='pip install pandas'; runPipInstall()">
-                                    <div
-                                        class="w-10 h-10 bg-teal-50 text-teal-600 rounded-xl flex items-center justify-center shrink-0 group-hover:bg-teal-600 group-hover:text-white transition-all">
-                                        <i data-lucide="table" class="w-5 h-5"></i>
-                                    </div>
-                                    <div class="flex-1">
-                                        <div class="flex justify-between items-center mb-0.5">
-                                            <span class="font-bold text-slate-800">Pandas</span>
-                                            <span class="text-[10px] text-slate-400 font-mono">Datos</span>
-                                        </div>
-                                        <div class="h-1 bg-slate-100 rounded-full overflow-hidden">
-                                            <div class="h-full bg-teal-500 w-[85%]"></div>
-                                        </div>
-                                    </div>
-                                </div>
+
+                                <!-- NumPy -->
                                 <div class="flex items-center gap-4 group cursor-pointer"
                                     onclick="document.getElementById('pip-input').value='pip install numpy'; runPipInstall()">
                                     <div
-                                        class="w-10 h-10 bg-indigo-50 text-indigo-600 rounded-xl flex items-center justify-center shrink-0 group-hover:bg-indigo-600 group-hover:text-white transition-all">
-                                        <i data-lucide="grid-3x3" class="w-5 h-5"></i>
+                                        class="w-12 h-12 bg-indigo-50 text-indigo-600 rounded-xl flex items-center justify-center shrink-0 group-hover:bg-indigo-600 group-hover:text-white transition-all">
+                                        <i data-lucide="binary" class="w-6 h-6"></i>
                                     </div>
                                     <div class="flex-1">
-                                        <div class="flex justify-between items-center mb-0.5">
-                                            <span class="font-bold text-slate-800">NumPy</span>
-                                            <span class="text-[10px] text-slate-400 font-mono">Cálculos</span>
-                                        </div>
-                                        <div class="h-1 bg-slate-100 rounded-full overflow-hidden">
-                                            <div class="h-full bg-indigo-500 w-[90%]"></div>
-                                        </div>
+                                        <div class="font-bold text-slate-900">numpy</div>
+                                        <div class="text-[11px] text-slate-500">Cálculo numérico de alto rendimiento y
+                                            matrices.</div>
                                     </div>
+                                    <i data-lucide="chevron-right"
+                                        class="w-4 h-4 text-slate-300 group-hover:text-indigo-600 transition-colors"></i>
                                 </div>
+
+                                <!-- Pandas -->
+                                <div class="flex items-center gap-4 group cursor-pointer"
+                                    onclick="document.getElementById('pip-input').value='pip install pandas'; runPipInstall()">
+                                    <div
+                                        class="w-12 h-12 bg-teal-50 text-teal-600 rounded-xl flex items-center justify-center shrink-0 group-hover:bg-teal-600 group-hover:text-white transition-all">
+                                        <i data-lucide="table" class="w-6 h-6"></i>
+                                    </div>
+                                    <div class="flex-1">
+                                        <div class="font-bold text-slate-900">pandas</div>
+                                        <div class="text-[11px] text-slate-500">Manipulación y análisis de tablas de
+                                            datos.</div>
+                                    </div>
+                                    <i data-lucide="chevron-right"
+                                        class="w-4 h-4 text-slate-300 group-hover:text-teal-600 transition-colors"></i>
+                                </div>
+
+                                <!-- Requests -->
+                                <div class="flex items-center gap-4 group cursor-pointer"
+                                    onclick="document.getElementById('pip-input').value='pip install requests'; runPipInstall()">
+                                    <div
+                                        class="w-12 h-12 bg-blue-50 text-blue-600 rounded-xl flex items-center justify-center shrink-0 group-hover:bg-blue-600 group-hover:text-white transition-all">
+                                        <i data-lucide="globe" class="w-6 h-6"></i>
+                                    </div>
+                                    <div class="flex-1">
+                                        <div class="font-bold text-slate-900">requests</div>
+                                        <div class="text-[11px] text-slate-500">El estandarte para conectar con
+                                            internet.</div>
+                                    </div>
+                                    <i data-lucide="chevron-right"
+                                        class="w-4 h-4 text-slate-300 group-hover:text-blue-600 transition-colors"></i>
+                                </div>
+
+                                <!-- Scikit-learn -->
+                                <div class="flex items-center gap-4 group cursor-pointer"
+                                    onclick="document.getElementById('pip-input').value='pip install scikit-learn'; runPipInstall()">
+                                    <div
+                                        class="w-12 h-12 bg-orange-50 text-orange-600 rounded-xl flex items-center justify-center shrink-0 group-hover:bg-orange-600 group-hover:text-white transition-all">
+                                        <i data-lucide="brain-circuit" class="w-6 h-6"></i>
+                                    </div>
+                                    <div class="flex-1">
+                                        <div class="font-bold text-slate-900">scikit-learn</div>
+                                        <div class="text-[11px] text-slate-500">Aprendizaje automático (Machine
+                                            Learning) sencillo.</div>
+                                    </div>
+                                    <i data-lucide="chevron-right"
+                                        class="w-4 h-4 text-slate-300 group-hover:text-orange-600 transition-colors"></i>
+                                </div>
+
+                                <!-- OpenAI -->
                                 <div class="flex items-center gap-4 group cursor-pointer"
                                     onclick="document.getElementById('pip-input').value='pip install openai'; runPipInstall()">
                                     <div
-                                        class="w-10 h-10 bg-purple-50 text-purple-600 rounded-xl flex items-center justify-center shrink-0 group-hover:bg-purple-600 group-hover:text-white transition-all">
-                                        <i data-lucide="bot" class="w-5 h-5"></i>
+                                        class="w-12 h-12 bg-purple-50 text-purple-600 rounded-xl flex items-center justify-center shrink-0 group-hover:bg-purple-600 group-hover:text-white transition-all">
+                                        <i data-lucide="sparkles" class="w-6 h-6"></i>
                                     </div>
                                     <div class="flex-1">
-                                        <div class="flex justify-between items-center mb-0.5">
-                                            <span class="font-bold text-slate-800">OpenAI</span>
-                                            <span class="text-[10px] text-slate-400 font-mono">I.A.</span>
-                                        </div>
-                                        <div class="h-1 bg-slate-100 rounded-full overflow-hidden">
-                                            <div class="h-full bg-purple-500 w-[70%]"></div>
-                                        </div>
+                                        <div class="font-bold text-slate-900">openai</div>
+                                        <div class="text-[11px] text-slate-500">Integración con modelos de IA como
+                                            GPT-4.</div>
                                     </div>
+                                    <i data-lucide="chevron-right"
+                                        class="w-4 h-4 text-slate-300 group-hover:text-purple-600 transition-colors"></i>
                                 </div>
                             </div>
                         </div>
 
-                        <div class="mt-auto bg-slate-50 p-6 rounded-3xl border border-dashed border-slate-300">
+                        <div class="mt-auto bg-slate-50 p-4 rounded-2xl border border-dashed border-slate-300">
                             <h4
-                                class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2 flex items-center gap-2">
+                                class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1 flex items-center gap-2">
                                 <i data-lucide="info" class="w-3 h-3"></i> Tip de Oro
                             </h4>
                             <p class="text-xs text-slate-600 italic">
@@ -798,58 +836,123 @@
             </div>
         </section>
 
-        <!-- SLIDE 9: PROFUNDIZACIÓN BIBLIOTECAS POPULARES -->
+        <!-- SLIDE 9: EXPLORADOR DE BIBLIOTECAS -->
         <section class="slide flex flex-col items-center p-8" id="slide-9">
-            <h2 class="text-3xl font-black mb-10 text-slate-900">Aplicaciones Reales</h2>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl w-full">
-                <div class="bg-white p-6 rounded-3xl border-2 border-slate-50 shadow-soft">
-                    <h3 class="font-bold flex items-center gap-2 mb-4"><i data-lucide="database"
-                            class="text-blue-600"></i> Data Science</h3>
-                    <p class="text-xs text-slate-500 mb-4">NumPy y Pandas para análisis de datos masivos.</p>
-                    <div class="rounded-lg overflow-hidden border border-slate-200 shadow-md bg-white">
-                        <div class="bg-slate-50 px-2 py-0.5 flex items-center justify-between border-b">
-                            <div class="text-[6px] text-slate-300">● ● ●</div>
-                            <div class="text-[6px] text-slate-500 font-mono font-bold">script.py</div>
+            <div class="max-w-6xl w-full">
+                <header class="flex flex-col gap-2 mb-8">
+                    <h2 class="text-4xl font-black text-slate-900 tracking-tight">Aplicaciones Reales</h2>
+                    <p class="text-slate-500 font-medium italic">Explora casos de uso y ejemplos de código para cada
+                        biblioteca.</p>
+                </header>
+
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 h-[500px]">
+                    <!-- Left: Selector -->
+                    <div class="lg:col-span-4 flex flex-col gap-2 overflow-y-auto custom-scrollbar pr-2">
+                        <div onclick="selectDeepLib('matplotlib')" data-lib-tab="matplotlib"
+                            class="deep-lib-tab p-4 rounded-2xl border-2 border-slate-100 bg-white cursor-pointer transition-all hover:border-brand-200 active">
+                            <div class="flex items-center gap-3">
+                                <div
+                                    class="w-10 h-10 bg-rose-50 text-rose-600 rounded-xl flex items-center justify-center shrink-0">
+                                    <i data-lucide="bar-chart-3" class="w-5 h-5"></i>
+                                </div>
+                                <div class="font-bold text-slate-800">matplotlib</div>
+                            </div>
                         </div>
-                        <div class="p-3">
-                            <pre class="!p-0 !bg-transparent !text-[10px]"><code class="language-python text-slate-800">import pandas as pd
-df = pd.read_csv("data.csv")</code></pre>
+                        <div onclick="selectDeepLib('numpy')" data-lib-tab="numpy"
+                            class="deep-lib-tab p-4 rounded-2xl border-2 border-slate-100 bg-white cursor-pointer transition-all hover:border-brand-200">
+                            <div class="flex items-center gap-3">
+                                <div
+                                    class="w-10 h-10 bg-indigo-50 text-indigo-600 rounded-xl flex items-center justify-center shrink-0">
+                                    <i data-lucide="binary" class="w-5 h-5"></i>
+                                </div>
+                                <div class="font-bold text-slate-800">numpy</div>
+                            </div>
+                        </div>
+                        <div onclick="selectDeepLib('pandas')" data-lib-tab="pandas"
+                            class="deep-lib-tab p-4 rounded-2xl border-2 border-slate-100 bg-white cursor-pointer transition-all hover:border-brand-200">
+                            <div class="flex items-center gap-3">
+                                <div
+                                    class="w-10 h-10 bg-teal-50 text-teal-600 rounded-xl flex items-center justify-center shrink-0">
+                                    <i data-lucide="table" class="w-5 h-5"></i>
+                                </div>
+                                <div class="font-bold text-slate-800">pandas</div>
+                            </div>
+                        </div>
+                        <div onclick="selectDeepLib('requests')" data-lib-tab="requests"
+                            class="deep-lib-tab p-4 rounded-2xl border-2 border-slate-100 bg-white cursor-pointer transition-all hover:border-brand-200">
+                            <div class="flex items-center gap-3">
+                                <div
+                                    class="w-10 h-10 bg-blue-50 text-blue-600 rounded-xl flex items-center justify-center shrink-0">
+                                    <i data-lucide="globe" class="w-5 h-5"></i>
+                                </div>
+                                <div class="font-bold text-slate-800">requests</div>
+                            </div>
+                        </div>
+                        <div onclick="selectDeepLib('scikit-learn')" data-lib-tab="scikit-learn"
+                            class="deep-lib-tab p-4 rounded-2xl border-2 border-slate-100 bg-white cursor-pointer transition-all hover:border-brand-200">
+                            <div class="flex items-center gap-3">
+                                <div
+                                    class="w-10 h-10 bg-orange-50 text-orange-600 rounded-xl flex items-center justify-center shrink-0">
+                                    <i data-lucide="brain-circuit" class="w-5 h-5"></i>
+                                </div>
+                                <div class="font-bold text-slate-800">scikit-learn</div>
+                            </div>
+                        </div>
+                        <div onclick="selectDeepLib('openai')" data-lib-tab="openai"
+                            class="deep-lib-tab p-4 rounded-2xl border-2 border-slate-100 bg-white cursor-pointer transition-all hover:border-brand-200">
+                            <div class="flex items-center gap-3">
+                                <div
+                                    class="w-10 h-10 bg-purple-50 text-purple-600 rounded-xl flex items-center justify-center shrink-0">
+                                    <i data-lucide="sparkles" class="w-5 h-5"></i>
+                                </div>
+                                <div class="font-bold text-slate-800">openai</div>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="bg-white p-6 rounded-3xl border-2 border-slate-50 shadow-soft">
-                    <h3 class="font-bold flex items-center gap-2 mb-4"><i data-lucide="globe"
-                            class="text-green-600"></i> Web/API</h3>
-                    <p class="text-xs text-slate-500 mb-4">Requests para obtener datos de internet.</p>
-                    <div class="rounded-lg overflow-hidden border border-slate-200 shadow-md bg-white">
-                        <div class="bg-slate-50 px-2 py-0.5 flex items-center justify-between border-b">
-                            <div class="text-[6px] text-slate-300">● ● ●</div>
-                            <div class="text-[6px] text-slate-500 font-mono font-bold">web.py</div>
-                        </div>
-                        <div class="p-3">
-                            <pre
-                                class="!p-0 !bg-transparent !text-[10px]"><code class="language-python text-slate-800"><span class="text-[#af00db]">import</span> requests<br>r = requests.<span class="text-[#795e26]">get</span>(url)</code></pre>
-                        </div>
-                    </div>
-                </div>
-                <div class="bg-white p-6 rounded-3xl border-2 border-slate-50 shadow-soft">
-                    <h3 class="font-bold flex items-center gap-2 mb-4"><i data-lucide="line-chart"
-                            class="text-indigo-600"></i> Gráficos</h3>
-                    <p class="text-xs text-slate-500 mb-4">Matplotlib para visualizaciones pro.</p>
-                    <div class="rounded-lg overflow-hidden border border-slate-200 shadow-md bg-white">
-                        <div class="bg-slate-50 px-2 py-0.5 flex items-center justify-between border-b">
-                            <div class="text-[6px] text-slate-300">● ● ●</div>
-                            <div class="text-[6px] text-slate-500 font-mono font-bold">plot.py</div>
-                        </div>
-                        <div class="p-3">
-                            <pre
-                                class="!p-0 !bg-transparent !text-[10px]"><code class="language-python text-slate-800"><span class="text-[#af00db]">import</span> matplotlib.pyplot <span class="text-[#af00db]">as</span> plt<br>plt.<span class="text-[#795e26]">plot</span>(x, y)</code></pre>
+
+                    <!-- Right: Content Display -->
+                    <div class="lg:col-span-8 flex flex-col gap-6">
+                        <div
+                            class="bg-white p-8 rounded-[2.5rem] border border-slate-200 shadow-soft flex-1 flex flex-col">
+                            <div class="mb-6">
+                                <h3 id="deep-lib-name" class="text-2xl font-black text-slate-900 mb-2">matplotlib</h3>
+                                <p id="deep-lib-desc" class="text-slate-600 leading-relaxed text-sm">Genera gráficos
+                                    visuales de alta calidad para analizar datos de forma intuitiva.</p>
+                            </div>
+
+                            <div
+                                class="flex-1 min-h-0 flex flex-col gap-0 shadow-xl rounded-2xl overflow-hidden border border-slate-200">
+                                <div
+                                    class="bg-[#f3f3f3] px-4 py-2 flex items-center justify-between border-b border-slate-200">
+                                    <div class="flex gap-1.5">
+                                        <div class="w-3 h-3 rounded-full bg-[#ff5f56] shadow-inner"></div>
+                                        <div class="w-3 h-3 rounded-full bg-[#ffbd2e] shadow-inner"></div>
+                                        <div class="w-3 h-3 rounded-full bg-[#27c93f] shadow-inner"></div>
+                                    </div>
+                                    <div class="text-[10px] text-slate-500 font-mono font-medium">ejemplo.py — VS Code
+                                    </div>
+                                    <button onclick="runDeepLibCode()"
+                                        class="flex items-center gap-2 bg-brand-500 hover:bg-brand-600 text-white text-[10px] font-bold px-3 py-1 rounded-lg transition-all shadow-sm active:scale-95">
+                                        <i data-lucide="play" class="w-3 h-3 fill-white"></i> Ejecutar
+                                    </button>
+                                </div>
+                                <div class="flex-1 bg-white overflow-hidden relative">
+                                    <pre class="p-6 h-full overflow-auto custom-scrollbar"><code id="deep-lib-code" class="language-python">import matplotlib.pyplot as plt
+
+meses = ['Ene', 'Feb', 'Mar']
+ventas = [150, 420, 310]
+
+plt.bar(meses, ventas)
+plt.title('Ventas Mensuales')
+plt.show()</code></pre>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
+            </div>
         </section>
-
         <!-- SLIDE 10: FINAL -->
         <section class="slide flex items-center justify-center p-8 bg-slate-900" id="slide-10">
             <div class="max-w-xl text-center">
@@ -860,6 +963,43 @@ df = pd.read_csv("data.csv")</code></pre>
                     class="text-slate-400 font-bold hover:text-white transition-colors">Volver al inicio</button>
             </div>
         </section>
+
+        <!-- RESULT MODAL -->
+        <div id="result-modal"
+            class="fixed inset-0 z-[100] hidden flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm transition-all">
+            <div
+                class="bg-white w-full max-w-2xl rounded-[2.5rem] shadow-2xl overflow-hidden animate-in fade-in zoom-in duration-300">
+                <!-- Modal Header -->
+                <div class="bg-slate-50 px-8 py-4 border-b border-slate-200 flex items-center justify-between">
+                    <div class="flex items-center gap-3">
+                        <div
+                            class="w-8 h-8 bg-brand-500 text-white rounded-lg flex items-center justify-center shadow-lg">
+                            <i data-lucide="terminal" class="w-4 h-4"></i>
+                        </div>
+                        <h4 class="font-black text-slate-900 uppercase text-xs tracking-widest">Resultado de Ejecución
+                        </h4>
+                    </div>
+                    <button onclick="closeResultModal()"
+                        class="w-8 h-8 rounded-full hover:bg-slate-200 flex items-center justify-center transition-colors">
+                        <i data-lucide="x" class="w-4 h-4 text-slate-500"></i>
+                    </button>
+                </div>
+
+                <!-- Modal Body (Loading State) -->
+                <div id="modal-loading" class="p-20 flex flex-col items-center justify-center gap-4">
+                    <div class="w-12 h-12 border-4 border-brand-200 border-t-brand-500 rounded-full animate-spin"></div>
+                    <p class="text-slate-500 font-mono text-sm">Ejecutando script...</p>
+                </div>
+
+                <!-- Modal Body (Results) -->
+                <div id="modal-content" class="p-8 hidden">
+                    <div id="result-visual-container"
+                        class="bg-slate-50 rounded-2xl border border-slate-200 p-6 min-h-[300px] flex items-center justify-center overflow-auto custom-scrollbar">
+                        <!-- Content will be injected here via JS -->
+                    </div>
+                </div>
+            </div>
+        </div>
 
         <!-- NAV -->
         <div class="fixed bottom-8 right-8 flex gap-4 z-50">
@@ -1146,10 +1286,10 @@ df = pd.read_csv("data.csv")</code></pre>
 
             if (!fullCommand) return;
 
-            // 1. Add executed command to the stream
+            // 2. Add the executed command to the stream
             const cmdLine = document.createElement('div');
             cmdLine.className = "flex gap-2 mb-1";
-            cmdLine.innerHTML = `<span class="text-green-400 font-bold">estudiante@mackbook ∼ %</span> <span class="text-white">${fullCommand}</span>`;
+            cmdLine.innerHTML = `<span class="text-green-400 font-bold">estudiante@macbook ∼ %</span> <span class="text-white">${fullCommand}</span>`;
             stream.appendChild(cmdLine);
 
             // 2. Hide the input line
@@ -1165,9 +1305,19 @@ df = pd.read_csv("data.csv")</code></pre>
                 return div;
             };
 
-            // Parsing
             const parts = fullCommand.split(' ').filter(p => p !== '');
-            if (parts[0] !== 'pip' || parts[1] !== 'install' || parts.length < 3) {
+            const isPipInstall = parts[0] === 'pip' && parts[1] === 'install' && parts.length >= 3;
+
+            const libVersions = {
+                'matplotlib': '3.8.3',
+                'numpy': '1.26.4',
+                'pandas': '2.2.1',
+                'requests': '2.31.0',
+                'scikit-learn': '1.4.1',
+                'openai': '1.12.0'
+            };
+
+            if (!isPipInstall) {
                 setTimeout(() => {
                     addLog(`zsh: command not found: ${parts[0]}`, 'text-red-400 opacity-80');
                     if (parts[0] === 'pip' && parts[1] !== 'install') {
@@ -1179,14 +1329,25 @@ df = pd.read_csv("data.csv")</code></pre>
             }
 
             const lib = parts[2].toLowerCase();
+            const version = libVersions[lib];
+
+            if (!version) {
+                setTimeout(() => {
+                    addLog(`ERROR: Could not find a version that satisfies the requirement ${lib}`, 'text-red-400');
+                    addLog(`ERROR: No matching distribution found for ${lib}`, 'text-red-400');
+                    finishCommand();
+                }, 300);
+                return;
+            }
+
             addLog(`Collecting ${lib}...`, 'text-blue-400');
 
             setTimeout(() => {
-                const progress = addLog(`  Downloading ${lib}-2.4.1-py3-none-any.whl (1.2 MB)`);
+                const progress = addLog(`  Downloading ${lib}-${version}-py3-none-any.whl (1.2 MB)`);
                 let percent = 0;
                 const interval = setInterval(() => {
                     percent += 10;
-                    progress.innerHTML = `  Downloading ${lib}-2.4.1-py3-none-any.whl (${percent}%)`;
+                    progress.innerHTML = `  Downloading ${lib}-${version}-py3-none-any.whl (${percent}%)`;
                     if (percent >= 100) {
                         clearInterval(interval);
                         startInstallation();
@@ -1198,7 +1359,7 @@ df = pd.read_csv("data.csv")</code></pre>
                 setTimeout(() => {
                     addLog('Installing package libraries...', 'text-slate-400');
                     setTimeout(() => {
-                        addLog(`Successfully installed ${lib}-2.4.1`, 'text-green-400 font-bold');
+                        addLog(`Successfully installed ${lib}-${version}`, 'text-green-400 font-bold');
                         addLog(`<br><span class="text-amber-400">WARNING:</span> You are using pip version 21.0.1; however, version 23.3.1 is available.`, 'text-[10px]');
                         finishCommand();
                     }, 800);
@@ -1214,6 +1375,194 @@ df = pd.read_csv("data.csv")</code></pre>
                     lucide.createIcons();
                 }, 200);
             }
+        }
+
+        // SLIDE 9: LIBRARY DEEP DIVE
+        const deepLibs = {
+            'matplotlib': {
+                name: 'matplotlib',
+                desc: 'Genera gráficos visuales de alta calidad para analizar datos de forma intuitiva.',
+                code: 'import matplotlib.pyplot as plt\n\nmeses = [\'Ene\', \'Feb\', \'Mar\']\nventas = [150, 420, 310]\n\nplt.bar(meses, ventas)\nplt.title(\'Ventas Mensuales\')\nplt.show()'
+            },
+            'numpy': {
+                name: 'numpy',
+                desc: 'Especializada en cálculo numérico y matrices de gran escala con alta velocidad.',
+                code: 'import numpy as np\n\nedades = np.array([21, 45, 18, 32])\npromedio = np.mean(edades)\nmaximo = np.max(edades)\n\nprint(f"Promedio: {promedio}")\nprint(f"Máximo: {maximo}")'
+            },
+            'pandas': {
+                name: 'pandas',
+                desc: 'La herramienta definitiva para manipular tablas de datos (DataFrames) de forma eficiente.',
+                code: 'import pandas as pd\n\ndata = {\n  \'Nombre\': [\'Ana\', \'Luis\', \'Marta\'],\n  \'Nota\': [9.5, 8.2, 9.1]\n}\ndf = pd.DataFrame(data)\n\nprint(df.describe()) # Resumen estadístico'
+            },
+            'requests': {
+                name: 'requests',
+                desc: 'Permite enviar peticiones HTTP de forma sencilla para interactuar con APIs y sitios web.',
+                code: 'import requests\n\n# Pedir información a una API\nresponse = requests.get("https://api.github.com/users/python")\ndatos = response.json()\n\nprint(f"Bio: {datos[\'bio\']}")'
+            },
+            'scikit-learn': {
+                name: 'scikit-learn',
+                desc: 'Proporciona herramientas robustas para crear y entrenar modelos de Inteligencia Artificial.',
+                code: 'from sklearn.linear_model import LinearRegression\nimport numpy as np\n\nmodel = LinearRegression()\nX = np.array([[1], [2], [3]])\ny = np.array([2, 4, 6])\n\nmodel.fit(X, y) # Entrenar modelo\nprint(model.predict([[4]])) # Predecir'
+            },
+            'openai': {
+                name: 'openai',
+                desc: 'Conecta tus aplicaciones con los modelos de lenguaje más avanzados del mundo (GPT-4).',
+                code: 'from openai import OpenAI\n\nclient = OpenAI(api_key="TU_KEY_AQUI")\n\nchat = client.chat.completions.create(\n  model="gpt-4",\n  messages=[{"role": "user", "content": "¡Hola!"}]\n)\n\nprint(chat.choices[0].message.content)'
+            }
+        };
+
+        let currentDeepLib = 'matplotlib'; // Default
+
+        function selectDeepLib(libId) {
+            currentDeepLib = libId;
+            const lib = deepLibs[libId];
+            if (!lib) return;
+
+            // Update UI content
+            document.getElementById('deep-lib-name').innerText = lib.name;
+            document.getElementById('deep-lib-desc').innerText = lib.desc;
+
+            const codeEl = document.getElementById('deep-lib-code');
+            codeEl.textContent = lib.code;
+
+            // Re-highlight code
+            Prism.highlightElement(codeEl);
+
+            // Update tabs state
+            document.querySelectorAll('.deep-lib-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            const targetTab = document.querySelector(`[data-lib-tab="${libId}"]`);
+            if (targetTab) targetTab.classList.add('active');
+        }
+
+        function runDeepLibCode() {
+            const modal = document.getElementById('result-modal');
+            const loading = document.getElementById('modal-loading');
+            const content = document.getElementById('modal-content');
+            const container = document.getElementById('result-visual-container');
+
+            modal.classList.remove('hidden');
+            loading.classList.remove('hidden');
+            content.classList.add('hidden');
+
+            setTimeout(() => {
+                loading.classList.add('hidden');
+                content.classList.remove('hidden');
+
+                // Set the visual based on the current library
+                container.innerHTML = getVisualResult(currentDeepLib);
+                lucide.createIcons();
+            }, 1200);
+        }
+
+        function closeResultModal() {
+            document.getElementById('result-modal').classList.add('hidden');
+        }
+
+        function getVisualResult(libId) {
+            const visuals = {
+                'matplotlib': `
+                    <div class="flex flex-col items-center w-full max-w-md">
+                        <div class="flex items-end gap-3 h-48 w-full border-b-2 border-slate-300 pb-1 px-4 mb-2">
+                            <div class="bg-rose-500 w-full rounded-t-lg transition-all duration-1000 animate-in slide-in-from-bottom" style="height: 40%"></div>
+                            <div class="bg-indigo-500 w-full rounded-t-lg transition-all duration-1000 animate-in slide-in-from-bottom" style="height: 100%"></div>
+                            <div class="bg-teal-500 w-full rounded-t-lg transition-all duration-1000 animate-in slide-in-from-bottom" style="height: 75%"></div>
+                        </div>
+                        <div class="flex justify-between w-full px-4 text-[10px] font-bold text-slate-400 font-mono">
+                            <span>ENE</span><span>FEB</span><span>MAR</span>
+                        </div>
+                        <p class="mt-6 text-xs font-bold text-slate-900 uppercase tracking-widest">Ventas Mensuales</p>
+                    </div>
+                `,
+                'numpy': `
+                    <div class="flex flex-col gap-4 font-mono text-xs w-full max-w-sm">
+                        <div class="p-4 bg-slate-900 text-green-400 rounded-xl border border-slate-700 shadow-xl">
+                            <span class="text-slate-500">>>> np.mean(edades)</span><br>
+                            <span class="font-bold">29.0</span><br><br>
+                            <span class="text-slate-500">>>> np.max(edades)</span><br>
+                            <span class="font-bold">45</span>
+                        </div>
+                        <div class="flex items-center gap-2 text-slate-400 italic">
+                            <i data-lucide="zap" class="w-3 h-3"></i> Procesado en 0.0002s
+                        </div>
+                    </div>
+                `,
+                'pandas': `
+                    <div class="w-full flex flex-col gap-4">
+                        <table class="w-full text-xs text-left border-collapse rounded-xl overflow-hidden shadow-sm">
+                            <thead class="bg-slate-100 text-slate-600 font-bold uppercase text-[10px]">
+                                <tr>
+                                    <th class="p-3 border-b">Nombre</th>
+                                    <th class="p-3 border-b">Nota</th>
+                                </tr>
+                            </thead>
+                            <tbody class="text-slate-700">
+                                <tr class="bg-white border-b hover:bg-slate-50 transition-colors">
+                                    <td class="p-3 font-medium">Ana</td>
+                                    <td class="p-3 text-brand-600 font-bold">9.5</td>
+                                </tr>
+                                <tr class="bg-white border-b hover:bg-slate-50 transition-colors">
+                                    <td class="p-3 font-medium">Luis</td>
+                                    <td class="p-3 text-brand-600 font-bold">8.2</td>
+                                </tr>
+                                <tr class="bg-white hover:bg-slate-50 transition-colors">
+                                    <td class="p-3 font-medium">Marta</td>
+                                    <td class="p-3 text-brand-600 font-bold">9.1</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <p class="text-[10px] text-slate-400 font-mono">DataFrame: 3 rows x 2 columns</p>
+                    </div>
+                `,
+                'requests': `
+                    <div class="w-full bg-[#1e1e1e] rounded-xl p-6 font-mono text-sm overflow-hidden shadow-2xl">
+                        <div class="flex items-center gap-2 mb-4">
+                            <span class="px-2 py-0.5 bg-green-900/30 text-green-400 text-[10px] rounded border border-green-500/30">200 OK</span>
+                            <span class="text-slate-500 text-[10px]">GET /users/python</span>
+                        </div>
+                        <div class="text-sky-300 italic mb-2">{</div>
+                        <div class="pl-4">
+                            <span class="text-orange-300">"login"</span>: <span class="text-amber-100">"python"</span>,<br>
+                            <span class="text-orange-300">"bio"</span>: <span class="text-amber-100">"The Python Programming Language"</span>,<br>
+                            <span class="text-orange-300">"public_repos"</span>: <span class="text-amber-100">247</span>
+                        </div>
+                        <div class="text-sky-300 italic">}</div>
+                    </div>
+                `,
+                'scikit-learn': `
+                    <div class="flex flex-col items-center w-full max-w-md">
+                        <div class="relative h-48 w-full border-b-2 border-l-2 border-slate-300 px-4 mb-4">
+                            <div class="absolute bottom-[20%] left-[10%] w-2 h-2 rounded-full bg-slate-400"></div>
+                            <div class="absolute bottom-[40%] left-[30%] w-2 h-2 rounded-full bg-slate-400"></div>
+                            <div class="absolute bottom-[60%] left-[50%] w-2 h-2 rounded-full bg-slate-400"></div>
+                            <div class="absolute bottom-[80%] left-[70%] w-3 h-3 rounded-full bg-rose-500 shadow-lg animate-pulse ring-4 ring-rose-200"></div>
+                            <svg class="absolute inset-0 w-full h-full pointer-events-none">
+                                <line x1="10%" y1="80%" x2="90%" y2="10%" stroke="#0ea5e9" stroke-width="2" stroke-dasharray="4" class="animate-in fade-in duration-1000" />
+                            </svg>
+                        </div>
+                        <p class="text-xs text-slate-500 font-bold uppercase tracking-widest">Modelo de Regresión Lineal</p>
+                    </div>
+                `,
+                'openai': `
+                    <div class="w-full flex flex-col gap-4 max-w-md">
+                        <div class="flex gap-3 justify-end items-start">
+                            <div class="bg-brand-500 text-white p-4 rounded-2xl rounded-tr-none text-xs shadow-sm border border-brand-600">
+                                ¡Hola! Explícame qué es una biblioteca.
+                            </div>
+                        </div>
+                        <div class="flex gap-3 items-start">
+                            <div class="w-8 h-8 rounded-full bg-slate-900 border border-slate-700 flex items-center justify-center shrink-0 shadow-lg">
+                                <i data-lucide="sparkles" class="w-4 h-4 text-purple-400"></i>
+                            </div>
+                            <div class="bg-white border border-slate-200 p-4 rounded-2xl rounded-tl-none text-xs shadow-sm leading-relaxed text-slate-700 animate-in fade-in slide-in-from-left duration-700">
+                                Una biblioteca es un conjunto de herramientas y funciones ya programadas por otros que puedes "importar" para hacer tu vida más fácil y potenciar tu código.
+                            </div>
+                        </div>
+                    </div>
+                `
+            };
+            return visuals[libId] || `<p class="text-slate-400">Resultado no disponible.</p>`;
         }
 
 
