@@ -272,19 +272,72 @@
         </section>
 
         <section class="slide flex flex-col items-center justify-center p-8" id="slide-3">
-            <div class="max-w-4xl w-full">
-                <h2 class="text-3xl font-black mb-6 text-slate-900 border-l-4 border-brand-500 pl-4">Cómo se usan las
-                    bibliotecas</h2>
+            <div class="max-w-6xl w-full">
+                <header class="mb-10">
+                    <h2 class="text-3xl font-black text-slate-900 border-l-4 border-brand-500 pl-4">Cómo se usan las
+                        bibliotecas</h2>
+                </header>
 
-                <div class="bg-blue-50 border-l-4 border-blue-500 p-6 rounded-xl mb-10">
-                    <p class="text-blue-800 font-medium leading-relaxed italic">
-                        Al ejecutar <code class="bg-white px-1 font-mono">import math</code>, Python busca el módulo, lo
-                        carga y crea un <b>objeto</b> llamado <code class="bg-white px-1 font-mono">math</code> que
-                        contiene todas las funciones listas para usar.
-                    </p>
-                </div>
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
+                    <!-- Left Column: Explanation -->
+                    <div class="space-y-6">
+                        <div
+                            class="bg-blue-50 border-l-4 border-blue-500 p-8 rounded-2xl shadow-sm transition-all hover:bg-blue-100/50">
+                            <p class="text-blue-900 font-medium leading-relaxed mb-6">
+                                En Python, la instrucción <code
+                                    class="bg-white px-2 py-0.5 rounded border border-blue-200 font-mono text-sm">import</code>
+                                se utiliza para cargar módulos (bibliotecas) que contienen código ya escrito que podemos
+                                reutilizar.
+                                Al escribir <b>import</b> seguido del nombre de un módulo, le decimos a Python:
+                                <span class="italic text-blue-800">"carga este módulo y haz que todo su contenido esté
+                                    disponible para mí"</span>.
+                            </p>
 
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                            <div class="flex items-center gap-4 bg-white/60 p-4 rounded-xl border border-blue-100 mb-6">
+                                <i data-lucide="info" class="w-6 h-6 text-blue-600 shrink-0"></i>
+                                <div class="text-sm text-blue-800">
+                                    <b>Por ejemplo:</b> <code
+                                        class="bg-slate-900 text-white px-2 py-1 rounded font-mono ml-2">import math</code>
+                                </div>
+                            </div>
+
+                            <p class="text-blue-900 font-bold mb-4">Cuando ejecutamos <code
+                                    class="bg-white px-1 font-mono">import math</code>, Python realiza tres pasos
+                                internos:</p>
+                            <ul class="space-y-3">
+                                <li class="flex items-start gap-3">
+                                    <span
+                                        class="w-6 h-6 bg-blue-600 text-white rounded-full flex items-center justify-center text-xs font-bold shrink-0 mt-0.5">1</span>
+                                    <span class="text-blue-800 text-sm"><b>Busca</b> el módulo llamado <code
+                                            class="font-mono bg-white/40 px-1">math</code> en el sistema.</span>
+                                </li>
+                                <li class="flex items-start gap-3">
+                                    <span
+                                        class="w-6 h-6 bg-blue-600 text-white rounded-full flex items-center justify-center text-xs font-bold shrink-0 mt-0.5">2</span>
+                                    <span class="text-blue-800 text-sm"><b>Lo carga</b> en la memoria del ordenador (si
+                                        no estaba ya cargado).</span>
+                                </li>
+                                <li class="flex items-start gap-3">
+                                    <span
+                                        class="w-6 h-6 bg-blue-600 text-white rounded-full flex items-center justify-center text-xs font-bold shrink-0 mt-0.5">3</span>
+                                    <span class="text-blue-800 text-sm"><b>Crea un objeto</b> llamado <code
+                                            class="font-mono bg-white/40 px-1">math</code> que contiene todas las
+                                        funciones matemáticas y constantes incluidas en el módulo.</span>
+                                </li>
+                                <li class="flex items-start gap-3">
+                                    <span
+                                        class="w-6 h-6 bg-emerald-600 text-white rounded-full flex items-center justify-center text-xs font-bold shrink-0 mt-0.5">4</span>
+                                    <span class="text-blue-800 text-sm"><b>Acceso:</b> Para usar cualquier función,
+                                        debemos usar el prefijo <code
+                                            class="font-mono bg-white/40 px-1 text-emerald-700 font-bold">math.</code>
+                                        (Notación de Punto). Esto le indica a Python que busque específicamente
+                                        <i>dentro</i> de esa biblioteca.</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Right Column: Interactive Editor -->
                     <div
                         class="bg-white p-8 rounded-3xl shadow-soft border border-slate-100 flex flex-col gap-6 transition-all hover:border-brand-200">
                         <h4 class="text-xs font-bold uppercase text-slate-400 mb-2">Editor Interactivo</h4>
@@ -306,9 +359,9 @@
                             <span id="math-paren-close" class="font-mono text-sm text-brand-600 font-bold">)</span>
                         </div>
                         <div
-                            class="rounded-xl overflow-hidden border border-slate-200 shadow-xl bg-white transition-all hover:shadow-2xl">
+                            class="rounded-2xl overflow-hidden border border-slate-200 shadow-xl bg-white transition-all hover:shadow-2xl">
                             <div
-                                class="bg-[#f3f3f3] px-4 py-2 flex items-center justify-between border-b border-slate-100">
+                                class="bg-[#f3f3f3] px-4 py-2 flex items-center justify-between border-b border-slate-200">
                                 <div class="flex gap-1.5">
                                     <div class="w-3 h-3 rounded-full bg-[#ff5f56] shadow-inner"></div>
                                     <div class="w-3 h-3 rounded-full bg-[#ffbd2e] shadow-inner"></div>
@@ -332,30 +385,6 @@
                             </div>
                         </div>
                     </div>
-                    <div class="space-y-6">
-                        <div
-                            class="flex items-start gap-4 p-5 bg-white rounded-2xl border border-slate-100 shadow-sm card-hover transition-all">
-                            <div class="bg-brand-50 p-2 rounded-lg mt-1">
-                                <i data-lucide="mouse-pointer-2" class="w-5 h-5 text-brand-600"></i>
-                            </div>
-                            <p class="text-sm text-slate-600 leading-relaxed">
-                                <b>Notación de Punto:</b> Usamos <code class="bg-slate-50 px-1 font-mono">math.</code>
-                                para indicarle a Python que busque dentro del objeto que importamos.
-                            </p>
-                        </div>
-                        <div
-                            class="flex items-start gap-4 p-5 bg-white rounded-2xl border border-slate-100 shadow-sm card-hover transition-all">
-                            <div class="bg-brand-50 p-2 rounded-lg mt-1">
-                                <i data-lucide="zap" class="w-5 h-5 text-brand-600"></i>
-                            </div>
-                            <p class="text-sm text-slate-600 leading-relaxed">
-                                <b>Interactividad:</b> Selecciona una función y cambia el valor para ver cómo se
-                                comporta
-                                en tiempo real. ¡Prueba con <code class="bg-slate-50 px-1 font-mono">pi</code> para ver
-                                una constante!
-                            </p>
-                        </div>
-                    </div>
                 </div>
             </div>
         </section>
@@ -364,9 +393,9 @@
         <section class="slide flex flex-col items-center justify-center p-8" id="slide-4">
             <div class="max-w-5xl w-full">
                 <header class="text-center mb-12">
-                    <h2 class="text-4xl font-black text-slate-900 mb-3 tracking-tight">La Magia de la Abstracción</h2>
-                    <p class="text-slate-500 font-medium italic">"Las bibliotecas transforman problemas matemáticos
-                        crueles en código legible"</p>
+                    <h2 class="text-4xl font-black text-slate-900 mb-3 tracking-tight">Manual vs. Bibliotecas</h2>
+                    <p class="text-slate-500 font-medium italic">Aquí tienes un ejemplo de cómo buscar la distancia
+                        entre dos puntos en un plano cartesiano, haciéndolo a mano y con bibliotecas.</p>
                 </header>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
@@ -376,16 +405,21 @@
                             <i data-lucide="x-circle" class="w-6 h-6"></i>
                             <h3 class="font-bold text-lg uppercase tracking-wider">Cálculo Manual</h3>
                         </div>
-                        <div class="bg-white rounded-3xl border-2 border-slate-100 shadow-soft overflow-hidden">
-                            <div class="bg-slate-50 px-4 py-2 flex items-center justify-between border-b">
-                                <span class="text-[10px] font-mono text-slate-400">geometria_cruda.py</span>
+                        <div
+                            class="rounded-2xl overflow-hidden border border-slate-200 shadow-xl bg-white transition-all hover:shadow-2xl">
+                            <div
+                                class="bg-[#f3f3f3] px-4 py-2 flex items-center justify-between border-b border-slate-200">
                                 <div class="flex gap-1.5">
-                                    <div class="w-2.5 h-2.5 rounded-full bg-slate-200"></div>
-                                    <div class="w-2.5 h-2.5 rounded-full bg-slate-200"></div>
+                                    <div class="w-3 h-3 rounded-full bg-[#ff5f56] shadow-inner"></div>
+                                    <div class="w-3 h-3 rounded-full bg-[#ffbd2e] shadow-inner"></div>
+                                    <div class="w-3 h-3 rounded-full bg-[#27c93f] shadow-inner"></div>
                                 </div>
+                                <div class="text-[10px] text-slate-500 font-mono font-medium">geometria_cruda.py — VS
+                                    Code</div>
+                                <div class="w-10"></div>
                             </div>
                             <div class="p-6">
-                                <pre class="text-xs font-mono leading-relaxed text-slate-400">
+                                <pre class="text-sm font-mono leading-relaxed">
 <span class="text-[#008000]"># Fórmula: √((x2-x1)² + (y2-y1)²)</span>
 <span class="text-[#af00db]">def</span> <span class="text-[#795e26]">distancia</span>(x1, y1, x2, y2):
     dx = x2 - x1
@@ -396,18 +430,7 @@
                                 </pre>
                             </div>
                         </div>
-                        <div class="grid grid-cols-2 gap-4">
-                            <div class="bg-red-50 p-4 rounded-2xl border border-red-100">
-                                <p class="text-[10px] font-black text-red-600 uppercase mb-1">Dificultad</p>
-                                <p class="text-sm font-bold text-red-900 leading-tight italic">Debes recordar la fórmula
-                                    pitagórica.</p>
-                            </div>
-                            <div class="bg-red-50 p-4 rounded-2xl border border-red-100">
-                                <p class="text-[10px] font-black text-red-600 uppercase mb-1">Riesgo</p>
-                                <p class="text-sm font-bold text-red-900 leading-tight italic">Error común al elevar al
-                                    cuadrado o la raíz.</p>
-                            </div>
-                        </div>
+
                     </div>
 
                     <!-- Library Side -->
@@ -418,14 +441,18 @@
                                 class="font-bold text-lg uppercase tracking-wider underline decoration-brand-200 underline-offset-8">
                                 Usando <span class="font-mono">math.dist</span></h3>
                         </div>
-                        <div class="bg-white rounded-3xl border-2 border-brand-200 shadow-floating overflow-hidden">
+                        <div
+                            class="rounded-2xl overflow-hidden border border-slate-200 shadow-xl bg-white transition-all hover:shadow-2xl">
                             <div
-                                class="bg-brand-50 px-4 py-2 flex items-center justify-between border-b border-brand-100">
-                                <span class="text-[10px] font-mono text-brand-400 font-bold italic">pro_dist.py</span>
+                                class="bg-[#f3f3f3] px-4 py-2 flex items-center justify-between border-b border-slate-200">
                                 <div class="flex gap-1.5">
-                                    <div class="w-2.5 h-2.5 rounded-full bg-[#ff5f56]"></div>
-                                    <div class="w-2.5 h-2.5 rounded-full bg-[#27c93f]"></div>
+                                    <div class="w-3 h-3 rounded-full bg-[#ff5f56] shadow-inner"></div>
+                                    <div class="w-3 h-3 rounded-full bg-[#ffbd2e] shadow-inner"></div>
+                                    <div class="w-3 h-3 rounded-full bg-[#27c93f] shadow-inner"></div>
                                 </div>
+                                <div class="text-[10px] text-slate-500 font-mono font-medium">pro_dist.py — VS Code
+                                </div>
+                                <div class="w-10"></div>
                             </div>
                             <div class="p-6 bg-white">
                                 <pre class="text-sm font-mono leading-relaxed">
@@ -438,20 +465,7 @@
                                 </pre>
                             </div>
                         </div>
-                        <div class="bg-brand-600 p-6 rounded-3xl text-white shadow-lg space-y-4">
-                            <div
-                                class="flex justify-between items-center bg-brand-700/50 p-3 rounded-2xl border border-brand-500">
-                                <span class="text-xs font-bold uppercase tracking-widest">Legibilidad</span>
-                                <span
-                                    class="px-3 py-1 bg-green-400 text-brand-900 text-[10px] font-black rounded-full">100%</span>
-                            </div>
-                            <div
-                                class="flex justify-between items-center bg-brand-700/50 p-3 rounded-2xl border border-brand-500">
-                                <span class="text-xs font-bold uppercase tracking-widest">Confiabilidad</span>
-                                <span
-                                    class="px-3 py-1 bg-green-400 text-brand-900 text-[10px] font-black rounded-full">Certificada</span>
-                            </div>
-                        </div>
+
                     </div>
                 </div>
             </div>
@@ -472,16 +486,17 @@
                             <h3 class="text-xl font-bold text-slate-900 font-mono">import math</h3>
                         </div>
                         <div
-                            class="rounded-xl overflow-hidden border border-slate-200 shadow-xl bg-white transition-all hover:shadow-2xl mb-6">
+                            class="rounded-2xl overflow-hidden border border-slate-200 shadow-xl bg-white transition-all hover:shadow-2xl mb-6">
                             <div
-                                class="bg-[#f3f3f3] px-4 py-2 flex items-center justify-between border-b border-slate-100">
+                                class="bg-[#f3f3f3] px-4 py-2 flex items-center justify-between border-b border-slate-200">
                                 <div class="flex gap-1.5">
-                                    <div class="w-2.5 h-2.5 rounded-full bg-[#ff5f56] shadow-inner"></div>
-                                    <div class="w-2.5 h-2.5 rounded-full bg-[#ffbd2e] shadow-inner"></div>
-                                    <div class="w-2.5 h-2.5 rounded-full bg-[#27c93f] shadow-inner"></div>
+                                    <div class="w-3 h-3 rounded-full bg-[#ff5f56] shadow-inner"></div>
+                                    <div class="w-3 h-3 rounded-full bg-[#ffbd2e] shadow-inner"></div>
+                                    <div class="w-3 h-3 rounded-full bg-[#27c93f] shadow-inner"></div>
                                 </div>
-                                <div class="text-[10px] text-slate-400 font-mono">completo.py — VS Code</div>
-                                <div class="w-8"></div>
+                                <div class="text-[10px] text-slate-500 font-mono font-medium">completo.py — VS Code
+                                </div>
+                                <div class="w-10"></div>
                             </div>
                             <div class="p-6 text-sm font-mono leading-relaxed">
                                 <span class="text-[#af00db]">import</span> <span
@@ -515,16 +530,16 @@
                             <h3 class="text-xl font-bold text-slate-900 font-mono">from math import sqrt, pi</h3>
                         </div>
                         <div
-                            class="rounded-xl overflow-hidden border border-slate-200 shadow-xl bg-white transition-all hover:shadow-2xl mb-6">
+                            class="rounded-2xl overflow-hidden border border-slate-200 shadow-xl bg-white transition-all hover:shadow-2xl mb-6">
                             <div
-                                class="bg-[#f3f3f3] px-4 py-2 flex items-center justify-between border-b border-slate-100">
+                                class="bg-[#f3f3f3] px-4 py-2 flex items-center justify-between border-b border-slate-200">
                                 <div class="flex gap-1.5">
-                                    <div class="w-2.5 h-2.5 rounded-full bg-[#ff5f56] shadow-inner"></div>
-                                    <div class="w-2.5 h-2.5 rounded-full bg-[#ffbd2e] shadow-inner"></div>
-                                    <div class="w-2.5 h-2.5 rounded-full bg-[#27c93f] shadow-inner"></div>
+                                    <div class="w-3 h-3 rounded-full bg-[#ff5f56] shadow-inner"></div>
+                                    <div class="w-3 h-3 rounded-full bg-[#ffbd2e] shadow-inner"></div>
+                                    <div class="w-3 h-3 rounded-full bg-[#27c93f] shadow-inner"></div>
                                 </div>
-                                <div class="text-[9px] text-slate-500 font-mono">directo.py — VS Code</div>
-                                <div class="w-8"></div>
+                                <div class="text-[10px] text-slate-500 font-mono font-medium">directo.py — VS Code</div>
+                                <div class="w-10"></div>
                             </div>
                             <div class="p-6 text-sm font-mono leading-relaxed">
                                 <span class="text-[#af00db]">from</span> math <span class="text-[#af00db]">import</span>
@@ -580,9 +595,9 @@
                         <div>
                             <p class="text-sm font-bold text-slate-800 mb-4">Antes</p>
                             <div
-                                class="rounded-xl overflow-hidden border border-slate-200 shadow-xl bg-white transition-all hover:shadow-2xl">
+                                class="rounded-2xl overflow-hidden border border-slate-200 shadow-xl bg-white transition-all hover:shadow-2xl">
                                 <div
-                                    class="bg-[#f3f3f3] px-4 py-2 flex items-center justify-between border-b border-slate-100">
+                                    class="bg-[#f3f3f3] px-4 py-2 flex items-center justify-between border-b border-slate-200">
                                     <div class="flex gap-1.5">
                                         <div class="w-3 h-3 rounded-full bg-[#ff5f56] shadow-inner"></div>
                                         <div class="w-3 h-3 rounded-full bg-[#ffbd2e] shadow-inner"></div>
@@ -590,7 +605,7 @@
                                     </div>
                                     <div class="text-[10px] text-slate-500 font-mono font-medium">viejo.py — VS Code
                                     </div>
-                                    <div class="w-6"></div>
+                                    <div class="w-10"></div>
                                 </div>
                                 <div class="p-6 text-sm font-mono leading-relaxed text-slate-800">
                                     <span class="text-[#af00db]">import</span> nombre_muy_largo<br><br>
@@ -602,9 +617,9 @@
                         <div>
                             <p class="text-sm font-bold text-brand-600 mb-4">Después</p>
                             <div
-                                class="rounded-xl overflow-hidden border border-slate-200 shadow-xl bg-white transition-all hover:shadow-2xl">
+                                class="rounded-2xl overflow-hidden border border-slate-200 shadow-xl bg-white transition-all hover:shadow-2xl">
                                 <div
-                                    class="bg-[#f3f3f3] px-4 py-2 flex items-center justify-between border-b border-slate-100">
+                                    class="bg-[#f3f3f3] px-4 py-2 flex items-center justify-between border-b border-slate-200">
                                     <div class="flex gap-1.5">
                                         <div class="w-3 h-3 rounded-full bg-[#ff5f56] shadow-inner"></div>
                                         <div class="w-3 h-3 rounded-full bg-[#ffbd2e] shadow-inner"></div>
@@ -612,7 +627,7 @@
                                     </div>
                                     <div class="text-[10px] text-brand-600 font-mono font-bold">moderno.py — VS Code
                                     </div>
-                                    <div class="w-6"></div>
+                                    <div class="w-10"></div>
                                 </div>
                                 <div class="p-6 text-sm font-mono leading-relaxed" id="alias-code-container">
                                     <div id="alias-code">
@@ -736,10 +751,6 @@
                         <h2 class="text-4xl font-black text-slate-900 tracking-tight">PyPI: El Universo de Python</h2>
                         <p class="text-slate-500 font-medium italic">Accede a miles de soluciones creadas por la
                             comunidad.</p>
-                    </div>
-                    <div class="bg-brand-50 px-4 py-2 rounded-2xl border border-brand-100 flex items-center gap-2">
-                        <i data-lucide="globe" class="w-4 h-4 text-brand-600"></i>
-                        <span class="text-[10px] font-black text-brand-700 uppercase tracking-widest">pip.org</span>
                     </div>
                 </header>
 
