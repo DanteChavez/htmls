@@ -69,7 +69,7 @@
             transition: opacity 0.4s ease-in-out;
             display: flex;
             flex-direction: column;
-            padding-top: 80px;
+            padding-top: 100px !important;
             overflow-y: auto;
         }
 
@@ -114,7 +114,7 @@
         </div>
         <div class="flex items-center gap-4">
             <div id="slide-indicator" class="bg-slate-100 px-4 py-1 rounded-full text-xs font-bold text-slate-600">1 /
-                11</div>
+                10</div>
         </div>
     </header>
 
@@ -275,8 +275,105 @@
             </div>
         </section>
 
-        <!-- SLIDE 4: IMPORT VS FROM ... IMPORT -->
+        <!-- SLIDE 4: MATH ABSTRACTION -->
         <section class="slide flex flex-col items-center justify-center p-8" id="slide-4">
+            <div class="max-w-5xl w-full">
+                <header class="text-center mb-12">
+                    <h2 class="text-4xl font-black text-slate-900 mb-3 tracking-tight">La Magia de la Abstracción</h2>
+                    <p class="text-slate-500 font-medium italic">"Las bibliotecas transforman problemas matemáticos
+                        crueles en código legible"</p>
+                </header>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
+                    <!-- Manual Side -->
+                    <div class="space-y-6">
+                        <div class="flex items-center gap-3 text-red-500">
+                            <i data-lucide="x-circle" class="w-6 h-6"></i>
+                            <h3 class="font-bold text-lg uppercase tracking-wider">Cálculo Manual</h3>
+                        </div>
+                        <div class="bg-white rounded-3xl border-2 border-slate-100 shadow-soft overflow-hidden">
+                            <div class="bg-slate-50 px-4 py-2 flex items-center justify-between border-b">
+                                <span class="text-[10px] font-mono text-slate-400">geometria_cruda.py</span>
+                                <div class="flex gap-1.5">
+                                    <div class="w-2.5 h-2.5 rounded-full bg-slate-200"></div>
+                                    <div class="w-2.5 h-2.5 rounded-full bg-slate-200"></div>
+                                </div>
+                            </div>
+                            <div class="p-6">
+                                <pre class="text-xs font-mono leading-relaxed text-slate-400">
+<span class="text-[#008000]"># Fórmula: √((x2-x1)² + (y2-y1)²)</span>
+<span class="text-[#af00db]">def</span> <span class="text-[#795e26]">distancia</span>(x1, y1, x2, y2):
+    dx = x2 - x1
+    dy = y2 - y1
+    <span class="text-[#af00db]">return</span> (dx**<span class="text-[#098658]">2</span> + dy**<span class="text-[#098658]">2</span>)**<span class="text-[#098658]">0.5</span>
+
+<span class="text-[#795e26]">print</span>(distancia(<span class="text-[#098658]">0</span>, <span class="text-[#098658]">0</span>, <span class="text-[#098658]">3</span>, <span class="text-[#098658]">4</span>)) <span class="text-[#008000]"># 5.0</span>
+                                </pre>
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-2 gap-4">
+                            <div class="bg-red-50 p-4 rounded-2xl border border-red-100">
+                                <p class="text-[10px] font-black text-red-600 uppercase mb-1">Dificultad</p>
+                                <p class="text-sm font-bold text-red-900 leading-tight italic">Debes recordar la fórmula
+                                    pitagórica.</p>
+                            </div>
+                            <div class="bg-red-50 p-4 rounded-2xl border border-red-100">
+                                <p class="text-[10px] font-black text-red-600 uppercase mb-1">Riesgo</p>
+                                <p class="text-sm font-bold text-red-900 leading-tight italic">Error común al elevar al
+                                    cuadrado o la raíz.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Library Side -->
+                    <div class="space-y-6 transform scale-105">
+                        <div class="flex items-center gap-3 text-brand-600">
+                            <i data-lucide="check-circle-2" class="w-6 h-6"></i>
+                            <h3
+                                class="font-bold text-lg uppercase tracking-wider underline decoration-brand-200 underline-offset-8">
+                                Usando <span class="font-mono">math.dist</span></h3>
+                        </div>
+                        <div class="bg-white rounded-3xl border-2 border-brand-200 shadow-floating overflow-hidden">
+                            <div
+                                class="bg-brand-50 px-4 py-2 flex items-center justify-between border-b border-brand-100">
+                                <span class="text-[10px] font-mono text-brand-400 font-bold italic">pro_dist.py</span>
+                                <div class="flex gap-1.5">
+                                    <div class="w-2.5 h-2.5 rounded-full bg-[#ff5f56]"></div>
+                                    <div class="w-2.5 h-2.5 rounded-full bg-[#27c93f]"></div>
+                                </div>
+                            </div>
+                            <div class="p-6 bg-white">
+                                <pre class="text-sm font-mono leading-relaxed">
+<span class="text-[#af00db]">import</span> math
+
+<span class="text-[#008000]"># Problema solucionado en 1 línea</span>
+<span class="text-[#001080]">d</span> = math.<span class="text-[#795e26]">dist</span>([<span class="text-[#098658]">0</span>, <span class="text-[#098658]">0</span>], [<span class="text-[#098658]">3</span>, <span class="text-[#098658]">4</span>])
+
+<span class="text-[#795e26]">print</span>(d) <span class="text-[#008000]"># 5.0</span>
+                                </pre>
+                            </div>
+                        </div>
+                        <div class="bg-brand-600 p-6 rounded-3xl text-white shadow-lg space-y-4">
+                            <div
+                                class="flex justify-between items-center bg-brand-700/50 p-3 rounded-2xl border border-brand-500">
+                                <span class="text-xs font-bold uppercase tracking-widest">Legibilidad</span>
+                                <span
+                                    class="px-3 py-1 bg-green-400 text-brand-900 text-[10px] font-black rounded-full">100%</span>
+                            </div>
+                            <div
+                                class="flex justify-between items-center bg-brand-700/50 p-3 rounded-2xl border border-brand-500">
+                                <span class="text-xs font-bold uppercase tracking-widest">Confiabilidad</span>
+                                <span
+                                    class="px-3 py-1 bg-green-400 text-brand-900 text-[10px] font-black rounded-full">Certificada</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SLIDE 5: IMPORT VS FROM ... IMPORT -->
+        <section class="slide flex flex-col items-center justify-center p-8" id="slide-5">
             <div class="max-w-5xl w-full">
                 <h2 class="text-3xl font-black mb-4 text-slate-900">Dos formas de importar</h2>
                 <p class="text-slate-500 mb-10 text-lg italic">¿Importar todo el kit de herramientas o solo el martillo
@@ -370,8 +467,8 @@
             </div>
         </section>
 
-        <!-- SLIDE 5: APODOS (AS) -->
-        <section class="slide flex flex-col items-center justify-center p-8" id="slide-5">
+        <!-- SLIDE 6: APODOS (AS) -->
+        <section class="slide flex flex-col items-center justify-center p-8" id="slide-6">
             <div class="max-w-4xl w-full">
                 <h2 class="text-3xl font-black mb-4 text-slate-900">Aliasing: Ponle un apodo</h2>
                 <p class="text-slate-500 mb-10 font-medium leading-relaxed">
@@ -450,8 +547,8 @@
             </div>
         </section>
 
-        <!-- SLIDE 6: STANDARD LIBRARY EXPLORER -->
-        <section class="slide flex flex-col items-center justify-center p-8" id="slide-6">
+        <!-- SLIDE 7: STANDARD LIBRARY EXPLORER -->
+        <section class="slide flex flex-col items-center justify-center p-8" id="slide-7">
             <h2 class="text-3xl font-black mb-4 text-slate-900 text-center px-4 w-full">Prueba algunas bibliotecas que
                 vienen incluidas en Python</h2>
 
@@ -545,191 +642,164 @@
             </div>
         </section>
 
-        <!-- SLIDE 7: MATH UTILITY -->
-        <section class="slide flex flex-col items-center justify-center p-8" id="slide-7">
-            <div class="max-w-5xl w-full">
-                <h2 class="text-3xl font-black mb-4 text-slate-900 text-center">¿Por qué usar <span
-                        class="font-mono text-brand-600">math</span>?</h2>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-10 mt-12">
-                    <div class="bg-white p-8 rounded-3xl border border-slate-200">
-                        <h3 class="text-red-500 font-bold mb-4 flex items-center gap-2">
-                            <i data-lucide="x-circle" class="w-5 h-5"></i> Sin Biblioteca
-                        </h3>
-                        <p class="text-sm text-slate-600 mb-6">Tendrías que implementar algoritmos matemáticos complejos
-                            tú mismo.</p>
-                        <div class="rounded-xl overflow-hidden border border-slate-200 shadow-md bg-white">
-                            <div
-                                class="bg-slate-50 px-3 py-1 flex items-center justify-between border-b border-slate-100">
-                                <div class="flex gap-1">
-                                    <div class="w-2 h-2 rounded-full bg-slate-300"></div>
-                                    <div class="w-2 h-2 rounded-full bg-slate-300"></div>
-                                    <div class="w-2 h-2 rounded-full bg-slate-300"></div>
-                                </div>
-                                <div class="text-[8px] text-slate-400 font-mono">manual.py — VS Code</div>
-                                <div class="w-6"></div>
-                            </div>
-                            <div class="p-4 text-xs font-mono leading-relaxed text-slate-600">
-                                <span class="text-[#008000]"># 10 líneas de lógica manual</span><br>
-                                <span class="text-[#af00db]">def</span> <span
-                                    class="text-[#795e26]">raiz_cuadrada</span>(n):<br>
-                                &nbsp;&nbsp;&nbsp;&nbsp;x = n / <span class="text-[#098658]">2</span><br>
-                                &nbsp;&nbsp;&nbsp;&nbsp;<span class="text-[#af00db]">for</span> _ <span
-                                    class="text-[#af00db]">in</span> <span class="text-[#795e26]">range</span>(<span
-                                    class="text-[#098658]">10</span>):<br>
-                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;x = (x + n/x) / <span
-                                    class="text-[#098658]">2</span><br>
-                                &nbsp;&nbsp;&nbsp;&nbsp;<span class="text-[#af00db]">return</span> x
-                            </div>
-                        </div>
-                    </div>
-                    <div
-                        class="bg-brand-600 p-8 rounded-3xl text-white shadow-floating transform scale-105 transition-all hover:scale-110">
-                        <h3 class="font-bold mb-4 flex items-center gap-2">
-                            <i data-lucide="check-circle" class="w-5 h-5"></i> Con <span
-                                class="font-mono bg-brand-700 px-2 py-1 rounded">math</span>
-                        </h3>
-                        <p class="text-sm text-brand-100 mb-6">Obtienes precisión máxima en una línea, probada por
-                            millones.</p>
-                        <div class="rounded-xl overflow-hidden border border-brand-300 bg-brand-50 shadow-inner">
-                            <div
-                                class="bg-brand-100 px-3 py-1 flex items-center justify-between border-b border-brand-200">
-                                <div class="flex gap-1">
-                                    <div class="w-2 h-2 rounded-full bg-[#ff5f56]"></div>
-                                    <div class="w-2 h-2 rounded-full bg-[#ffbd2e]"></div>
-                                    <div class="w-2 h-2 rounded-full bg-[#27c93f]"></div>
-                                </div>
-                                <div class="text-[8px] text-brand-700 font-mono font-bold">math_opt.py — VS Code</div>
-                                <div class="w-6"></div>
-                            </div>
-                            <div class="p-4 text-xs font-mono leading-relaxed text-brand-900 font-bold">
-                                <span class="text-[#af00db]">import</span> math<br><br>
-                                <span class="text-[#001080]">res</span> = math.<span
-                                    class="text-[#795e26]">sqrt</span>(<span class="text-[#098658]">256</span>)<br>
-                                <span class="text-[#795e26]">print</span>(res) <span class="text-[#008000]">#
-                                    16.0</span>
-                            </div>
-                        </div>
-                        <div
-                            class="mt-6 bg-brand-500/50 p-3 rounded-xl border border-brand-400 text-[10px] uppercase font-black text-center">
-                            Eficiencia: Máxima | Errores: 0
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
 
-        <!-- SLIDE 8: RANDOM USE CASES -->
-        <section class="slide flex flex-col items-center justify-center p-8" id="slide-8">
-            <h2 class="text-3xl font-black mb-10 text-slate-900 text-center">Usos de <span
-                    class="font-mono text-purple-600">random</span></h2>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-6xl w-full">
-                <div
-                    class="bg-white p-6 rounded-3xl shadow-soft hover:shadow-floating transition-all border border-slate-100 flex flex-col gap-4">
-                    <div class="bg-orange-50 text-orange-600 w-10 h-10 rounded-xl flex items-center justify-center"><i
-                            data-lucide="gamepad-2" class="w-5 h-5"></i></div>
-                    <h4 class="font-bold">Lanzar un dado</h4>
-                    <div class="rounded-lg overflow-hidden border border-slate-200 shadow-sm bg-white">
-                        <div class="bg-slate-50 px-2 py-0.5 flex items-center justify-between border-b">
-                            <div class="text-[6px] text-slate-300">● ● ●</div>
-                            <div class="text-[6px] text-slate-500 font-mono font-bold">script.py</div>
-                        </div>
-                        <div class="p-3">
-                            <pre
-                                class="!p-0 !bg-transparent !text-[10px]"><code class="language-python text-slate-700">random.<span class="text-[#795e26]">randint</span>(<span class="text-[#098658]">1, 6</span>)</code></pre>
-                        </div>
+        <!-- SLIDE 8: BIBLIOTECAS EXTERNAS (PyPI) -->
+        <section class="slide flex flex-col items-center p-8" id="slide-8">
+            <div class="max-w-6xl w-full">
+                <header class="flex justify-between items-end mb-8">
+                    <div>
+                        <h2 class="text-4xl font-black text-slate-900 tracking-tight">PyPI: El Universo de Python</h2>
+                        <p class="text-slate-500 font-medium italic">Accede a miles de soluciones creadas por la
+                            comunidad.</p>
                     </div>
-                </div>
-                <div
-                    class="bg-white p-6 rounded-3xl shadow-soft hover:shadow-floating transition-all border border-slate-100 flex flex-col gap-4">
-                    <div class="bg-blue-50 text-blue-600 w-10 h-10 rounded-xl flex items-center justify-center"><i
-                            data-lucide="user-check" class="w-5 h-5"></i></div>
-                    <h4 class="font-bold">Elegir un ganador</h4>
-                    <div class="rounded-lg overflow-hidden border border-slate-200 shadow-sm bg-white">
-                        <div class="bg-slate-50 px-2 py-0.5 flex items-center justify-between border-b">
-                            <div class="text-[6px] text-slate-300">● ● ●</div>
-                            <div class="text-[6px] text-slate-500 font-mono font-bold">sorteo.py</div>
-                        </div>
-                        <div class="p-3">
-                            <pre
-                                class="!p-0 !bg-transparent !text-[10px]"><code class="language-python text-slate-700">random.<span class="text-[#795e26]">choice</span>(estudiantes)</code></pre>
-                        </div>
+                    <div class="bg-brand-50 px-4 py-2 rounded-2xl border border-brand-100 flex items-center gap-2">
+                        <i data-lucide="globe" class="w-4 h-4 text-brand-600"></i>
+                        <span class="text-[10px] font-black text-brand-700 uppercase tracking-widest">pip.org</span>
                     </div>
-                </div>
-                <div
-                    class="bg-white p-6 rounded-3xl shadow-soft hover:shadow-floating transition-all border border-slate-100 flex flex-col gap-4">
-                    <div class="bg-green-50 text-green-600 w-10 h-10 rounded-xl flex items-center justify-center"><i
-                            data-lucide="shuffle" class="w-5 h-5"></i></div>
-                    <h4 class="font-bold">Barajar cartas</h4>
-                    <div class="rounded-lg overflow-hidden border border-slate-200 shadow-sm bg-white">
-                        <div class="bg-slate-50 px-2 py-0.5 flex items-center justify-between border-b">
-                            <div class="text-[6px] text-slate-300">● ● ●</div>
-                            <div class="text-[6px] text-slate-500 font-mono font-bold">cartas.py</div>
-                        </div>
-                        <div class="p-3">
-                            <pre
-                                class="!p-0 !bg-transparent !text-[10px]"><code class="language-python text-slate-700">random.<span class="text-[#795e26]">shuffle</span>(lista)</code></pre>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
+                </header>
 
-        <!-- SLIDE 9: BIBLIOTECAS EXTERNAS (PIPI) -->
-        <section class="slide flex flex-col items-center pt-10 px-8 pb-8" id="slide-9">
-            <div class="max-w-5xl w-full">
-                <h2 class="text-3xl font-black mb-10 text-slate-900">PyPI: El Universo de Python</h2>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
-                    <div class="space-y-6">
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 h-[550px]">
+                    <!-- Left: Explanation & Console -->
+                    <div class="lg:col-span-7 flex flex-col gap-6">
+                        <!-- What is PyPI Card -->
                         <div class="bg-white p-6 rounded-3xl border border-slate-200 shadow-soft">
-                            <h3 class="text-lg font-bold mb-4 flex items-center gap-2"><i data-lucide="box"
-                                    class="w-5 h-5 text-brand-600"></i> ¿Qué es PyPI?</h3>
-                            <p class="text-sm text-slate-600">Un almacén con más de 500k bibliotecas. Si necesitas
-                                resolver algo del mundo real, probablemente esté ahí.</p>
+                            <h3 class="text-lg font-bold mb-3 flex items-center gap-2"><i data-lucide="box"
+                                    class="w-5 h-5 text-brand-600"></i> El almacén central</h3>
+                            <p class="text-sm text-slate-600 leading-relaxed">
+                                PyPI (Python Package Index) es el repositorio oficial donde se guardan las
+                                <span class="text-brand-600 font-bold">bibliotecas externas</span>.
+                                Para traer una de estas herramientas a tu computadora, usamos el comando
+                                <code
+                                    class="bg-slate-100 px-1.5 py-0.5 rounded font-mono text-brand-600 font-bold">pip</code>.
+                            </p>
                         </div>
-                        <div class="bg-slate-900 p-6 rounded-3xl text-white shadow-floating">
-                            <h3 class="text-lg font-bold mb-4 flex items-center gap-2"><i data-lucide="terminal"
-                                    class="w-5 h-5 text-green-400"></i> Instalación con PIP</h3>
-                            <p class="text-xs text-slate-400 mb-4">Usa la terminal para instalar:</p>
-                            <div class="rounded-xl overflow-hidden border border-slate-200 shadow-xl">
-                                <div class="bg-slate-100 px-3 py-1.5 flex items-center justify-between border-b">
-                                    <div class="flex gap-1.5">
-                                        <div class="w-2.5 h-2.5 rounded-full bg-[#ff5f56]"></div>
-                                        <div class="w-2.5 h-2.5 rounded-full bg-[#ffbd2e]"></div>
-                                        <div class="w-2.5 h-2.5 rounded-full bg-[#27c93f]"></div>
-                                    </div>
-                                    <div class="text-[9px] text-slate-500 font-mono">Terminal — zsh</div>
-                                    <div class="w-8"></div>
+
+                        <!-- Interactive Terminal -->
+                        <div
+                            class="flex-1 bg-slate-900 rounded-[2.5rem] shadow-floating flex flex-col overflow-hidden border border-slate-700">
+                            <!-- Terminal Header -->
+                            <div
+                                class="bg-slate-800/50 px-6 py-3 flex items-center justify-between border-b border-slate-700">
+                                <div class="flex gap-2">
+                                    <div class="w-3 h-3 rounded-full bg-[#ff5f56]"></div>
+                                    <div class="w-3 h-3 rounded-full bg-[#ffbd2e]"></div>
+                                    <div class="w-3 h-3 rounded-full bg-[#27c93f]"></div>
                                 </div>
-                                <div class="bg-white p-4 font-mono text-sm border-t border-slate-50">
-                                    <div class="flex gap-2">
-                                        <span class="text-brand-500 font-bold">➜</span>
-                                        <span class="text-slate-800 font-bold">pip <span
-                                                class="text-[#af00db]">install</span> <span
-                                                class="text-[#098658]">nombre-libreria</span></span>
+                                <div
+                                    class="text-[10px] text-slate-400 font-mono flex items-center gap-2 uppercase tracking-widest">
+                                    <i data-lucide="terminal" class="w-3 h-3"></i> Terminal — bash
+                                </div>
+                                <div class="w-10"></div>
+                            </div>
+
+                            <!-- Terminal Body -->
+                            <div class="p-6 font-mono text-sm overflow-y-auto flex-1 custom-scrollbar text-slate-300"
+                                id="pip-console">
+                                <div id="terminal-stream" class="space-y-1 text-[12px] mb-2"></div>
+                                <div id="pip-input-line" class="flex items-center gap-2 mb-4 group">
+                                    <span class="text-green-400 font-bold shrink-0">estudiante@mackbook ∼ %</span>
+                                    <input type="text" id="pip-input" placeholder="pip install requests"
+                                        class="bg-transparent border-none outline-none text-white w-full font-mono placeholder:text-slate-700"
+                                        onkeypress="if(event.key==='Enter') runPipInstall()">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right: Popular List -->
+                    <div
+                        class="lg:col-span-5 bg-white rounded-[2.5rem] border border-slate-200 p-8 shadow-soft flex flex-col gap-8">
+                        <div>
+                            <h3
+                                class="font-black text-slate-900 uppercase text-xs tracking-[0.2em] mb-6 flex items-center gap-2">
+                                <i data-lucide="star" class="w-4 h-4 text-amber-500 fill-amber-500"></i> Bibliotecas
+                                Populares
+                            </h3>
+                            <div class="grid grid-cols-1 gap-4">
+                                <div class="flex items-center gap-4 group cursor-pointer"
+                                    onclick="document.getElementById('pip-input').value='pip install requests'; runPipInstall()">
+                                    <div
+                                        class="w-10 h-10 bg-blue-50 text-blue-600 rounded-xl flex items-center justify-center shrink-0 group-hover:bg-blue-600 group-hover:text-white transition-all">
+                                        <i data-lucide="globe" class="w-5 h-5"></i>
+                                    </div>
+                                    <div class="flex-1">
+                                        <div class="flex justify-between items-center mb-0.5">
+                                            <span class="font-bold text-slate-800">Requests</span>
+                                            <span class="text-[10px] text-slate-400 font-mono">Para APIs</span>
+                                        </div>
+                                        <div class="h-1 bg-slate-100 rounded-full overflow-hidden">
+                                            <div class="h-full bg-blue-500 w-[95%]"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="flex items-center gap-4 group cursor-pointer"
+                                    onclick="document.getElementById('pip-input').value='pip install pandas'; runPipInstall()">
+                                    <div
+                                        class="w-10 h-10 bg-teal-50 text-teal-600 rounded-xl flex items-center justify-center shrink-0 group-hover:bg-teal-600 group-hover:text-white transition-all">
+                                        <i data-lucide="table" class="w-5 h-5"></i>
+                                    </div>
+                                    <div class="flex-1">
+                                        <div class="flex justify-between items-center mb-0.5">
+                                            <span class="font-bold text-slate-800">Pandas</span>
+                                            <span class="text-[10px] text-slate-400 font-mono">Datos</span>
+                                        </div>
+                                        <div class="h-1 bg-slate-100 rounded-full overflow-hidden">
+                                            <div class="h-full bg-teal-500 w-[85%]"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="flex items-center gap-4 group cursor-pointer"
+                                    onclick="document.getElementById('pip-input').value='pip install numpy'; runPipInstall()">
+                                    <div
+                                        class="w-10 h-10 bg-indigo-50 text-indigo-600 rounded-xl flex items-center justify-center shrink-0 group-hover:bg-indigo-600 group-hover:text-white transition-all">
+                                        <i data-lucide="grid-3x3" class="w-5 h-5"></i>
+                                    </div>
+                                    <div class="flex-1">
+                                        <div class="flex justify-between items-center mb-0.5">
+                                            <span class="font-bold text-slate-800">NumPy</span>
+                                            <span class="text-[10px] text-slate-400 font-mono">Cálculos</span>
+                                        </div>
+                                        <div class="h-1 bg-slate-100 rounded-full overflow-hidden">
+                                            <div class="h-full bg-indigo-500 w-[90%]"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="flex items-center gap-4 group cursor-pointer"
+                                    onclick="document.getElementById('pip-input').value='pip install openai'; runPipInstall()">
+                                    <div
+                                        class="w-10 h-10 bg-purple-50 text-purple-600 rounded-xl flex items-center justify-center shrink-0 group-hover:bg-purple-600 group-hover:text-white transition-all">
+                                        <i data-lucide="bot" class="w-5 h-5"></i>
+                                    </div>
+                                    <div class="flex-1">
+                                        <div class="flex justify-between items-center mb-0.5">
+                                            <span class="font-bold text-slate-800">OpenAI</span>
+                                            <span class="text-[10px] text-slate-400 font-mono">I.A.</span>
+                                        </div>
+                                        <div class="h-1 bg-slate-100 rounded-full overflow-hidden">
+                                            <div class="h-full bg-purple-500 w-[70%]"></div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                            <p class="text-[10px] text-slate-500 mt-4 italic">Tip: Usa requirements.txt para listar
-                                todas tus dependencias.</p>
                         </div>
-                    </div>
-                    <div class="bg-white p-8 rounded-3xl border border-slate-200 shadow-soft">
-                        <h3 class="text-lg font-bold mb-6 italic">Librerías Populares</h3>
-                        <div class="flex flex-wrap gap-2 text-xs font-bold">
-                            <span class="bg-blue-50 text-blue-700 px-3 py-1 rounded-full">NumPy</span>
-                            <span class="bg-teal-50 text-teal-700 px-3 py-1 rounded-full">Pandas</span>
-                            <span class="bg-indigo-50 text-indigo-700 px-3 py-1 rounded-full">Matplotlib</span>
-                            <span class="bg-slate-50 text-slate-700 px-3 py-1 rounded-full">Requests</span>
-                            <span class="bg-purple-100 text-purple-700 px-3 py-1 rounded-full">OpenAI (ChatGPT)</span>
-                            <span class="bg-green-50 text-green-700 px-3 py-1 rounded-full">FastAPI</span>
+
+                        <div class="mt-auto bg-slate-50 p-6 rounded-3xl border border-dashed border-slate-300">
+                            <h4
+                                class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2 flex items-center gap-2">
+                                <i data-lucide="info" class="w-3 h-3"></i> Tip de Oro
+                            </h4>
+                            <p class="text-xs text-slate-600 italic">
+                                "Si quieres que otros puedan ejecutar tu programa, crea un archivo llamado
+                                <b>requirements.txt</b> con la lista de tus bibliotecas."
+                            </p>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- SLIDE 10: PROFUNDIZACIÓN LIBRERÍAS POPULARES -->
-        <section class="slide flex flex-col items-center p-8" id="slide-10">
+        <!-- SLIDE 9: PROFUNDIZACIÓN BIBLIOTECAS POPULARES -->
+        <section class="slide flex flex-col items-center p-8" id="slide-9">
             <h2 class="text-3xl font-black mb-10 text-slate-900">Aplicaciones Reales</h2>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl w-full">
                 <div class="bg-white p-6 rounded-3xl border-2 border-slate-50 shadow-soft">
@@ -780,12 +850,12 @@ df = pd.read_csv("data.csv")</code></pre>
             </div>
         </section>
 
-        <!-- SLIDE 11: FINAL -->
-        <section class="slide flex items-center justify-center p-8 bg-slate-900" id="slide-11">
+        <!-- SLIDE 10: FINAL -->
+        <section class="slide flex items-center justify-center p-8 bg-slate-900" id="slide-10">
             <div class="max-w-xl text-center">
                 <i data-lucide="check-circle" class="w-20 h-20 text-brand-500 mx-auto mb-8"></i>
                 <h2 class="text-4xl font-black text-white mb-2">Fin del Módulo 2</h2>
-                <h3 class="text-6xl font-black text-brand-500 mb-10">Librerías</h3>
+                <h3 class="text-6xl font-black text-brand-500 mb-10">Bibliotecas</h3>
                 <button onclick="currentSlide = 1; updateUI();"
                     class="text-slate-400 font-bold hover:text-white transition-colors">Volver al inicio</button>
             </div>
@@ -805,7 +875,7 @@ df = pd.read_csv("data.csv")</code></pre>
 
     <script>
         let currentSlide = 1;
-        const totalSlides = 11;
+        const totalSlides = 10;
 
         function updateUI() {
             document.querySelectorAll('.slide').forEach((s, i) => s.classList.toggle('active', i + 1 === currentSlide));
@@ -1066,6 +1136,86 @@ df = pd.read_csv("data.csv")</code></pre>
             if (e.key === 'ArrowRight') nextSlide();
             if (e.key === 'ArrowLeft') prevSlide();
         });
+
+        // SLIDE 8: PIP SIMULATION
+        function runPipInstall() {
+            const inputLine = document.getElementById('pip-input-line');
+            const input = document.getElementById('pip-input');
+            const stream = document.getElementById('terminal-stream');
+            const fullCommand = input.value.trim();
+
+            if (!fullCommand) return;
+
+            // 1. Add executed command to the stream
+            const cmdLine = document.createElement('div');
+            cmdLine.className = "flex gap-2 mb-1";
+            cmdLine.innerHTML = `<span class="text-green-400 font-bold">estudiante@mackbook ∼ %</span> <span class="text-white">${fullCommand}</span>`;
+            stream.appendChild(cmdLine);
+
+            // 2. Hide the input line
+            inputLine.classList.add('hidden');
+            input.value = '';
+
+            const addLog = (msg, color = 'text-slate-300') => {
+                const div = document.createElement('div');
+                div.className = color;
+                div.innerHTML = msg;
+                stream.appendChild(div);
+                document.getElementById('pip-console').scrollTop = document.getElementById('pip-console').scrollHeight;
+                return div;
+            };
+
+            // Parsing
+            const parts = fullCommand.split(' ').filter(p => p !== '');
+            if (parts[0] !== 'pip' || parts[1] !== 'install' || parts.length < 3) {
+                setTimeout(() => {
+                    addLog(`zsh: command not found: ${parts[0]}`, 'text-red-400 opacity-80');
+                    if (parts[0] === 'pip' && parts[1] !== 'install') {
+                        addLog(`ERROR: usage: pip install <package>`, 'text-red-400 font-bold');
+                    }
+                    finishCommand();
+                }, 100);
+                return;
+            }
+
+            const lib = parts[2].toLowerCase();
+            addLog(`Collecting ${lib}...`, 'text-blue-400');
+
+            setTimeout(() => {
+                const progress = addLog(`  Downloading ${lib}-2.4.1-py3-none-any.whl (1.2 MB)`);
+                let percent = 0;
+                const interval = setInterval(() => {
+                    percent += 10;
+                    progress.innerHTML = `  Downloading ${lib}-2.4.1-py3-none-any.whl (${percent}%)`;
+                    if (percent >= 100) {
+                        clearInterval(interval);
+                        startInstallation();
+                    }
+                }, 100);
+            }, 500);
+
+            function startInstallation() {
+                setTimeout(() => {
+                    addLog('Installing package libraries...', 'text-slate-400');
+                    setTimeout(() => {
+                        addLog(`Successfully installed ${lib}-2.4.1`, 'text-green-400 font-bold');
+                        addLog(`<br><span class="text-amber-400">WARNING:</span> You are using pip version 21.0.1; however, version 23.3.1 is available.`, 'text-[10px]');
+                        finishCommand();
+                    }, 800);
+                }, 400);
+            }
+
+            function finishCommand() {
+                setTimeout(() => {
+                    // Show the input line again (it stays at the bottom of the console container)
+                    inputLine.classList.remove('hidden');
+                    input.focus();
+                    document.getElementById('pip-console').scrollTop = document.getElementById('pip-console').scrollHeight;
+                    lucide.createIcons();
+                }, 200);
+            }
+        }
+
 
         window.onload = () => {
             updateUI();
