@@ -46,8 +46,8 @@
         }
     </script>
 
-    <!-- Prism.js for Syntax Highlighting -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-coy.min.css" rel="stylesheet" />
+    <!-- Prism.js for Syntax Highlighting (Disabled for Slide 9 to avoid conflicts) -->
+    <!-- <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-coy.min.css" rel="stylesheet" /> -->
 
     <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
@@ -117,6 +117,47 @@
 
         .content-fade {
             animation: fadeIn 0.3s ease-out forwards;
+        }
+
+        /* Simple Syntax Highlighter Classes (VS Code Light) */
+        /* VS Code Light+ Theme Colors */
+        .sh-keyword {
+            color: #AF00DB;
+            font-weight: bold;
+        }
+
+        .sh-func {
+            color: #795E26;
+        }
+
+        .sh-string {
+            color: #A31515;
+        }
+
+        .sh-comment {
+            color: #008000;
+            font-style: italic;
+        }
+
+        .sh-number {
+            color: #098658;
+        }
+
+        .sh-variable {
+            color: #001080;
+        }
+
+        .sh-builtin {
+            color: #267f99;
+        }
+
+        .sh-constant {
+            color: #0070C1;
+        }
+
+        pre code {
+            font-family: 'JetBrains Mono', monospace;
+            line-height: 1.5;
         }
     </style>
 </head>
@@ -954,7 +995,7 @@
                                     </button>
                                 </div>
                                 <div class="flex-1 bg-white overflow-hidden relative">
-                                    <pre class="p-6 h-full overflow-auto custom-scrollbar"><code id="deep-lib-code" class="language-python">import matplotlib.pyplot as plt
+                                    <pre class="p-6 h-full overflow-auto custom-scrollbar"><code id="deep-lib-code">import matplotlib.pyplot as plt
 
 meses = ['Ene', 'Feb', 'Mar']
 ventas = [150, 420, 310]
@@ -983,23 +1024,28 @@ plt.show()</code></pre>
 
         <!-- RESULT MODAL -->
         <div id="result-modal"
-            class="fixed inset-0 z-[100] hidden flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm transition-all">
-            <div
-                class="bg-white w-full max-w-2xl rounded-[2.5rem] shadow-2xl overflow-hidden animate-in fade-in zoom-in duration-300">
+            class="fixed inset-0 z-[100] hidden flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm transition-all"
+            onclick="closeResultModal()">
+            <div class="bg-white w-full max-w-2xl rounded-[2.5rem] shadow-2xl overflow-hidden animate-in fade-in zoom-in duration-300"
+                onclick="event.stopPropagation()">
                 <!-- Modal Header -->
-                <div class="bg-slate-50 px-8 py-4 border-b border-slate-200 flex items-center justify-between">
-                    <div class="flex items-center gap-3">
-                        <div
-                            class="w-8 h-8 bg-brand-500 text-white rounded-lg flex items-center justify-center shadow-lg">
-                            <i data-lucide="terminal" class="w-4 h-4"></i>
-                        </div>
-                        <h4 class="font-black text-slate-900 uppercase text-xs tracking-widest">Resultado de Ejecución
-                        </h4>
+                <div class="bg-[#f3f3f3] px-6 py-4 border-b border-slate-200 flex items-center relative">
+                    <!-- macOS Traffic Lights -->
+                    <div class="flex gap-2 z-10">
+                        <button onclick="closeResultModal()"
+                            class="w-3.5 h-3.5 rounded-full bg-[#ff5f56] border border-[#e0443e] hover:brightness-90 transition-all shadow-inner"></button>
+                        <div class="w-3.5 h-3.5 rounded-full bg-[#ffbd2e] border border-[#dea123] shadow-inner"></div>
+                        <div class="w-3.5 h-3.5 rounded-full bg-[#27c93f] border border-[#1aab29] shadow-inner"></div>
                     </div>
-                    <button onclick="closeResultModal()"
-                        class="w-8 h-8 rounded-full hover:bg-slate-200 flex items-center justify-center transition-colors">
-                        <i data-lucide="x" class="w-4 h-4 text-slate-500"></i>
-                    </button>
+
+                    <!-- Centered Title -->
+                    <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
+                        <div class="flex items-center gap-2">
+                            <i data-lucide="terminal" class="w-3 h-3 text-slate-400"></i>
+                            <h4 class="font-bold text-slate-600 text-[11px] uppercase tracking-widest">Resultado de
+                                Ejecución</h4>
+                        </div>
+                    </div>
                 </div>
 
                 <!-- Modal Body (Loading State) -->
@@ -1040,7 +1086,11 @@ plt.show()</code></pre>
             document.getElementById('btn-prev').disabled = currentSlide === 1;
             document.getElementById('btn-next').disabled = currentSlide === totalSlides;
             lucide.createIcons();
-            Prism.highlightAll();
+
+            // Special initialization for Slide 9 when active
+            if (currentSlide === 9) {
+                selectDeepLib(currentDeepLib);
+            }
         }
 
         function nextSlide() { if (currentSlide < totalSlides) { currentSlide++; updateUI(); } }
@@ -1409,7 +1459,7 @@ plt.show()</code></pre>
             'pandas': {
                 name: 'pandas',
                 desc: 'La herramienta definitiva para manipular tablas de datos (DataFrames) de forma eficiente.',
-                code: 'import pandas as pd\n\ndata = {\n  \'Nombre\': [\'Ana\', \'Luis\', \'Marta\'],\n  \'Nota\': [9.5, 8.2, 9.1]\n}\ndf = pd.DataFrame(data)\n\nprint(df.describe()) # Resumen estadístico'
+                code: 'import pandas as pd\n\ndata = {\n  \'Nombre\': [\'Ana\', \'Luis\', \'Marta\'],\n  \'Nota\': [9.5, 8.2, 9.1]\n}\ndf = pd.DataFrame(data)\n\nprint(df)'
             },
             'requests': {
                 name: 'requests',
@@ -1424,11 +1474,44 @@ plt.show()</code></pre>
             'openai': {
                 name: 'openai',
                 desc: 'Conecta tus aplicaciones con los modelos de lenguaje más avanzados del mundo (GPT-4).',
-                code: 'from openai import OpenAI\n\nclient = OpenAI(api_key="TU_KEY_AQUI")\n\nchat = client.chat.completions.create(\n  model="gpt-4",\n  messages=[{"role": "user", "content": "¡Hola!"}]\n)\n\nprint(chat.choices[0].message.content)'
+                code: 'from openai import OpenAI\n\nclient = OpenAI(api_key="TU_KEY_AQUI")\n\nchat = client.chat.completions.create(\n  model="gpt-4",\n  messages=[{"role": "user", "content": "¿Qué es una biblioteca?"}]\n)\n\nprint(chat.choices[0].message.content)'
             }
         };
 
         let currentDeepLib = 'matplotlib'; // Default
+
+        function simpleHighlight(code) {
+            if (!code) return '';
+
+            // Step 1: Define the giant regex to catch EVERYTHING in one pass
+            // order: comments, strings, keywords, numbers, function calls, variables
+            // we use groups to identify what we caught
+            const regex = /(#.*)|("(?:\\.|[^"\\])*"|'(?:\\.|[^'\\])*')|\b(import|from|as|def|return|if|else|elif|for|while|try|except|with|print|None|True|False|class|in|is|not|and|or|lambda)\b|\b(\d+)\b|\b([a-z_]\w*)\b(?=\s*\()|\b([a-z_]\w*)\b/gi;
+
+            // Step 2: Escape the entire code first to be safe
+            let escaped = code
+                .replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;");
+
+            // Step 3: Run the replacement on the escaped code
+            return escaped.replace(regex, (match, comment, string, keyword, number, func, variable) => {
+                if (comment) return `<span class="sh-comment">${match}</span>`;
+                if (string) return `<span class="sh-string">${match}</span>`;
+                if (keyword) return `<span class="sh-keyword">${match}</span>`;
+                if (number) return `<span class="sh-number">${match}</span>`;
+                if (func) return `<span class="sh-func">${match}</span>`;
+                if (variable) {
+                    const low = match.toLowerCase();
+                    // Optional: special color for common modules
+                    if (['plt', 'np', 'pd', 'requests', 'sklearn'].includes(low)) {
+                        return `<span class="sh-builtin">${match}</span>`;
+                    }
+                    return `<span class="sh-variable">${match}</span>`;
+                }
+                return match;
+            });
+        }
 
         function selectDeepLib(libId) {
             currentDeepLib = libId;
@@ -1448,7 +1531,7 @@ plt.show()</code></pre>
             document.getElementById('deep-lib-desc').innerText = lib.desc;
 
             const codeEl = document.getElementById('deep-lib-code');
-            codeEl.textContent = lib.code;
+            codeEl.innerHTML = simpleHighlight(lib.code);
 
             // Update tabs state
             document.querySelectorAll('.deep-lib-tab').forEach(tab => {
@@ -1487,9 +1570,9 @@ plt.show()</code></pre>
                 'matplotlib': `
                     <div class="flex flex-col items-center w-full max-w-md">
                         <div class="flex items-end gap-3 h-48 w-full border-b-2 border-slate-300 pb-1 px-4 mb-2">
-                            <div class="bg-rose-500 w-full rounded-t-lg transition-all duration-1000 animate-in slide-in-from-bottom" style="height: 40%"></div>
+                            <div class="bg-rose-500 w-full rounded-t-lg transition-all duration-1000 animate-in slide-in-from-bottom" style="height: 35%"></div>
                             <div class="bg-indigo-500 w-full rounded-t-lg transition-all duration-1000 animate-in slide-in-from-bottom" style="height: 100%"></div>
-                            <div class="bg-teal-500 w-full rounded-t-lg transition-all duration-1000 animate-in slide-in-from-bottom" style="height: 75%"></div>
+                            <div class="bg-teal-500 w-full rounded-t-lg transition-all duration-1000 animate-in slide-in-from-bottom" style="height: 74%"></div>
                         </div>
                         <div class="flex justify-between w-full px-4 text-[10px] font-bold text-slate-400 font-mono">
                             <span>ENE</span><span>FEB</span><span>MAR</span>
@@ -1570,7 +1653,7 @@ plt.show()</code></pre>
                     <div class="w-full flex flex-col gap-4 max-w-md">
                         <div class="flex gap-3 justify-end items-start">
                             <div class="bg-brand-500 text-white p-4 rounded-2xl rounded-tr-none text-xs shadow-sm border border-brand-600">
-                                ¡Hola! Explícame qué es una biblioteca.
+                                ¿Qué es una biblioteca?
                             </div>
                         </div>
                         <div class="flex gap-3 items-start">
@@ -1591,7 +1674,7 @@ plt.show()</code></pre>
         window.onload = () => {
             updateUI();
             runMathDemo();
-            selectDeepLib('matplotlib'); // Initialize Slide 9
+            selectDeepLib('matplotlib'); // Highlight Slide 9 on load
         };
     </script>
 </body>
