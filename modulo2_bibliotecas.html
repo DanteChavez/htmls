@@ -395,7 +395,7 @@
                 <header class="text-center mb-12">
                     <h2 class="text-4xl font-black text-slate-900 mb-3 tracking-tight">Manual vs. Bibliotecas</h2>
                     <p class="text-slate-500 font-medium italic">Aquí tienes un ejemplo de cómo buscar la distancia
-                        entre dos puntos en un plano cartesiano, haciéndolo a mano y con bibliotecas.</p>
+                        entre dos puntos en un plano cartesiano, haciéndolo a mano vs con bibliotecas.</p>
                 </header>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
@@ -472,9 +472,9 @@
         <!-- SLIDE 5: IMPORT VS FROM ... IMPORT -->
         <section class="slide flex flex-col items-center justify-center p-8" id="slide-5">
             <div class="max-w-5xl w-full">
-                <h2 class="text-3xl font-black mb-4 text-slate-900">Dos formas de importar</h2>
-                <p class="text-slate-500 mb-10 text-lg italic">¿Importar todo el kit de herramientas o solo el martillo
-                    que necesitas?</p>
+                <h2 class="text-3xl font-black mb-4 text-slate-900">Importación Selectiva: Elige tus herramientas</h2>
+                <p class="text-slate-500 mb-10 text-lg italic">Puedes cargar toda la biblioteca o extraer solo las
+                    funciones específicas que planeas utilizar.</p>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                     <!-- Import Completo -->
@@ -545,8 +545,8 @@
                                 <span class="text-[#795e26]">print</span>(<span class="text-[#795e26]">sqrt</span>(<span
                                     class="text-[#098658]">16</span>))<br>
                                 <span class="text-[#795e26]">print</span>(<span class="text-[#001080]">pi</span>)<br>
-                                <span class="text-red-500 font-bold underline decoration-wavy">sin(0)</span> <span
-                                    class="text-red-500 italic"># ❌ ERROR: sin no importado</span>
+                                <span class="text-red-500 font-bold underline decoration-wavy">print(sin(0))</span>
+                                <span class="text-red-500 italic"># ❌ ERROR: sin no importado</span>
                             </div>
                         </div>
                         <div class="mt-auto space-y-4">
@@ -556,7 +556,8 @@
                             </div>
                             <div class="flex items-center gap-3 text-sm">
                                 <i data-lucide="minus-circle" class="w-4 h-4 text-red-400"></i>
-                                <span class="text-slate-600 font-medium">Riesgo: Podría confundirse con variables
+                                <span class="text-slate-600 font-medium">Riesgo: Podría confundirse con variables o
+                                    funciones
                                     tuyas.</span>
                             </div>
                         </div>
@@ -568,11 +569,11 @@
         <!-- SLIDE 6: APODOS (AS) -->
         <section class="slide flex flex-col items-center justify-center p-8" id="slide-6">
             <div class="max-w-4xl w-full">
-                <h2 class="text-3xl font-black mb-4 text-slate-900">Aliasing: Ponle un apodo</h2>
+                <h2 class="text-3xl font-black mb-4 text-slate-900">Alias de Importación: Abreviando tu código</h2>
                 <p class="text-slate-500 mb-10 font-medium leading-relaxed">
-                    A veces las bibliotecas tienen nombres muy largos y queremos abreviar por comodidad.
-                    De hecho, a veces es necesario importar toda la biblioteca y se necesita abreviar para que el código
-                    sea más legible y rápido de escribir.
+                    A veces las bibliotecas tienen nombres muy largos y queremos abreviar por comodidad. Un ejemplo
+                    común ocurre con las herramientas más populares de Python, donde se suele usar un alias estándar
+                    para escribir menos código.
                 </p>
 
                 <div class="bg-white rounded-3xl shadow-floating border border-slate-100 overflow-hidden">
@@ -608,7 +609,7 @@
                                 <div class="p-6 text-sm font-mono leading-relaxed text-slate-800">
                                     <span class="text-[#af00db]">import</span> nombre_muy_largo<br><br>
                                     nombre_muy_largo.<span class="text-[#795e26]">funcion</span>()<br>
-                                    nombre_muy_largo.<span class="text-[#795e26]">otra_func</span>()
+                                    nombre_muy_largo.<span class="text-[#795e26]">otra_funcion</span>()
                                 </div>
                             </div>
                         </div>
@@ -635,7 +636,7 @@
                                         <span class="text-[#001080] font-bold">n</span>.<span
                                             class="text-[#795e26]">funcion</span>()<br>
                                         <span class="text-[#001080] font-bold">n</span>.<span
-                                            class="text-[#795e26]">otra_func</span>()
+                                            class="text-[#795e26]">otra_funcion</span>()
                                     </div>
                                 </div>
                             </div>
@@ -1134,7 +1135,7 @@ plt.show()</code></pre>
             codeEl.innerHTML = `
                 <span class="text-[#af00db]">import</span> nombre_muy_largo <span class="text-[#af00db]">as</span> <span class="text-[#001080] font-bold">${val}</span><br><br>
                 <span class="text-[#001080] font-bold">${val}</span>.<span class="text-[#795e26]">funcion</span>()<br>
-                <span class="text-[#001080] font-bold">${val}</span>.<span class="text-[#795e26]">otra_func</span>()
+                <span class="text-[#001080] font-bold">${val}</span>.<span class="text-[#795e26]">otra_funcion</span>()
             `;
         }
 
