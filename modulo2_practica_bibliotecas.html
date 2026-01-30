@@ -170,7 +170,7 @@
         <div class="flex flex-col items-center gap-2">
             <div class="flex gap-2 w-48" id="progress-bar"></div>
             <span id="level-counter" class="text-[10px] font-bold text-slate-400 uppercase tracking-tighter">Escenario 1
-                de 8</span>
+                de 7</span>
         </div>
         <div class="flex items-center gap-4">
             <div id="slide-indicator" class="bg-slate-100 px-4 py-1 rounded-full text-xs font-bold text-slate-600">1 / 3
@@ -186,10 +186,10 @@
                     class="w-48 h-48 bg-white rounded-[40px] flex items-center justify-center shadow-xl overflow-hidden p-4 mx-auto mb-8 border border-slate-100 animate-in zoom-in duration-700">
                     <i data-lucide="shield-check" class="w-24 h-24 text-brand-500"></i>
                 </div>
-                <h1 class="text-6xl font-black text-slate-900 tracking-tighter mb-6">Auditor de Bibliotecas</h1>
+                <h1 class="text-6xl font-black text-slate-900 tracking-tighter mb-6">Jefe de Librerías</h1>
                 <p class="text-lg text-slate-600 font-medium max-w-xl mx-auto leading-relaxed">
-                    Un buen programador protege sus bibliotecas. Detecta funciones intrusas y <b>arrástralas al
-                        basurero</b> para limpiar el sistema.
+                    Como jefe de proyecto, tu misión es organizar el código. Separa las funciones esenciales de las
+                    descartadas para mantener una arquitectura limpia.
                 </p>
                 <div class="mt-12 flex justify-center gap-4">
                     <button onclick="nextSlide()"
@@ -204,27 +204,26 @@
         <!-- SLIDE 2: MISIÓN -->
         <section class="slide flex flex-col items-center justify-center p-8" id="slide-2">
             <div class="max-w-4xl w-full">
-                <h2 class="text-4xl font-black mb-8 text-slate-900 tracking-tight text-center">Instrucciones de Limpieza
-                </h2>
+                <h2 class="text-4xl font-black mb-8 text-slate-900 tracking-tight text-center">Gestión de Calidad</h2>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-10">
                     <div class="bg-white p-8 rounded-[32px] shadow-soft border border-slate-100">
                         <div class="w-12 h-12 bg-indigo-100 rounded-2xl flex items-center justify-center mb-6">
-                            <i data-lucide="mouse-pointer-2" class="text-indigo-600"></i>
+                            <i data-lucide="shuffle" class="text-indigo-600"></i>
                         </div>
-                        <h4 class="text-xl font-bold text-slate-900 mb-3">Identifica e Intrusas</h4>
+                        <h4 class="text-xl font-bold text-slate-900 mb-3">Organiza el Código</h4>
                         <p class="text-sm text-slate-500 leading-relaxed">
-                            Analiza las funciones de cada biblioteca. Si una no pertenece a su responsabilidad, es una
-                            "intrusa".
+                            Mueve las funciones entre "En Uso" y "Archivo". Asegúrate de que solo lo necesario esté
+                            activo.
                         </p>
                     </div>
                     <div class="bg-white p-8 rounded-[32px] shadow-soft border border-slate-100">
-                        <div class="w-12 h-12 bg-rose-100 rounded-2xl flex items-center justify-center mb-6">
-                            <i data-lucide="trash-2" class="text-rose-600"></i>
+                        <div class="w-12 h-12 bg-emerald-100 rounded-2xl flex items-center justify-center mb-6">
+                            <i data-lucide="check-square" class="text-emerald-600"></i>
                         </div>
-                        <h4 class="text-xl font-bold text-slate-900 mb-3">Arrastra al Basurero</h4>
+                        <h4 class="text-xl font-bold text-slate-900 mb-3">Verifica la Estructura</h4>
                         <p class="text-sm text-slate-500 leading-relaxed">
-                            Mueve las funciones intrusas al contenedor rojo en la parte inferior. Luego, confirma tu
-                            elección.
+                            Al terminar la gestión, verifica si la librería cumple con los estándares de responsabilidad
+                            única.
                         </p>
                     </div>
                 </div>
@@ -238,72 +237,115 @@
         </section>
 
         <!-- SLIDE 3: JUEGO -->
-        <section class="slide p-8" id="slide-3">
-            <div class="max-w-5xl mx-auto w-full flex flex-col h-full gap-6">
-                <!-- Library Info -->
-                <div class="bg-white p-6 rounded-[28px] shadow-soft border border-slate-100">
-                    <div class="flex items-center gap-4">
-                        <div class="p-3 bg-indigo-50 rounded-2xl text-indigo-600 shrink-0">
-                            <i data-lucide="library" class="w-6 h-6"></i>
+        <section class="slide p-6" id="slide-3">
+            <div class="max-w-[1200px] mx-auto w-full flex flex-col h-full gap-4">
+
+                <!-- Library Header -->
+                <div
+                    class="bg-white p-6 rounded-[28px] shadow-sm border border-slate-100 flex flex-col gap-4 shrink-0 transition-all duration-500">
+                    <!-- Header Top Section: Title and Buttons -->
+                    <div class="flex justify-between items-start border-b border-slate-50 pb-4">
+                        <div class="flex-1 flex flex-col gap-2">
+                            <!-- Nombre -->
+                            <div class="flex items-center gap-2">
+                                <span
+                                    class="text-[10px] font-bold text-slate-400 uppercase tracking-widest w-32 shrink-0">Nombre
+                                    librería:</span>
+                                <h3 id="lib-name" class="text-2xl font-black text-slate-900 tracking-tight"></h3>
+                            </div>
+                            <!-- Descripción -->
+                            <div class="flex items-center gap-2">
+                                <span
+                                    class="text-[10px] font-bold text-slate-400 uppercase tracking-widest w-32 shrink-0">Descripción:</span>
+                                <p id="lib-context" class="text-[13px] text-slate-700 font-medium"></p>
+                            </div>
+                            <!-- Capa -->
+                            <div class="flex items-center gap-2">
+                                <span
+                                    class="text-[10px] font-bold text-slate-400 uppercase tracking-widest w-32 shrink-0">Capa
+                                    del sistema:</span>
+                                <span id="lib-layer" class="text-[13px] text-slate-700 font-medium"></span>
+                            </div>
+                            <!-- Responsabilidad -->
+                            <div class="flex items-center gap-2">
+                                <span
+                                    class="text-[10px] font-bold text-slate-400 uppercase tracking-widest w-32 shrink-0">Responsabilidad:</span>
+                                <p id="lib-responsibility" class="text-[13px] text-slate-700 font-medium flex-1"></p>
+                            </div>
                         </div>
-                        <div class="flex-1">
-                            <h3 id="lib-name" class="text-xl font-black text-slate-900">nombre_biblioteca</h3>
-                            <p id="lib-desc" class="text-sm text-slate-500 font-medium">Descripción corta de la
-                                biblioteca.</p>
+
+                        <!-- Action Buttons -->
+                        <div class="flex items-center gap-3 ml-6 self-center">
+                            <button id="verify-btn" onclick="verifyScenario()"
+                                class="px-6 py-3 bg-slate-900 text-white text-sm font-bold rounded-2xl shadow-lg hover:bg-brand-600 transition-all flex items-center gap-2">
+                                <i data-lucide="check-check" class="w-4 h-4"></i>
+                                Verificar Gestión
+                            </button>
+                            <button id="next-scenario-btn" onclick="goToNextScenario()"
+                                class="hidden px-6 py-3 bg-brand-500 text-white text-sm font-bold rounded-2xl shadow-lg hover:bg-brand-600 transition-all flex items-center gap-2">
+                                Siguiente Escenario
+                                <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                            </button>
                         </div>
-                        <button id="verify-btn" onclick="verifyScenario()"
-                            class="px-6 py-3 bg-brand-500 text-white font-bold rounded-xl shadow-lg hover:bg-brand-600 transition-all flex items-center gap-2">
-                            Verificar Auditoría
-                        </button>
+                    </div>
+
+                    <!-- Tip Container: Principle -->
+                    <div class="bg-indigo-50/50 p-3 rounded-2xl border border-indigo-100/30 flex items-center gap-2">
+                        <div class="p-1.5 bg-white rounded-lg shadow-sm">
+                            <i data-lucide="lightbulb" class="w-4 h-4 text-amber-500"></i>
+                        </div>
+                        <div class="text-[10px] font-bold text-slate-400 uppercase tracking-widest ml-1 w-32 shrink-0">
+                            Tip de Diseño:</div>
+                        <span id="lib-principle" class="text-[13px] font-bold text-brand-600 italic"></span>
                     </div>
                 </div>
 
-                <!-- Source Zone (Library) -->
-                <div id="library-zone"
-                    class="drop-zone flex flex-wrap gap-4 p-4 min-h-[140px] bg-slate-50/50 border-2 border-slate-100 rounded-[28px] content-start"
-                    ondragover="allowDrop(event)" ondrop="dropToZone(event, 'library')">
-                    <!-- Cards generated by JS -->
-                </div>
+                <!-- Split Pane Container: Two Management Columns -->
+                <div class="flex-1 flex gap-6 overflow-hidden min-h-0">
 
-                <!-- Feedback Box (Hidden initially) -->
-                <div id="feedback-area" class="invisible">
-                    <div id="feedback-content" class="p-4 rounded-xl flex items-start gap-3"></div>
-                </div>
-
-                <!-- Trash Zone -->
-                <div class="mt-auto pb-6">
-                    <div id="trash-zone"
-                        class="trash-zone flex items-center justify-center gap-4 py-8 border-2 border-slate-200 border-dashed rounded-[32px] bg-white relative overflow-hidden"
-                        ondragover="allowDrop(event)" ondrop="dropToZone(event, 'trash')">
-                        <div id="trash-prompt" class="flex flex-col items-center pointer-events-none">
-                            <i data-lucide="trash-2" class="w-10 h-10 text-slate-300 mb-2"></i>
-                            <span class="text-xs font-bold text-slate-400 uppercase tracking-widest text-center">Suelta
-                                aquí las funciones intrusas</span>
+                    <!-- LEFT COLUMN: Functions in Use -->
+                    <div class="flex-1 flex flex-col gap-4 overflow-hidden">
+                        <div class="flex flex-col items-center justify-center p-2 mb-1">
+                            <div class="text-[11px] font-black text-emerald-600 uppercase tracking-widest leading-none">
+                                Funciones en Uso</div>
                         </div>
-                        <div id="trash-contents" class="flex flex-wrap gap-4 justify-center px-6"></div>
+                        <div id="library-zone"
+                            class="drop-zone flex-1 overflow-y-auto grid grid-cols-2 gap-3 p-4 bg-white border-2 border-slate-100 rounded-[28px] content-start shadow-sm"
+                            ondragover="allowDrop(event)" ondrop="dropToZone(event, 'library')">
+                            <!-- Standard/Good functions belong here -->
+                        </div>
+                    </div>
+
+                    <!-- RIGHT COLUMN: Functions Archive (Discarded) -->
+                    <div class="flex-1 flex flex-col gap-4 overflow-hidden">
+                        <div class="flex flex-col items-center justify-center p-2 mb-1">
+                            <div class="text-[11px] font-black text-rose-600 uppercase tracking-widest leading-none">
+                                Funciones Descartadas</div>
+                        </div>
+                        <div id="trash-zone"
+                            class="drop-zone flex-1 overflow-y-auto grid grid-cols-2 gap-3 p-4 bg-slate-50 border-2 border-slate-200 border-dashed rounded-[28px] content-start"
+                            ondragover="allowDrop(event)" ondrop="dropToZone(event, 'archive')">
+                            <!-- Intruder/Bad functions belong here -->
+                        </div>
                     </div>
                 </div>
 
-                <!-- Next Button (Hidden initially) -->
-                <div class="flex justify-center pb-8">
-                    <button id="next-scenario-btn" onclick="goToNextScenario()"
-                        class="hidden px-12 py-4 bg-slate-900 text-white font-black rounded-2xl shadow-xl hover:bg-brand-600 transition-all flex items-center gap-3">
-                        Siguiente Escenario
-                        <i data-lucide="arrow-right" class="w-5 h-5"></i>
-                    </button>
+                <!-- Feedback Area -->
+                <div id="feedback-area" class="invisible h-20 shrink-0 transition-all translate-y-2">
+                    <div id="feedback-content" class="h-full"></div>
                 </div>
 
-                <!-- Final Results -->
+                <!-- Final Results Overlay -->
                 <div id="results-screen"
-                    class="hidden absolute inset-0 bg-macos-bg flex flex-col items-center justify-center p-8 text-center z-50 animate-in zoom-in duration-700">
-                    <div class="w-24 h-24 bg-emerald-100 rounded-full flex items-center justify-center mb-8">
-                        <i data-lucide="medal" class="w-12 h-12 text-emerald-600"></i>
+                    class="hidden absolute inset-0 bg-macos-bg flex flex-col items-center justify-center p-8 text-center z-[60] animate-in zoom-in duration-700">
+                    <div class="w-20 h-20 bg-emerald-100 rounded-full flex items-center justify-center mb-6">
+                        <i data-lucide="medal" class="w-10 h-10 text-emerald-600"></i>
                     </div>
-                    <h2 class="text-5xl font-black text-slate-900 mb-4">¡Maestro Auditor!</h2>
-                    <p class="text-xl text-slate-500 mb-10 max-w-lg leading-relaxed">Has limpiado todos los sistemas con
+                    <h2 class="text-4xl font-black text-slate-900 mb-3 tracking-tight">¡Maestro Auditor!</h2>
+                    <p class="text-md text-slate-500 mb-8 max-w-sm leading-relaxed">Has limpiado todos los sistemas con
                         éxito. Tu criterio sobre la separación de responsabilidades es impecable.</p>
                     <button onclick="location.reload()"
-                        class="px-10 py-5 bg-slate-900 text-white font-bold rounded-[32px] shadow-xl hover:shadow-2xl transition-all">
+                        class="px-8 py-4 bg-slate-900 text-white font-bold rounded-2xl shadow-lg hover:shadow-xl transition-all">
                         Reiniciar Entrenamiento
                     </button>
                 </div>
@@ -327,86 +369,163 @@
     <script>
         const scenarios = [
             {
-                name: "archivo_utils",
-                desc: "Biblioteca para trabajar con archivos de texto (Lectura y procesamiento).",
+                name: "file_reader",
+                context: "Backend que procesa archivos de texto subidos por usuarios (logs, tareas, reportes).",
+                responsibility: "Lectura y análisis básico de archivos de texto. No escribe, no imprime, no interactúa con el usuario.",
+                layer: "Entrada / IO controlado",
+                principle: "Una buena biblioteca hace una sola cosa y la hace bien.",
                 functions: [
-                    { id: 1, name: "leer_archivo(ruta)", info: "Lee el contenido de un archivo.", isCorrect: true },
-                    { id: 2, name: "parsear_archivo(ruta)", info: "Devuelve el contenido separado por líneas.", isCorrect: true },
-                    { id: 3, name: "escribir_archivo(ruta, cont)", info: "Escribe contenido en un archivo.", isCorrect: false, reason: "No pertenece aquí porque el propósito de esta biblioteca es la lectura y procesamiento ligero, no la escritura persistente." },
-                    { id: 4, name: "cerrar_archivo()", info: "Cierra el archivo abierto actualmente.", isCorrect: false, reason: "No pertenece aquí porque el manejo de cierre debe ser parte del flujo de apertura (Context Manager), no una función global suelta." }
+                    { id: 1, name: "read_text(path)", info: "Lee el contenido completo del archivo.", isCorrect: true },
+                    { id: 2, name: "read_lines(path)", info: "Retorna una lista de líneas.", isCorrect: true },
+                    { id: 3, name: "count_lines(path)", info: "Cuenta las líneas del archivo.", isCorrect: true },
+                    { id: 4, name: "file_exists(path)", info: "Verifica si el archivo existe.", isCorrect: true },
+                    {
+                        id: 5,
+                        name: "print_file(path)",
+                        info: "Imprime el contenido en consola.",
+                        isCorrect: false,
+                        reason: "Imprimir es responsabilidad de la capa de presentación."
+                    },
+                    {
+                        id: 6,
+                        name: "save_analysis(path, result)",
+                        info: "Guarda el resultado del análisis.",
+                        isCorrect: false,
+                        reason: "Guardar datos es persistencia, no lectura."
+                    }
                 ]
             },
             {
-                name: "math_simple",
-                desc: "Biblioteca para operaciones matemáticas básicas y puras.",
+                name: "math_core",
+                context: "Motor matemático reutilizable en simulaciones, juegos y aplicaciones científicas.",
+                responsibility: "Cálculo matemático puro y determinista, sin efectos secundarios.",
+                layer: "Lógica de dominio pura",
+                principle: "Si una función imprime, guarda o pregunta, probablemente no es lógica pura.",
                 functions: [
-                    { id: 1, name: "sumar(a, b)", info: "Retorna la suma de dos números.", isCorrect: true },
-                    { id: 2, name: "restar(a, b)", info: "Retorna la resta de dos números.", isCorrect: true },
-                    { id: 3, name: "mostrar_resultado(res)", info: "Imprime el resultado en pantalla.", isCorrect: false, reason: "No pertenece aquí porque es una responsabilidad de presentación (interfaz), no de cálculo matemático puro." },
-                    { id: 4, name: "guardar_resultado(res)", info: "Guarda el resultado en un archivo.", isCorrect: false, reason: "No pertenece aquí porque mezcla la lógica de cálculo con la persistencia de datos externa." }
+                    { id: 1, name: "add(a, b)", info: "Suma dos números.", isCorrect: true },
+                    { id: 2, name: "subtract(a, b)", info: "Resta dos números.", isCorrect: true },
+                    { id: 3, name: "multiply(a, b)", info: "Multiplica dos números.", isCorrect: true },
+                    { id: 4, name: "divide(a, b)", info: "Divide dos números.", isCorrect: true },
+                    { id: 5, name: "average(values)", info: "Calcula el promedio.", isCorrect: true },
+                    {
+                        id: 6,
+                        name: "show_result(result)",
+                        info: "Muestra el resultado al usuario.",
+                        isCorrect: false,
+                        reason: "Mostrar resultados pertenece a la interfaz."
+                    },
+                    {
+                        id: 7,
+                        name: "store_result(result)",
+                        info: "Guarda el resultado en un archivo.",
+                        isCorrect: false,
+                        reason: "Persistencia externa rompe la pureza del cálculo."
+                    }
                 ]
             },
             {
-                name: "random_tools",
-                desc: "Biblioteca para generación de valores aleatorios.",
+                name: "random_utils",
+                context: "Sistema de juegos y generación de datos de prueba.",
+                responsibility: "Generación y manipulación de valores aleatorios.",
+                layer: "Lógica de dominio (no determinista)",
+                principle: "Generar no es mostrar ni guardar.",
                 functions: [
-                    { id: 1, name: "numero_aleatorio(min, max)", info: "Retorna un número aleatorio en un rango.", isCorrect: true },
-                    { id: 2, name: "elegir_element(lista)", info: "Retorna un elemento al azar de una lista.", isCorrect: true },
-                    { id: 3, name: "semilla_aleatoria()", info: "Inicializa el generador aleatorio.", isCorrect: true },
-                    { id: 4, name: "guardar_numero(n)", info: "Guarda el número generado en un archivo.", isCorrect: false, reason: "No pertenece aquí porque la persistencia no es parte de la lógica de generación aleatoria." }
+                    { id: 1, name: "random_int(min, max)", info: "Genera un entero aleatorio.", isCorrect: true },
+                    { id: 2, name: "random_float()", info: "Genera un decimal aleatorio.", isCorrect: true },
+                    { id: 3, name: "choice(list)", info: "Selecciona un elemento al azar.", isCorrect: true },
+                    { id: 4, name: "shuffle(list)", info: "Mezcla una lista.", isCorrect: true },
+                    {
+                        id: 5,
+                        name: "log_random(value)",
+                        info: "Registra el valor generado.",
+                        isCorrect: false,
+                        reason: "El registro es responsabilidad de otra capa."
+                    }
                 ]
             },
             {
-                name: "fecha_utils",
-                desc: "Biblioteca para trabajar con fechas y horas (Cálculos lógicos).",
+                name: "date_time_utils",
+                context: "Sistema de reservas, agendas y vencimientos.",
+                responsibility: "Cálculo y transformación lógica de fechas y horas.",
+                layer: "Lógica de dominio temporal",
+                principle: "Formatear es válido; mostrar no.",
                 functions: [
-                    { id: 1, name: "fecha_actual()", info: "Retorna la fecha actual.", isCorrect: true },
-                    { id: 2, name: "formatear_fecha(f)", info: "Retorna la fecha formateada como string.", isCorrect: true },
-                    { id: 3, name: "sumar_dias(f, d)", info: "Retorna una nueva fecha calculada.", isCorrect: true },
-                    { id: 4, name: "imprimir_calendario()", info: "Muestra un calendario en pantalla.", isCorrect: false, reason: "No pertenece aquí porque es una función de salida visual, no de manipulación lógica de fechas." }
+                    { id: 1, name: "now()", info: "Retorna fecha y hora actual.", isCorrect: true },
+                    { id: 2, name: "add_days(date, days)", info: "Suma días a una fecha.", isCorrect: true },
+                    { id: 3, name: "diff_days(d1, d2)", info: "Calcula diferencia de días.", isCorrect: true },
+                    { id: 4, name: "format_date(date, format)", info: "Formatea la fecha.", isCorrect: true },
+                    {
+                        id: 5,
+                        name: "print_calendar(month, year)",
+                        info: "Muestra un calendario.",
+                        isCorrect: false,
+                        reason: "Mostrar información pertenece a la capa de presentación."
+                    }
                 ]
             },
             {
                 name: "csv_reader",
-                desc: "Biblioteca para leer archivos CSV exclusivamente.",
+                context: "Importación de datos desde Excel o sistemas externos.",
+                responsibility: "Lectura, validación y análisis de archivos CSV.",
+                layer: "Entrada de datos estructurados",
+                principle: "El nombre de la biblioteca define sus límites.",
                 functions: [
-                    { id: 1, name: "leer_csv(ruta)", info: "Retorna contenido como lista.", isCorrect: true },
-                    { id: 2, name: "parsear_filas(cont)", info: "Procesa filas del archivo.", isCorrect: true },
-                    { id: 3, name: "validar_columns(cont)", info: "Verifica estructura del CSV.", isCorrect: true },
-                    { id: 4, name: "escribir_csv(ruta, d)", info: "Escribe datos en un CSV.", isCorrect: false, reason: "No pertenece aquí porque contradice el propósito de una biblioteca definida como 'Reader' (solo lectura)." }
+                    { id: 1, name: "read_csv(path)", info: "Lee filas del CSV.", isCorrect: true },
+                    { id: 2, name: "get_headers(rows)", info: "Obtiene encabezados.", isCorrect: true },
+                    { id: 3, name: "validate_columns(rows, expected)", info: "Valida columnas.", isCorrect: true },
+                    { id: 4, name: "filter_rows(rows, condition)", info: "Filtra filas.", isCorrect: true },
+                    {
+                        id: 5,
+                        name: "write_csv(path, data)",
+                        info: "Escribe un CSV.",
+                        isCorrect: false,
+                        reason: "Una biblioteca Reader no debe escribir datos."
+                    }
                 ]
             },
             {
-                name: "usuario_auth",
-                desc: "Biblioteca para autenticación de usuarios y seguridad.",
+                name: "auth_core",
+                context: "Backend de autenticación para una aplicación web.",
+                responsibility: "Autenticación, sesiones y seguridad.",
+                layer: "Seguridad / dominio",
+                principle: "La seguridad no interactúa directamente con el usuario.",
                 functions: [
-                    { id: 1, name: "validar_usuario(u, p)", info: "Verifica credenciales.", isCorrect: true },
-                    { id: 2, name: "cerrar_sesion(usuario)", info: "Finaliza la sesión.", isCorrect: true },
-                    { id: 3, name: "mostrar_error(msg)", info: "Muestra un error en pantalla.", isCorrect: false, reason: "No pertenece aquí porque la presentación de errores es responsabilidad de la UI, no del motor de autenticación." },
-                    { id: 4, name: "generar_token(usuario)", info: "Genera token de sesión.", isCorrect: true }
+                    { id: 1, name: "authenticate(user, pass)", info: "Valida credenciales.", isCorrect: true },
+                    { id: 2, name: "hash_password(pass)", info: "Genera hash seguro.", isCorrect: true },
+                    { id: 3, name: "generate_token(userId)", info: "Genera token.", isCorrect: true },
+                    { id: 4, name: "invalidate_token(token)", info: "Cierra sesión.", isCorrect: true },
+                    {
+                        id: 5,
+                        name: "show_error(msg)",
+                        info: "Muestra error al usuario.",
+                        isCorrect: false,
+                        reason: "Mostrar errores es responsabilidad de la interfaz."
+                    }
                 ]
             },
             {
-                name: "texto_utils",
-                desc: "Biblioteca para manipulación y análisis de texto.",
+                name: "text_processing",
+                context: "Análisis y limpieza de textos.",
+                responsibility: "Procesar y analizar strings.",
+                layer: "Lógica de dominio",
+                principle: "Texto no es archivo.",
                 functions: [
-                    { id: 1, name: "contar_palabras(txt)", info: "Retorna número de palabras.", isCorrect: true },
-                    { id: 2, name: "convertir_altas(txt)", info: "Convierte texto a mayúsculas.", isCorrect: true },
-                    { id: 3, name: "reemplazar(t, v, n)", info: "Sustituye contenido en el texto.", isCorrect: true },
-                    { id: 4, name: "guardar_texto(txt)", info: "Guarda texto en un archivo.", isCorrect: false, reason: "No pertenece aquí porque la persistencia en disco es una responsabilidad externa a la manipulación de strings." }
-                ]
-            },
-            {
-                name: "archivo_reader",
-                desc: "Biblioteca para la recuperación de contenido y metadatos de archivos.",
-                functions: [
-                    { id: 1, name: "leer_archivo(ruta)", info: "Lee el contenido binario.", isCorrect: true },
-                    { id: 2, name: "leer_lineas(ruta)", info: "Retorna lista de líneas.", isCorrect: true },
-                    { id: 3, name: "cerrar_archivo()", info: "Cierra el archivo abierto.", isCorrect: false, reason: "No pertenece aquí porque sin un contexto de apertura persistente gestionado por la biblioteca, no tiene sentido como global." },
-                    { id: 4, name: "obtener_tamaño(ruta)", info: "Retorna tamaño del archivo.", isCorrect: true }
+                    { id: 1, name: "word_count(text)", info: "Cuenta palabras.", isCorrect: true },
+                    { id: 2, name: "to_upper(text)", info: "Convierte a mayúsculas.", isCorrect: true },
+                    { id: 3, name: "replace(text, old, new)", info: "Reemplaza texto.", isCorrect: true },
+                    { id: 4, name: "remove_punctuation(text)", info: "Elimina puntuación.", isCorrect: true },
+                    {
+                        id: 5,
+                        name: "save_text(text)",
+                        info: "Guarda el texto en un archivo.",
+                        isCorrect: false,
+                        reason: "Guardar datos es persistencia externa."
+                    }
                 ]
             }
         ];
+
+
 
         let currentSlideIdx = 1;
         let currentScenarioIdx = 0;
@@ -447,23 +566,36 @@
             const scenario = scenarios[currentScenarioIdx];
             auditInProgress = true;
 
-            document.getElementById('level-counter').innerText = `Escenario ${currentScenarioIdx + 1} de 8`;
-            document.getElementById('lib-name').innerText = `biblioteca: ${scenario.name}`;
-            document.getElementById('lib-desc').innerText = scenario.desc;
+            document.getElementById('level-counter').innerText = `Escenario ${currentScenarioIdx + 1} de 7`;
+            document.getElementById('lib-name').innerText = scenario.name;
+
+            // Populating rich metadata
+            document.getElementById('lib-context').innerText = scenario.context || "Sin contexto definido.";
+            document.getElementById('lib-responsibility').innerText = scenario.responsibility || "Sin responsabilidad definida.";
+            document.getElementById('lib-layer').innerText = scenario.layer || "General";
+            document.getElementById('lib-principle').innerText = scenario.principle || "Responsabilidad Única";
 
             document.getElementById('next-scenario-btn').classList.add('hidden');
             document.getElementById('verify-btn').classList.remove('hidden');
-            document.getElementById('feedback-area').className = "invisible";
-            document.getElementById('trash-prompt').classList.remove('hidden');
-            document.getElementById('trash-contents').innerHTML = '';
-            document.getElementById('trash-zone').classList.remove('bg-rose-50', 'border-rose-300');
+            document.getElementById('feedback-area').className = "invisible translate-y-2";
 
             const libZone = document.getElementById('library-zone');
+            const trashZone = document.getElementById('trash-zone');
             libZone.innerHTML = '';
+            trashZone.innerHTML = '';
 
-            scenario.functions.forEach((func) => {
+            // Randomize distribution between Used and Archived
+            const allFunctions = [...scenario.functions];
+            allFunctions.sort(() => Math.random() - 0.5);
+
+            allFunctions.forEach((func, idx) => {
                 const card = createCard(func);
-                libZone.appendChild(card);
+                // First half to library, second half to archive (roughly)
+                if (idx < allFunctions.length / 2) {
+                    libZone.appendChild(card);
+                } else {
+                    trashZone.appendChild(card);
+                }
             });
 
             renderProgressBar();
@@ -473,12 +605,21 @@
         function createCard(func) {
             const card = document.createElement('div');
             card.id = `func-${func.id}`;
-            card.className = "func-card bg-white border border-slate-200 p-4 rounded-2xl shadow-sm flex flex-col gap-1 w-[180px] animate-in zoom-in duration-300";
+            card.className = "func-card bg-white border border-slate-200 p-4 rounded-2xl shadow-sm flex flex-col gap-1 w-full animate-in zoom-in duration-300 ring-offset-2 ring-brand-500 hover:border-brand-500 select-none cursor-pointer group transition-all";
             card.draggable = true;
             card.innerHTML = `
-                <span class="font-mono font-bold text-slate-800 text-[11px] truncate">${func.name}</span>
-                <p class="text-[10px] text-slate-400 leading-tight">${func.info}</p>
+                <div class="flex justify-between items-start mb-1 pointer-events-none">
+                    <span class="font-mono font-bold text-slate-800 text-[11px] truncate">${func.name}</span>
+                    <i data-lucide="info" class="w-3 h-3 text-slate-300 group-hover:text-brand-500 transition-colors"></i>
+                </div>
+                <p class="text-[10px] text-slate-400 leading-tight pointer-events-none">${func.info}</p>
             `;
+
+            // Click Logic for Selection
+            card.onclick = (e) => {
+                e.stopPropagation(); // Prevent document-level click from clearing this immediately
+                selectCard(card);
+            };
 
             // Hover Logic for Dialogues - ONLY after verification
             card.onmouseenter = (e) => {
@@ -491,6 +632,7 @@
             card.ondragstart = (e) => {
                 hideHoverDialogue();
                 if (!auditInProgress) { e.preventDefault(); return; }
+                selectCard(card); // Ensure it's selected when starting drag
                 e.dataTransfer.setData('text/plain', func.id);
                 card.classList.add('dragging');
             };
@@ -498,14 +640,34 @@
             return card;
         }
 
+        function selectCard(card) {
+            // Remove selection from all others
+            document.querySelectorAll('.func-card').forEach(c => {
+                c.classList.remove('ring-2', 'border-brand-500', 'is-selected');
+            });
+            // Add to target
+            if (card) {
+                card.classList.add('ring-2', 'border-brand-500', 'is-selected');
+            }
+        }
+
+        // Global listener to clear selection when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('.func-card')) {
+                selectCard(null);
+            }
+        });
+
+        // Removed updateInspector
+
         function showHoverDialogue(text, element) {
             const tooltip = document.getElementById('hover-dialogue');
             const tooltipText = document.getElementById('dialogue-text');
             const rect = element.getBoundingClientRect();
 
             tooltipText.innerText = text;
-            tooltip.style.left = `${rect.left + rect.width / 2 - 120}px`; // Center minus half width
-            tooltip.style.top = `${rect.top - 100}px`; // Above card
+            tooltip.style.left = `${rect.left + rect.width / 2 - 120}px`;
+            tooltip.style.top = `${rect.top - 80}px`;
             tooltip.style.opacity = '1';
             tooltip.style.transform = 'translateY(0)';
         }
@@ -530,72 +692,70 @@
             const funcId = e.dataTransfer.getData('text/plain');
             const card = document.getElementById(`func-${funcId}`);
 
-            if (targetId === 'trash') {
-                document.getElementById('trash-contents').appendChild(card);
-                document.getElementById('trash-prompt').classList.add('hidden');
+            if (targetId === 'archive') {
+                document.getElementById('trash-zone').appendChild(card);
             } else {
                 document.getElementById('library-zone').appendChild(card);
-                if (document.getElementById('trash-contents').children.length === 0) {
-                    document.getElementById('trash-prompt').classList.remove('hidden');
-                }
             }
             lucide.createIcons();
         }
 
         function verifyScenario() {
             const scenario = scenarios[currentScenarioIdx];
-            const trashedIds = Array.from(document.getElementById('trash-contents').children).map(c => parseInt(c.id.split('-')[1]));
+            const archiveIds = Array.from(document.getElementById('trash-zone').children).map(c => parseInt(c.id.split('-')[1]));
 
             let failures = [];
 
-            // 1. Audit each function
             scenario.functions.forEach(f => {
                 const card = document.getElementById(`func-${f.id}`);
-                const isTrashed = trashedIds.includes(f.id);
+                const isArchived = archiveIds.includes(f.id);
 
-                if (!f.isCorrect) { // Should be trashed
-                    if (isTrashed) {
+                if (!f.isCorrect) {
+                    // It's an intruder - should be in archive
+                    if (isArchived) {
                         card.classList.add('result-correct');
                     } else {
                         card.classList.add('result-wrong', 'animate-shake');
-                        failures.push(`• <b>${f.name}</b>: Sigue en la biblioteca pero no pertenece.`);
+                        failures.push(`• <b>${f.name}</b>: Sigue activa. Debería estar archivada.`);
                     }
-                } else { // Should NOT be trashed
-                    if (isTrashed) {
+                } else {
+                    // It's standard - should be in library
+                    if (isArchived) {
                         card.classList.add('result-wrong', 'animate-shake');
-                        failures.push(`• <b>${f.name}</b>: La has tirado pero sí pertenece aquí.`);
+                        failures.push(`• <b>${f.name}</b>: Es necesaria pero está archivada.`);
                     } else {
                         card.classList.add('result-correct');
                     }
                 }
             });
 
-            // 2. State transition
-            auditInProgress = false; // Enable hover dialogues
+            auditInProgress = false;
             document.getElementById('verify-btn').classList.add('hidden');
             document.getElementById('next-scenario-btn').classList.remove('hidden');
             document.querySelectorAll('.func-card').forEach(c => c.draggable = false);
 
-            // 3. Render Feedback Box
             const feedbackArea = document.getElementById('feedback-area');
             const feedbackContent = document.getElementById('feedback-content');
-            feedbackArea.className = "visible block animate-in slide-in-from-bottom duration-400";
+            feedbackArea.className = "visible block animate-in slide-in-from-bottom duration-400 h-24";
 
             if (failures.length === 0) {
-                feedbackContent.className = "p-4 rounded-xl flex items-start gap-3 bg-emerald-50 text-emerald-700 h-24 overflow-y-auto";
-                feedbackContent.innerHTML = `<i data-lucide="check-circle" class="w-5 h-5 mt-0.5"></i> <div><p class="font-bold text-sm">Auditoría Impecable</p><p class="text-xs">Has identificado perfectamente todas las funciones. ¡Excelente trabajo de diseño!</p></div>`;
-            } else {
-                feedbackContent.className = "p-4 rounded-xl flex items-start gap-3 bg-rose-50 text-rose-700 h-24 overflow-y-auto";
                 feedbackContent.innerHTML = `
-                    <i data-lucide="alert-circle" class="w-5 h-5 mt-0.5"></i> 
-                    <div class="flex-1">
-                        <p class="font-bold text-sm mb-1">Resultado de Auditoría</p>
-                        <div class="text-[10px] leading-tight space-y-1">
-                            ${failures.join('<br>')}
+                    <div class="p-4 rounded-xl flex items-start gap-3 bg-emerald-50 text-emerald-700 border border-emerald-100 h-full overflow-y-auto">
+                        <i data-lucide="check-circle" class="w-5 h-5 mt-0.5"></i> 
+                        <div><p class="font-bold text-sm">Auditoría Impecable</p><p class="text-xs">Has identificado perfectamente todas las funciones. ¡Excelente trabajo de diseño!</p></div>
+                    </div>`;
+            } else {
+                feedbackContent.innerHTML = `
+                    <div class="p-4 rounded-xl flex items-start gap-3 bg-rose-50 text-rose-700 border border-rose-100 h-full overflow-y-auto">
+                        <i data-lucide="alert-circle" class="w-5 h-5 mt-0.5"></i> 
+                        <div class="flex-1">
+                            <p class="font-bold text-sm mb-1">Resultado de Auditoría</p>
+                            <div class="text-[10px] leading-tight space-y-1">
+                                ${failures.join('<br>')}
+                            </div>
+                            <p class="text-[9px] mt-2 italic opacity-70">Pasa el mouse sobre las funciones marcadas en rojo para ver el porqué.</p>
                         </div>
-                        <p class="text-[9px] mt-2 italic opacity-70">Pasa el mouse sobre las funciones marcadas en rojo para ver el porqué.</p>
-                    </div>
-                `;
+                    </div>`;
                 document.getElementById('trash-zone').classList.add('animate-shake');
                 setTimeout(() => document.getElementById('trash-zone').classList.remove('animate-shake'), 400);
             }
