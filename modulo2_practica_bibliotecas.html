@@ -66,8 +66,6 @@
             transition: opacity 0.4s ease-in-out;
             display: flex;
             flex-direction: column;
-            padding-top: 100px !important;
-            overflow-y: auto;
         }
 
         .slide.active {
@@ -169,8 +167,7 @@
         </div>
         <div class="flex flex-col items-center gap-2">
             <div class="flex gap-2 w-48" id="progress-bar"></div>
-            <span id="level-counter" class="text-[10px] font-bold text-slate-400 uppercase tracking-tighter">Escenario 1
-                de 7</span>
+            <span id="level-counter" class="text-[10px] font-bold text-slate-400 uppercase tracking-tighter"></span>
         </div>
         <div class="flex items-center gap-4">
             <div id="slide-indicator" class="bg-slate-100 px-4 py-1 rounded-full text-xs font-bold text-slate-600">1 / 3
@@ -178,7 +175,7 @@
         </div>
     </header>
 
-    <main id="main-container" class="w-full h-full relative bg-macos-bg">
+    <main id="main-container" class="w-full h-[calc(100vh-70px)] mt-[70px] relative bg-macos-bg overflow-hidden">
         <!-- SLIDE 1: PORTADA -->
         <section class="slide active flex items-center justify-center p-8" id="slide-1">
             <div class="max-w-3xl text-center">
@@ -212,7 +209,7 @@
                         </div>
                         <h4 class="text-xl font-bold text-slate-900 mb-3">Organiza el Código</h4>
                         <p class="text-sm text-slate-500 leading-relaxed">
-                            Mueve las funciones entre "En Uso" y "Archivo". Asegúrate de que solo lo necesario esté
+                            Mueve las funciones entre "En Uso" y "Descartadas". Asegúrate de que solo lo necesario esté
                             activo.
                         </p>
                     </div>
@@ -237,8 +234,8 @@
         </section>
 
         <!-- SLIDE 3: JUEGO -->
-        <section class="slide p-6" id="slide-3">
-            <div class="max-w-[1200px] mx-auto w-full flex flex-col h-full gap-4">
+        <section class="slide pt-2 px-6 pb-6 h-full overflow-hidden" id="slide-3">
+            <div class="max-w-[1200px] mx-auto w-full flex flex-col h-full gap-2">
 
                 <!-- Library Header -->
                 <div
@@ -330,9 +327,42 @@
                     </div>
                 </div>
 
-                <!-- Feedback Area -->
-                <div id="feedback-area" class="invisible h-20 shrink-0 transition-all translate-y-2">
-                    <div id="feedback-content" class="h-full"></div>
+                <!-- Feedback Modal Overlay -->
+                <div id="feedback-modal"
+                    class="hidden fixed inset-0 z-[100] flex items-center justify-center p-6 bg-slate-900/40 backdrop-blur-sm animate-in fade-in duration-300">
+                    <div id="modal-content"
+                        class="bg-white w-full max-w-lg rounded-[32px] shadow-2xl overflow-hidden animate-in zoom-in-95 duration-300">
+                        <!-- Top Header of Modal -->
+                        <div id="modal-header"
+                            class="p-6 border-b border-slate-50 flex flex-col items-center text-center gap-3">
+                            <div id="modal-icon-container"
+                                class="w-16 h-16 rounded-full flex items-center justify-center">
+                                <i id="modal-icon" data-lucide="check" class="w-8 h-8"></i>
+                            </div>
+                            <div>
+                                <h3 id="modal-title" class="text-2xl font-black text-slate-900 tracking-tight"></h3>
+                                <p id="modal-subtitle" class="text-sm text-slate-500 font-medium"></p>
+                            </div>
+                        </div>
+
+                        <!-- Body of Modal -->
+                        <div class="p-8 max-h-[40vh] overflow-y-auto">
+                            <div id="modal-feedback-list" class="space-y-3"></div>
+                        </div>
+
+                        <!-- Footer of Modal -->
+                        <div class="p-6 bg-slate-50 border-t border-slate-100 flex justify-center gap-4">
+                            <button id="modal-close-btn" onclick="closeModal()"
+                                class="px-8 py-3 bg-white border border-slate-200 text-slate-600 font-bold rounded-2xl hover:bg-slate-50 transition-all">
+                                Revisar Gestión
+                            </button>
+                            <button id="modal-next-btn" onclick="goToNextScenario()"
+                                class="px-8 py-3 bg-slate-900 text-white font-bold rounded-2xl hover:bg-brand-600 transition-all flex items-center gap-2">
+                                Continuar
+                                <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                            </button>
+                        </div>
+                    </div>
                 </div>
 
                 <!-- Final Results Overlay -->
@@ -566,7 +596,7 @@
             const scenario = scenarios[currentScenarioIdx];
             auditInProgress = true;
 
-            document.getElementById('level-counter').innerText = `Escenario ${currentScenarioIdx + 1} de 7`;
+            document.getElementById('level-counter').innerText = `Escenario ${currentScenarioIdx + 1} de ${scenarios.length}`;
             document.getElementById('lib-name').innerText = scenario.name;
 
             // Populating rich metadata
@@ -577,7 +607,6 @@
 
             document.getElementById('next-scenario-btn').classList.add('hidden');
             document.getElementById('verify-btn').classList.remove('hidden');
-            document.getElementById('feedback-area').className = "invisible translate-y-2";
 
             const libZone = document.getElementById('library-zone');
             const trashZone = document.getElementById('trash-zone');
@@ -734,35 +763,54 @@
             document.getElementById('next-scenario-btn').classList.remove('hidden');
             document.querySelectorAll('.func-card').forEach(c => c.draggable = false);
 
-            const feedbackArea = document.getElementById('feedback-area');
-            const feedbackContent = document.getElementById('feedback-content');
-            feedbackArea.className = "visible block animate-in slide-in-from-bottom duration-400 h-24";
+            showModal(failures);
+        }
+
+        function showModal(failures) {
+            const modal = document.getElementById('feedback-modal');
+            const iconContainer = document.getElementById('modal-icon-container');
+            const icon = document.getElementById('modal-icon');
+            const title = document.getElementById('modal-title');
+            const subtitle = document.getElementById('modal-subtitle');
+            const list = document.getElementById('modal-feedback-list');
+
+            list.innerHTML = '';
+            modal.classList.remove('hidden');
 
             if (failures.length === 0) {
-                feedbackContent.innerHTML = `
-                    <div class="p-4 rounded-xl flex items-start gap-3 bg-emerald-50 text-emerald-700 border border-emerald-100 h-full overflow-y-auto">
-                        <i data-lucide="check-circle" class="w-5 h-5 mt-0.5"></i> 
-                        <div><p class="font-bold text-sm">Auditoría Impecable</p><p class="text-xs">Has identificado perfectamente todas las funciones. ¡Excelente trabajo de diseño!</p></div>
+                iconContainer.className = "w-16 h-16 rounded-full flex items-center justify-center bg-emerald-100 text-emerald-600";
+                icon.setAttribute('data-lucide', 'check-circle');
+                title.innerText = "¡Excelente Gestión!";
+                subtitle.innerText = "Has organizado perfectamente esta biblioteca.";
+                list.innerHTML = `
+                    <div class="p-4 bg-emerald-50 rounded-2xl border border-emerald-100/50 flex items-center gap-3">
+                        <i data-lucide="sparkles" class="w-5 h-5 text-emerald-500"></i>
+                        <p class="text-[13px] text-emerald-700 font-medium">Arquitectura limpia y responsabilidades bien definidas.</p>
                     </div>`;
             } else {
-                feedbackContent.innerHTML = `
-                    <div class="p-4 rounded-xl flex items-start gap-3 bg-rose-50 text-rose-700 border border-rose-100 h-full overflow-y-auto">
-                        <i data-lucide="alert-circle" class="w-5 h-5 mt-0.5"></i> 
-                        <div class="flex-1">
-                            <p class="font-bold text-sm mb-1">Resultado de Auditoría</p>
-                            <div class="text-[10px] leading-tight space-y-1">
-                                ${failures.join('<br>')}
-                            </div>
-                            <p class="text-[9px] mt-2 italic opacity-70">Pasa el mouse sobre las funciones marcadas en rojo para ver el porqué.</p>
-                        </div>
-                    </div>`;
-                document.getElementById('trash-zone').classList.add('animate-shake');
-                setTimeout(() => document.getElementById('trash-zone').classList.remove('animate-shake'), 400);
+                iconContainer.className = "w-16 h-16 rounded-full flex items-center justify-center bg-rose-100 text-rose-600";
+                icon.setAttribute('data-lucide', 'alert-circle');
+                title.innerText = "Ajustes Necesarios";
+                subtitle.innerText = "Algunas funciones aún no están en el lugar correcto.";
+                failures.forEach(fail => {
+                    const item = document.createElement('div');
+                    item.className = "p-4 bg-rose-50 rounded-2xl border border-rose-100/50 flex items-start gap-3";
+                    item.innerHTML = `
+                        <i data-lucide="x-circle" class="w-4 h-4 text-rose-500 mt-0.5 shrink-0"></i>
+                        <p class="text-[13px] text-rose-700 font-medium leading-tight">${fail}</p>
+                    `;
+                    list.appendChild(item);
+                });
             }
             lucide.createIcons();
         }
 
+        function closeModal() {
+            document.getElementById('feedback-modal').classList.add('hidden');
+        }
+
         function goToNextScenario() {
+            closeModal();
             if (currentScenarioIdx < scenarios.length - 1) {
                 currentScenarioIdx++;
                 loadScenario();
