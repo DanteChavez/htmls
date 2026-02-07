@@ -1,0 +1,74 @@
+Implementation Plan: Python Sets Interactive Module
+Goal Description
+Create a single-file interactive HTML learning module for Python Sets (set), strictly adhering to the specified learning outcomes (Bloom's Taxonomy) and visual/didactic requirements.
+
+File Location
+Unidad1/Modulo3-Sets/index.html
+
+Visual & Tech Specs (Strict)
+Structure: Single HTML5 file.
+Styling: Tailwind CSS (via CDN).
+Scripting: Vanilla JavaScript (via CDN if needed, but likely inline/local).
+Window Style: macOS style window controls (Red/Yellow/Green dots), Rounded tabs.
+Code Style: VS Code Light+ theme.
+Color Palette (Mandatory):
+#ffffff (Base Background)
+#f1f5f9 (Alt Background)
+#003c58 (Main Titles)
+#06717e (Visual Accents)
+#0055ad (Buttons/Actions)
+#399be2 (Hover)
+#0f6cbf (Highlighted Containers)
+#6ea2ee (Text on Dark)
+#6da8e9 (Descriptive Text)
+#1e293b (Long Text)
+#e2e8f0 (Borders)
+Detailed Slide Breakdown
+Slide 1: Portada (Activación)
+Header: "Sets (Conjuntos) en Python" | Subtitle: "Fundamentos y operaciones".
+Content: Brief intro on What (Collections without order/duplicates) and Why (Efficiency, math operations).
+Design: Clean, uncluttered.
+Cognitive Check (Internal): Student is cognitively primed and understands the high-level utility (efficiency/math).
+Slide 2: ¿Qué es un set? (Comprender - RA1)
+Concept: Definition (Unique, Unordered, Mutable).
+Comparision: Vs Lists (Conceptual).
+Didactic Element (Mandatory):
+Analogy: Represent sets as a bag of unique items vs a shelf (list).
+Guided Question: "Why wouldn't a list work effectively here?" regarding uniqueness.
+Interaction: Read-only code examples.
+Cognitive Check (Internal): Student can correct explain why sets remove duplicates without referencing syntax.
+Slide 3: Operaciones Básicas (Aplicar - RA2)
+Interactive Console: macOS-styled terminal.
+Interaction Flow (Strict):
+Predict: "What do you think will happen if we add '2' again?"
+Action: User clicks "Run Code".
+Result: Terminal shows {1, 2, 3} (no duplicate).
+Explanation: Brief tooltip/text explaining the result.
+Operations: my_set = {1, 2, 3}, add(), remove(), in.
+Cognitive Check (Internal): Student moves from mechanical clicking to conscious prediction of set behavior (mutability/uniqueness).
+Slide 4: Operaciones entre Sets (Analizar - RA3)
+Visuals: Interactive Venn Diagrams (SVG or CSS shapes).
+Operations: Union |, Intersection &, Difference -, Symmetric Diff ^.
+Common Mistake (Mandatory):
+Explicitly show that A - B is NOT equal to B - A.
+"Many students assume difference is symmetric. Look at this counterexample."
+Didactic Element: Compare results explicitly.
+Cognitive Check (Internal): Student can identify non-commutative operations (difference) and visually map syntax to logic.
+Slide 5: Contexto Real (Evaluar - RA4)
+Scenario: "Physical Store Clients" vs "Online Clients".
+Flow:
+Present Problem text.
+Mandatory Question: "Which operation would you use to find clients who bought in BOTH?" (Intersection).
+User selects answer.
+Show Code Solution with justification.
+Cognitive Check (Internal): Student selects the correct set operation based on a natural language problem description.
+Slide 6: Cierre (Metacognición)
+Summary: Key concepts recap.
+Checklist: "Now you can...".
+Advice: "When to use Sets" vs "When NOT to use them".
+Next Steps: Preparing for the next module.
+Cognitive Check (Internal): Student can articulate a valid use-case for sets vs lists.
+Verification Checklist
+ Verify all colors match the hex codes exactly.
+ Ensure "Auto-correction" behavior is active (I will self-correct if the generated code is buggy).
+ Check that no external assets (images/css files) are referenced locally; use embedded SVG/Data URIs or CDNs.
