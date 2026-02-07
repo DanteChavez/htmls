@@ -338,6 +338,15 @@
             </section>
 
             <!-- Slide 4: Operaciones entre Sets (Analizar) -->
+            <svg width="0" height="0" style="position: absolute;">
+                <defs>
+                    <clipPath id="lens-shape" clipPathUnits="objectBoundingBox">
+                        <path
+                            d="M 0.5,0.13 Q 0.9,0.3 0.9,0.5 Q 0.9,0.7 0.5,0.87 Q 0.1,0.7 0.1,0.5 Q 0.1,0.3 0.5,0.13 Z" />
+                    </clipPath>
+                </defs>
+            </svg>
+
             <section id="slide-4"
                 class="slide force-hidden w-full h-full flex flex-col md:grid md:grid-cols-2 gap-8 p-8 items-center">
                 <div class="space-y-6">
@@ -411,8 +420,7 @@
                 <!-- Visualization Area -->
                 <div id="universe"
                     class="flex flex-col items-center justify-center p-6 bg-white rounded-xl border border-border shadow-inner min-h-[350px] relative">
-                    <div class="absolute top-2 right-4 text-xs font-bold text-gray-300 uppercase italic">Universo (U)
-                    </div>
+
                     <div class="relative w-80 h-48 mt-4">
                         <!-- Background Overlays -->
                         <div id="overlay-a"
@@ -423,7 +431,7 @@
                         </div>
                         <div id="overlay-int"
                             class="absolute left-1/2 -translate-x-1/2 w-20 h-48 transition-all duration-500 pointer-events-none opacity-0 z-10"
-                            style="clip-path: ellipse(38% 32% at 50% 50%);"></div>
+                            style="clip-path: url(#lens-shape);"></div>
                         <!-- Borders/Labels -->
                         <div id="circle-a"
                             class="absolute left-0 w-48 h-48 rounded-full border-2 border-accent/40 flex items-center justify-center pointer-events-none z-20">
@@ -450,246 +458,248 @@
                         {}
                     </div>
                 </div>
+                <div class="hidden">Cognitive Success Check: Student can identify non-commutative operations and
+                    visual intersection.</div>
+            </section>
 
-                <!-- Slide 5: Comparación de Sets -->
-                <section id="slide-5"
-                    class="slide force-hidden w-full h-full flex flex-col md:grid md:grid-cols-2 gap-8 p-12 items-center">
-                    <div class="space-y-6">
-                        <div class="flex items-center gap-2">
-                            <div
-                                class="bg-action/10 text-action px-3 py-1 rounded-full text-xs font-bold tracking-wide border border-action/10">
-                                COMPRAR COLECIONES</div>
-                            <span class="text-xs text-gray-400 font-mono">issubset() / issuperset()</span>
+            <!-- Slide 5: Comparación de Sets -->
+            <section id="slide-5"
+                class="slide force-hidden w-full h-full flex flex-col md:grid md:grid-cols-2 gap-8 p-12 items-center">
+                <div class="space-y-6">
+                    <div class="flex items-center gap-2">
+                        <div
+                            class="bg-action/10 text-action px-3 py-1 rounded-full text-xs font-bold tracking-wide border border-action/10">
+                            COMPRAR COLECIONES</div>
+                        <span class="text-xs text-gray-400 font-mono">issubset() / issuperset()</span>
+                    </div>
+                    <h2 class="text-3xl font-bold text-title">Comparación de Sets</h2>
+                    <p class="text-body text-lg leading-relaxed">
+                        Podemos preguntar a Python si un conjunto está <strong>contenido</strong> dentro de otro.
+                    </p>
+
+                    <div class="grid grid-cols-2 gap-3">
+                        <button onclick="showComp('subset')"
+                            class="p-3 bg-white border border-border rounded-lg shadow-sm hover:border-action transition-all text-left group">
+                            <div class="font-bold text-action group-hover:text-action-hover">Subconjunto (<)< /div>
+                                    <div class="text-[10px] text-gray-500 italic">issubset()</div>
+                        </button>
+                        <button onclick="showComp('superset')"
+                            class="p-3 bg-white border border-border rounded-lg shadow-sm hover:border-action transition-all text-left group">
+                            <div class="font-bold text-action group-hover:text-action-hover">Superconjunto (>)</div>
+                            <div class="text-[10px] text-gray-500 italic">issuperset()</div>
+                        </button>
+                        <button onclick="showComp('subset_eq')"
+                            class="p-3 bg-white border border-border rounded-lg shadow-sm hover:border-action transition-all text-left group">
+                            <div class="font-bold text-action group-hover:text-action-hover">Sub. o Igual (<=)< /div>
+                        </button>
+                        <button onclick="showComp('superset_eq')"
+                            class="p-3 bg-white border border-border rounded-lg shadow-sm hover:border-action transition-all text-left group">
+                            <div class="font-bold text-action group-hover:text-action-hover">Sup. o Igual (>=)</div>
+                        </button>
+                    </div>
+
+                    <!-- Dynamic Code Example -->
+                    <div class="bg-[#f3f3f3] border border-border rounded-lg overflow-hidden shadow-sm mt-4">
+                        <div class="bg-[#e8e8e8] px-3 py-1 text-[10px] text-gray-500 font-mono flex items-center gap-2">
+                            <span class="w-2.5 h-2.5 rounded-full bg-red-400/50"></span>
+                            <span class="w-2.5 h-2.5 rounded-full bg-yellow-400/50"></span>
+                            <span class="w-2.5 h-2.5 rounded-full bg-green-400/50"></span>
+                            comparar.py
                         </div>
-                        <h2 class="text-3xl font-bold text-title">Comparación de Sets</h2>
-                        <p class="text-body text-lg leading-relaxed">
-                            Podemos preguntar a Python si un conjunto está <strong>contenido</strong> dentro de otro.
+                        <div class="p-4 font-mono text-xs leading-relaxed space-y-1 bg-white" id="comp-code-container">
+                            <div class="text-gray-400"># Selecciona una comparación</div>
+                            <div><span class="text-blue-600">set_a</span> = {<span class="text-green-600">1, 2,
+                                    3</span>}</div>
+                            <div><span class="text-blue-600">set_b</span> = {<span class="text-green-600">3, 4,
+                                    5</span>}</div>
+                        </div>
+                        <div id="comp-feedback" class="bg-blue-50 border border-blue-200 p-4 rounded-lg hidden mt-4">
+                            <p class="text-blue-800 text-sm" id="comp-tip-text"></p>
+                        </div>
+                    </div> <!-- End space-y-6 -->
+
+                    <!-- Simulation Area (Right Column) -->
+                    <div
+                        class="flex flex-col items-center justify-center p-8 bg-white rounded-xl border border-border shadow-inner min-h-[400px] relative w-full">
+                        <div class="relative w-80 h-64 flex items-center justify-center">
+                            <!-- Circle B (Container) -->
+                            <div id="comp-circle-b"
+                                class="absolute w-60 h-60 rounded-full border-4 border-action/30 flex items-center justify-center transition-all duration-700 bg-transparent">
+                                <span class="font-bold text-action absolute top-4 right-10">B</span>
+                                <div class="absolute text-sm text-gray-400 bottom-10 right-10">4, 5</div>
+                            </div>
+                            <!-- Circle A (Potential nested) -->
+                            <div id="comp-circle-a"
+                                class="absolute w-32 h-32 rounded-full border-4 border-accent/30 flex items-center justify-center transition-all duration-700 bg-transparent z-10">
+                                <span class="font-bold text-accent absolute -top-8">A</span>
+                                <div class="absolute text-sm text-gray-600">1, 2</div>
+                            </div>
+                        </div>
+
+                        <div id="comp-explanation" class="mt-8 text-center text-body text-sm font-medium h-12 px-6">
+                            Selecciona una comparación para ver cómo se relacionan los conjuntos.
+                        </div>
+                        <div id="comp-result"
+                            class="mt-4 font-mono text-xl font-bold px-6 py-2 rounded-full bg-gray-100 border border-border opacity-0 transition-all duration-500">
+                            Result
+                        </div>
+                    </div>
+            </section>
+
+            <!-- Slide 6: Contexto Real (Evaluar) -->
+            <section id="slide-6"
+                class="slide force-hidden w-full h-full flex flex-col md:grid md:grid-cols-2 gap-12 p-12 items-center">
+                <div class="space-y-6">
+                    <div
+                        class="bg-blue-50 text-action px-3 py-1 rounded-full text-xs font-bold tracking-wide border border-blue-100 w-max">
+                        CASO PRÁCTICO</div>
+                    <h2 class="text-3xl font-bold text-title">Tienda Física vs. Online</h2>
+                    <p class="text-body text-lg leading-relaxed">
+                        Tienes dos bases de datos de clientes:
+                    </p>
+                    <ul class="space-y-2 text-sm">
+                        <li class="flex items-center gap-2">
+                            <span class="w-24 font-bold text-accent">Tienda Física:</span>
+                            <span class="font-mono bg-gray-50 px-2 py-1 rounded">{Juan, Ana, Pedro}</span>
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <span class="w-24 font-bold text-action">Tienda Online:</span>
+                            <span class="font-mono bg-gray-50 px-2 py-1 rounded">{Ana, Pedro, Luis}</span>
+                        </li>
+                    </ul>
+
+                    <div class="bg-white p-6 rounded-xl border-l-4 border-highlight shadow-md">
+                        <h3 class="font-bold text-title mb-2">El Desafío</h3>
+                        <p class="text-body text-sm mb-4">Queremos enviar un cupón de descuento especial a los clientes
+                            que COMPRARON EN AMBAS tiendas.</p>
+                        <p class="text-body text-sm font-medium italic">¿Qué operación de conjuntos resuelve esto?</p>
+                    </div>
+                </div>
+
+                <div class="space-y-4">
+                    <button onclick="checkScenario('union', this)"
+                        class="w-full p-4 bg-white border border-border rounded-xl shadow-sm hover:shadow-md transition-all text-left group relative overflow-hidden">
+                        <div class="font-bold text-body group-hover:text-action transition-colors">A) Unión (|)</div>
+                        <div class="text-xs text-gray-500 mt-1">Enviar a todos los que compraron en cualquiera de las
+                            dos.</div>
+                        <div class="overlay absolute inset-0 bg-red-50 opacity-0 transition-opacity"></div>
+                    </button>
+
+                    <button onclick="checkScenario('intersection', this)"
+                        class="w-full p-4 bg-white border border-border rounded-xl shadow-sm hover:shadow-md transition-all text-left group relative overflow-hidden">
+                        <div class="font-bold text-body group-hover:text-action transition-colors">B) Intersección (&)
+                        </div>
+                        <div class="text-xs text-gray-500 mt-1">Enviar solo a los que aparecen en ambas listas.</div>
+                        <div class="overlay absolute inset-0 bg-green-50 opacity-0 transition-opacity"></div>
+                    </button>
+
+                    <button onclick="checkScenario('difference', this)"
+                        class="w-full p-4 bg-white border border-border rounded-xl shadow-sm hover:shadow-md transition-all text-left group relative overflow-hidden">
+                        <div class="font-bold text-body group-hover:text-action transition-colors">C) Diferencia (-)
+                        </div>
+                        <div class="text-xs text-gray-500 mt-1">Enviar a los que compraron en física pero no online.
+                        </div>
+                        <div class="overlay absolute inset-0 bg-red-50 opacity-0 transition-opacity"></div>
+                    </button>
+
+                    <div id="scenario-feedback" class="hidden mt-4 p-4 rounded-lg text-sm border">
+                        <!-- Dynamic feedback -->
+                    </div>
+                </div>
+                <!-- Cognitive Check -->
+                <div class="hidden">Cognitive Success Check: Student selects correct operation based on natural language
+                    problem.</div>
+            </section>
+
+            <!-- Slide 7: Cierre (Metacognición) -->
+            <section id="slide-7"
+                class="slide force-hidden w-full h-full flex flex-col items-center justify-center p-12 text-center">
+                <h2 class="text-4xl font-bold text-title mb-8">¡Misión Cumplida! 🚀</h2>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 w-full max-w-5xl">
+                    <!-- Column 1: Conceptos -->
+                    <div class="bg-white p-6 rounded-xl border border-border shadow-sm flex flex-col items-center">
+                        <div class="w-12 h-12 bg-accent/10 rounded-full flex items-center justify-center mb-4">
+                            <svg class="w-6 h-6 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z">
+                                </path>
+                            </svg>
+                        </div>
+                        <h3 class="font-bold text-title mb-2">Conceptos Clave</h3>
+                        <ul class="text-sm text-body space-y-2 text-left w-full px-4">
+                            <li class="flex items-center gap-2"><span
+                                    class="w-2 h-2 rounded-full bg-accent"></span>Colección
+                                desordenada</li>
+                            <li class="flex items-center gap-2"><span
+                                    class="w-2 h-2 rounded-full bg-accent"></span>Elementos
+                                ÚNICOS</li>
+                            <li class="flex items-center gap-2"><span
+                                    class="w-2 h-2 rounded-full bg-accent"></span>Ideal para
+                                matemáticas</li>
+                        </ul>
+                    </div>
+
+                    <!-- Column 2: Logros -->
+                    <div
+                        class="bg-white p-6 rounded-xl border border-border shadow-sm flex flex-col items-center relative overflow-hidden">
+                        <div class="absolute top-0 w-full h-1 bg-gradient-to-r from-action to-action-hover"></div>
+                        <div class="w-12 h-12 bg-action/10 rounded-full flex items-center justify-center mb-4">
+                            <svg class="w-6 h-6 text-action" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M5 13l4 4L19 7"></path>
+                            </svg>
+                        </div>
+                        <h3 class="font-bold text-title mb-2">Ahora puedes...</h3>
+                        <ul class="text-sm text-body space-y-2 text-left w-full px-4">
+                            <li class="flex items-center gap-2">✅ Eliminar duplicados de una lista</li>
+                            <li class="flex items-center gap-2">✅ Encontrar elementos comunes</li>
+                            <li class="flex items-center gap-2">✅ Verificar pertenencia rápidamente</li>
+                        </ul>
+                    </div>
+
+                    <!-- Column 3: Cuándo Usar -->
+                    <div
+                        class="bg-gray-50 p-6 rounded-xl border border-border dashed border-2 flex flex-col items-center">
+                        <div class="w-12 h-12 bg-gray-200 rounded-full flex items-center justify-center mb-4">
+                            <svg class="w-6 h-6 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"></path>
+                            </svg>
+                        </div>
+                        <h3 class="font-bold text-gray-700 mb-2">¿Cuándo NO usarlo?</h3>
+                        <p class="text-xs text-body mb-2 text-center">Si el <strong>orden</strong> importa (ej.
+                            historial de navegación).</p>
+                        <p class="text-xs text-body text-center">Si necesitas acceder por <strong>índice</strong> (ej.
+                            <code>items[0]</code>).
                         </p>
-
-                        <div class="grid grid-cols-2 gap-3">
-                            <button onclick="showComp('subset')"
-                                class="p-3 bg-white border border-border rounded-lg shadow-sm hover:border-action transition-all text-left group">
-                                <div class="font-bold text-action group-hover:text-action-hover">Subconjunto (<)< /div>
-                                        <div class="text-[10px] text-gray-500 italic">issubset()</div>
-                            </button>
-                            <button onclick="showComp('superset')"
-                                class="p-3 bg-white border border-border rounded-lg shadow-sm hover:border-action transition-all text-left group">
-                                <div class="font-bold text-action group-hover:text-action-hover">Superconjunto (>)</div>
-                                <div class="text-[10px] text-gray-500 italic">issuperset()</div>
-                            </button>
-                            <button onclick="showComp('subset_eq')"
-                                class="p-3 bg-white border border-border rounded-lg shadow-sm hover:border-action transition-all text-left group">
-                                <div class="font-bold text-action group-hover:text-action-hover">Sub. o Igual (<=)<
-                                        /div>
-                            </button>
-                            <button onclick="showComp('superset_eq')"
-                                class="p-3 bg-white border border-border rounded-lg shadow-sm hover:border-action transition-all text-left group">
-                                <div class="font-bold text-action group-hover:text-action-hover">Sup. o Igual (>=)</div>
-                            </button>
-                        </div>
-
-                        <!-- Dynamic Code Example -->
-                        <div class="bg-[#f3f3f3] border border-border rounded-lg overflow-hidden shadow-sm mt-4">
-                            <div
-                                class="bg-[#e8e8e8] px-3 py-1 text-[10px] text-gray-500 font-mono flex items-center gap-2">
-                                <span class="w-2.5 h-2.5 rounded-full bg-red-400/50"></span>
-                                <span class="w-2.5 h-2.5 rounded-full bg-yellow-400/50"></span>
-                                <span class="w-2.5 h-2.5 rounded-full bg-green-400/50"></span>
-                                comparar.py
-                            </div>
-                            <div class="p-4 font-mono text-xs leading-relaxed space-y-1 bg-white"
-                                id="comp-code-container">
-                                <div class="text-gray-400"># Selecciona una comparación</div>
-                                <div><span class="text-blue-600">set_a</span> = {<span class="text-green-600">1, 2,
-                                        3</span>}</div>
-                                <div><span class="text-blue-600">set_b</span> = {<span class="text-green-600">3, 4,
-                                        5</span>}</div>
-                            </div>
-                        </div>
                     </div>
-
-                    <div id="comp-feedback" class="bg-blue-50 border border-blue-200 p-4 rounded-lg hidden">
-                        <p class="text-blue-800 text-sm" id="comp-tip-text"></p>
-                    </div>
-    </div>
-
-    <!-- Simulation Area -->
-    <div
-        class="flex flex-col items-center justify-center p-8 bg-white rounded-xl border border-border shadow-inner min-h-[400px] relative w-full">
-        <div class="relative w-80 h-64 flex items-center justify-center">
-            <!-- Circle B (Container) -->
-            <div id="comp-circle-b"
-                class="absolute w-60 h-60 rounded-full border-4 border-action/30 flex items-center justify-center transition-all duration-700 bg-transparent">
-                <span class="font-bold text-action absolute top-4 right-10">B</span>
-                <div class="absolute text-sm text-gray-400 bottom-10 right-10">4, 5</div>
-            </div>
-            <!-- Circle A (Potential nested) -->
-            <div id="comp-circle-a"
-                class="absolute w-32 h-32 rounded-full border-4 border-accent/30 flex items-center justify-center transition-all duration-700 bg-transparent z-10">
-                <span class="font-bold text-accent absolute -top-8">A</span>
-                <div class="absolute text-sm text-gray-600">1, 2</div>
-            </div>
-        </div>
-
-        <div id="comp-explanation" class="mt-8 text-center text-body text-sm font-medium h-12 px-6">
-            Selecciona una comparación para ver cómo se relacionan los conjuntos.
-        </div>
-        <div id="comp-result"
-            class="mt-4 font-mono text-xl font-bold px-6 py-2 rounded-full bg-gray-100 border border-border opacity-0 transition-all duration-500">
-            Result
-        </div>
-    </div>
-    </section>
-
-    <!-- Slide 6: Contexto Real (Evaluar) -->
-    <section id="slide-6"
-        class="slide force-hidden w-full h-full flex flex-col md:grid md:grid-cols-2 gap-12 p-12 items-center">
-        <div class="space-y-6">
-            <div
-                class="bg-blue-50 text-action px-3 py-1 rounded-full text-xs font-bold tracking-wide border border-blue-100 w-max">
-                CASO PRÁCTICO</div>
-            <h2 class="text-3xl font-bold text-title">Tienda Física vs. Online</h2>
-            <p class="text-body text-lg leading-relaxed">
-                Tienes dos bases de datos de clientes:
-            </p>
-            <ul class="space-y-2 text-sm">
-                <li class="flex items-center gap-2">
-                    <span class="w-24 font-bold text-accent">Tienda Física:</span>
-                    <span class="font-mono bg-gray-50 px-2 py-1 rounded">{Juan, Ana, Pedro}</span>
-                </li>
-                <li class="flex items-center gap-2">
-                    <span class="w-24 font-bold text-action">Tienda Online:</span>
-                    <span class="font-mono bg-gray-50 px-2 py-1 rounded">{Ana, Pedro, Luis}</span>
-                </li>
-            </ul>
-
-            <div class="bg-white p-6 rounded-xl border-l-4 border-highlight shadow-md">
-                <h3 class="font-bold text-title mb-2">El Desafío</h3>
-                <p class="text-body text-sm mb-4">Queremos enviar un cupón de descuento especial a los clientes
-                    que COMPRARON EN AMBAS tiendas.</p>
-                <p class="text-body text-sm font-medium italic">¿Qué operación de conjuntos resuelve esto?</p>
-            </div>
-        </div>
-
-        <div class="space-y-4">
-            <button onclick="checkScenario('union', this)"
-                class="w-full p-4 bg-white border border-border rounded-xl shadow-sm hover:shadow-md transition-all text-left group relative overflow-hidden">
-                <div class="font-bold text-body group-hover:text-action transition-colors">A) Unión (|)</div>
-                <div class="text-xs text-gray-500 mt-1">Enviar a todos los que compraron en cualquiera de las
-                    dos.</div>
-                <div class="overlay absolute inset-0 bg-red-50 opacity-0 transition-opacity"></div>
-            </button>
-
-            <button onclick="checkScenario('intersection', this)"
-                class="w-full p-4 bg-white border border-border rounded-xl shadow-sm hover:shadow-md transition-all text-left group relative overflow-hidden">
-                <div class="font-bold text-body group-hover:text-action transition-colors">B) Intersección (&)
                 </div>
-                <div class="text-xs text-gray-500 mt-1">Enviar solo a los que aparecen en ambas listas.</div>
-                <div class="overlay absolute inset-0 bg-green-50 opacity-0 transition-opacity"></div>
-            </button>
 
-            <button onclick="checkScenario('difference', this)"
-                class="w-full p-4 bg-white border border-border rounded-xl shadow-sm hover:shadow-md transition-all text-left group relative overflow-hidden">
-                <div class="font-bold text-body group-hover:text-action transition-colors">C) Diferencia (-)
+                <div class="mt-12">
+                    <p class="text-gray-400 text-sm mb-4">Has completado el Módulo 3 de la Unidad 1</p>
+                    <button onclick="location.reload()"
+                        class="bg-alt text-action hover:bg-gray-200 border border-border px-6 py-2 rounded-full text-sm font-medium transition-colors">
+                        Reiniciar Módulo
+                    </button>
                 </div>
-                <div class="text-xs text-gray-500 mt-1">Enviar a los que compraron en física pero no online.
+                <!-- Cognitive Check -->
+                <div class="hidden">Cognitive Success Check: Student can articulate a valid use-case for sets vs lists.
                 </div>
-                <div class="overlay absolute inset-0 bg-red-50 opacity-0 transition-opacity"></div>
-            </button>
+            </section>
+        </main>
 
-            <div id="scenario-feedback" class="hidden mt-4 p-4 rounded-lg text-sm border">
-                <!-- Dynamic feedback -->
+        <!-- Footer / Progress -->
+        <footer class="h-12 bg-alt border-t border-border flex items-center justify-between px-6">
+            <button onclick="prevSlide()" class="text-body hover:text-action text-sm font-medium disabled:opacity-50"
+                id="btn-prev">Anterior</button>
+            <div class="flex gap-1">
+                <div class="w-16 h-1 bg-action rounded-full"></div>
+                <!-- Progress bar logic to be added -->
             </div>
-        </div>
-        <!-- Cognitive Check -->
-        <div class="hidden">Cognitive Success Check: Student selects correct operation based on natural language
-            problem.</div>
-    </section>
-
-    <!-- Slide 7: Cierre (Metacognición) -->
-    <section id="slide-7"
-        class="slide force-hidden w-full h-full flex flex-col items-center justify-center p-12 text-center">
-        <h2 class="text-4xl font-bold text-title mb-8">¡Misión Cumplida! 🚀</h2>
-
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 w-full max-w-5xl">
-            <!-- Column 1: Conceptos -->
-            <div class="bg-white p-6 rounded-xl border border-border shadow-sm flex flex-col items-center">
-                <div class="w-12 h-12 bg-accent/10 rounded-full flex items-center justify-center mb-4">
-                    <svg class="w-6 h-6 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z">
-                        </path>
-                    </svg>
-                </div>
-                <h3 class="font-bold text-title mb-2">Conceptos Clave</h3>
-                <ul class="text-sm text-body space-y-2 text-left w-full px-4">
-                    <li class="flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-accent"></span>Colección
-                        desordenada</li>
-                    <li class="flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-accent"></span>Elementos
-                        ÚNICOS</li>
-                    <li class="flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-accent"></span>Ideal para
-                        matemáticas</li>
-                </ul>
-            </div>
-
-            <!-- Column 2: Logros -->
-            <div
-                class="bg-white p-6 rounded-xl border border-border shadow-sm flex flex-col items-center relative overflow-hidden">
-                <div class="absolute top-0 w-full h-1 bg-gradient-to-r from-action to-action-hover"></div>
-                <div class="w-12 h-12 bg-action/10 rounded-full flex items-center justify-center mb-4">
-                    <svg class="w-6 h-6 text-action" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                    </svg>
-                </div>
-                <h3 class="font-bold text-title mb-2">Ahora puedes...</h3>
-                <ul class="text-sm text-body space-y-2 text-left w-full px-4">
-                    <li class="flex items-center gap-2">✅ Eliminar duplicados de una lista</li>
-                    <li class="flex items-center gap-2">✅ Encontrar elementos comunes</li>
-                    <li class="flex items-center gap-2">✅ Verificar pertenencia rápidamente</li>
-                </ul>
-            </div>
-
-            <!-- Column 3: Cuándo Usar -->
-            <div class="bg-gray-50 p-6 rounded-xl border border-border dashed border-2 flex flex-col items-center">
-                <div class="w-12 h-12 bg-gray-200 rounded-full flex items-center justify-center mb-4">
-                    <svg class="w-6 h-6 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"></path>
-                    </svg>
-                </div>
-                <h3 class="font-bold text-gray-700 mb-2">¿Cuándo NO usarlo?</h3>
-                <p class="text-xs text-body mb-2 text-center">Si el <strong>orden</strong> importa (ej.
-                    historial de navegación).</p>
-                <p class="text-xs text-body text-center">Si necesitas acceder por <strong>índice</strong> (ej.
-                    <code>items[0]</code>).
-                </p>
-            </div>
-        </div>
-
-        <div class="mt-12">
-            <p class="text-gray-400 text-sm mb-4">Has completado el Módulo 3 de la Unidad 1</p>
-            <button onclick="location.reload()"
-                class="bg-alt text-action hover:bg-gray-200 border border-border px-6 py-2 rounded-full text-sm font-medium transition-colors">
-                Reiniciar Módulo
-            </button>
-        </div>
-        <!-- Cognitive Check -->
-        <div class="hidden">Cognitive Success Check: Student can articulate a valid use-case for sets vs lists.
-        </div>
-    </section>
-    </main>
-
-    <!-- Footer / Progress -->
-    <footer class="h-12 bg-alt border-t border-border flex items-center justify-between px-6">
-        <button onclick="prevSlide()" class="text-body hover:text-action text-sm font-medium disabled:opacity-50"
-            id="btn-prev">Anterior</button>
-        <div class="flex gap-1">
-            <div class="w-16 h-1 bg-action rounded-full"></div>
-            <!-- Progress bar logic to be added -->
-        </div>
-        <button onclick="nextSlide()" class="text-body hover:text-action text-sm font-medium disabled:opacity-50"
-            id="btn-next">Siguiente</button>
-    </footer>
+            <button onclick="nextSlide()" class="text-body hover:text-action text-sm font-medium disabled:opacity-50"
+                id="btn-next">Siguiente</button>
+        </footer>
 
     </div>
 
