@@ -96,7 +96,7 @@
             </div>
             <div class="flex gap-2">
                 <!-- Navigation Dots placeholder -->
-                <span class="text-sm text-body">Slide <span id="current-slide-num">1</span>/7</span>
+                <span class="text-sm text-body">Slide <span id="current-slide-num">1</span>/9</span>
             </div>
         </header>
 
@@ -337,7 +337,82 @@
                     prediction of set behavior.</div>
             </section>
 
-            <!-- Slide 4: Operaciones entre Sets (Analizar) -->
+            <!-- Slide 4: Acceso y Eliminación (Aplicar) [NEW] -->
+            <section id="slide-4"
+                class="slide force-hidden w-full h-full flex flex-col md:grid md:grid-cols-2 gap-8 p-8 items-center">
+                <div class="space-y-6">
+                    <div
+                        class="bg-accent/10 text-accent px-3 py-1 rounded-full text-xs font-bold tracking-wide border border-accent/10 w-max">
+                        INTERACTIVO</div>
+                    <h2 class="text-3xl font-bold text-title">Acceso y Eliminación</h2>
+                    <p class="text-body text-sm leading-relaxed">
+                        A diferencia de las listas, los sets <strong>no tienen orden</strong>. Esto cambia cómo
+                        accedemos a ellos y cómo eliminamos sus elementos.
+                    </p>
+
+                    <div class="space-y-4">
+                        <button onclick="resetAdvSet()"
+                            class="w-full p-4 bg-white border border-border rounded-xl shadow-sm hover:shadow-md transition-all text-left group relative overflow-hidden border-l-4 border-l-accent">
+                            <div class="font-bold text-body group-hover:text-accent transition-colors">1. Crear Set
+                            </div>
+                            <div class="text-[10px] text-gray-500 mt-1">Inicializa <code>mi_set = {1, 2, 3}</code></div>
+                        </button>
+                        <button onclick="runAdvancedOp('access')"
+                            class="w-full p-4 bg-white border border-border rounded-xl shadow-sm hover:shadow-md transition-all text-left group relative overflow-hidden">
+                            <div class="font-bold text-body group-hover:text-accent transition-colors">2. ¿Acceso por
+                                índice?</div>
+                            <div class="text-[10px] text-gray-500 mt-1">Intenta hacer <code>print(mi_set[0])</code>
+                            </div>
+                        </button>
+                        <div class="grid grid-cols-2 gap-4">
+                            <button onclick="runAdvancedOp('remove')"
+                                class="p-4 bg-white border border-border rounded-xl shadow-sm hover:shadow-md transition-all text-left group">
+                                <div
+                                    class="font-bold text-body group-hover:text-accent transition-colors tracking-tight text-sm">
+                                    3a. remove(2)</div>
+                                <div class="text-[10px] text-gray-500 mt-1 italic">Estricto</div>
+                            </button>
+                            <button onclick="runAdvancedOp('discard')"
+                                class="p-4 bg-white border border-border rounded-xl shadow-sm hover:shadow-md transition-all text-left group">
+                                <div
+                                    class="font-bold text-body group-hover:text-accent transition-colors tracking-tight text-sm">
+                                    3b. discard(2)</div>
+                                <div class="text-[10px] text-gray-500 mt-1 italic">Seguro</div>
+                            </button>
+                        </div>
+                        <button onclick="runAdvancedOp('clear')"
+                            class="w-full p-4 bg-white border border-border rounded-xl shadow-sm hover:shadow-md transition-all text-left group relative overflow-hidden">
+                            <div class="font-bold text-body group-hover:text-accent transition-colors">4. Vaciar el Set
+                            </div>
+                            <div class="text-[10px] text-gray-500 mt-1">Uso de <code>clear()</code></div>
+                        </button>
+                    </div>
+
+                    <div id="adv-console-feedback" class="opacity-0 transition-opacity duration-300">
+                        <!-- Dynamic feedback -->
+                    </div>
+                </div>
+
+                <!-- Simulation Terminal -->
+                <div
+                    class="w-full h-full flex flex-col bg-[#1e1e1e] rounded-xl shadow-2xl overflow-hidden border border-gray-700 min-h-[400px]">
+                    <div class="bg-[#323232] px-4 py-2 flex items-center justify-between border-b border-gray-700">
+                        <div class="flex gap-2">
+                            <div class="w-3 h-3 rounded-full bg-[#ff5f56]"></div>
+                            <div class="w-3 h-3 rounded-full bg-[#ffbd2e]"></div>
+                            <div class="w-3 h-3 rounded-full bg-[#27c93f]"></div>
+                        </div>
+                        <span class="text-gray-400 text-xs font-mono">avanzado.py</span>
+                    </div>
+                    <div id="adv-terminal-output"
+                        class="p-6 font-mono text-sm space-y-2 overflow-y-auto flex-1 custom-scrollbar scroll-smooth">
+                        <div class="text-blue-400"># El conjunto actual es:</div>
+                        <div class="text-white">>>> mi_set = {1, 2, 3}</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Slide 5: Operaciones entre Conjuntos (Analizar) -->
             <svg width="0" height="0" style="position: absolute;">
                 <defs>
                     <clipPath id="lens-shape" clipPathUnits="objectBoundingBox">
@@ -347,7 +422,7 @@
                 </defs>
             </svg>
 
-            <section id="slide-4"
+            <section id="slide-5"
                 class="slide force-hidden w-full h-full flex flex-col md:grid md:grid-cols-2 gap-8 p-8 items-center">
                 <div class="space-y-6">
                     <h2 class="text-3xl font-bold text-title">Analizando Operaciones</h2>
@@ -463,15 +538,103 @@
                     visual intersection.</div>
             </section>
 
-            <!-- Slide 5: Comparación de Sets -->
-            <section id="slide-5"
+            <!-- Slide 6: Crea tus Propios Sets (Analizar) -->
+            <section id="slide-6"
+                class="slide force-hidden w-full h-full flex flex-col md:grid md:grid-cols-2 gap-8 p-8 items-center">
+                <div class="space-y-6">
+                    <div
+                        class="bg-accent/10 text-accent px-3 py-1 rounded-full text-xs font-bold tracking-wide border border-accent/10 w-max">
+                        INTERACTIVO</div>
+                    <h2 class="text-3xl font-bold text-title">Crea tus Propios Conjuntos</h2>
+                    <p class="text-body text-sm">Elige qué elementos poner en cada conjunto y observa cómo cambian las
+                        operaciones en tiempo real.</p>
+
+                    <!-- Element Toggles -->
+                    <div class="space-y-4">
+                        <div>
+                            <span class="text-xs font-bold text-accent uppercase tracking-wider">Elementos en A:</span>
+                            <div class="flex gap-2 mt-2" id="toggle-container-a">
+                                <!-- JS will populate buttons 1-6 -->
+                            </div>
+                        </div>
+                        <div>
+                            <span class="text-xs font-bold text-action uppercase tracking-wider">Elementos en B:</span>
+                            <div class="flex gap-2 mt-2" id="toggle-container-b">
+                                <!-- JS will populate buttons 1-6 -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Operation Selector -->
+                    <div class="pt-4 border-t border-border">
+                        <span class="text-xs font-bold text-gray-400 uppercase tracking-wider">Ver Resultado
+                            de:</span>
+                        <div class="grid grid-cols-2 gap-2 mt-2">
+                            <button onclick="updateInteractiveVenn('union')" id="btn-int-union"
+                                class="p-2 text-xs border border-border rounded-lg bg-white hover:bg-alt transition-all font-bold text-action">Unión
+                                (|)</button>
+                            <button onclick="updateInteractiveVenn('intersection')" id="btn-int-intersection"
+                                class="p-2 text-xs border border-border rounded-lg bg-white hover:bg-alt transition-all font-bold text-action">Intersección
+                                (&)</button>
+                            <button onclick="updateInteractiveVenn('difference_a_b')" id="btn-int-diff"
+                                class="p-2 text-xs border border-border rounded-lg bg-white hover:bg-alt transition-all font-bold text-action">Diff
+                                (A - B)</button>
+                            <button onclick="updateInteractiveVenn('symmetric')" id="btn-int-sym"
+                                class="p-2 text-xs border border-border rounded-lg bg-white hover:bg-alt transition-all font-bold text-action">Simétrica
+                                (^)</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Visualization Area (Copy of Slide 4 with dynamic IDs) -->
+                <div id="interactive-universe"
+                    class="flex flex-col items-center justify-center p-6 bg-white rounded-xl border border-border shadow-inner min-h-[350px] relative w-full">
+                    <div class="relative w-80 h-48 mt-4">
+                        <div id="int-overlay-a"
+                            class="absolute left-0 w-48 h-48 rounded-full transition-all duration-500 pointer-events-none opacity-0 z-0">
+                        </div>
+                        <div id="int-overlay-b"
+                            class="absolute right-0 w-48 h-48 rounded-full transition-all duration-500 pointer-events-none opacity-0 z-0">
+                        </div>
+                        <div id="int-overlay-int"
+                            class="absolute left-1/2 -translate-x-1/2 w-20 h-48 transition-all duration-500 pointer-events-none opacity-0 z-10"
+                            style="clip-path: url(#lens-shape);"></div>
+
+                        <div id="int-circle-a"
+                            class="absolute left-0 w-48 h-48 rounded-full border-2 border-accent/40 flex items-center justify-center pointer-events-none z-20">
+                            <span class="absolute -top-6 left-1/2 -translate-x-1/2 text-xs font-bold text-accent">Set
+                                A</span>
+                        </div>
+                        <div id="int-circle-b"
+                            class="absolute right-0 w-48 h-48 rounded-full border-2 border-action/40 flex items-center justify-center pointer-events-none z-20">
+                            <span class="absolute -top-6 left-1/2 -translate-x-1/2 text-xs font-bold text-action">Set
+                                B</span>
+                        </div>
+
+                        <!-- Dynamic Numbers for Slide 5 -->
+                        <div id="int-numbers-container" class="absolute inset-0 z-30 pointer-events-none">
+                            <!-- Numbers will be placed by JS -->
+                        </div>
+                    </div>
+
+                    <div id="int-venn-explanation" class="mt-12 text-center text-body text-[10px] font-medium h-8">
+                        Configura tus sets para ver el resultado.
+                    </div>
+                    <div id="int-venn-result"
+                        class="mt-2 font-mono text-sm bg-gray-100 px-4 py-1 rounded-full text-title border border-border opacity-0 transition-opacity duration-500">
+                        {}
+                    </div>
+                </div>
+            </section>
+
+            <!-- Slide 7: Comparación de Sets -->
+            <section id="slide-7"
                 class="slide force-hidden w-full h-full flex flex-col md:grid md:grid-cols-2 gap-8 p-12 items-center">
                 <div class="space-y-6">
                     <div class="flex items-center gap-2">
                         <div
                             class="bg-action/10 text-action px-3 py-1 rounded-full text-xs font-bold tracking-wide border border-action/10">
-                            COMPRAR COLECIONES</div>
-                        <span class="text-xs text-gray-400 font-mono">issubset() / issuperset()</span>
+                            COMPARAR COLECCIONES</div>
                     </div>
                     <h2 class="text-3xl font-bold text-title">Comparación de Sets</h2>
                     <p class="text-body text-lg leading-relaxed">
@@ -481,21 +644,25 @@
                     <div class="grid grid-cols-2 gap-3">
                         <button onclick="showComp('subset')"
                             class="p-3 bg-white border border-border rounded-lg shadow-sm hover:border-action transition-all text-left group">
-                            <div class="font-bold text-action group-hover:text-action-hover">Subconjunto (<)< /div>
-                                    <div class="text-[10px] text-gray-500 italic">issubset()</div>
+                            <div class="font-bold text-action group-hover:text-action-hover">Subconjunto Propio (&lt;)
+                            </div>
+                            <div class="text-[10px] text-gray-500 italic">&lt;</div>
                         </button>
                         <button onclick="showComp('superset')"
                             class="p-3 bg-white border border-border rounded-lg shadow-sm hover:border-action transition-all text-left group">
-                            <div class="font-bold text-action group-hover:text-action-hover">Superconjunto (>)</div>
-                            <div class="text-[10px] text-gray-500 italic">issuperset()</div>
+                            <div class="font-bold text-action group-hover:text-action-hover">Superconjunto Propio (&gt;)
+                            </div>
+                            <div class="text-[10px] text-gray-500 italic">&gt;</div>
                         </button>
                         <button onclick="showComp('subset_eq')"
                             class="p-3 bg-white border border-border rounded-lg shadow-sm hover:border-action transition-all text-left group">
-                            <div class="font-bold text-action group-hover:text-action-hover">Sub. o Igual (<=)< /div>
+                            <div class="font-bold text-action group-hover:text-action-hover">Sub. o Igual (&lt;=)</div>
+                            <div class="text-[10px] text-gray-500 italic">issubset()</div>
                         </button>
                         <button onclick="showComp('superset_eq')"
                             class="p-3 bg-white border border-border rounded-lg shadow-sm hover:border-action transition-all text-left group">
-                            <div class="font-bold text-action group-hover:text-action-hover">Sup. o Igual (>=)</div>
+                            <div class="font-bold text-action group-hover:text-action-hover">Sup. o Igual (&gt;=)</div>
+                            <div class="text-[10px] text-gray-500 italic">issuperset()</div>
                         </button>
                     </div>
 
@@ -511,44 +678,45 @@
                             <div class="text-gray-400"># Selecciona una comparación</div>
                             <div><span class="text-blue-600">set_a</span> = {<span class="text-green-600">1, 2,
                                     3</span>}</div>
-                            <div><span class="text-blue-600">set_b</span> = {<span class="text-green-600">3, 4,
+                            <div><span class="text-blue-600">set_b</span> = {<span class="text-green-600">1, 2, 3, 4,
                                     5</span>}</div>
                         </div>
                         <div id="comp-feedback" class="bg-blue-50 border border-blue-200 p-4 rounded-lg hidden mt-4">
                             <p class="text-blue-800 text-sm" id="comp-tip-text"></p>
                         </div>
-                    </div> <!-- End space-y-6 -->
+                    </div> <!-- End of Code Box -->
+                </div> <!-- End of Right Column (space-y-6) -->
 
-                    <!-- Simulation Area (Right Column) -->
-                    <div
-                        class="flex flex-col items-center justify-center p-8 bg-white rounded-xl border border-border shadow-inner min-h-[400px] relative w-full">
-                        <div class="relative w-80 h-64 flex items-center justify-center">
-                            <!-- Circle B (Container) -->
-                            <div id="comp-circle-b"
-                                class="absolute w-60 h-60 rounded-full border-4 border-action/30 flex items-center justify-center transition-all duration-700 bg-transparent">
-                                <span class="font-bold text-action absolute top-4 right-10">B</span>
-                                <div class="absolute text-sm text-gray-400 bottom-10 right-10">4, 5</div>
-                            </div>
-                            <!-- Circle A (Potential nested) -->
-                            <div id="comp-circle-a"
-                                class="absolute w-32 h-32 rounded-full border-4 border-accent/30 flex items-center justify-center transition-all duration-700 bg-transparent z-10">
-                                <span class="font-bold text-accent absolute -top-8">A</span>
-                                <div class="absolute text-sm text-gray-600">1, 2</div>
-                            </div>
+                <!-- Simulation Area (Right Column) -->
+                <div
+                    class="flex flex-col items-center justify-center p-8 bg-white rounded-xl border border-border shadow-inner min-h-[400px] relative w-full">
+                    <div class="relative w-80 h-64 flex items-center justify-center">
+                        <!-- Circle B (Container) -->
+                        <div id="comp-circle-b"
+                            class="absolute w-60 h-60 rounded-full border-4 border-action/30 flex items-center justify-center transition-all duration-700 bg-transparent">
+                            <span class="font-bold text-action absolute top-4 right-10">B</span>
+                            <div class="absolute text-sm text-gray-400 bottom-10 right-10 text-center">4, 5</div>
                         </div>
-
-                        <div id="comp-explanation" class="mt-8 text-center text-body text-sm font-medium h-12 px-6">
-                            Selecciona una comparación para ver cómo se relacionan los conjuntos.
-                        </div>
-                        <div id="comp-result"
-                            class="mt-4 font-mono text-xl font-bold px-6 py-2 rounded-full bg-gray-100 border border-border opacity-0 transition-all duration-500">
-                            Result
+                        <!-- Circle A (Potential nested) -->
+                        <div id="comp-circle-a"
+                            class="absolute w-32 h-32 rounded-full border-4 border-accent/30 flex items-center justify-center transition-all duration-700 bg-transparent z-10">
+                            <span class="font-bold text-accent absolute -top-8">A</span>
+                            <div class="absolute text-sm text-gray-600">1, 2, 3</div>
                         </div>
                     </div>
+
+                    <div id="comp-explanation" class="mt-8 text-center text-body text-sm font-medium h-12 px-6">
+                        Selecciona una comparación para ver cómo se relacionan los conjuntos.
+                    </div>
+                    <div id="comp-result"
+                        class="mt-4 font-mono text-xl font-bold px-6 py-2 rounded-full bg-gray-100 border border-border opacity-0 transition-all duration-500">
+                        Result
+                    </div>
+                </div>
             </section>
 
-            <!-- Slide 6: Contexto Real (Evaluar) -->
-            <section id="slide-6"
+            <!-- Slide 8: Contexto Real (Evaluar) -->
+            <section id="slide-8"
                 class="slide force-hidden w-full h-full flex flex-col md:grid md:grid-cols-2 gap-12 p-12 items-center">
                 <div class="space-y-6">
                     <div
@@ -612,8 +780,8 @@
                     problem.</div>
             </section>
 
-            <!-- Slide 7: Cierre (Metacognición) -->
-            <section id="slide-7"
+            <!-- Slide 9: Cierre (Metacognición) -->
+            <section id="slide-9"
                 class="slide force-hidden w-full h-full flex flex-col items-center justify-center p-12 text-center">
                 <h2 class="text-4xl font-bold text-title mb-8">¡Misión Cumplida! 🚀</h2>
 
@@ -706,7 +874,7 @@
 
     <script>
         let currentSlide = 1;
-        const totalSlides = 7;
+        const totalSlides = 9;
 
 
         // --- Slide 3 Logic ---
@@ -872,48 +1040,48 @@
 
             let codeHtml = `
                 <div><span class="text-blue-600">set_a</span> = {<span class="text-green-600">1, 2, 3</span>}</div>
-                <div><span class="text-blue-600">set_b</span> = {<span class="text-green-600">3, 4, 5</span>}</div>
+                <div><span class="text-blue-600">set_b</span> = {<span class="text-green-600">1, 2, 3, 4, 5</span>}</div>
             `;
 
             if (op === 'subset') {
                 // Animation: Move A inside B
                 circleA.classList.add('bg-accent/10', 'scale-75');
                 circleB.classList.add('bg-action/5');
-                explanation.innerHTML = "<strong>Subconjunto:</strong> A es subconjunto de B si todos los elementos de A están en B.";
-                result.innerText = "False";
-                result.className = "mt-4 font-mono text-xl font-bold px-6 py-2 rounded-full bg-red-100 text-red-700 border border-red-200 transition-all duration-500 opacity-100";
+                explanation.innerHTML = "<strong>Subconjunto Propio:</strong> A es subconjunto de B si todos los elementos de A están en B, y A no es igual a B.";
+                result.innerText = "True";
+                result.className = "mt-4 font-mono text-xl font-bold px-6 py-2 rounded-full bg-green-100 text-green-700 border border-green-200 transition-all duration-500 opacity-100";
 
                 feedback.classList.remove('hidden');
-                tipText.innerHTML = "En nuestro ejemplo, A={1,2,3} y B={3,4,5}. Como 1 y 2 no están en B, <strong>A no es subconjunto de B</strong>.";
-                codeHtml += `<div class="mt-2 text-purple-600 font-bold"># ¿Es A subconjunto de B?</div>
-                             <div><span class="text-blue-600">res</span> = set_a.issubset(set_b) <span class="text-gray-400"># False</span></div>`;
+                tipText.innerHTML = "Como todos los elementos de A están en B y A es más pequeño, <strong>A es un subconjunto propio de B</strong>.";
+                codeHtml += `<div class="mt-2 text-purple-600 font-bold"># ¿Es A subconjunto propio de B?</div>
+                             <div><span class="text-blue-600">res</span> = set_a < set_b <span class="text-gray-400"># True</span></div>`;
             } else if (op === 'superset') {
-                explanation.innerHTML = "<strong>Superconjunto:</strong> A es superconjunto de B si contiene a todos los elementos de B.";
+                explanation.innerHTML = "<strong>Superconjunto Propio:</strong> A es superconjunto de B si contiene a todos los elementos de B, y A no es igual a B.";
                 circleA.classList.add('bg-accent/5');
-                circleB.classList.add('bg-action/10', 'scale-75');
+                circleB.classList.add('bg-action/10');
                 result.innerText = "False";
                 result.className = "mt-4 font-mono text-xl font-bold px-6 py-2 rounded-full bg-red-100 text-red-700 border border-red-200 transition-all duration-500 opacity-100";
 
                 feedback.classList.remove('hidden');
-                tipText.innerHTML = "Para que A fuera superconjunto, debería contener al 4 y al 5.";
-                codeHtml += `<div class="mt-2 text-purple-600 font-bold"># ¿Es A superconjunto de B?</div>
-                             <div><span class="text-blue-600">res</span> = set_a.issuperset(set_b) <span class="text-gray-400"># False</span></div>`;
+                tipText.innerHTML = "A no es superconjunto de B porque B tiene elementos (4, 5) que no están en A.";
+                codeHtml += `<div class="mt-2 text-purple-600 font-bold"># ¿Es A superconjunto propio de B?</div>
+                             <div><span class="text-blue-600">res</span> = set_a > set_b <span class="text-gray-400"># False</span></div>`;
             } else if (op === 'subset_eq') {
                 circleA.classList.add('bg-accent/10', 'scale-75');
                 circleB.classList.add('bg-action/5');
                 explanation.innerHTML = "<strong>Subconjunto o Igual:</strong> ¿Están todos los elementos de A en B? (Incluyendo si fueran iguales)";
-                result.innerText = "False";
-                result.className = "mt-4 font-mono text-xl font-bold px-6 py-2 rounded-full bg-red-100 text-red-700 border border-red-200 transition-all duration-500 opacity-100";
+                result.innerText = "True";
+                result.className = "mt-4 font-mono text-xl font-bold px-6 py-2 rounded-full bg-green-100 text-green-700 border border-green-200 transition-all duration-500 opacity-100";
                 codeHtml += `<div class="mt-2 text-purple-600 font-bold"># Subconjunto o igual</div>
-                             <div><span class="text-blue-600">res</span> = set_a <= set_b <span class="text-gray-400"># False</span></div>`;
+                             <div><span class="text-blue-600">res</span> = set_a.issubset(set_b) <span class="text-gray-400"># True</span></div>`;
             } else if (op === 'superset_eq') {
                 circleA.classList.add('bg-accent/5');
-                circleB.classList.add('bg-action/10', 'scale-75');
+                circleB.classList.add('bg-action/10');
                 explanation.innerHTML = "<strong>Superconjunto o Igual:</strong> ¿Contiene A a todos los elementos de B? (Incluyendo si fueran iguales)";
                 result.innerText = "False";
                 result.className = "mt-4 font-mono text-xl font-bold px-6 py-2 rounded-full bg-red-100 text-red-700 border border-red-200 transition-all duration-500 opacity-100";
                 codeHtml += `<div class="mt-2 text-purple-600 font-bold"># Superconjunto o igual</div>
-                             <div><span class="text-blue-600">res</span> = set_a >= set_b <span class="text-gray-400"># False</span></div>`;
+                             <div><span class="text-blue-600">res</span> = set_a.issuperset(set_b) <span class="text-gray-400"># False</span></div>`;
             }
             codeContainer.innerHTML = codeHtml;
         }
@@ -947,7 +1115,232 @@
 
             document.getElementById('btn-prev').disabled = currentSlide === 1;
             document.getElementById('btn-next').innerText = currentSlide === totalSlides ? 'Finalizar' : 'Siguiente';
-            document.getElementById('btn-next').disabled = currentSlide === totalSlides;
+            // Enable next even on last slide if needed, but per plan let's keep it simple
+            document.getElementById('btn-next').disabled = false;
+            if (currentSlide === totalSlides) {
+                document.getElementById('btn-next').onclick = () => alert("¡Felicidades! Has completado el módulo.");
+            } else {
+                document.getElementById('btn-next').onclick = nextSlide;
+            }
+
+            if (currentSlide === 6) initInteractiveSlide();
+
+            // Re-init Slide 4 if needed (reset terminal)
+            if (currentSlide === 4) {
+                resetAdvSet();
+            }
+        }
+
+        // --- Slide 4 Logic: Advanced Ops ---
+        let advancedSetState = new Set([1, 2, 3]);
+
+        function resetAdvSet() {
+            advancedSetState = new Set([1, 2, 3]);
+            const term = document.getElementById('adv-terminal-output');
+            if (term) {
+                term.innerHTML = `
+                    <div class="text-blue-400"># El conjunto ha sido inicializado:</div>
+                    <div class="text-white">>>> mi_set = {1, 2, 3}</div>
+                `;
+            }
+            const feedback = document.getElementById('adv-console-feedback');
+            if (feedback) {
+                feedback.innerHTML = "<strong>Set Creado:</strong> Ahora puedes probar a eliminar o acceder a sus elementos.";
+                feedback.className = "mt-4 p-4 rounded-lg text-sm border bg-accent/10 border-accent/20 text-accent transition-opacity duration-300 opacity-100";
+            }
+        }
+
+        function addAdvTerminal(content) {
+            const term = document.getElementById('adv-terminal-output');
+            const newDiv = document.createElement('div');
+            newDiv.innerHTML = content;
+            newDiv.className = 'opacity-0 transform translate-y-2 transition-all duration-300';
+            term.appendChild(newDiv);
+            term.scrollTop = term.scrollHeight;
+            requestAnimationFrame(() => newDiv.classList.remove('opacity-0', 'translate-y-2'));
+        }
+
+        function runAdvancedOp(op) {
+            const feedback = document.getElementById('adv-console-feedback');
+            feedback.className = "mt-4 p-4 rounded-lg text-sm border bg-blue-50 border-blue-100 text-blue-800 transition-opacity duration-300 opacity-100";
+
+            if (op === 'access') {
+                addAdvTerminal(`<span class="text-green-400 font-bold">>>> print(mi_set[0])</span>`);
+                setTimeout(() => {
+                    addAdvTerminal(`<span class="text-red-400">TypeError: 'set' object is not subscriptable</span>`);
+                    feedback.innerHTML = "<strong>¡ERROR!</strong> Los sets no tienen orden, por lo que no puedes acceder por índice. Recuerda: usa un <code>for</code> o <code>in</code>.";
+                    feedback.className = "mt-4 p-4 rounded-lg text-sm border bg-red-50 border-red-200 text-red-800 transition-opacity duration-300 opacity-100";
+                }, 400);
+            } else if (op === 'remove') {
+                addAdvTerminal(`<span class="text-green-400 font-bold">>>> mi_set.remove(2)</span>`);
+                setTimeout(() => {
+                    if (advancedSetState.has(2)) {
+                        advancedSetState.delete(2);
+                        addAdvTerminal(`<span class="text-white">>>> print(mi_set)</span>`);
+                        addAdvTerminal(`<span class="text-white">{${Array.from(advancedSetState).join(', ')}}</span>`);
+                        feedback.innerHTML = "<strong>Éxito:</strong> El elemento 2 ha sido eliminado. ¿Qué pasa si intentas borrarlo de nuevo?";
+                    } else {
+                        addAdvTerminal(`<span class="text-red-400">KeyError: 2</span>`);
+                        feedback.innerHTML = "<strong>¡ERROR!</strong> <code>remove()</code> lanza un <code>KeyError</code> si el elemento no existe en el conjunto.";
+                        feedback.className = "mt-4 p-4 rounded-lg text-sm border bg-red-50 border-red-200 text-red-800 transition-opacity duration-300 opacity-100";
+                    }
+                }, 400);
+            } else if (op === 'discard') {
+                addAdvTerminal(`<span class="text-green-400 font-bold">>>> mi_set.discard(2)</span>`);
+                setTimeout(() => {
+                    const wasIn = advancedSetState.has(2);
+                    advancedSetState.delete(2);
+                    addAdvTerminal(`<span class="text-white">>>> print(mi_set)</span>`);
+                    addAdvTerminal(`<span class="text-white">${advancedSetState.size > 0 ? '{' + Array.from(advancedSetState).join(', ') + '}' : 'set()'}</span>`);
+                    if (wasIn) {
+                        feedback.innerHTML = "<strong>Éxito:</strong> El elemento 2 ha sido eliminado silenciosamente.";
+                    } else {
+                        feedback.innerHTML = "<strong>Silencio:</strong> <code>discard()</code> no hace nada si el elemento no existe. ¡Es muy seguro!";
+                    }
+                }, 400);
+            } else if (op === 'clear') {
+                addAdvTerminal(`<span class="text-green-400 font-bold">>>> mi_set.clear()<br>>>> print(mi_set)</span>`);
+                setTimeout(() => {
+                    advancedSetState.clear();
+                    addAdvTerminal(`<span class="text-white">set()</span>`);
+                    feedback.innerHTML = "<strong>Vaciado:</strong> <code>clear()</code> elimina todos los elementos. Un set vacío se representa como <code>set()</code>.";
+                }, 400);
+            }
+        }
+
+        // --- Slide 5 Logic: Interactive Venn ---
+        let setA_int = new Set([1, 2]);
+        let setB_int = new Set([2, 3]);
+        let currentIntOp = 'union';
+
+        function initInteractiveSlide() {
+            const containerA = document.getElementById('toggle-container-a');
+            const containerB = document.getElementById('toggle-container-b');
+
+            if (containerA.children.length > 0) return; // Already init
+
+            for (let i = 1; i <= 6; i++) {
+                // A buttons
+                const btnA = document.createElement('button');
+                btnA.innerText = i;
+                btnA.className = `w-8 h-8 rounded-full border text-xs font-bold transition-all ${setA_int.has(i) ? 'bg-accent text-white border-accent' : 'bg-white text-gray-400 border-gray-300'}`;
+                btnA.onclick = () => toggleElement('A', i, btnA);
+                containerA.appendChild(btnA);
+
+                // B buttons
+                const btnB = document.createElement('button');
+                btnB.innerText = i;
+                btnB.className = `w-8 h-8 rounded-full border text-xs font-bold transition-all ${setB_int.has(i) ? 'bg-action text-white border-action' : 'bg-white text-gray-400 border-gray-300'}`;
+                btnB.onclick = () => toggleElement('B', i, btnB);
+                containerB.appendChild(btnB);
+            }
+            updateInteractiveVenn(currentIntOp);
+        }
+
+        function toggleElement(setLabel, val, btn) {
+            const targetSet = setLabel === 'A' ? setA_int : setB_int;
+            const activeClass = setLabel === 'A' ? 'bg-accent text-white border-accent' : 'bg-action text-white border-action';
+            const inactiveClass = 'bg-white text-gray-400 border-gray-300';
+
+            if (targetSet.has(val)) {
+                targetSet.delete(val);
+                btn.className = `w-8 h-8 rounded-full border text-xs font-bold transition-all ${inactiveClass}`;
+            } else {
+                targetSet.add(val);
+                btn.className = `w-8 h-8 rounded-full border text-xs font-bold transition-all ${activeClass}`;
+            }
+            updateInteractiveVenn(currentIntOp);
+        }
+
+        function updateInteractiveVenn(op) {
+            currentIntOp = op;
+            const overlayA = document.getElementById('int-overlay-a');
+            const overlayB = document.getElementById('int-overlay-b');
+            const overlayInt = document.getElementById('int-overlay-int');
+            const explanation = document.getElementById('int-venn-explanation');
+            const resultDisplay = document.getElementById('int-venn-result');
+            const numContainer = document.getElementById('int-numbers-container');
+
+            // Reset overlays
+            [overlayA, overlayB, overlayInt].forEach(el => {
+                if (el) el.className = el.className.replace(/bg-\S+/g, '').replace('opacity-100', 'opacity-0');
+            });
+
+            // Highlight buttons
+            document.querySelectorAll('[id^="btn-int-"]').forEach(b => b.classList.remove('bg-alt', 'ring-2', 'ring-action'));
+            document.getElementById(`btn-int-${op.startsWith('diff') ? 'diff' : op.slice(0, 3)}`)?.classList.add('bg-alt', 'ring-2', 'ring-action');
+
+            // Calculation
+            let res = new Set();
+            if (op === 'union') {
+                res = new Set([...setA_int, ...setB_int]);
+                overlayA.classList.add('bg-blue-200', 'opacity-100');
+                overlayB.classList.add('bg-blue-400', 'opacity-100');
+                overlayInt.classList.add('bg-blue-300', 'opacity-100');
+                explanation.innerHTML = "<strong>Unión:</strong> Todos los elementos que están en A o en B.";
+            } else if (op === 'intersection') {
+                res = new Set([...setA_int].filter(x => setB_int.has(x)));
+                overlayInt.classList.add('bg-highlight', 'opacity-100');
+                explanation.innerHTML = "<strong>Intersección:</strong> Elementos presentes en ambos conjuntos.";
+            } else if (op === 'difference_a_b') {
+                res = new Set([...setA_int].filter(x => !setB_int.has(x)));
+                overlayA.classList.add('bg-accent', 'opacity-60', 'opacity-100');
+                overlayInt.classList.add('bg-white', 'opacity-100');
+                explanation.innerHTML = "<strong>Diferencia (A-B):</strong> Elementos en A que no están en B.";
+            } else if (op === 'symmetric') {
+                let diff1 = [...setA_int].filter(x => !setB_int.has(x));
+                let diff2 = [...setB_int].filter(x => !setA_int.has(x));
+                res = new Set([...diff1, ...diff2]);
+                overlayA.classList.add('bg-accent', 'opacity-40', 'opacity-100');
+                overlayB.classList.add('bg-action', 'opacity-40', 'opacity-100');
+                overlayInt.classList.add('bg-white', 'opacity-100');
+                explanation.innerHTML = "<strong>Diferencia Simétrica:</strong> Elementos en A o B, pero no en ambos.";
+            }
+
+            // Results
+            resultDisplay.innerText = res.size === 0 ? "{}" : "{" + [...res].sort().join(", ") + "}";
+            resultDisplay.classList.remove('opacity-0');
+
+            // Update Numbers
+            numContainer.innerHTML = '';
+            const allNums = new Set([...setA_int, ...setB_int]);
+
+            // Layout offsets to avoid overlap and center better
+            // Higher intersection (Y starts at 15 instead of 30)
+            allNums.forEach(n => {
+                const span = document.createElement('span');
+                span.innerText = n;
+                span.className = "absolute text-sm font-bold transition-all duration-500 animate-fadeIn";
+
+                const inA = setA_int.has(n);
+                const inB = setB_int.has(n);
+
+                if (inA && inB) {
+                    span.style.left = '50%';
+                    // Linear vertical distribution to avoid overlap (range 1-6)
+                    span.style.top = (12 + (n * 11)) + '%';
+                    span.style.transform = 'translateX(-50%)';
+                    span.className += " text-title z-40";
+                } else if (inA) {
+                    // Spread in A circle (left side)
+                    const angle = (n * 60) * (Math.PI / 180);
+                    let leftPos = 25 + Math.cos(angle) * 14;
+                    if (n === 6) leftPos -= 8; // Alejar hacia la izquierda
+                    span.style.left = leftPos + '%';
+                    span.style.top = (45 + Math.sin(angle) * 15) + '%';
+                    span.className += " text-accent";
+                } else if (inB) {
+                    // Spread in B circle (right side)
+                    const angle = (n * 60) * (Math.PI / 180);
+                    let leftPos = 75 + Math.cos(angle) * 14;
+                    if (n === 3) leftPos += 8; // Alejar hacia la derecha
+                    span.style.left = leftPos + '%';
+                    span.style.top = (45 + Math.sin(angle) * 15) + '%';
+                    span.style.transform = 'translateX(-50%)';
+                    span.className += " text-action";
+                }
+                numContainer.appendChild(span);
+            });
         }
 
         function nextSlide() {
