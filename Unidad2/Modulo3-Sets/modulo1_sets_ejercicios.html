@@ -216,24 +216,57 @@
                     <!-- Left: Logic Builder -->
                     <div class="lg:col-span-4 flex flex-col gap-6 overflow-y-auto pr-4">
                         <div class="space-y-4">
-                            <span
-                                class="bg-accent text-white px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest">Laboratorio
-                                1</span>
-                            <h2 class="text-3xl font-extrabold text-title">Filtros de Segmentación</h2>
-                            <p class="text-xs text-text-long leading-relaxed">
-                                Comienza con un desafío simple. Utiliza los operadores de conjuntos para identificar
-                                grupos específicos de usuarios.
+                            <span id="lab-tag-1"
+                                class="bg-accent text-white px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest">Desafío:
+                                1/1</span>
+                            <h2 id="exercise-title-1" class="text-3xl font-extrabold text-title">Cargando...</h2>
+                            <p id="exercise-desc-1" class="text-xs text-text-long leading-relaxed">
+                                Preparando entorno de datos...
+                            </p>
+                        </div>
+
+                        <!-- Current Question Panel -->
+                        <div
+                            class="bg-white/50 border border-border p-5 rounded-2xl space-y-3 shadow-sm shadow-accent/5">
+                            <div class="flex justify-between items-center">
+                                <span class="text-[10px] font-bold text-accent uppercase tracking-tighter">Pregunta
+                                    <span id="question-index-1">1/1</span></span>
+                                <div class="flex gap-1" id="question-controls-1">
+                                    <button onclick="changeQuestion(-1)"
+                                        class="p-1 hover:bg-slate-100 rounded text-slate-400 disabled:opacity-0"
+                                        id="prev-q-btn">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none"
+                                            viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M15 19l-7-7 7-7" />
+                                        </svg>
+                                    </button>
+                                    <button onclick="changeQuestion(1)"
+                                        class="p-1 hover:bg-slate-100 rounded text-accent disabled:opacity-0"
+                                        id="next-q-btn">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none"
+                                            viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M9 5l7 7-7 7" />
+                                        </svg>
+                                    </button>
+                                </div>
+                            </div>
+                            <p id="current-question-text-1" class="text-sm font-bold text-title leading-snug">
+                                ...
                             </p>
                         </div>
 
                         <div class="grid grid-cols-2 gap-2">
                             <div class="bg-accent/10 border border-accent/20 p-2 rounded-lg text-center">
-                                <span class="text-[8px] font-bold uppercase text-accent">WEB (A)</span>
-                                <p class="text-[10px] font-mono font-bold">58 cl</p>
+                                <span id="set-a-name-1"
+                                    class="text-[8px] font-bold uppercase text-accent truncate block">Cargando...</span>
+                                <p id="set-a-count-1" class="text-[10px] font-mono font-bold">0 items</p>
                             </div>
                             <div class="bg-action/10 border border-action/20 p-2 rounded-lg text-center">
-                                <span class="text-[8px] font-bold uppercase text-action">MÓVIL (B)</span>
-                                <p class="text-[10px] font-mono font-bold">42 cl</p>
+                                <span id="set-b-name-1"
+                                    class="text-[8px] font-bold uppercase text-action truncate block">Cargando...</span>
+                                <p id="set-b-count-1" class="text-[10px] font-mono font-bold">0 items</p>
                             </div>
                         </div>
 
@@ -306,13 +339,13 @@
 
                                     <div
                                         class="absolute left-0 w-48 h-48 rounded-full border-2 border-accent/40 flex items-start justify-center pt-8 z-20">
-                                        <span class="text-[8px] font-bold text-accent uppercase tracking-widest">Web
-                                            (A)</span>
+                                        <span id="venn-a-label-1"
+                                            class="text-[8px] font-bold text-accent uppercase tracking-widest px-4 text-center">A</span>
                                     </div>
                                     <div
                                         class="absolute right-0 w-48 h-48 rounded-full border-2 border-action/40 flex items-start justify-center pt-8 z-20">
-                                        <span class="text-[8px] font-bold text-action uppercase tracking-widest">Móvil
-                                            (B)</span>
+                                        <span id="venn-b-label-1"
+                                            class="text-[8px] font-bold text-action uppercase tracking-widest px-4 text-center">B</span>
                                     </div>
                                     <div id="int-numbers-container" class="absolute inset-0 z-30 pointer-events-none">
                                     </div>
@@ -516,10 +549,194 @@
         const nextBtn = document.getElementById('next-btn');
         const dotNav = document.getElementById('dot-nav');
 
-        // State Slide 1 (Challenge 1)
+        // Dynamic Exercise Data
+        const ejerciciosSets = [
+            {
+                "titulo": "Servicios de Streaming",
+                "descripcion": "Se analiza el consumo de plataformas de streaming en un grupo de amigos. Unos tienen Netflix y otros tienen Disney+.",
+                "conjuntos": {
+                    "A": {
+                        "nombre": "Netflix",
+                        "estudiantes": ["Laura", "Marcos", "Sofía", "Daniel", "Andrea"]
+                    },
+                    "B": {
+                        "nombre": "Disney+",
+                        "estudiantes": ["Sofía", "Daniel", "Pablo", "Lucas", "Andrea"]
+                    }
+                },
+                "preguntas": [
+                    {
+                        "pregunta": "¿Quiénes tienen suscripción a ambas plataformas?",
+                        "soluciones": ["A&B", "B&A"],
+                        "explicacion": "Intersección - elementos presentes en ambos conjuntos simultáneamente."
+                    },
+                    {
+                        "pregunta": "¿Quiénes tienen solo Netflix (y no Disney+)?",
+                        "soluciones": ["A-B"],
+                        "explicacion": "Diferencia - elementos que están en A pero se eliminan los que también están en B."
+                    },
+                    {
+                        "pregunta": "¿Quiénes tienen suscripción a una sola plataforma (no a ambas)?",
+                        "soluciones": ["A^B", "B^A"],
+                        "explicacion": "Diferencia Simétrica - elementos que están en A o en B, pero no en ambos."
+                    },
+                    {
+                        "pregunta": "¿Quiénes tienen al menos una de las dos suscripciones?",
+                        "soluciones": ["A|B", "B|A"],
+                        "explicacion": "Unión - agrupa todos los elementos únicos de ambos conjuntos."
+                    }
+                ]
+            },
+            {
+                "titulo": "Habilidades Técnicas",
+                "descripcion": "Una empresa de tecnología clasifica a sus postulantes según los lenguajes de programación que dominan: Python o Java.",
+                "conjuntos": {
+                    "A": {
+                        "nombre": "Python",
+                        "estudiantes": ["Javiera", "Felipe", "Camila", "Roberto", "Ignacio"]
+                    },
+                    "B": {
+                        "nombre": "Java",
+                        "estudiantes": ["Camila", "Roberto", "Esteban", "Mónica"]
+                    }
+                },
+                "preguntas": [
+                    {
+                        "pregunta": "¿Qué postulantes saben programar en Python o Java (cualquiera de los dos)?",
+                        "soluciones": ["A|B", "B|A"],
+                        "explicacion": "Unión - lista total de postulantes sin repetir nombres."
+                    },
+                    {
+                        "pregunta": "¿Qué postulantes saben SOLO Java?",
+                        "soluciones": ["B-A"],
+                        "explicacion": "Diferencia - postulantes del conjunto B excluyendo los que también están en A."
+                    },
+                    {
+                        "pregunta": "¿Qué postulantes son 'Full Stack' (saben ambos lenguajes)?",
+                        "soluciones": ["A&B", "B&A"],
+                        "explicacion": "Intersección - postulantes que aparecen en ambas listas."
+                    },
+                    {
+                        "pregunta": "¿Qué postulantes saben solo un lenguaje (excluyendo a los que saben ambos)?",
+                        "soluciones": ["A^B", "B^A"],
+                        "explicacion": "Diferencia Simétrica - opuesto a la intersección, excluye a los elementos comunes."
+                    }
+                ]
+            },
+            {
+                "titulo": "Festivales de Música",
+                "descripcion": "Se revisa la asistencia de un grupo de personas a dos festivales de música realizados el verano pasado: Lollapalooza y Rock in Rio.",
+                "conjuntos": {
+                    "A": {
+                        "nombre": "Lollapalooza",
+                        "estudiantes": ["Diego", "Valentina", "Sebastián", "Martina"]
+                    },
+                    "B": {
+                        "nombre": "Rock in Rio",
+                        "estudiantes": ["Sebastián", "Martina", "Vicente", "Renata", "Diego"]
+                    }
+                },
+                "preguntas": [
+                    {
+                        "pregunta": "¿Quiénes fueron a Lollapalooza pero NO a Rock in Rio?",
+                        "soluciones": ["A-B"],
+                        "explicacion": "Diferencia - asistentes exclusivos del evento A."
+                    },
+                    {
+                        "pregunta": "¿Quiénes fueron a Rock in Rio pero NO a Lollapalooza?",
+                        "soluciones": ["B-A"],
+                        "explicacion": "Diferencia - asistentes exclusivos del evento B."
+                    },
+                    {
+                        "pregunta": "¿Quiénes asistieron a ambos festivales?",
+                        "soluciones": ["A&B", "B&A"],
+                        "explicacion": "Intersección - personas que se repiten en ambas listas de asistencia."
+                    },
+                    {
+                        "pregunta": "¿Quiénes fueron a alguno de los festivales, pero no a los dos?",
+                        "soluciones": ["A^B", "B^A"],
+                        "explicacion": "Diferencia Simétrica - personas que asistieron exclusivamente a uno de los dos eventos."
+                    }
+                ]
+            },
+            {
+                "titulo": "Preferencias de Mascotas",
+                "descripcion": "Una encuesta vecinal pregunta a los residentes si tienen Perros o Gatos en sus hogares.",
+                "conjuntos": {
+                    "A": {
+                        "nombre": "Perros",
+                        "estudiantes": ["Juan", "Pedro", "Luisa", "Ana", "Carla"]
+                    },
+                    "B": {
+                        "nombre": "Gatos",
+                        "estudiantes": ["Ana", "Carla", "José", "Miguel"]
+                    }
+                },
+                "preguntas": [
+                    {
+                        "pregunta": "¿Quiénes tienen tanto Perros como Gatos?",
+                        "soluciones": ["A&B", "B&A"],
+                        "explicacion": "Intersección - dueños que tienen ambas mascotas."
+                    },
+                    {
+                        "pregunta": "¿Quiénes tienen solo Perros (y ningún Gato)?",
+                        "soluciones": ["A-B"],
+                        "explicacion": "Diferencia - dueños en A que no están en B."
+                    },
+                    {
+                        "pregunta": "¿Quiénes tienen algún tipo de mascota (Perro o Gato)?",
+                        "soluciones": ["A|B", "B|A"],
+                        "explicacion": "Unión - todos los dueños de mascotas encuestados."
+                    },
+                    {
+                        "pregunta": "¿Quiénes tienen solo un tipo de mascota (o solo Perro o solo Gato)?",
+                        "soluciones": ["A^B", "B^A"],
+                        "explicacion": "Diferencia Simétrica - excluye a quienes tienen ambos."
+                    }
+                ]
+            },
+            {
+                "titulo": "Idiomas Extranjeros",
+                "descripcion": "En una academia de idiomas, se registran los estudiantes inscritos en los cursos de Inglés y Francés.",
+                "conjuntos": {
+                    "A": {
+                        "nombre": "Inglés",
+                        "estudiantes": ["Tomás", "Javiera", "Andrés", "Bárbara", "Camila"]
+                    },
+                    "B": {
+                        "nombre": "Francés",
+                        "estudiantes": ["Bárbara", "Camila", "Francisco", "Elena"]
+                    }
+                },
+                "preguntas": [
+                    {
+                        "pregunta": "¿Quiénes estudian solo Francés?",
+                        "soluciones": ["B-A"],
+                        "explicacion": "Diferencia - estudiantes inscritos en Francés que no están en Inglés."
+                    },
+                    {
+                        "pregunta": "¿Quiénes estudian ambos idiomas simultáneamente?",
+                        "soluciones": ["A&B", "B&A"],
+                        "explicacion": "Intersección - estudiantes que aparecen en ambas listas."
+                    },
+                    {
+                        "pregunta": "¿Quiénes estudian Inglés pero no Francés?",
+                        "soluciones": ["A-B"],
+                        "explicacion": "Diferencia - estudiantes exclusivos de Inglés."
+                    },
+                    {
+                        "pregunta": "¿Quiénes estudian al menos uno de los dos idiomas?",
+                        "soluciones": ["A|B", "B|A"],
+                        "explicacion": "Unión - lista completa de estudiantes de la academia en estos cursos."
+                    }
+                ]
+            }
+        ];
+
+        let currentQuestionIdx1 = 0;
         let tokens1 = [];
-        const setA_int = new Set([1, 2, 4]); // Ana, Bert, Dan
-        const setB_int = new Set([2, 3, 5]); // Bert, Clara, Flo
+        let setA_int = new Set();
+        let setB_int = new Set();
 
         // State Slide 2 (Challenge 2)
         let tokens2 = [];
@@ -536,7 +753,54 @@
                 dot.id = `dot-${i}`;
                 dotNav.appendChild(dot);
             }
+            loadExercise1(0);
             updateNavigation();
+        }
+
+        function loadExercise1(qIdx) {
+            currentQuestionIdx1 = qIdx;
+            const ex = dataSlide1;
+            const q = ex.preguntas[qIdx];
+
+            // Update Text
+            document.getElementById('exercise-title-1').innerText = ex.titulo;
+            document.getElementById('exercise-desc-1').innerText = ex.descripcion;
+            document.getElementById('current-question-text-1').innerText = q.pregunta;
+            document.getElementById('question-index-1').innerText = `${qIdx + 1}/${ex.preguntas.length}`;
+            document.getElementById('lab-tag-1').innerText = `Desafío: 1/1`; // Generic for now
+
+            // Update Sets Info
+            document.getElementById('set-a-name-1').innerText = `${ex.conjuntos.A.nombre} (A)`;
+            document.getElementById('set-a-count-1').innerText = `${ex.conjuntos.A.estudiantes.length} alumnos`;
+            document.getElementById('set-b-name-1').innerText = `${ex.conjuntos.B.nombre} (B)`;
+            document.getElementById('set-b-count-1').innerText = `${ex.conjuntos.B.estudiantes.length} alumnos`;
+
+            // Labels in Venn
+            document.getElementById('venn-a-label-1').innerText = ex.conjuntos.A.nombre;
+            document.getElementById('venn-b-label-1').innerText = ex.conjuntos.B.nombre;
+
+            // Nav Buttons
+            document.getElementById('prev-q-btn').disabled = qIdx === 0;
+            document.getElementById('next-q-btn').disabled = qIdx === ex.preguntas.length - 1;
+
+            // Update Logic Sets
+            setA_int = new Set(ex.conjuntos.A.estudiantes);
+            setB_int = new Set(ex.conjuntos.B.estudiantes);
+
+            // Reset UI
+            clearExpression(1);
+            document.getElementById('terminal-1').innerHTML = '<div class="text-slate-600 italic">Esperando expresión...</div>';
+            document.getElementById('logic-insight-1').classList.add('opacity-0');
+            document.getElementById('logic-result-icon-1').classList.add('opacity-0');
+
+            renderVenn1('');
+        }
+
+        function changeQuestion(dir) {
+            const newIdx = currentQuestionIdx1 + dir;
+            if (newIdx >= 0 && newIdx < dataSlide1.preguntas.length) {
+                loadExercise1(newIdx);
+            }
         }
 
         function updateNavigation() {
@@ -595,15 +859,24 @@
             const insight = document.getElementById('logic-insight-1');
             if (!expr) return;
 
+            const q = dataSlide1.preguntas[currentQuestionIdx1];
             term.innerHTML += `<div class="animate-fade-in"><span class="text-teal-400">>>></span> filter_v1(<span class="text-white">${expr}</span>)</div>`;
             renderVenn1(expr);
 
             setTimeout(() => {
-                const solution = (expr === "A-B");
-                if (solution) {
-                    term.innerHTML += `<div class="text-green-400 font-bold ml-6">EXIT: {'Ana', 'Dan'}</div>`;
+                const isCorrect = q.soluciones.includes(expr);
+                if (isCorrect) {
+                    // Simple calculation of result set for the terminal
+                    let res = [];
+                    if (expr === "A&B" || expr === "B&A") res = [...setA_int].filter(x => setB_int.has(x));
+                    else if (expr === "A-B") res = [...setA_int].filter(x => !setB_int.has(x));
+                    else if (expr === "B-A") res = [...setB_int].filter(x => !setA_int.has(x));
+                    else if (expr === "A|B" || expr === "B|A") res = [...new Set([...setA_int, ...setB_int])];
+                    else if (expr === "A^B" || expr === "B^A") res = [...setA_int].filter(x => !setB_int.has(x)).concat([...setB_int].filter(x => !setA_int.has(x)));
+
+                    term.innerHTML += `<div class="text-green-400 font-bold ml-6">EXIT: {${res.map(s => `'${s}'`).join(', ')}}</div>`;
                     insight.classList.replace('opacity-0', 'opacity-100');
-                    document.getElementById('insight-text-1').innerText = "Excelente. Has extraído a los usuarios que usan la Web pero evitan la App móvil.";
+                    document.getElementById('insight-text-1').innerText = q.explicacion;
                     document.getElementById('logic-result-icon-1').classList.replace('opacity-0', 'opacity-100');
                 } else {
                     term.innerHTML += `<div class="text-red-400 ml-6">ERR: El resultado no coincide con el objetivo.</div>`;
@@ -643,15 +916,30 @@
             }
 
             numContainer.innerHTML = '';
-            const all = new Set([...setA_int, ...setB_int]);
-            all.forEach(n => {
+            const all = Array.from(new Set([...setA_int, ...setB_int]));
+            all.forEach((name, i) => {
                 const s = document.createElement('span');
-                s.innerText = n;
-                s.className = "absolute text-xs font-bold font-mono transition-all duration-500";
-                const inA = setA_int.has(n), inB = setB_int.has(n);
-                if (inA && inB) { s.style.left = '50%'; s.style.top = (25 + (n * 5)) + '%'; s.style.transform = 'translateX(-50%)'; s.className += " text-title z-40"; }
-                else if (inA) { s.style.left = '20%'; s.style.top = (30 + (n * 6)) + '%'; s.className += " text-accent"; }
-                else if (inB) { s.style.left = '80%'; s.style.top = (30 + (n * 6)) + '%'; s.className += " text-action"; }
+                s.innerText = name;
+                s.className = "absolute text-[8px] font-bold transition-all duration-500 truncate max-w-[50px]";
+                const inA = setA_int.has(name), inB = setB_int.has(name);
+
+                // Better positioning for names
+                if (inA && inB) {
+                    s.style.left = '50%';
+                    s.style.top = (15 + (i * 12)) + '%';
+                    s.style.transform = 'translateX(-50%)';
+                    s.className += " text-title z-40";
+                }
+                else if (inA) {
+                    s.style.left = '20%';
+                    s.style.top = (25 + (i * 10)) + '%';
+                    s.className += " text-accent";
+                }
+                else if (inB) {
+                    s.style.left = '80%';
+                    s.style.top = (25 + (i * 10)) + '%';
+                    s.className += " text-action";
+                }
                 numContainer.appendChild(s);
             });
         }
