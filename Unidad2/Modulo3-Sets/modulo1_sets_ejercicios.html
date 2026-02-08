@@ -210,84 +210,141 @@
                 </button>
             </section>
 
-            <!-- Slide 1: Interactive Playground (2 Sets) -->
+            <!-- Slide 1: Logic Challenge (2 Sets) -->
             <section id="slide-1" class="slide w-full h-full flex items-center justify-center p-8">
-                <div class="max-w-6xl w-full grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-                    <div class="space-y-6">
-                        <div
-                            class="bg-accent/10 text-accent px-3 py-1 rounded-full text-xs font-bold tracking-wide border border-accent/10 w-max">
-                            LABORATORIO 1</div>
-                        <h2 class="text-3xl font-bold text-title">Control de Conjuntos</h2>
-                        <p class="text-text-long text-sm">Activa elementos para el Conjunto A y B. Observa cómo
-                            interactúan
-                            las operaciones básicas en tiempo real.</p>
-
+                <div class="max-w-7xl w-full grid grid-cols-1 lg:grid-cols-12 gap-10 h-full max-h-[85vh]">
+                    <!-- Left: Logic Builder -->
+                    <div class="lg:col-span-4 flex flex-col gap-6 overflow-y-auto pr-4">
                         <div class="space-y-4">
-                            <div>
-                                <span class="text-[10px] font-bold text-accent uppercase tracking-widest">Elementos en
-                                    A:</span>
-                                <div class="flex gap-2 mt-2" id="toggle-container-a"></div>
+                            <span
+                                class="bg-accent text-white px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest">Laboratorio
+                                1</span>
+                            <h2 class="text-3xl font-extrabold text-title">Filtros de Segmentación</h2>
+                            <p class="text-xs text-text-long leading-relaxed">
+                                Comienza con un desafío simple. Utiliza los operadores de conjuntos para identificar
+                                grupos específicos de usuarios.
+                            </p>
+                        </div>
+
+                        <div class="grid grid-cols-2 gap-2">
+                            <div class="bg-accent/10 border border-accent/20 p-2 rounded-lg text-center">
+                                <span class="text-[8px] font-bold uppercase text-accent">WEB (A)</span>
+                                <p class="text-[10px] font-mono font-bold">58 cl</p>
                             </div>
-                            <div>
-                                <span class="text-[10px] font-bold text-action uppercase tracking-widest">Elementos en
-                                    B:</span>
-                                <div class="flex gap-2 mt-2" id="toggle-container-b"></div>
+                            <div class="bg-action/10 border border-action/20 p-2 rounded-lg text-center">
+                                <span class="text-[8px] font-bold uppercase text-action">MÓVIL (B)</span>
+                                <p class="text-[10px] font-mono font-bold">42 cl</p>
                             </div>
                         </div>
 
-                        <div class="pt-6 border-t border-border">
-                            <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Operación
-                                Visual:</span>
-                            <div class="grid grid-cols-2 gap-2 mt-2">
-                                <button onclick="updateInteractiveVenn('union')" id="btn-int-union"
-                                    class="p-3 text-xs border border-border rounded-lg bg-white hover:bg-alt transition-all font-bold text-action">Unión
-                                    (|)</button>
-                                <button onclick="updateInteractiveVenn('intersection')" id="btn-int-intersection"
-                                    class="p-3 text-xs border border-border rounded-lg bg-white hover:bg-alt transition-all font-bold text-action">Intersección
-                                    (&)</button>
-                                <button onclick="updateInteractiveVenn('difference_a_b')" id="btn-int-diff"
-                                    class="p-3 text-xs border border-border rounded-lg bg-white hover:bg-alt transition-all font-bold text-action">A
-                                    - B</button>
-                                <button onclick="updateInteractiveVenn('symmetric')" id="btn-int-sym"
-                                    class="p-3 text-xs border border-border rounded-lg bg-white hover:bg-alt transition-all font-bold text-action">Simétrica
-                                    (^)</button>
+                        <div class="mac-window h-full flex-1 flex flex-col min-h-0">
+                            <div
+                                class="mac-titlebar flex justify-between px-4 sticky top-0 bg-alt border-b border-border z-10">
+                                <span class="text-[10px] text-slate-400 font-mono">segmenter_v1.py</span>
+                            </div>
+                            <div class="p-4 space-y-4 flex-1 overflow-y-auto">
+                                <div class="flex flex-wrap gap-2" id="expression-tokens-1">
+                                    <button onclick="addToken(1, '(')"
+                                        class="px-3 py-2 bg-slate-100 rounded text-sm font-mono hover:bg-slate-200 transition-colors">(</button>
+                                    <button onclick="addToken(1, ')')"
+                                        class="px-3 py-2 bg-slate-100 rounded text-sm font-mono hover:bg-slate-200 transition-colors">)</button>
+                                    <button onclick="addToken(1, 'A')"
+                                        class="px-3 py-2 bg-accent/20 text-accent rounded text-sm font-mono font-bold hover:bg-accent/30 transition-colors">A</button>
+                                    <button onclick="addToken(1, 'B')"
+                                        class="px-3 py-2 bg-action/20 text-action rounded text-sm font-mono font-bold hover:bg-action/30 transition-colors">B</button>
+                                    <button onclick="addToken(1, '|')"
+                                        class="px-3 py-2 bg-slate-800 text-white rounded text-sm font-mono hover:bg-slate-900 transition-colors">|</button>
+                                    <button onclick="addToken(1, '&')"
+                                        class="px-3 py-2 bg-slate-800 text-white rounded text-sm font-mono hover:bg-slate-900 transition-colors">&</button>
+                                    <button onclick="addToken(1, '-')"
+                                        class="px-3 py-2 bg-slate-800 text-white rounded text-sm font-mono hover:bg-slate-900 transition-colors">-</button>
+                                    <button onclick="addToken(1, '^')"
+                                        class="px-3 py-2 bg-slate-800 text-white rounded text-sm font-mono hover:bg-slate-900 transition-colors">^</button>
+                                </div>
+
+                                <div
+                                    class="bg-slate-900 p-4 rounded-xl min-h-[60px] flex items-center justify-between group">
+                                    <div id="current-expression-1"
+                                        class="font-mono text-teal-400 text-lg tracking-wider"></div>
+                                    <button onclick="clearExpression(1)"
+                                        class="text-slate-500 hover:text-red-400 opacity-0 group-hover:opacity-100 transition-opacity">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none"
+                                            viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                                        </svg>
+                                    </button>
+                                </div>
+
+                                <button onclick="executeLogic1()"
+                                    class="w-full py-3 bg-action text-white rounded-xl font-bold uppercase tracking-[0.2em] text-xs hover:bg-highlight transition-all shadow-lg shadow-action/20">Ejecutar
+                                    Filtro</button>
                             </div>
                         </div>
                     </div>
 
-                    <div
-                        class="flex flex-col items-center justify-center p-8 bg-white rounded-2xl border border-border shadow-inner min-h-[400px] relative w-full">
-                        <div class="relative w-80 h-48 mt-4">
-                            <div id="int-overlay-a"
-                                class="absolute left-0 w-48 h-48 rounded-full transition-all duration-500 opacity-0 z-0">
-                            </div>
-                            <div id="int-overlay-b"
-                                class="absolute right-0 w-48 h-48 rounded-full transition-all duration-500 opacity-0 z-0">
-                            </div>
-                            <div id="int-overlay-int"
-                                class="absolute left-1/2 -translate-x-1/2 w-20 h-48 transition-all duration-500 opacity-0 z-10 lens-shape">
+                    <!-- Right: Diagram & Console -->
+                    <div class="lg:col-span-8 space-y-6 flex flex-col">
+                        <div class="flex-1 mac-window bg-white flex flex-col relative min-h-0">
+                            <div class="mac-titlebar flex justify-between px-4">
+                                <span class="text-[10px] text-slate-400 font-mono italic">output_stream.log</span>
                             </div>
 
-                            <div id="int-circle-a"
-                                class="absolute left-0 w-48 h-48 rounded-full border-2 border-accent/40 pointer-events-none z-20">
-                                <span
-                                    class="absolute -top-6 left-1/2 -translate-x-1/2 text-xs font-bold text-accent uppercase tracking-widest">Set
-                                    A</span>
+
+                            <div
+                                class="flex-1 flex flex-col items-center justify-center p-8 select-none h-full overflow-hidden">
+                                <div class="relative w-80 h-56 flex-shrink-0">
+                                    <div id="int-overlay-a"
+                                        class="absolute left-0 w-48 h-48 rounded-full transition-all duration-500 opacity-0 z-0">
+                                    </div>
+                                    <div id="int-overlay-b"
+                                        class="absolute right-0 w-48 h-48 rounded-full transition-all duration-500 opacity-0 z-0">
+                                    </div>
+                                    <div id="int-overlay-int"
+                                        class="absolute left-1/2 -translate-x-1/2 w-20 h-48 transition-all duration-500 opacity-0 z-10 lens-shape">
+                                    </div>
+
+                                    <div
+                                        class="absolute left-0 w-48 h-48 rounded-full border-2 border-accent/40 flex items-start justify-center pt-8 z-20">
+                                        <span class="text-[8px] font-bold text-accent uppercase tracking-widest">Web
+                                            (A)</span>
+                                    </div>
+                                    <div
+                                        class="absolute right-0 w-48 h-48 rounded-full border-2 border-action/40 flex items-start justify-center pt-8 z-20">
+                                        <span class="text-[8px] font-bold text-action uppercase tracking-widest">Móvil
+                                            (B)</span>
+                                    </div>
+                                    <div id="int-numbers-container" class="absolute inset-0 z-30 pointer-events-none">
+                                    </div>
+                                    <div
+                                        class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col items-center z-40">
+                                        <div id="logic-result-icon-1"
+                                            class="text-4xl animate-bounce-subtle opacity-0 transition-opacity">🎯</div>
+                                    </div>
+                                </div>
                             </div>
-                            <div id="int-circle-b"
-                                class="absolute right-0 w-48 h-48 rounded-full border-2 border-action/40 pointer-events-none z-20">
-                                <span
-                                    class="absolute -top-6 left-1/2 -translate-x-1/2 text-xs font-bold text-action uppercase tracking-widest">Set
-                                    B</span>
-                            </div>
-                            <div id="int-numbers-container" class="absolute inset-0 z-30 pointer-events-none"></div>
                         </div>
 
-                        <div id="int-venn-explanation" class="mt-12 text-center text-text-long text-xs font-medium h-8">
-                            Configura tus sets para ver el resultado.</div>
-                        <div id="int-venn-result"
-                            class="mt-2 font-mono text-sm bg-alt px-4 py-2 rounded-xl text-title border border-border opacity-0 transition-opacity duration-500">
-                            {}</div>
+                        <!-- Console Outside -->
+                        <div class="w-full grid grid-cols-1 lg:grid-cols-2 gap-4 flex-shrink-0">
+                            <div
+                                class="bg-[#1e1e1e] rounded-xl p-6 font-mono text-xs text-slate-400 shadow-2xl flex flex-col min-h-[150px]">
+                                <div class="flex items-center gap-2 mb-4 border-b border-slate-700 pb-2">
+                                    <div class="w-2 h-2 rounded-full bg-slate-600"></div>
+                                    <span class="text-[10px] uppercase">Consola de Resultados</span>
+                                </div>
+                                <div id="terminal-1" class="space-y-3 overflow-y-auto flex-1 pr-2">
+                                    <div class="text-slate-600 italic">Esperando expresión...</div>
+                                </div>
+                            </div>
+                            <div id="logic-insight-1"
+                                class="bg-alt border border-border p-4 rounded-xl opacity-0 transition-all flex flex-col justify-center">
+                                <h4 class="text-[10px] font-bold text-title uppercase mb-1">Análisis
+                                    Post-Filtro:</h4>
+                                <p id="insight-text-1" class="text-[11px] text-text-long font-medium leading-relaxed">
+                                </p>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </section>
@@ -329,21 +386,21 @@
                             </div>
                             <div class="p-4 space-y-4 flex-1 overflow-y-auto">
                                 <div class="flex flex-wrap gap-2" id="expression-tokens">
-                                    <button onclick="addToken('(')"
+                                    <button onclick="addToken(2, '(')"
                                         class="px-3 py-2 bg-slate-100 rounded text-sm font-mono hover:bg-slate-200 transition-colors">(</button>
-                                    <button onclick="addToken(')')"
+                                    <button onclick="addToken(2, ')')"
                                         class="px-3 py-2 bg-slate-100 rounded text-sm font-mono hover:bg-slate-200 transition-colors">)</button>
-                                    <button onclick="addToken('A')"
+                                    <button onclick="addToken(2, 'A')"
                                         class="px-3 py-2 bg-accent/20 text-accent rounded text-sm font-mono font-bold hover:bg-accent/30 transition-colors">A</button>
-                                    <button onclick="addToken('B')"
+                                    <button onclick="addToken(2, 'B')"
                                         class="px-3 py-2 bg-action/20 text-action rounded text-sm font-mono font-bold hover:bg-action/30 transition-colors">B</button>
-                                    <button onclick="addToken('C')"
+                                    <button onclick="addToken(2, 'C')"
                                         class="px-3 py-2 bg-purple-100 text-purple-600 rounded text-sm font-mono font-bold hover:bg-purple-200 transition-colors">C</button>
-                                    <button onclick="addToken('|')"
+                                    <button onclick="addToken(2, '|')"
                                         class="px-3 py-2 bg-slate-800 text-white rounded text-sm font-mono hover:bg-slate-900 transition-colors">|</button>
-                                    <button onclick="addToken('&')"
+                                    <button onclick="addToken(2, '&')"
                                         class="px-3 py-2 bg-slate-800 text-white rounded text-sm font-mono hover:bg-slate-900 transition-colors">&</button>
-                                    <button onclick="addToken('-')"
+                                    <button onclick="addToken(2, '-')"
                                         class="px-3 py-2 bg-slate-800 text-white rounded text-sm font-mono hover:bg-slate-900 transition-colors">-</button>
                                 </div>
 
@@ -351,7 +408,7 @@
                                     class="bg-slate-900 p-4 rounded-xl min-h-[60px] flex items-center justify-between group">
                                     <div id="current-expression" class="font-mono text-teal-400 text-lg tracking-wider">
                                     </div>
-                                    <button onclick="clearExpression()"
+                                    <button onclick="clearExpression(2)"
                                         class="text-slate-500 hover:text-red-400 opacity-0 group-hover:opacity-100 transition-opacity">
                                         <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none"
                                             viewBox="0 0 24 24" stroke="currentColor">
@@ -374,8 +431,9 @@
                                 <span class="text-[10px] text-slate-400 font-mono italic">output_stream.log</span>
                             </div>
 
+
                             <div
-                                class="flex-1 flex flex-col md:flex-row items-center justify-center p-8 gap-12 select-none h-full overflow-hidden">
+                                class="flex-1 flex flex-col items-center justify-center p-8 select-none h-full overflow-hidden">
                                 <div class="relative w-72 h-72 flex-shrink-0 scale-90 md:scale-100">
                                     <div class="absolute top-0 left-1/2 -translate-x-1/2 w-44 h-44 rounded-full border-4 border-accent/40 bg-accent/5 flex items-start justify-center pt-8"
                                         id="venn-a">
@@ -399,47 +457,28 @@
                                             class="text-4xl animate-bounce-subtle opacity-0 transition-opacity">✨</div>
                                     </div>
                                 </div>
-
-                                <div class="flex-1 w-full flex flex-col gap-4 min-h-0">
-                                    <div
-                                        class="bg-[#1e1e1e] rounded-xl p-6 font-mono text-xs text-slate-400 shadow-2xl flex-1 flex flex-col min-h-0">
-                                        <div class="flex items-center gap-2 mb-4 border-b border-slate-700 pb-2">
-                                            <div class="w-2 h-2 rounded-full bg-slate-600"></div>
-                                            <span class="text-[10px] uppercase">Resultado de Ejecución</span>
-                                        </div>
-                                        <div id="complex-terminal"
-                                            class="space-y-3 overflow-y-auto custom-scrollbar flex-1 pr-2">
-                                            <div class="text-slate-600 italic">Construye una expresión y pulsa
-                                                'Sincronizar'...</div>
-                                        </div>
-                                    </div>
-                                    <div id="logic-insight"
-                                        class="bg-alt border border-border p-4 rounded-xl opacity-0 transition-all flex-shrink-0">
-                                        <h4 class="text-[10px] font-bold text-title uppercase mb-1">Análisis de
-                                            Estructura:</h4>
-                                        <p id="insight-text"
-                                            class="text-[11px] text-text-long font-medium leading-relaxed"></p>
-                                    </div>
-                                </div>
                             </div>
                         </div>
 
-                        <div
-                            class="bg-highlight/5 border border-highlight/20 p-4 rounded-2xl flex items-center justify-between">
-                            <div class="flex items-center gap-4">
-                                <div
-                                    class="w-10 h-10 bg-highlight/10 rounded-full flex items-center justify-center text-highlight font-bold">
-                                    🎯</div>
-                                <div>
-                                    <p class="text-[10px] uppercase font-bold text-highlight tracking-widest">Objetivo
-                                        Actual de la Misión</p>
-                                    <p id="mission-objective" class="text-sm font-bold text-title">Filtra los clientes
-                                        que compraron en la WEB y MÓVIL, pero JAMÁS en la tienda física.</p>
+                        <!-- Console Outside -->
+                        <div class="w-full grid grid-cols-1 lg:grid-cols-2 gap-4 flex-shrink-0">
+                            <div
+                                class="bg-[#1e1e1e] rounded-xl p-6 font-mono text-xs text-slate-400 shadow-2xl flex flex-col min-h-[150px]">
+                                <div class="flex items-center gap-2 mb-4 border-b border-slate-700 pb-2">
+                                    <div class="w-2 h-2 rounded-full bg-slate-600"></div>
+                                    <span class="text-[10px] uppercase">Resultado de Ejecución</span>
+                                </div>
+                                <div id="complex-terminal" class="space-y-3 overflow-y-auto flex-1 pr-2">
+                                    <div class="text-slate-600 italic">Construye una expresión y pulsa
+                                        'Sincronizar'...</div>
                                 </div>
                             </div>
-                            <span
-                                class="bg-slate-200 text-slate-500 px-3 py-1 rounded-full text-[8px] font-bold uppercase"
-                                id="status-badge">Pendiente</span>
+                            <div id="logic-insight"
+                                class="bg-alt border border-border p-4 rounded-xl opacity-0 transition-all flex flex-col justify-center">
+                                <h4 class="text-[10px] font-bold text-title uppercase mb-1">Análisis de
+                                    Estructura:</h4>
+                                <p id="insight-text" class="text-[11px] text-text-long font-medium leading-relaxed"></p>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -477,13 +516,13 @@
         const nextBtn = document.getElementById('next-btn');
         const dotNav = document.getElementById('dot-nav');
 
-        // State Slide 1
-        let setA_int = new Set([1, 2]);
-        let setB_int = new Set([2, 3]);
-        let currentIntOp = 'union';
+        // State Slide 1 (Challenge 1)
+        let tokens1 = [];
+        const setA_int = new Set([1, 2, 4]); // Ana, Bert, Dan
+        const setB_int = new Set([2, 3, 5]); // Bert, Clara, Flo
 
-        // State Slide 2
-        let currentTokens = [];
+        // State Slide 2 (Challenge 2)
+        let tokens2 = [];
         const rawSets = {
             A: new Set(['Ana', 'Bert', 'Clara', 'Dan', 'Eve']),
             B: new Set(['Bert', 'Clara', 'Flo', 'Guy']),
@@ -497,7 +536,6 @@
                 dot.id = `dot-${i}`;
                 dotNav.appendChild(dot);
             }
-            initInteractiveSlide();
             updateNavigation();
         }
 
@@ -513,6 +551,8 @@
             }
             prevBtn.disabled = currentSlide === 0;
             nextBtn.disabled = currentSlide === totalSlides - 1;
+
+            if (currentSlide === 1) renderVenn1('');
         }
 
         function nextSlide() {
@@ -533,94 +573,94 @@
             }
         }
 
-        // --- SLIDE 1: LABORATORY ---
-        function initInteractiveSlide() {
-            const containerA = document.getElementById('toggle-container-a');
-            const containerB = document.getElementById('toggle-container-b');
-            containerA.innerHTML = ''; containerB.innerHTML = '';
-            for (let i = 1; i <= 6; i++) {
-                const createBtn = (label, targetSet, colorClass) => {
-                    const btn = document.createElement('button');
-                    btn.innerText = i;
-                    const active = targetSet.has(i);
-                    btn.className = `w-8 h-8 rounded-full border text-xs font-bold transition-all ${active ? colorClass + ' text-white border-transparent' : 'bg-white text-slate-400 border-slate-200'}`;
-                    btn.onclick = () => {
-                        if (targetSet.has(i)) targetSet.delete(i); else targetSet.add(i);
-                        btn.className = `w-8 h-8 rounded-full border text-xs font-bold transition-all ${targetSet.has(i) ? colorClass + ' text-white border-transparent' : 'bg-white text-slate-400 border-slate-200'}`;
-                        updateInteractiveVenn(currentIntOp);
-                    };
-                    return btn;
-                };
-                containerA.appendChild(createBtn('A', setA_int, 'bg-accent'));
-                containerB.appendChild(createBtn('B', setB_int, 'bg-action'));
-            }
-            updateInteractiveVenn(currentIntOp);
+        // --- GLOBAL LOGIC BUILDER ---
+        function addToken(slide, t) {
+            const arr = slide === 1 ? tokens1 : tokens2;
+            if (arr.length < 15) { arr.push(t); renderExpression(slide); }
+        }
+        function clearExpression(slide) {
+            if (slide === 1) tokens1 = []; else tokens2 = [];
+            renderExpression(slide);
+        }
+        function renderExpression(slide) {
+            const id = slide === 1 ? 'current-expression-1' : 'current-expression';
+            const arr = slide === 1 ? tokens1 : tokens2;
+            document.getElementById(id).innerText = arr.join(' ');
         }
 
-        function updateInteractiveVenn(op) {
-            currentIntOp = op;
-            const resDisplay = document.getElementById('int-venn-result');
+        // --- CHALLENGE 1 (SLIDE 2) ---
+        function executeLogic1() {
+            const expr = tokens1.join('');
+            const term = document.getElementById('terminal-1');
+            const insight = document.getElementById('logic-insight-1');
+            if (!expr) return;
+
+            term.innerHTML += `<div class="animate-fade-in"><span class="text-teal-400">>>></span> filter_v1(<span class="text-white">${expr}</span>)</div>`;
+            renderVenn1(expr);
+
+            setTimeout(() => {
+                const solution = (expr === "A-B");
+                if (solution) {
+                    term.innerHTML += `<div class="text-green-400 font-bold ml-6">EXIT: {'Ana', 'Dan'}</div>`;
+                    insight.classList.replace('opacity-0', 'opacity-100');
+                    document.getElementById('insight-text-1').innerText = "Excelente. Has extraído a los usuarios que usan la Web pero evitan la App móvil.";
+                    document.getElementById('logic-result-icon-1').classList.replace('opacity-0', 'opacity-100');
+                } else {
+                    term.innerHTML += `<div class="text-red-400 ml-6">ERR: El resultado no coincide con el objetivo.</div>`;
+                    insight.classList.replace('opacity-100', 'opacity-0');
+                    document.getElementById('logic-result-icon-1').classList.replace('opacity-100', 'opacity-0');
+                }
+                term.scrollTop = term.scrollHeight;
+            }, 500);
+        }
+
+        function renderVenn1(op) {
+            const overlayA = document.getElementById('int-overlay-a');
+            const overlayB = document.getElementById('int-overlay-b');
+            const overlayInt = document.getElementById('int-overlay-int');
             const numContainer = document.getElementById('int-numbers-container');
-            const explanation = document.getElementById('int-venn-explanation');
 
-            // Overlays
-            ['int-overlay-a', 'int-overlay-b', 'int-overlay-int'].forEach(id => {
-                const el = document.getElementById(id);
-                el.className = el.className.replace(/bg-\S+/g, '').replace('opacity-100', 'opacity-0');
-            });
+            // Reset
+            [overlayA, overlayB, overlayInt].forEach(el => el.classList.remove('bg-accent', 'bg-action', 'bg-highlight', 'opacity-100', 'opacity-40', 'opacity-60', 'bg-blue-200', 'bg-blue-300', 'bg-blue-400', 'bg-white'));
+            [overlayA, overlayB, overlayInt].forEach(el => el.classList.add('opacity-0'));
 
-            document.querySelectorAll('[id^="btn-int-"]').forEach(b => b.classList.remove('bg-alt', 'ring-2', 'ring-action'));
-            document.getElementById(`btn-int-${op === 'difference_a_b' ? 'diff' : (op === 'symmetric' ? 'sym' : op)}`)?.classList.add('bg-alt', 'ring-2', 'ring-action');
-
-            let res = new Set();
-            if (op === 'union') {
-                res = new Set([...setA_int, ...setB_int]);
-                document.getElementById('int-overlay-a').classList.add('bg-blue-200', 'opacity-100');
-                document.getElementById('int-overlay-b').classList.add('bg-blue-400', 'opacity-100');
-                document.getElementById('int-overlay-int').classList.add('bg-blue-300', 'opacity-100');
-                explanation.innerHTML = "<strong>Unión:</strong> Todos los elementos de A y de B.";
-            } else if (op === 'intersection') {
-                res = new Set([...setA_int].filter(x => setB_int.has(x)));
-                document.getElementById('int-overlay-int').classList.add('bg-highlight', 'opacity-100');
-                explanation.innerHTML = "<strong>Intersección:</strong> Solo los elementos comunes.";
-            } else if (op === 'difference_a_b') {
-                res = new Set([...setA_int].filter(x => !setB_int.has(x)));
-                document.getElementById('int-overlay-a').classList.add('bg-accent', 'opacity-60', 'opacity-100');
-                document.getElementById('int-overlay-int').classList.add('bg-white', 'opacity-100');
-                explanation.innerHTML = "<strong>Diferencia (A-B):</strong> Elementos que están solo en A.";
-            } else if (op === 'symmetric') {
-                res = new Set([...setA_int].filter(x => !setB_int.has(x)).concat([...setB_int].filter(x => !setA_int.has(x))));
-                document.getElementById('int-overlay-a').classList.add('bg-accent', 'opacity-40', 'opacity-100');
-                document.getElementById('int-overlay-b').classList.add('bg-action', 'opacity-40', 'opacity-100');
-                document.getElementById('int-overlay-int').classList.add('bg-white', 'opacity-100');
-                explanation.innerHTML = "<strong>Simétrica:</strong> Están en A o en B, pero no en ambos.";
+            if (op === 'A|B' || op === 'B|A') {
+                overlayA.classList.add('bg-blue-200', 'opacity-100');
+                overlayB.classList.add('bg-blue-400', 'opacity-100');
+                overlayInt.classList.add('bg-blue-300', 'opacity-100');
+            } else if (op === 'A&B' || op === 'B&A') {
+                overlayInt.classList.add('bg-highlight', 'opacity-100');
+            } else if (op === 'A-B') {
+                overlayA.classList.add('bg-accent', 'opacity-60', 'opacity-100');
+                overlayInt.classList.add('bg-white', 'opacity-100');
+            } else if (op === 'B-A') {
+                overlayB.classList.add('bg-action', 'opacity-60', 'opacity-100');
+                overlayInt.classList.add('bg-white', 'opacity-100');
+            } else if (op === 'A^B' || op === 'B^A') {
+                overlayA.classList.add('bg-accent', 'opacity-40', 'opacity-100');
+                overlayB.classList.add('bg-action', 'opacity-40', 'opacity-100');
+                overlayInt.classList.add('bg-white', 'opacity-100');
             }
 
-            resDisplay.innerText = res.size === 0 ? "{}" : "{" + [...res].sort().join(", ") + "}";
-            resDisplay.classList.remove('opacity-0');
-
             numContainer.innerHTML = '';
-            new Set([...setA_int, ...setB_int]).forEach(n => {
+            const all = new Set([...setA_int, ...setB_int]);
+            all.forEach(n => {
                 const s = document.createElement('span');
                 s.innerText = n;
-                s.className = "absolute text-sm font-bold transition-all duration-500";
+                s.className = "absolute text-xs font-bold font-mono transition-all duration-500";
                 const inA = setA_int.has(n), inB = setB_int.has(n);
-                if (inA && inB) { s.style.left = '50%'; s.style.top = (15 + (n * 10)) + '%'; s.style.transform = 'translateX(-50%)'; s.className += " text-title z-40"; }
-                else if (inA) { s.style.left = '25%'; s.style.top = (25 + (n * 8)) + '%'; s.className += " text-accent"; }
-                else if (inB) { s.style.left = '75%'; s.style.top = (25 + (n * 8)) + '%'; s.className += " text-action"; }
+                if (inA && inB) { s.style.left = '50%'; s.style.top = (25 + (n * 5)) + '%'; s.style.transform = 'translateX(-50%)'; s.className += " text-title z-40"; }
+                else if (inA) { s.style.left = '20%'; s.style.top = (30 + (n * 6)) + '%'; s.className += " text-accent"; }
+                else if (inB) { s.style.left = '80%'; s.style.top = (30 + (n * 6)) + '%'; s.className += " text-action"; }
                 numContainer.appendChild(s);
             });
         }
 
-        // --- SLIDE 2: 3-SET LOGIC ---
-        function addToken(t) { if (currentTokens.length < 15) { currentTokens.push(t); renderExpression(); } }
-        function clearExpression() { currentTokens = []; renderExpression(); }
-        function renderExpression() { document.getElementById('current-expression').innerText = currentTokens.join(' '); }
+        // --- CHALLENGE 2 (SLIDE 3) ---
         function executeComplexLogic() {
-            const expr = currentTokens.join('');
+            const expr = tokens2.join('');
             const term = document.getElementById('complex-terminal');
             const insight = document.getElementById('logic-insight');
-            const badge = document.getElementById('status-badge');
             if (!expr) return;
             const valid = (expr === "(A&B)-C" || expr === "A&B-C" || expr === "(B&A)-C");
             term.innerHTML += `<div class="animate-fade-in"><span class="text-teal-400">>>></span> logic_engine.run(<span class="text-white">${expr}</span>)</div>`;
@@ -629,7 +669,6 @@
                     term.innerHTML += `<div class="text-green-400 font-bold ml-6">EXIT: {'Bert'}</div>`;
                     insight.classList.replace('opacity-0', 'opacity-100');
                     document.getElementById('insight-text').innerText = "Misión cumplida. Has aislado el canal digital puro.";
-                    badge.innerText = "Completado"; badge.className = "bg-accent text-white px-3 py-1 rounded-full text-[8px] font-bold uppercase";
                     document.getElementById('logic-result-icon').classList.replace('opacity-0', 'opacity-100');
                 } else {
                     term.innerHTML += `<div class="text-red-400 ml-6">LOGIC_ERROR: No se cumple el objetivo.</div>`;
@@ -639,6 +678,11 @@
                 term.scrollTop = term.scrollHeight;
             }, 600);
         }
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight') nextSlide();
+            if (e.key === 'ArrowLeft') prevSlide();
+        });
 
         window.onload = init;
     </script>
