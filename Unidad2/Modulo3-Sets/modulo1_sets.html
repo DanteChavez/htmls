@@ -89,14 +89,10 @@
         <!-- Header / Navigation Placeholder -->
         <header class="h-16 border-b border-border flex items-center justify-between px-6 bg-base">
             <div class="flex items-center gap-2">
-                <div class="w-3 h-3 rounded-full bg-red-400"></div>
-                <div class="w-3 h-3 rounded-full bg-yellow-400"></div>
-                <div class="w-3 h-3 rounded-full bg-green-400"></div>
                 <span class="ml-4 text-title font-semibold text-lg">Unidad 2: Sets</span>
             </div>
             <div class="flex gap-2">
-                <!-- Navigation Dots placeholder -->
-                <span class="text-sm text-body">Slide <span id="current-slide-num">1</span>/9</span>
+                <span class="text-sm text-body"> <span id="current-slide-num">1</span>/9</span>
             </div>
         </header>
 
@@ -104,13 +100,16 @@
         <main class="flex-1 relative overflow-hidden">
             <!-- Slide 1: Portada -->
             <section id="slide-1"
-                class="slide active w-full h-full flex-col justify-center items-center text-center p-12">
-                <div class="mb-4">
+                class="slide active w-full h-full flex flex-col justify-center items-center text-center p-12">
+                <div class="mb-4 force-hidden">
                     <span
                         class="bg-alt text-accent px-3 py-1 rounded-full text-sm font-medium tracking-wide border border-border">BLOOM:
                         ACTIVACIÓN</span>
                 </div>
-                <h1 class="text-6xl font-bold text-title mb-4 tracking-tight">Unidad 2: Sets</h1>
+                <div class="mb-2">
+                    <span class="text-2xl font-bold text-accent uppercase tracking-widest">Unidad 2</span>
+                </div>
+                <h1 class="text-6xl font-bold text-title mb-4 tracking-tight">Módulo 1: Sets</h1>
                 <p class="text-2xl text-accent font-light mb-12">Fundamentos, operaciones y aplicaciones en Python</p>
 
                 <div class="grid grid-cols-2 gap-8 max-w-2xl w-full mb-12">
@@ -147,7 +146,7 @@
                     <!-- Left: Conceptual Definition -->
                     <div class="space-y-6">
                         <div
-                            class="bg-alt text-title font-medium px-4 py-2 rounded-lg inline-block text-sm uppercase tracking-wider border border-border">
+                            class="bg-alt text-title font-medium px-4 py-2 rounded-lg inline-block text-sm uppercase tracking-wider border border-border force-hidden">
                             Concepto Clave</div>
                         <h2 class="text-4xl font-bold text-title">¿Qué es un Set?</h2>
                         <ul class="space-y-4 text-body text-lg">
@@ -273,7 +272,7 @@
                         <!-- Prediction Overlay -->
                         <div id="prediction-step-2"
                             class="absolute inset-0 bg-white/95 z-10 flex flex-col justify-center items-center p-4 text-center transition-opacity">
-                            <p class="text-title text-sm font-bold mb-3">¿Qué pasará con el '2'?</p>
+                            <p class="text-title text-sm font-bold mb-3">¿Qué pasará si se intenta agregar el '2'?</p>
                             <div class="flex gap-2 w-full">
                                 <button onclick="handlePrediction(2, false)"
                                     class="flex-1 bg-gray-100 hover:bg-red-100 text-gray-700 py-2 rounded text-xs border border-gray-200">Se
@@ -342,7 +341,7 @@
                 class="slide force-hidden w-full h-full flex flex-col md:grid md:grid-cols-2 gap-8 p-8 items-center">
                 <div class="space-y-6">
                     <div
-                        class="bg-accent/10 text-accent px-3 py-1 rounded-full text-xs font-bold tracking-wide border border-accent/10 w-max">
+                        class="bg-accent/10 text-accent px-3 py-1 rounded-full text-xs font-bold tracking-wide border border-accent/10 w-max force-hidden">
                         INTERACTIVO</div>
                     <h2 class="text-3xl font-bold text-title">Acceso y Eliminación</h2>
                     <p class="text-body text-sm leading-relaxed">
@@ -669,7 +668,7 @@
                 class="slide force-hidden w-full h-full flex flex-col md:grid md:grid-cols-2 gap-8 p-8 items-center">
                 <div class="space-y-6">
                     <div
-                        class="bg-accent/10 text-accent px-3 py-1 rounded-full text-xs font-bold tracking-wide border border-accent/10 w-max">
+                        class="bg-accent/10 text-accent px-3 py-1 rounded-full text-xs font-bold tracking-wide border border-accent/10 w-max force-hidden">
                         INTERACTIVO</div>
                     <h2 class="text-3xl font-bold text-title">Crea tus Propios Conjuntos</h2>
                     <p class="text-body text-sm">Elige qué elementos poner en cada conjunto y observa cómo cambian las
@@ -759,7 +758,7 @@
                 <div class="space-y-6">
                     <div class="flex items-center gap-2">
                         <div
-                            class="bg-action/10 text-action px-3 py-1 rounded-full text-xs font-bold tracking-wide border border-action/10">
+                            class="bg-action/10 text-action px-3 py-1 rounded-full text-xs font-bold tracking-wide border border-action/10 force-hidden">
                             COMPARAR COLECCIONES</div>
                     </div>
                     <h2 class="text-3xl font-bold text-title">Comparación de Sets</h2>
@@ -841,75 +840,10 @@
                 </div>
             </section>
 
-            <!-- Slide 9: Contexto Real (Evaluar) -->
+            <!-- Slide 9: Cierre (Metacognición) -->
             <section id="slide-9"
-                class="slide force-hidden w-full h-full flex flex-col md:grid md:grid-cols-2 gap-12 p-12 items-center">
-                <div class="space-y-6">
-                    <div
-                        class="bg-blue-50 text-action px-3 py-1 rounded-full text-xs font-bold tracking-wide border border-blue-100 w-max">
-                        CASO PRÁCTICO</div>
-                    <h2 class="text-3xl font-bold text-title">Tienda Física vs. Online</h2>
-                    <p class="text-body text-lg leading-relaxed">
-                        Tienes dos bases de datos de clientes:
-                    </p>
-                    <ul class="space-y-2 text-sm">
-                        <li class="flex items-center gap-2">
-                            <span class="w-24 font-bold text-accent">Tienda Física:</span>
-                            <span class="font-mono bg-gray-50 px-2 py-1 rounded">{Juan, Ana, Pedro}</span>
-                        </li>
-                        <li class="flex items-center gap-2">
-                            <span class="w-24 font-bold text-action">Tienda Online:</span>
-                            <span class="font-mono bg-gray-50 px-2 py-1 rounded">{Ana, Pedro, Luis}</span>
-                        </li>
-                    </ul>
-
-                    <div class="bg-white p-6 rounded-xl border-l-4 border-highlight shadow-md">
-                        <h3 class="font-bold text-title mb-2">El Desafío</h3>
-                        <p class="text-body text-sm mb-4">Queremos enviar un cupón de descuento especial a los clientes
-                            que COMPRARON EN AMBAS tiendas.</p>
-                        <p class="text-body text-sm font-medium italic">¿Qué operación de conjuntos resuelve esto?</p>
-                    </div>
-                </div>
-
-                <div class="space-y-4">
-                    <button onclick="checkScenario('union', this)"
-                        class="w-full p-4 bg-white border border-border rounded-xl shadow-sm hover:shadow-md transition-all text-left group relative overflow-hidden">
-                        <div class="font-bold text-body group-hover:text-action transition-colors">A) Unión (|)</div>
-                        <div class="text-xs text-gray-500 mt-1">Enviar a todos los que compraron en cualquiera de las
-                            dos.</div>
-                        <div class="overlay absolute inset-0 bg-red-50 opacity-0 transition-opacity"></div>
-                    </button>
-
-                    <button onclick="checkScenario('intersection', this)"
-                        class="w-full p-4 bg-white border border-border rounded-xl shadow-sm hover:shadow-md transition-all text-left group relative overflow-hidden">
-                        <div class="font-bold text-body group-hover:text-action transition-colors">B) Intersección (&)
-                        </div>
-                        <div class="text-xs text-gray-500 mt-1">Enviar solo a los que aparecen en ambas listas.</div>
-                        <div class="overlay absolute inset-0 bg-green-50 opacity-0 transition-opacity"></div>
-                    </button>
-
-                    <button onclick="checkScenario('difference', this)"
-                        class="w-full p-4 bg-white border border-border rounded-xl shadow-sm hover:shadow-md transition-all text-left group relative overflow-hidden">
-                        <div class="font-bold text-body group-hover:text-action transition-colors">C) Diferencia (-)
-                        </div>
-                        <div class="text-xs text-gray-500 mt-1">Enviar a los que compraron en física pero no online.
-                        </div>
-                        <div class="overlay absolute inset-0 bg-red-50 opacity-0 transition-opacity"></div>
-                    </button>
-
-                    <div id="scenario-feedback" class="hidden mt-4 p-4 rounded-lg text-sm border">
-                        <!-- Dynamic feedback -->
-                    </div>
-                </div>
-                <!-- Cognitive Check -->
-                <div class="hidden">Cognitive Success Check: Student selects correct operation based on natural language
-                    problem.</div>
-            </section>
-
-            <!-- Slide 10: Cierre (Metacognición) -->
-            <section id="slide-10"
                 class="slide force-hidden w-full h-full flex flex-col items-center justify-center p-12 text-center">
-                <h2 class="text-4xl font-bold text-title mb-8">¡Misión Cumplida! 🚀</h2>
+                <h2 class="text-4xl font-bold text-title mb-8">Módulo 1: Sets Finalizado</h2>
 
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-8 w-full max-w-5xl">
                     <!-- Column 1: Conceptos -->
@@ -972,7 +906,7 @@
                 </div>
 
                 <div class="mt-12">
-                    <p class="text-gray-400 text-sm mb-4">Has completado el Módulo 3 de la Unidad 1</p>
+                    <p class="text-gray-400 text-sm mb-4">Has completado el Módulo 1 de la Unidad 2</p>
                     <button onclick="location.reload()"
                         class="bg-alt text-action hover:bg-gray-200 border border-border px-6 py-2 rounded-full text-sm font-medium transition-colors">
                         Reiniciar Módulo
@@ -1000,7 +934,7 @@
 
     <script>
         let currentSlide = 1;
-        const totalSlides = 10;
+        const totalSlides = 9;
 
 
         // --- Slide 3 Logic ---
@@ -1212,28 +1146,6 @@
             codeContainer.innerHTML = codeHtml;
         }
 
-        // --- Slide 5 Logic: Scenario ---
-        function checkScenario(choice, btn) {
-            const feedback = document.getElementById('scenario-feedback');
-            feedback.classList.remove('hidden');
-
-            // disable all buttons
-            btn.parentElement.querySelectorAll('button').forEach(b => b.disabled = true);
-
-            if (choice === 'intersection') {
-                btn.querySelector('.overlay').classList.add('opacity-30', 'bg-green-100');
-                btn.classList.add('ring-2', 'ring-green-500');
-                feedback.innerHTML = `<strong class="text-green-800">¡Correcto!</strong><br>Queremos elementos que existan en A <strong>Y</strong> en B. <br><code class="mt-2 block bg-gray-100 p-2 rounded">clientes_ambos = fisica.intersection(online)</code>`;
-                feedback.className = "mt-4 p-4 rounded-lg text-sm border bg-green-50 border-green-200 text-green-800";
-            } else {
-                btn.querySelector('.overlay').classList.add('opacity-30', 'bg-red-100');
-                btn.classList.add('ring-2', 'ring-red-500');
-                let explanation = choice === 'union' ? "La Unión incluiría a gente que solo fue a una tienda." : "La Diferencia excluiría a los que fueron a ambas.";
-                feedback.innerHTML = `<strong class="text-red-800">No exactamente.</strong><br>${explanation}<br>Intenta de nuevo (recarga si deseas).`;
-                feedback.className = "mt-4 p-4 rounded-lg text-sm border bg-red-50 border-red-200 text-red-800";
-            }
-        }
-
         function updateUI() {
             document.querySelectorAll('.slide').forEach(s => s.classList.add('force-hidden'));
             document.getElementById(`slide-${currentSlide}`).classList.remove('force-hidden');
@@ -1244,7 +1156,7 @@
             // Enable next even on last slide if needed, but per plan let's keep it simple
             document.getElementById('btn-next').disabled = false;
             if (currentSlide === totalSlides) {
-                document.getElementById('btn-next').onclick = () => alert("¡Felicidades! Has completado el módulo.");
+                //document.getElementById('btn-next').onclick = () => alert("¡Felicidades! Has completado el módulo.");
             } else {
                 document.getElementById('btn-next').onclick = nextSlide;
             }
