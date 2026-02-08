@@ -486,10 +486,31 @@
                             </button>
                         </div>
 
-                        <button onclick="runPlaygroundOp('clear')"
-                            class="w-full py-2 bg-gray-100 hover:bg-gray-200 rounded-lg text-xs font-bold text-gray-600 transition-colors">
-                            clear() - Vaciar todo
-                        </button>
+                        <div class="flex flex-col gap-2 relative">
+                            <!-- Burbuja Didáctica (Tooltip) -->
+                            <div id="iterate-tooltip" class="hidden absolute bottom-full left-0 mb-2 w-full z-20">
+                                <div
+                                    class="bg-purple-600 text-white p-3 rounded-xl shadow-xl border border-purple-400 text-xs relative animate-bounce-subtle">
+                                    <button onclick="closeIterateTooltip()"
+                                        class="absolute top-1 right-2 text-white hover:text-purple-200 font-bold">×</button>
+                                    <p class="pr-4"><strong>Sobre el orden:</strong> Los sets no garantizan orden. En
+                                        Python 3.7+, a veces parecen ordenados (especialmente con números pequeños) por
+                                        coincidencia, ¡pero con números grandes verás que el orden es impredecible!</p>
+                                    <div
+                                        class="absolute top-full left-1/2 -translate-x-1/2 border-8 border-transparent border-t-purple-600">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <button onclick="runPlaygroundOp('iterate')"
+                                class="w-full py-2 bg-purple-50 hover:bg-purple-100 rounded-lg text-xs font-bold text-purple-700 transition-colors border border-purple-100">
+                                for x in mi_set: print(x)
+                            </button>
+                            <button onclick="runPlaygroundOp('clear')"
+                                class="w-full py-2 bg-gray-100 hover:bg-gray-200 rounded-lg text-xs font-bold text-gray-600 transition-colors">
+                                clear() - Vaciar todo
+                            </button>
+                        </div>
                     </div>
 
                     <div id="play-console-feedback"
@@ -1317,6 +1338,12 @@
         // --- Slide 5 Logic: Laboratorio (Playground) ---
         let playgroundSetState = new Set();
         let currentPlaygroundType = 'int';
+        let hasShownIterateTooltip = false;
+
+        function closeIterateTooltip() {
+            const tt = document.getElementById('iterate-tooltip');
+            if (tt) tt.classList.add('hidden');
+        }
 
         function setPlaygroundType(type, btn) {
             currentPlaygroundType = type;
@@ -1431,7 +1458,7 @@
                 }
             }
 
-            if (!isValid && op !== 'clear') {
+            if (!isValid && op !== 'clear' && op !== 'iterate') {
                 fb.innerHTML = errorMsg;
                 fb.className = "text-sm p-4 rounded-xl border bg-red-50 border-red-200 text-red-800 opacity-100";
                 // Quick flash to the input container
@@ -1447,6 +1474,47 @@
                     playgroundSetState.clear();
                     addPlayTerminal(`<span class="text-white">>>> print(mi_set)<br>set()</span>`);
                     fb.innerHTML = "<strong>Vaciado:</strong> El conjunto está totalmente limpio.";
+                }, 400);
+                return;
+            }
+
+            if (op === 'iterate') {
+                if (!hasShownIterateTooltip) {
+                    const tt = document.getElementById('iterate-tooltip');
+                    if (tt) tt.classList.remove('hidden');
+                    hasShownIterateTooltip = true;
+                }
+
+                addPlayTerminal(`<span class="text-purple-400 font-bold">>>> for x in mi_set: print(x)</span>`);
+                if (playgroundSetState.size === 0) {
+                    setTimeout(() => {
+                        addPlayTerminal(`<span class="text-gray-500 italic"># El set está vacío</span>`);
+                        fb.innerHTML = "<strong>Iteración:</strong> El conjunto no tiene elementos para recorrer.";
+                    }, 400);
+                    return;
+                }
+                setTimeout(() => {
+                    let itemsToPrint = Array.from(playgroundSetState);
+
+                    // Shuffle if there are "large" numbers or mixed types to simulate set behavior
+                    const hasLargeNumbers = itemsToPrint.some(x => typeof x === 'number' && x > 100);
+                    const hasStrings = itemsToPrint.some(x => typeof x === 'string');
+
+                    if (hasLargeNumbers || hasStrings) {
+                        itemsToPrint.sort(() => Math.random() - 0.5);
+                    }
+
+                    let delay = 0;
+                    itemsToPrint.forEach(item => {
+                        setTimeout(() => {
+                            addPlayTerminal(`<span class="text-white">${item}</span>`);
+                        }, delay);
+                        delay += 200;
+                    });
+                    setTimeout(() => {
+                        fb.innerHTML = `<strong>Iteración:</strong> Recorriendo los elementos del conjunto para comprobar su (no) orden.`;
+                        fb.className = "text-sm p-4 rounded-xl border bg-purple-50 border-purple-100 text-purple-800 opacity-100 transition-opacity duration-300";
+                    }, delay);
                 }, 400);
                 return;
             }
