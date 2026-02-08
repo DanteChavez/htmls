@@ -412,7 +412,112 @@
                 </div>
             </section>
 
-            <!-- Slide 5: Operaciones entre Conjuntos (Analizar) -->
+            <!-- Slide 5: Laboratorio de Conjuntos (Playground) [NEW] -->
+            <section id="slide-5"
+                class="slide force-hidden w-full h-full flex flex-col md:grid md:grid-cols-2 gap-8 p-8 items-center">
+                <div class="space-y-6">
+                    <h2 class="text-3xl font-bold text-title">Laboratorio de Conjuntos</h2>
+                    <p class="text-body text-sm">
+                        ¡Es tu turno de experimentar! Ingresa valores para modificar tu propio conjunto y observa cómo
+                        se comporta Python.
+                    </p>
+
+                    <div class="bg-blue-50 p-4 rounded-xl border border-blue-100 space-y-4">
+                        <div class="flex flex-col space-y-2">
+                            <label class="text-xs font-bold text-blue-800 uppercase tracking-wider">Tipo de
+                                Dato:</label>
+                            <div class="flex flex-wrap gap-2" id="playground-type-selector">
+                                <button onclick="setPlaygroundType('int', this)"
+                                    class="type-btn px-3 py-1 rounded-full border border-blue-200 text-xs font-medium bg-blue-100 text-blue-800">int</button>
+                                <button onclick="setPlaygroundType('str', this)"
+                                    class="type-btn px-3 py-1 rounded-full border border-blue-200 text-xs font-medium bg-white text-blue-600 hover:bg-blue-50 transition-colors">str</button>
+                                <button onclick="setPlaygroundType('tuple', this)"
+                                    class="type-btn px-3 py-1 rounded-full border border-blue-200 text-xs font-medium bg-white text-blue-600 hover:bg-blue-50 transition-colors">tuple</button>
+                                <button onclick="setPlaygroundType('list', this)"
+                                    class="type-btn px-3 py-1 rounded-full border border-red-200 text-xs font-medium bg-white text-red-600 hover:bg-red-50 transition-colors">list</button>
+                                <button onclick="setPlaygroundType('set', this)"
+                                    class="type-btn px-3 py-1 rounded-full border border-red-200 text-xs font-medium bg-white text-red-600 hover:bg-red-50 transition-colors">set</button>
+                                <button onclick="setPlaygroundType('dict', this)"
+                                    class="type-btn px-3 py-1 rounded-full border border-red-200 text-xs font-medium bg-white text-red-600 hover:bg-red-50 transition-colors">dict</button>
+                            </div>
+                        </div>
+
+                        <div class="flex flex-col space-y-2">
+                            <label class="text-xs font-bold text-blue-800 uppercase tracking-wider">Valor a
+                                Procesar:</label>
+                            <div class="flex gap-2">
+                                <div
+                                    class="flex-1 flex items-center gap-1 bg-white border border-blue-200 rounded-lg focus-within:ring-2 focus-within:ring-accent focus-within:border-accent px-3 transition-all">
+                                    <span id="play-prefix" class="text-blue-400 font-mono font-bold text-sm"></span>
+                                    <input type="text" id="playground-input" placeholder="Ej: 5"
+                                        class="flex-1 py-3 outline-none text-sm font-mono bg-transparent">
+                                    <span id="play-suffix" class="text-blue-400 font-mono font-bold text-sm"></span>
+                                </div>
+                                <button onclick="resetPlaygroundSet()"
+                                    class="px-4 py-2 bg-white border border-blue-200 rounded-lg text-xs font-bold text-blue-600 hover:bg-blue-50 transition-colors">
+                                    Reset
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-2 gap-3">
+                            <button onclick="runPlaygroundOp('add')"
+                                class="p-3 bg-white border border-border rounded-lg shadow-sm hover:shadow-md transition-all text-left group">
+                                <div class="font-bold text-accent group-hover:text-accent-hover text-sm">add(valor)
+                                </div>
+                                <div class="text-[10px] text-gray-400">Agrega un elemento</div>
+                            </button>
+                            <button onclick="runPlaygroundOp('in')"
+                                class="p-3 bg-white border border-border rounded-lg shadow-sm hover:shadow-md transition-all text-left group">
+                                <div class="font-bold text-gray-600 group-hover:text-gray-800 text-sm">valor in mi_set
+                                </div>
+                                <div class="text-[10px] text-gray-400">Pertenencia</div>
+                            </button>
+                            <button onclick="runPlaygroundOp('remove')"
+                                class="p-3 bg-white border border-border rounded-lg shadow-sm hover:shadow-md transition-all text-left group">
+                                <div class="font-bold text-red-500 group-hover:text-red-600 text-sm">remove(valor)</div>
+                                <div class="text-[10px] text-gray-400 italic">Error si falta</div>
+                            </button>
+                            <button onclick="runPlaygroundOp('discard')"
+                                class="p-3 bg-white border border-border rounded-lg shadow-sm hover:shadow-md transition-all text-left group">
+                                <div class="font-bold text-green-600 group-hover:text-green-700 text-sm">discard(valor)
+                                </div>
+                                <div class="text-[10px] text-gray-400 italic">Seguro</div>
+                            </button>
+                        </div>
+
+                        <button onclick="runPlaygroundOp('clear')"
+                            class="w-full py-2 bg-gray-100 hover:bg-gray-200 rounded-lg text-xs font-bold text-gray-600 transition-colors">
+                            clear() - Vaciar todo
+                        </button>
+                    </div>
+
+                    <div id="play-console-feedback"
+                        class="text-sm p-4 rounded-xl border opacity-0 transition-opacity duration-300">
+                        <!-- Dynamic feedback -->
+                    </div>
+                </div>
+
+                <!-- Simulation Terminal -->
+                <div
+                    class="w-full h-full flex flex-col bg-[#1e1e1e] rounded-xl shadow-2xl overflow-hidden border border-gray-700 min-h-[400px]">
+                    <div class="bg-[#323232] px-4 py-2 flex items-center justify-between border-b border-gray-700">
+                        <div class="flex gap-2">
+                            <div class="w-3 h-3 rounded-full bg-[#ff5f56]"></div>
+                            <div class="w-3 h-3 rounded-full bg-[#ffbd2e]"></div>
+                            <div class="w-3 h-3 rounded-full bg-[#27c93f]"></div>
+                        </div>
+                        <span class="text-gray-400 text-xs font-mono">playground.py</span>
+                    </div>
+                    <div id="play-terminal-output"
+                        class="p-6 font-mono text-sm space-y-2 overflow-y-auto flex-1 custom-scrollbar scroll-smooth">
+                        <div class="text-blue-400"># Laboratorio listo.</div>
+                        <div class="text-white">>>> mi_set = set()</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Slide 6: Operaciones entre Conjuntos (Analizar) -->
             <svg width="0" height="0" style="position: absolute;">
                 <defs>
                     <clipPath id="lens-shape" clipPathUnits="objectBoundingBox">
@@ -422,7 +527,7 @@
                 </defs>
             </svg>
 
-            <section id="slide-5"
+            <section id="slide-6"
                 class="slide force-hidden w-full h-full flex flex-col md:grid md:grid-cols-2 gap-8 p-8 items-center">
                 <div class="space-y-6">
                     <h2 class="text-3xl font-bold text-title">Analizando Operaciones</h2>
@@ -538,8 +643,8 @@
                     visual intersection.</div>
             </section>
 
-            <!-- Slide 6: Crea tus Propios Sets (Analizar) -->
-            <section id="slide-6"
+            <!-- Slide 7: Crea tus Propios Sets (Analizar) -->
+            <section id="slide-7"
                 class="slide force-hidden w-full h-full flex flex-col md:grid md:grid-cols-2 gap-8 p-8 items-center">
                 <div class="space-y-6">
                     <div
@@ -627,8 +732,8 @@
                 </div>
             </section>
 
-            <!-- Slide 7: Comparación de Sets -->
-            <section id="slide-7"
+            <!-- Slide 8: Comparación de Sets -->
+            <section id="slide-8"
                 class="slide force-hidden w-full h-full flex flex-col md:grid md:grid-cols-2 gap-8 p-12 items-center">
                 <div class="space-y-6">
                     <div class="flex items-center gap-2">
@@ -715,8 +820,8 @@
                 </div>
             </section>
 
-            <!-- Slide 8: Contexto Real (Evaluar) -->
-            <section id="slide-8"
+            <!-- Slide 9: Contexto Real (Evaluar) -->
+            <section id="slide-9"
                 class="slide force-hidden w-full h-full flex flex-col md:grid md:grid-cols-2 gap-12 p-12 items-center">
                 <div class="space-y-6">
                     <div
@@ -780,8 +885,8 @@
                     problem.</div>
             </section>
 
-            <!-- Slide 9: Cierre (Metacognición) -->
-            <section id="slide-9"
+            <!-- Slide 10: Cierre (Metacognición) -->
+            <section id="slide-10"
                 class="slide force-hidden w-full h-full flex flex-col items-center justify-center p-12 text-center">
                 <h2 class="text-4xl font-bold text-title mb-8">¡Misión Cumplida! 🚀</h2>
 
@@ -874,7 +979,7 @@
 
     <script>
         let currentSlide = 1;
-        const totalSlides = 9;
+        const totalSlides = 10;
 
 
         // --- Slide 3 Logic ---
@@ -1123,7 +1228,8 @@
                 document.getElementById('btn-next').onclick = nextSlide;
             }
 
-            if (currentSlide === 6) initInteractiveSlide();
+            if (currentSlide === 7) initInteractiveSlide();
+            if (currentSlide === 5) resetPlaygroundSet();
 
             // Re-init Slide 4 if needed (reset terminal)
             if (currentSlide === 4) {
@@ -1208,7 +1314,211 @@
             }
         }
 
-        // --- Slide 5 Logic: Interactive Venn ---
+        // --- Slide 5 Logic: Laboratorio (Playground) ---
+        let playgroundSetState = new Set();
+        let currentPlaygroundType = 'int';
+
+        function setPlaygroundType(type, btn) {
+            currentPlaygroundType = type;
+            // Update UI buttons
+            document.querySelectorAll('#playground-type-selector .type-btn').forEach(b => {
+                const isMut = ['list', 'set', 'dict'].some(t => b.innerText.includes(t));
+                b.className = `type-btn px-3 py-1 rounded-full border text-xs font-medium transition-all ${isMut ? 'bg-white text-red-600 border-red-200 hover:bg-red-50' : 'bg-white text-blue-600 border-blue-200 hover:bg-blue-50'}`;
+            });
+
+            const isMut = ['list', 'set', 'dict'].includes(type);
+            btn.className = `type-btn px-3 py-1 rounded-full border text-xs font-medium transition-all ${isMut ? 'bg-red-100 text-red-800 border-red-300' : 'bg-blue-100 text-blue-800 border-blue-300'}`;
+
+            const prefix = document.getElementById('play-prefix');
+            const suffix = document.getElementById('play-suffix');
+            const decorators = {
+                'int': { pre: '', suf: '' },
+                'str': { pre: '"', suf: '"' },
+                'tuple': { pre: '(', suf: ')' },
+                'list': { pre: '[', suf: ']' },
+                'set': { pre: '{', suf: '}' },
+                'dict': { pre: '{', suf: '}' }
+            };
+            prefix.innerText = decorators[type].pre;
+            suffix.innerText = decorators[type].suf;
+
+            const input = document.getElementById('playground-input');
+            const placeholders = {
+                'int': 'Ej: 5',
+                'str': 'Ej: Python',
+                'tuple': 'Ej: 1, 2',
+                'list': 'Ej: 1, 2',
+                'set': 'Ej: 1, 2',
+                'dict': "'a': 1"
+            };
+            input.placeholder = placeholders[type] || 'Ingresa un valor';
+            input.value = '';
+        }
+
+        function resetPlaygroundSet() {
+            playgroundSetState = new Set();
+            const term = document.getElementById('play-terminal-output');
+            if (term) {
+                term.innerHTML = `
+                    <div class="text-blue-400"># Laboratorio reiniciado.</div>
+                    <div class="text-white">>>> mi_set = set()</div>
+                `;
+            }
+            const fb = document.getElementById('play-console-feedback');
+            if (fb) {
+                fb.innerHTML = "<strong>Laboratorio Listo:</strong> Selecciona un tipo de dato e ingresa un valor.";
+                fb.className = "text-sm p-4 rounded-xl border bg-blue-50 border-blue-100 text-blue-800 opacity-100 transition-opacity duration-300";
+            }
+            const input = document.getElementById('playground-input');
+            if (input) input.value = '';
+        }
+
+        function addPlayTerminal(content) {
+            const term = document.getElementById('play-terminal-output');
+            const newDiv = document.createElement('div');
+            newDiv.innerHTML = content;
+            newDiv.className = 'opacity-0 transform translate-y-2 transition-all duration-300';
+            term.appendChild(newDiv);
+            term.scrollTop = term.scrollHeight;
+            requestAnimationFrame(() => newDiv.classList.remove('opacity-0', 'translate-y-2'));
+        }
+
+        function runPlaygroundOp(op) {
+            const inputEl = document.getElementById('playground-input');
+            let rawVal = inputEl.value.trim();
+            const fb = document.getElementById('play-console-feedback');
+            const type = currentPlaygroundType;
+            const isMutable = ['list', 'set', 'dict'].includes(type);
+
+            // Formatting for different types for display
+            const pre = document.getElementById('play-prefix').innerText;
+            const suf = document.getElementById('play-suffix').innerText;
+            val = `${pre}${rawVal}${suf}`;
+
+            // Internal value for Set operations
+            let internalVal = rawVal;
+            if (type === 'int') {
+                internalVal = isNaN(rawVal) ? rawVal : Number(rawVal);
+            } else if (type === 'str') {
+                internalVal = rawVal;
+            } else if (type === 'tuple') {
+                internalVal = `(${rawVal})`; // Store as (val)
+            } else {
+                internalVal = `${pre}${rawVal}${suf}`; // For blocked mutables
+            }
+
+            fb.className = "text-sm p-4 rounded-xl border bg-blue-50 border-blue-100 text-blue-800 opacity-100 transition-opacity duration-300";
+
+            // Validation Step
+            let isValid = true;
+            let errorMsg = "";
+
+            if (type === 'int') {
+                if (rawVal === "" || isNaN(rawVal) || !Number.isInteger(Number(rawVal))) {
+                    isValid = false;
+                    errorMsg = "<strong>¡Error de Tipo!</strong> Has seleccionado <code>int</code>, pero el valor ingresado no es un número entero válido.";
+                }
+            } else if (type === 'str') {
+                if (rawVal === "") {
+                    isValid = false;
+                    errorMsg = "<strong>Aviso:</strong> El texto no puede estar vacío.";
+                }
+            } else {
+                // For collections, at least check it's not empty
+                if (rawVal === "") {
+                    isValid = false;
+                    errorMsg = `<strong>Aviso:</strong> El contenido del <code>${type}</code> no puede estar vacío.`;
+                }
+            }
+
+            if (!isValid && op !== 'clear') {
+                fb.innerHTML = errorMsg;
+                fb.className = "text-sm p-4 rounded-xl border bg-red-50 border-red-200 text-red-800 opacity-100";
+                // Quick flash to the input container
+                const inputParent = inputEl.parentElement;
+                inputParent.classList.add('ring-2', 'ring-red-400', 'border-red-400');
+                setTimeout(() => inputParent.classList.remove('ring-2', 'ring-red-400', 'border-red-400'), 1000);
+                return;
+            }
+
+            if (op === 'clear') {
+                addPlayTerminal(`<span class="text-green-400 font-bold">>>> mi_set.clear()</span>`);
+                setTimeout(() => {
+                    playgroundSetState.clear();
+                    addPlayTerminal(`<span class="text-white">>>> print(mi_set)<br>set()</span>`);
+                    fb.innerHTML = "<strong>Vaciado:</strong> El conjunto está totalmente limpio.";
+                }, 400);
+                return;
+            }
+
+            // Error simulation for mutable types
+            if (isMutable) {
+                const cmd = op === 'in' ? `${val} in mi_set` : `mi_set.${op}(${val})`;
+                addPlayTerminal(`<span class="text-green-400 font-bold">>>> ${cmd}</span>`);
+                setTimeout(() => {
+                    addPlayTerminal(`<span class="text-red-400">TypeError: unhashable type: '${type}'</span>`);
+                    fb.innerHTML = `<strong>¡ERROR!</strong> Los objetos <strong>mutables</strong> (como <code>${type}</code>) no pueden ser elementos de un set porque no son <em>hashables</em>.`;
+                    fb.className = "text-sm p-4 rounded-xl border bg-red-50 border-red-200 text-red-800 opacity-100";
+                }, 400);
+                return;
+            }
+
+            if (op === 'in') {
+                addPlayTerminal(`<span class="text-green-400 font-bold">>>> ${val} in mi_set</span>`);
+                setTimeout(() => {
+                    const exists = playgroundSetState.has(internalVal);
+                    addPlayTerminal(`<span class="text-white">${exists ? 'True' : 'False'}</span>`);
+                    fb.innerHTML = exists ? `<strong>Pertenencia:</strong> El valor ${val} SÍ está en el conjunto.` : `<strong>Pertenencia:</strong> El valor ${val} NO está en el conjunto.`;
+                }, 400);
+            } else if (op === 'add') {
+                addPlayTerminal(`<span class="text-green-400 font-bold">>>> mi_set.add(${val})</span>`);
+                setTimeout(() => {
+                    const exists = playgroundSetState.has(internalVal);
+                    playgroundSetState.add(internalVal);
+                    addPlayTerminal(`<span class="text-white">>>> print(mi_set)</span>`);
+                    addPlayTerminal(`<span class="text-white">${formatSet(playgroundSetState)}</span>`);
+                    fb.innerHTML = exists ? `<strong>Dato:</strong> ${val} ya estaba en el set. ¡Sin duplicados!` : `<strong>Agregado:</strong> ${val} ha sido añadido al conjunto.`;
+                }, 400);
+            } else if (op === 'remove') {
+                addPlayTerminal(`<span class="text-green-400 font-bold">>>> mi_set.remove(${val})</span>`);
+                setTimeout(() => {
+                    if (playgroundSetState.has(internalVal)) {
+                        playgroundSetState.delete(internalVal);
+                        addPlayTerminal(`<span class="text-white">>>> print(mi_set)</span>`);
+                        addPlayTerminal(`<span class="text-white">${formatSet(playgroundSetState)}</span>`);
+                        fb.innerHTML = `<strong>Eliminado:</strong> Se quitó ${val} del conjunto.`;
+                    } else {
+                        addPlayTerminal(`<span class="text-red-400">KeyError: ${val}</span>`);
+                        fb.innerHTML = `<strong>¡ERROR!</strong> Python no encontró ${val}, por lo que <code>remove()</code> falló.`;
+                        fb.className = "text-sm p-4 rounded-xl border bg-red-50 border-red-200 text-red-800 opacity-100";
+                    }
+                }, 400);
+            } else if (op === 'discard') {
+                addPlayTerminal(`<span class="text-green-400 font-bold">>>> mi_set.discard(${val})</span>`);
+                setTimeout(() => {
+                    const wasIn = playgroundSetState.has(internalVal);
+                    playgroundSetState.delete(internalVal);
+                    addPlayTerminal(`<span class="text-white">>>> print(mi_set)</span>`);
+                    addPlayTerminal(`<span class="text-white">${formatSet(playgroundSetState)}</span>`);
+                    fb.innerHTML = wasIn ? `<strong>Seguro:</strong> Se eliminó ${val}.` : `<strong>Seguro:</strong> ${val} no estaba, pero <code>discard()</code> no dio error.`;
+                }, 400);
+            }
+        }
+
+        function formatSet(s) {
+            if (s.size === 0) return 'set()';
+            const parts = Array.from(s).map(v => {
+                if (typeof v === 'string') {
+                    // Don't add quotes to tuples (they already have parentheses)
+                    if (v.startsWith('(') && v.endsWith(')')) return v;
+                    return `'${v}'`;
+                }
+                return v;
+            });
+            return `{${parts.join(', ')}}`;
+        }
+
+        // --- Slide 6 Logic: Interactive Venn ---
         let setA_int = new Set([1, 2]);
         let setB_int = new Set([2, 3]);
         let currentIntOp = 'union';
@@ -1268,7 +1578,10 @@
 
             // Highlight buttons
             document.querySelectorAll('[id^="btn-int-"]').forEach(b => b.classList.remove('bg-alt', 'ring-2', 'ring-action'));
-            document.getElementById(`btn-int-${op.startsWith('diff') ? 'diff' : op.slice(0, 3)}`)?.classList.add('bg-alt', 'ring-2', 'ring-action');
+            let btnId = `btn-int-${op}`;
+            if (op === 'difference_a_b') btnId = 'btn-int-diff';
+            if (op === 'symmetric') btnId = 'btn-int-sym';
+            document.getElementById(btnId)?.classList.add('bg-alt', 'ring-2', 'ring-action');
 
             // Calculation
             let res = new Set();
