@@ -232,7 +232,7 @@
                                 <span class="text-[10px] font-bold text-accent uppercase tracking-tighter">Pregunta
                                     <span id="question-index-1">1/1</span></span>
                                 <div class="flex gap-1" id="question-controls-1">
-                                    <button onclick="changeQuestion(-1)"
+                                    <button onclick="changeQuestion(1, -1)"
                                         class="p-1 hover:bg-slate-100 rounded text-slate-400 disabled:opacity-0"
                                         id="prev-q-btn">
                                         <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none"
@@ -241,7 +241,7 @@
                                                 d="M15 19l-7-7 7-7" />
                                         </svg>
                                     </button>
-                                    <button onclick="changeQuestion(1)"
+                                    <button onclick="changeQuestion(1, 1)"
                                         class="p-1 hover:bg-slate-100 rounded text-accent disabled:opacity-0"
                                         id="next-q-btn">
                                         <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none"
@@ -309,7 +309,7 @@
                                     </button>
                                 </div>
 
-                                <button onclick="executeLogic1()"
+                                <button onclick="executeLogic(1)"
                                     class="w-full py-3 bg-action text-white rounded-xl font-bold uppercase tracking-[0.2em] text-xs hover:bg-highlight transition-all shadow-lg shadow-action/20">Ejecutar
                                     Filtro</button>
                             </div>
@@ -338,12 +338,12 @@
                                     </div>
 
                                     <div
-                                        class="absolute left-0 w-48 h-48 rounded-full border-2 border-accent/40 flex items-start justify-center pt-8 z-20">
+                                        class="absolute left-0 w-48 h-48 rounded-full border-2 border-accent/40 flex items-start justify-center pt-6 z-20">
                                         <span id="venn-a-label-1"
                                             class="text-[8px] font-bold text-accent uppercase tracking-widest px-4 text-center">A</span>
                                     </div>
                                     <div
-                                        class="absolute right-0 w-48 h-48 rounded-full border-2 border-action/40 flex items-start justify-center pt-8 z-20">
+                                        class="absolute right-0 w-48 h-48 rounded-full border-2 border-action/40 flex items-start justify-center pt-6 z-20">
                                         <span id="venn-b-label-1"
                                             class="text-[8px] font-bold text-action uppercase tracking-widest px-4 text-center">B</span>
                                     </div>
@@ -382,8 +382,179 @@
                 </div>
             </section>
 
-            <!-- Slide 2: 3-Set Logic Challenge -->
+            <!-- Slide 2: Logic Challenge 2 (Random Exercise #2) -->
             <section id="slide-2" class="slide w-full h-full flex items-center justify-center p-8">
+                <div class="max-w-7xl w-full grid grid-cols-1 lg:grid-cols-12 gap-10 h-full max-h-[85vh]">
+                    <!-- Left: Logic Builder -->
+                    <div class="lg:col-span-4 flex flex-col gap-6 overflow-y-auto pr-4">
+                        <div class="space-y-4">
+                            <span id="lab-tag-2"
+                                class="bg-accent text-white px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest">Desafío:
+                                2/2</span>
+                            <h2 id="exercise-title-2" class="text-3xl font-extrabold text-title">Cargando...</h2>
+                            <p id="exercise-desc-2" class="text-xs text-text-long leading-relaxed">
+                                Preparando entorno de datos...
+                            </p>
+                        </div>
+
+                        <!-- Current Question Panel -->
+                        <div
+                            class="bg-white/50 border border-border p-5 rounded-2xl space-y-3 shadow-sm shadow-accent/5">
+                            <div class="flex justify-between items-center">
+                                <span class="text-[10px] font-bold text-accent uppercase tracking-tighter">Pregunta
+                                    <span id="question-index-2">1/1</span></span>
+                                <div class="flex gap-1">
+                                    <button onclick="changeQuestion(2, -1)"
+                                        class="p-1 hover:bg-slate-100 rounded text-slate-400 disabled:opacity-0"
+                                        id="prev-q-btn-2">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none"
+                                            viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M15 19l-7-7 7-7" />
+                                        </svg>
+                                    </button>
+                                    <button onclick="changeQuestion(2, 1)"
+                                        class="p-1 hover:bg-slate-100 rounded text-accent disabled:opacity-0"
+                                        id="next-q-btn-2">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none"
+                                            viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M9 5l7 7-7 7" />
+                                        </svg>
+                                    </button>
+                                </div>
+                            </div>
+                            <p id="current-question-text-2" class="text-sm font-bold text-title leading-snug">
+                                ...
+                            </p>
+                        </div>
+
+                        <div class="grid grid-cols-2 gap-2">
+                            <div class="bg-accent/10 border border-accent/20 p-2 rounded-lg text-center">
+                                <span id="set-a-name-2"
+                                    class="text-[8px] font-bold uppercase text-accent truncate block">Cargando...</span>
+                                <p id="set-a-count-2" class="text-[10px] font-mono font-bold">0 alumnos</p>
+                            </div>
+                            <div class="bg-action/10 border border-action/20 p-2 rounded-lg text-center">
+                                <span id="set-b-name-2"
+                                    class="text-[8px] font-bold uppercase text-action truncate block">Cargando...</span>
+                                <p id="set-b-count-2" class="text-[10px] font-mono font-bold">0 alumnos</p>
+                            </div>
+                        </div>
+
+                        <div class="mac-window h-full flex-1 flex flex-col min-h-0">
+                            <div
+                                class="mac-titlebar flex justify-between px-4 sticky top-0 bg-alt border-b border-border z-10">
+                                <span class="text-[10px] text-slate-400 font-mono">segmenter_v2.py</span>
+                            </div>
+                            <div class="p-4 space-y-4 flex-1 overflow-y-auto">
+                                <div class="flex flex-wrap gap-2" id="expression-tokens-2">
+                                    <button onclick="addToken(2, '(')"
+                                        class="px-3 py-2 bg-slate-100 rounded text-sm font-mono hover:bg-slate-200 transition-colors">(</button>
+                                    <button onclick="addToken(2, ')')"
+                                        class="px-3 py-2 bg-slate-100 rounded text-sm font-mono hover:bg-slate-200 transition-colors">)</button>
+                                    <button onclick="addToken(2, 'A')"
+                                        class="px-3 py-2 bg-accent/20 text-accent rounded text-sm font-mono font-bold hover:bg-accent/30 transition-colors">A</button>
+                                    <button onclick="addToken(2, 'B')"
+                                        class="px-3 py-2 bg-action/20 text-action rounded text-sm font-mono font-bold hover:bg-action/30 transition-colors">B</button>
+                                    <button onclick="addToken(2, '|')"
+                                        class="px-3 py-2 bg-slate-800 text-white rounded text-sm font-mono hover:bg-slate-900 transition-colors">|</button>
+                                    <button onclick="addToken(2, '&')"
+                                        class="px-3 py-2 bg-slate-800 text-white rounded text-sm font-mono hover:bg-slate-900 transition-colors">&</button>
+                                    <button onclick="addToken(2, '-')"
+                                        class="px-3 py-2 bg-slate-800 text-white rounded text-sm font-mono hover:bg-slate-900 transition-colors">-</button>
+                                    <button onclick="addToken(2, '^')"
+                                        class="px-3 py-2 bg-slate-800 text-white rounded text-sm font-mono hover:bg-slate-900 transition-colors">^</button>
+                                </div>
+
+                                <div
+                                    class="bg-slate-900 p-4 rounded-xl min-h-[60px] flex items-center justify-between group">
+                                    <div id="current-expression-2"
+                                        class="font-mono text-teal-400 text-lg tracking-wider"></div>
+                                    <button onclick="clearExpression(2)"
+                                        class="text-slate-500 hover:text-red-400 opacity-0 group-hover:opacity-100 transition-opacity">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none"
+                                            viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                                        </svg>
+                                    </button>
+                                </div>
+
+                                <button onclick="executeLogic(2)"
+                                    class="w-full py-3 bg-action text-white rounded-xl font-bold uppercase tracking-[0.2em] text-xs hover:bg-highlight transition-all shadow-lg shadow-action/20">Ejecutar
+                                    Filtro</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right: Diagram & Console -->
+                    <div class="lg:col-span-8 space-y-6 flex flex-col">
+                        <div class="flex-1 mac-window bg-white flex flex-col relative min-h-0">
+                            <div class="mac-titlebar flex justify-between px-4">
+                                <span class="text-[10px] text-slate-400 font-mono italic">output_stream.log</span>
+                            </div>
+
+
+                            <div
+                                class="flex-1 flex flex-col items-center justify-center p-8 select-none h-full overflow-hidden">
+                                <div class="relative w-80 h-56 flex-shrink-0">
+                                    <div id="int-overlay-a-2"
+                                        class="absolute left-0 w-48 h-48 rounded-full transition-all duration-500 opacity-0 z-0">
+                                    </div>
+                                    <div id="int-overlay-b-2"
+                                        class="absolute right-0 w-48 h-48 rounded-full transition-all duration-500 opacity-0 z-0">
+                                    </div>
+                                    <div id="int-overlay-int-2"
+                                        class="absolute left-1/2 -translate-x-1/2 w-20 h-48 transition-all duration-500 opacity-0 z-10 lens-shape">
+                                    </div>
+
+                                    <div
+                                        class="absolute left-0 w-48 h-48 rounded-full border-2 border-accent/40 flex items-start justify-center pt-6 z-20">
+                                        <span id="venn-a-label-2"
+                                            class="text-[8px] font-bold text-accent uppercase tracking-widest px-4 text-center">A</span>
+                                    </div>
+                                    <div
+                                        class="absolute right-0 w-48 h-48 rounded-full border-2 border-action/40 flex items-start justify-center pt-6 z-20">
+                                        <span id="venn-b-label-2"
+                                            class="text-[8px] font-bold text-action uppercase tracking-widest px-4 text-center">B</span>
+                                    </div>
+                                    <div id="int-numbers-container-2" class="absolute inset-0 z-30 pointer-events-none">
+                                    </div>
+                                    <div
+                                        class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col items-center z-40">
+                                        <div id="logic-result-icon-2"
+                                            class="text-4xl animate-bounce-subtle opacity-0 transition-opacity">🎯</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Console Outside -->
+                        <div class="w-full grid grid-cols-1 lg:grid-cols-2 gap-4 flex-shrink-0">
+                            <div
+                                class="bg-[#1e1e1e] rounded-xl p-6 font-mono text-xs text-slate-400 shadow-2xl flex flex-col min-h-[150px]">
+                                <div class="flex items-center gap-2 mb-4 border-b border-slate-700 pb-2">
+                                    <div class="w-2 h-2 rounded-full bg-slate-600"></div>
+                                    <span class="text-[10px] uppercase">Consola de Resultados</span>
+                                </div>
+                                <div id="terminal-2" class="space-y-3 overflow-y-auto flex-1 pr-2">
+                                    <div class="text-slate-600 italic">Esperando expresión...</div>
+                                </div>
+                            </div>
+                            <div id="logic-insight-2"
+                                class="bg-alt border border-border p-4 rounded-xl opacity-0 transition-all flex flex-col justify-center">
+                                <h4 class="text-[10px] font-bold text-title uppercase mb-1">Análisis
+                                    Post-Filtro:</h4>
+                                <p id="insight-text-2" class="text-[11px] text-text-long font-medium leading-relaxed">
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <!-- Slide 3: 3-Set Logic Challenge -->
+            <section id="slide-3" class="slide w-full h-full flex items-center justify-center p-8">
                 <div class="max-w-7xl w-full grid grid-cols-1 lg:grid-cols-12 gap-10 h-full max-h-[85vh]">
                     <div class="lg:col-span-4 flex flex-col gap-6 overflow-y-auto pr-4">
                         <div class="space-y-4">
@@ -418,30 +589,31 @@
                                 <span class="text-[10px] text-slate-400 font-mono">logic_builder.py</span>
                             </div>
                             <div class="p-4 space-y-4 flex-1 overflow-y-auto">
-                                <div class="flex flex-wrap gap-2" id="expression-tokens">
-                                    <button onclick="addToken(2, '(')"
+                                <div class="flex flex-wrap gap-2" id="expression-tokens-3">
+                                    <button onclick="addToken(3, '(')"
                                         class="px-3 py-2 bg-slate-100 rounded text-sm font-mono hover:bg-slate-200 transition-colors">(</button>
-                                    <button onclick="addToken(2, ')')"
+                                    <button onclick="addToken(3, ')')"
                                         class="px-3 py-2 bg-slate-100 rounded text-sm font-mono hover:bg-slate-200 transition-colors">)</button>
-                                    <button onclick="addToken(2, 'A')"
+                                    <button onclick="addToken(3, 'A')"
                                         class="px-3 py-2 bg-accent/20 text-accent rounded text-sm font-mono font-bold hover:bg-accent/30 transition-colors">A</button>
-                                    <button onclick="addToken(2, 'B')"
+                                    <button onclick="addToken(3, 'B')"
                                         class="px-3 py-2 bg-action/20 text-action rounded text-sm font-mono font-bold hover:bg-action/30 transition-colors">B</button>
-                                    <button onclick="addToken(2, 'C')"
+                                    <button onclick="addToken(3, 'C')"
                                         class="px-3 py-2 bg-purple-100 text-purple-600 rounded text-sm font-mono font-bold hover:bg-purple-200 transition-colors">C</button>
-                                    <button onclick="addToken(2, '|')"
+                                    <button onclick="addToken(3, '|')"
                                         class="px-3 py-2 bg-slate-800 text-white rounded text-sm font-mono hover:bg-slate-900 transition-colors">|</button>
-                                    <button onclick="addToken(2, '&')"
+                                    <button onclick="addToken(3, '&')"
                                         class="px-3 py-2 bg-slate-800 text-white rounded text-sm font-mono hover:bg-slate-900 transition-colors">&</button>
-                                    <button onclick="addToken(2, '-')"
+                                    <button onclick="addToken(3, '-')"
                                         class="px-3 py-2 bg-slate-800 text-white rounded text-sm font-mono hover:bg-slate-900 transition-colors">-</button>
                                 </div>
 
                                 <div
                                     class="bg-slate-900 p-4 rounded-xl min-h-[60px] flex items-center justify-between group">
-                                    <div id="current-expression" class="font-mono text-teal-400 text-lg tracking-wider">
+                                    <div id="current-expression-3"
+                                        class="font-mono text-teal-400 text-lg tracking-wider">
                                     </div>
-                                    <button onclick="clearExpression(2)"
+                                    <button onclick="clearExpression(3)"
                                         class="text-slate-500 hover:text-red-400 opacity-0 group-hover:opacity-100 transition-opacity">
                                         <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none"
                                             viewBox="0 0 24 24" stroke="currentColor">
@@ -468,25 +640,39 @@
                             <div
                                 class="flex-1 flex flex-col items-center justify-center p-8 select-none h-full overflow-hidden">
                                 <div class="relative w-72 h-72 flex-shrink-0 scale-90 md:scale-100">
-                                    <div class="absolute top-0 left-1/2 -translate-x-1/2 w-44 h-44 rounded-full border-4 border-accent/40 bg-accent/5 flex items-start justify-center pt-8"
-                                        id="venn-a">
-                                        <span class="text-[8px] font-bold text-accent uppercase tracking-widest">Web
+                                    <!-- Overlays for generic renderVenn compatibility -->
+                                    <div id="int-overlay-a-3"
+                                        class="absolute top-0 left-1/2 -translate-x-1/2 w-44 h-44 rounded-full transition-all duration-500 opacity-0 z-0">
+                                    </div>
+                                    <div id="int-overlay-b-3"
+                                        class="absolute top-12 left-0 w-44 h-44 rounded-full transition-all duration-500 opacity-0 z-0">
+                                    </div>
+                                    <div id="int-overlay-int-3" class="hidden"></div>
+
+                                    <div class="absolute top-0 left-1/2 -translate-x-1/2 w-44 h-44 rounded-full border-4 border-accent/40 bg-accent/5 flex items-start justify-center pt-6 z-10"
+                                        id="venn-a-3">
+                                        <span
+                                            class="text-[8px] font-bold text-accent uppercase tracking-widest px-4 text-center">Web
                                             (A)</span>
                                     </div>
-                                    <div class="absolute bottom-4 left-0 w-44 h-44 rounded-full border-4 border-action/40 bg-action/5 flex items-end justify-start pb-8 pl-8"
-                                        id="venn-b">
-                                        <span class="text-[8px] font-bold text-action uppercase tracking-widest">Móvil
+                                    <div class="absolute top-12 left-0 w-44 h-44 rounded-full border-4 border-action/40 bg-action/5 flex items-start justify-center pt-6 z-10"
+                                        id="venn-b-3">
+                                        <span
+                                            class="text-[8px] font-bold text-action uppercase tracking-widest px-4 text-center">Móvil
                                             (B)</span>
                                     </div>
-                                    <div class="absolute bottom-4 right-0 w-44 h-44 rounded-full border-4 border-purple-400/40 bg-purple-500/5 flex items-end justify-end pb-8 pr-8"
-                                        id="venn-c">
+                                    <div class="absolute top-12 right-0 w-44 h-44 rounded-full border-4 border-purple-400/40 bg-purple-500/5 flex items-start justify-center pt-6 z-10"
+                                        id="venn-c-3">
                                         <span
-                                            class="text-[8px] font-bold text-purple-600 uppercase tracking-widest">Tienda
+                                            class="text-[8px] font-bold text-purple-600 uppercase tracking-widest px-4 text-center">Tienda
                                             (C)</span>
+                                    </div>
+                                    <!-- Container for numbers (generic renderVenn compatibility) -->
+                                    <div id="int-numbers-container-3" class="absolute inset-0 z-30 pointer-events-none">
                                     </div>
                                     <div
                                         class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col items-center">
-                                        <div id="logic-result-icon"
+                                        <div id="logic-result-icon-3"
                                             class="text-4xl animate-bounce-subtle opacity-0 transition-opacity">✨</div>
                                     </div>
                                 </div>
@@ -501,16 +687,16 @@
                                     <div class="w-2 h-2 rounded-full bg-slate-600"></div>
                                     <span class="text-[10px] uppercase">Resultado de Ejecución</span>
                                 </div>
-                                <div id="complex-terminal" class="space-y-3 overflow-y-auto flex-1 pr-2">
-                                    <div class="text-slate-600 italic">Construye una expresión y pulsa
-                                        'Sincronizar'...</div>
+                                <div id="complex-terminal-3" class="space-y-3 overflow-y-auto flex-1 pr-2">
+                                    <div class="text-slate-600 italic">Construye una expresión y pulsa 'Sincronizar'...
+                                    </div>
                                 </div>
                             </div>
-                            <div id="logic-insight"
+                            <div id="logic-insight-3"
                                 class="bg-alt border border-border p-4 rounded-xl opacity-0 transition-all flex flex-col justify-center">
-                                <h4 class="text-[10px] font-bold text-title uppercase mb-1">Análisis de
-                                    Estructura:</h4>
-                                <p id="insight-text" class="text-[11px] text-text-long font-medium leading-relaxed"></p>
+                                <h4 class="text-[10px] font-bold text-title uppercase mb-1">Análisis de Estructura:</h4>
+                                <p id="insight-text-3" class="text-[11px] text-text-long font-medium leading-relaxed">
+                                </p>
                             </div>
                         </div>
                     </div>
@@ -543,7 +729,7 @@
 
     <script>
         let currentSlide = 0;
-        const totalSlides = 3;
+        const totalSlides = 4;
         const slideCounter = document.getElementById('slide-counter');
         const prevBtn = document.getElementById('prev-btn');
         const nextBtn = document.getElementById('next-btn');
@@ -733,13 +919,15 @@
             }
         ];
 
-        let currentQuestionIdx1 = 0;
-        let tokens1 = [];
-        let setA_int = new Set();
-        let setB_int = new Set();
+        let selectedExercises1 = [];
+        let currentQuestions = { 1: 0, 2: 0 };
+        let tokens1 = [], tokens2 = [], tokens3 = [];
+        let activeSets = {
+            1: { A: new Set(), B: new Set() },
+            2: { A: new Set(), B: new Set() }
+        };
 
         // State Slide 2 (Challenge 2)
-        let tokens2 = [];
         const rawSets = {
             A: new Set(['Ana', 'Bert', 'Clara', 'Dan', 'Eve']),
             B: new Set(['Bert', 'Clara', 'Flo', 'Guy']),
@@ -753,53 +941,64 @@
                 dot.id = `dot-${i}`;
                 dotNav.appendChild(dot);
             }
-            loadExercise1(0);
+
+            // Seleccionar 2 ejercicios al azar
+            const shuffled = [...ejerciciosSets].sort(() => 0.5 - Math.random());
+            selectedExercises1 = shuffled.slice(0, 2);
+
+            // Cargar ejercicio 0 en slide 1 y ejercicio 1 en slide 2
+            loadExercise(1, 0, 0);
+            loadExercise(2, 1, 0);
+
             updateNavigation();
         }
 
-        function loadExercise1(qIdx) {
-            currentQuestionIdx1 = qIdx;
-            const ex = dataSlide1;
+        function loadExercise(slide, exIdx, qIdx) {
+            currentQuestions[slide] = qIdx;
+            const ex = selectedExercises1[exIdx];
             const q = ex.preguntas[qIdx];
 
             // Update Text
-            document.getElementById('exercise-title-1').innerText = ex.titulo;
-            document.getElementById('exercise-desc-1').innerText = ex.descripcion;
-            document.getElementById('current-question-text-1').innerText = q.pregunta;
-            document.getElementById('question-index-1').innerText = `${qIdx + 1}/${ex.preguntas.length}`;
-            document.getElementById('lab-tag-1').innerText = `Desafío: 1/1`; // Generic for now
+            document.getElementById(`exercise-title-${slide}`).innerText = ex.titulo;
+            document.getElementById(`exercise-desc-${slide}`).innerText = ex.descripcion;
+            document.getElementById(`current-question-text-${slide}`).innerText = q.pregunta;
+            document.getElementById(`question-index-${slide}`).innerText = `${qIdx + 1}/${ex.preguntas.length}`;
+            document.getElementById(`lab-tag-${slide}`).innerText = `Desafío: ${exIdx + 1}/2`;
 
             // Update Sets Info
-            document.getElementById('set-a-name-1').innerText = `${ex.conjuntos.A.nombre} (A)`;
-            document.getElementById('set-a-count-1').innerText = `${ex.conjuntos.A.estudiantes.length} alumnos`;
-            document.getElementById('set-b-name-1').innerText = `${ex.conjuntos.B.nombre} (B)`;
-            document.getElementById('set-b-count-1').innerText = `${ex.conjuntos.B.estudiantes.length} alumnos`;
+            document.getElementById(`set-a-name-${slide}`).innerText = `${ex.conjuntos.A.nombre} (A)`;
+            document.getElementById(`set-a-count-${slide}`).innerText = `${ex.conjuntos.A.estudiantes.length} alumnos`;
+            document.getElementById(`set-b-name-${slide}`).innerText = `${ex.conjuntos.B.nombre} (B)`;
+            document.getElementById(`set-b-count-${slide}`).innerText = `${ex.conjuntos.B.estudiantes.length} alumnos`;
 
             // Labels in Venn
-            document.getElementById('venn-a-label-1').innerText = ex.conjuntos.A.nombre;
-            document.getElementById('venn-b-label-1').innerText = ex.conjuntos.B.nombre;
+            document.getElementById(`venn-a-label-${slide}`).innerText = ex.conjuntos.A.nombre;
+            document.getElementById(`venn-b-label-${slide}`).innerText = ex.conjuntos.B.nombre;
 
             // Nav Buttons
-            document.getElementById('prev-q-btn').disabled = qIdx === 0;
-            document.getElementById('next-q-btn').disabled = qIdx === ex.preguntas.length - 1;
+            document.getElementById(`prev-q-btn${slide === 1 ? '' : '-' + slide}`).disabled = qIdx === 0;
+            document.getElementById(`next-q-btn${slide === 1 ? '' : '-' + slide}`).disabled = qIdx === ex.preguntas.length - 1;
 
             // Update Logic Sets
-            setA_int = new Set(ex.conjuntos.A.estudiantes);
-            setB_int = new Set(ex.conjuntos.B.estudiantes);
+            activeSets[slide].A = new Set(ex.conjuntos.A.estudiantes);
+            activeSets[slide].B = new Set(ex.conjuntos.B.estudiantes);
 
             // Reset UI
-            clearExpression(1);
-            document.getElementById('terminal-1').innerHTML = '<div class="text-slate-600 italic">Esperando expresión...</div>';
-            document.getElementById('logic-insight-1').classList.add('opacity-0');
-            document.getElementById('logic-result-icon-1').classList.add('opacity-0');
+            clearExpression(slide);
+            document.getElementById(`terminal-${slide}`).innerHTML = '<div class="text-slate-600 italic">Esperando expresión...</div>';
+            document.getElementById(`logic-insight-${slide}`).classList.add('opacity-0');
+            document.getElementById(`logic-result-icon-${slide}`).classList.add('opacity-0');
 
-            renderVenn1('');
+            renderVenn(slide, '');
         }
 
-        function changeQuestion(dir) {
-            const newIdx = currentQuestionIdx1 + dir;
-            if (newIdx >= 0 && newIdx < dataSlide1.preguntas.length) {
-                loadExercise1(newIdx);
+        function changeQuestion(slide, dir) {
+            const exIdx = slide === 1 ? 0 : 1;
+            const ex = selectedExercises1[exIdx];
+            let nextQ = currentQuestions[slide] + dir;
+
+            if (nextQ >= 0 && nextQ < ex.preguntas.length) {
+                loadExercise(slide, exIdx, nextQ);
             }
         }
 
@@ -816,7 +1015,8 @@
             prevBtn.disabled = currentSlide === 0;
             nextBtn.disabled = currentSlide === totalSlides - 1;
 
-            if (currentSlide === 1) renderVenn1('');
+            if (currentSlide === 1) renderVenn(1, '');
+            if (currentSlide === 2) renderVenn(2, '');
         }
 
         function nextSlide() {
@@ -839,59 +1039,73 @@
 
         // --- GLOBAL LOGIC BUILDER ---
         function addToken(slide, t) {
-            const arr = slide === 1 ? tokens1 : tokens2;
+            let arr;
+            if (slide === 1) arr = tokens1;
+            else if (slide === 2) arr = tokens2;
+            else arr = tokens3;
             if (arr.length < 15) { arr.push(t); renderExpression(slide); }
         }
         function clearExpression(slide) {
-            if (slide === 1) tokens1 = []; else tokens2 = [];
+            if (slide === 1) tokens1 = [];
+            else if (slide === 2) tokens2 = [];
+            else tokens3 = [];
             renderExpression(slide);
         }
         function renderExpression(slide) {
-            const id = slide === 1 ? 'current-expression-1' : 'current-expression';
-            const arr = slide === 1 ? tokens1 : tokens2;
+            const id = `current-expression-${slide}`;
+            let arr;
+            if (slide === 1) arr = tokens1;
+            else if (slide === 2) arr = tokens2;
+            else arr = tokens3;
             document.getElementById(id).innerText = arr.join(' ');
         }
 
-        // --- CHALLENGE 1 (SLIDE 2) ---
-        function executeLogic1() {
-            const expr = tokens1.join('');
-            const term = document.getElementById('terminal-1');
-            const insight = document.getElementById('logic-insight-1');
+        // --- GENERIC CHALLENGE LOGIC (SLIDES 1 & 3) ---
+        function executeLogic(slide) {
+            let tokens = slide === 1 ? tokens1 : tokens2;
+            const expr = tokens.join('');
+            const term = document.getElementById(`terminal-${slide}`);
+            const insight = document.getElementById(`logic-insight-${slide}`);
             if (!expr) return;
 
-            const q = dataSlide1.preguntas[currentQuestionIdx1];
-            term.innerHTML += `<div class="animate-fade-in"><span class="text-teal-400">>>></span> filter_v1(<span class="text-white">${expr}</span>)</div>`;
-            renderVenn1(expr);
+            const exIdx = slide === 1 ? 0 : 1;
+            const q = selectedExercises1[exIdx].preguntas[currentQuestions[slide]];
+            term.innerHTML += `<div class="animate-fade-in"><span class="text-teal-400">>>></span> filter_v${slide}(<span class="text-white">${expr}</span>)</div>`;
+            renderVenn(slide, expr);
 
             setTimeout(() => {
                 const isCorrect = q.soluciones.includes(expr);
+                const sA = activeSets[slide].A;
+                const sB = activeSets[slide].B;
+
                 if (isCorrect) {
-                    // Simple calculation of result set for the terminal
                     let res = [];
-                    if (expr === "A&B" || expr === "B&A") res = [...setA_int].filter(x => setB_int.has(x));
-                    else if (expr === "A-B") res = [...setA_int].filter(x => !setB_int.has(x));
-                    else if (expr === "B-A") res = [...setB_int].filter(x => !setA_int.has(x));
-                    else if (expr === "A|B" || expr === "B|A") res = [...new Set([...setA_int, ...setB_int])];
-                    else if (expr === "A^B" || expr === "B^A") res = [...setA_int].filter(x => !setB_int.has(x)).concat([...setB_int].filter(x => !setA_int.has(x)));
+                    if (expr === "A&B" || expr === "B&A") res = [...sA].filter(x => sB.has(x));
+                    else if (expr === "A-B") res = [...sA].filter(x => !sB.has(x));
+                    else if (expr === "B-A") res = [...sB].filter(x => !sA.has(x));
+                    else if (expr === "A|B" || expr === "B|A") res = [...new Set([...sA, ...sB])];
+                    else if (expr === "A^B" || expr === "B^A") res = [...sA].filter(x => !sB.has(x)).concat([...sB].filter(x => !sA.has(x)));
 
                     term.innerHTML += `<div class="text-green-400 font-bold ml-6">EXIT: {${res.map(s => `'${s}'`).join(', ')}}</div>`;
                     insight.classList.replace('opacity-0', 'opacity-100');
-                    document.getElementById('insight-text-1').innerText = q.explicacion;
-                    document.getElementById('logic-result-icon-1').classList.replace('opacity-0', 'opacity-100');
+                    document.getElementById(`insight-text-${slide}`).innerText = q.explicacion;
+                    document.getElementById(`logic-result-icon-${slide}`).classList.replace('opacity-0', 'opacity-100');
                 } else {
                     term.innerHTML += `<div class="text-red-400 ml-6">ERR: El resultado no coincide con el objetivo.</div>`;
                     insight.classList.replace('opacity-100', 'opacity-0');
-                    document.getElementById('logic-result-icon-1').classList.replace('opacity-100', 'opacity-0');
+                    document.getElementById(`logic-result-icon-${slide}`).classList.replace('opacity-100', 'opacity-0');
                 }
                 term.scrollTop = term.scrollHeight;
             }, 500);
         }
 
-        function renderVenn1(op) {
-            const overlayA = document.getElementById('int-overlay-a');
-            const overlayB = document.getElementById('int-overlay-b');
-            const overlayInt = document.getElementById('int-overlay-int');
-            const numContainer = document.getElementById('int-numbers-container');
+        function renderVenn(slide, op) {
+            const overlayA = document.getElementById(`int-overlay-a${slide === 1 ? '' : '-' + slide}`);
+            const overlayB = document.getElementById(`int-overlay-b${slide === 1 ? '' : '-' + slide}`);
+            const overlayInt = document.getElementById(`int-overlay-int${slide === 1 ? '' : '-' + slide}`);
+            const numContainer = document.getElementById(`int-numbers-container${slide === 1 ? '' : '-' + slide}`);
+            const sA = activeSets[slide].A;
+            const sB = activeSets[slide].B;
 
             // Reset
             [overlayA, overlayB, overlayInt].forEach(el => el.classList.remove('bg-accent', 'bg-action', 'bg-highlight', 'opacity-100', 'opacity-40', 'opacity-60', 'bg-blue-200', 'bg-blue-300', 'bg-blue-400', 'bg-white'));
@@ -916,29 +1130,32 @@
             }
 
             numContainer.innerHTML = '';
-            const all = Array.from(new Set([...setA_int, ...setB_int]));
-            all.forEach((name, i) => {
+            const all = Array.from(new Set([...sA, ...sB]));
+            let idxA = 0, idxB = 0, idxInt = 0;
+            all.forEach((name) => {
                 const s = document.createElement('span');
                 s.innerText = name;
                 s.className = "absolute text-[8px] font-bold transition-all duration-500 truncate max-w-[50px]";
-                const inA = setA_int.has(name), inB = setB_int.has(name);
+                const inA = sA.has(name), inB = sB.has(name);
 
-                // Better positioning for names
                 if (inA && inB) {
                     s.style.left = '50%';
-                    s.style.top = (15 + (i * 12)) + '%';
+                    s.style.top = (25 + (idxInt * 12)) + '%';
                     s.style.transform = 'translateX(-50%)';
                     s.className += " text-title z-40";
+                    idxInt++;
                 }
                 else if (inA) {
                     s.style.left = '20%';
-                    s.style.top = (25 + (i * 10)) + '%';
+                    s.style.top = (30 + (idxA * 10)) + '%';
                     s.className += " text-accent";
+                    idxA++;
                 }
                 else if (inB) {
                     s.style.left = '80%';
-                    s.style.top = (25 + (i * 10)) + '%';
+                    s.style.top = (30 + (idxB * 10)) + '%';
                     s.className += " text-action";
+                    idxB++;
                 }
                 numContainer.appendChild(s);
             });
@@ -946,9 +1163,9 @@
 
         // --- CHALLENGE 2 (SLIDE 3) ---
         function executeComplexLogic() {
-            const expr = tokens2.join('');
-            const term = document.getElementById('complex-terminal');
-            const insight = document.getElementById('logic-insight');
+            const expr = tokens3.join('');
+            const term = document.getElementById('complex-terminal-3');
+            const insight = document.getElementById('logic-insight-3');
             if (!expr) return;
             const valid = (expr === "(A&B)-C" || expr === "A&B-C" || expr === "(B&A)-C");
             term.innerHTML += `<div class="animate-fade-in"><span class="text-teal-400">>>></span> logic_engine.run(<span class="text-white">${expr}</span>)</div>`;
@@ -956,12 +1173,12 @@
                 if (valid) {
                     term.innerHTML += `<div class="text-green-400 font-bold ml-6">EXIT: {'Bert'}</div>`;
                     insight.classList.replace('opacity-0', 'opacity-100');
-                    document.getElementById('insight-text').innerText = "Misión cumplida. Has aislado el canal digital puro.";
-                    document.getElementById('logic-result-icon').classList.replace('opacity-0', 'opacity-100');
+                    document.getElementById('insight-text-3').innerText = "Misión cumplida. Has aislado el canal digital puro.";
+                    document.getElementById('logic-result-icon-3').classList.replace('opacity-0', 'opacity-100');
                 } else {
                     term.innerHTML += `<div class="text-red-400 ml-6">LOGIC_ERROR: No se cumple el objetivo.</div>`;
                     insight.classList.replace('opacity-100', 'opacity-0');
-                    document.getElementById('logic-result-icon').classList.replace('opacity-100', 'opacity-0');
+                    document.getElementById('logic-result-icon-3').classList.replace('opacity-100', 'opacity-0');
                 }
                 term.scrollTop = term.scrollHeight;
             }, 600);
