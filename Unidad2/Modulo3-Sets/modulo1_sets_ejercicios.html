@@ -155,12 +155,6 @@
         <!-- Header -->
         <header class="h-14 border-b border-border flex items-center justify-between px-8 bg-white z-50">
             <div class="flex items-center gap-4">
-                <div class="flex gap-1.5 mr-2">
-                    <div class="mac-dot mac-dot-red"></div>
-                    <div class="mac-dot mac-dot-yellow"></div>
-                    <div class="mac-dot mac-dot-green"></div>
-                </div>
-                <div class="h-4 w-px bg-border mx-2"></div>
                 <span class="text-title font-bold text-sm tracking-tight uppercase">Unidad 2: Python Sets</span>
                 <span class="text-accent/50 text-xs font-medium ml-2">Módulo 1: Ejercicios</span>
             </div>
@@ -296,8 +290,7 @@
                                     class="bg-slate-900 p-4 rounded-xl min-h-[60px] flex items-center justify-between group">
                                     <div id="current-expression-1"
                                         class="font-mono text-teal-400 text-lg tracking-wider"></div>
-                                    <button onclick="clearExpression(1)"
-                                        class="text-slate-500 hover:text-red-400 opacity-0 group-hover:opacity-100 transition-opacity">
+                                    <button onclick="clearExpression(1)" class="text-red-500 transition-colors">
                                         <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none"
                                             viewBox="0 0 24 24" stroke="currentColor">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -465,8 +458,7 @@
                                     class="bg-slate-900 p-4 rounded-xl min-h-[60px] flex items-center justify-between group">
                                     <div id="current-expression-2"
                                         class="font-mono text-teal-400 text-lg tracking-wider"></div>
-                                    <button onclick="clearExpression(2)"
-                                        class="text-slate-500 hover:text-red-400 opacity-0 group-hover:opacity-100 transition-opacity">
+                                    <button onclick="clearExpression(2)" class="text-red-500 transition-colors">
                                         <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none"
                                             viewBox="0 0 24 24" stroke="currentColor">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -636,8 +628,7 @@
                                     <div id="current-expression-3"
                                         class="font-mono text-teal-400 text-lg tracking-wider">
                                     </div>
-                                    <button onclick="clearExpression(3)"
-                                        class="text-slate-500 hover:text-red-400 opacity-0 group-hover:opacity-100 transition-opacity">
+                                    <button onclick="clearExpression(3)" class="text-red-500 transition-colors">
                                         <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none"
                                             viewBox="0 0 24 24" stroke="currentColor">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -1330,9 +1321,9 @@
             if (arr.length < 15) { arr.push(t); renderExpression(slide); }
         }
         function clearExpression(slide) {
-            if (slide === 1) tokens1 = [];
-            else if (slide === 2) tokens2 = [];
-            else tokens3 = [];
+            if (slide === 1) tokens1.pop();
+            else if (slide === 2) tokens2.pop();
+            else tokens3.pop();
             renderExpression(slide);
         }
         function renderExpression(slide) {
