@@ -662,37 +662,45 @@
 
                             <div
                                 class="flex-1 flex flex-col items-center justify-center p-8 select-none h-full overflow-hidden">
-                                <div class="relative w-72 h-72 flex-shrink-0 scale-90 md:scale-100">
-                                    <!-- Overlays for 3nd-set Challenge -->
+                                <div class="relative w-96 h-96 flex-shrink-0 scale-90 md:scale-100">
+                                    <!-- Overlays para intersecciones -->
                                     <div id="int-overlay-a-3"
-                                        class="absolute top-0 left-1/2 -translate-x-1/2 w-44 h-44 rounded-full transition-all duration-500 opacity-0 z-0">
+                                        class="absolute top-0 left-1/2 -translate-x-1/2 w-52 h-52 rounded-full transition-all duration-500 opacity-0 z-0">
                                     </div>
                                     <div id="int-overlay-b-3"
-                                        class="absolute top-12 left-0 w-44 h-44 rounded-full transition-all duration-500 opacity-0 z-0">
+                                        class="absolute top-32 left-4 w-52 h-52 rounded-full transition-all duration-500 opacity-0 z-0">
                                     </div>
                                     <div id="int-overlay-c-3"
-                                        class="absolute top-12 right-0 w-44 h-44 rounded-full transition-all duration-500 opacity-0 z-0">
+                                        class="absolute top-32 right-4 w-52 h-52 rounded-full transition-all duration-500 opacity-0 z-0">
                                     </div>
                                     <div id="int-overlay-int-3" class="hidden"></div>
 
-                                    <div class="absolute top-0 left-1/2 -translate-x-1/2 w-44 h-44 rounded-full border-4 border-accent/40 bg-accent/5 flex items-start justify-center pt-2 z-10"
+                                    <!-- Círculo A (arriba, centro) -->
+                                    <div class="absolute top-0 left-1/2 -translate-x-1/2 w-52 h-52 rounded-full border-4 border-accent/40 bg-accent/5 flex items-center justify-center z-10"
                                         id="venn-a-3">
                                         <span
-                                            class="text-[8px] font-bold text-accent uppercase tracking-widest px-4 text-center">A</span>
+                                            class="text-xs font-bold text-accent uppercase tracking-widest -mt-16">A</span>
                                     </div>
-                                    <div class="absolute top-12 left-0 w-44 h-44 rounded-full border-4 border-action/40 bg-action/5 flex items-center justify-start pl-2 z-10"
+
+                                    <!-- Círculo B (abajo izquierda) -->
+                                    <div class="absolute top-32 left-4 w-52 h-52 rounded-full border-4 border-action/40 bg-action/5 flex items-center justify-center z-10"
                                         id="venn-b-3">
                                         <span
-                                            class="text-[8px] font-bold text-action uppercase tracking-widest px-4 text-left rotate-[-45deg] origin-left">B</span>
+                                            class="text-xs font-bold text-action uppercase tracking-widest -ml-12 mt-12">B</span>
                                     </div>
-                                    <div class="absolute top-12 right-0 w-44 h-44 rounded-full border-4 border-purple-400/40 bg-purple-500/5 flex items-center justify-end pr-2 z-10"
+
+                                    <!-- Círculo C (abajo derecha) -->
+                                    <div class="absolute top-32 right-4 w-52 h-52 rounded-full border-4 border-purple-400/40 bg-purple-500/5 flex items-center justify-center z-10"
                                         id="venn-c-3">
                                         <span
-                                            class="text-[8px] font-bold text-purple-600 uppercase tracking-widest px-4 text-right rotate-[45deg] origin-right">C</span>
+                                            class="text-xs font-bold text-purple-600 uppercase tracking-widest -mr-12 mt-12">C</span>
                                     </div>
-                                    <!-- Container for numbers (generic renderVenn compatibility) -->
+
+                                    <!-- Container para números -->
                                     <div id="int-numbers-container-3" class="absolute inset-0 z-30 pointer-events-none">
                                     </div>
+
+                                    <!-- Ícono de resultado -->
                                     <div
                                         class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col items-center">
                                         <div id="logic-result-icon-3"
@@ -711,13 +719,15 @@
                                     <span class="text-[10px] uppercase">Resultado de Ejecución</span>
                                 </div>
                                 <div id="complex-terminal-3" class="space-y-3 overflow-y-auto flex-1 pr-2">
-                                    <div class="text-slate-600 italic">Construye una expresión y pulsa 'Sincronizar'...
+                                    <div class="text-slate-600 italic">Construye una expresión y pulsa
+                                        'Sincronizar'...
                                     </div>
                                 </div>
                             </div>
                             <div id="logic-insight-3"
                                 class="bg-alt border border-border p-4 rounded-xl opacity-0 transition-all flex flex-col justify-center">
-                                <h4 class="text-[10px] font-bold text-title uppercase mb-1">Análisis de Estructura:</h4>
+                                <h4 class="text-[10px] font-bold text-title uppercase mb-1">Análisis de Estructura:
+                                </h4>
                                 <p id="insight-text-3" class="text-[11px] text-text-long font-medium leading-relaxed">
                                 </p>
                             </div>
