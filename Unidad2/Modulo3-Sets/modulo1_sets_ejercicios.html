@@ -216,9 +216,6 @@
                     <!-- Left: Logic Builder -->
                     <div class="lg:col-span-4 flex flex-col gap-6 overflow-y-auto pr-4">
                         <div class="space-y-4">
-                            <span id="lab-tag-1"
-                                class="bg-accent text-white px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest">Desafío:
-                                1/1</span>
                             <h2 id="exercise-title-1" class="text-3xl font-extrabold text-title">Cargando...</h2>
                             <p id="exercise-desc-1" class="text-xs text-text-long leading-relaxed">
                                 Preparando entorno de datos...
@@ -388,9 +385,6 @@
                     <!-- Left: Logic Builder -->
                     <div class="lg:col-span-4 flex flex-col gap-6 overflow-y-auto pr-4">
                         <div class="space-y-4">
-                            <span id="lab-tag-2"
-                                class="bg-accent text-white px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest">Desafío:
-                                2/2</span>
                             <h2 id="exercise-title-2" class="text-3xl font-extrabold text-title">Cargando...</h2>
                             <p id="exercise-desc-2" class="text-xs text-text-long leading-relaxed">
                                 Preparando entorno de datos...
@@ -558,28 +552,57 @@
                 <div class="max-w-7xl w-full grid grid-cols-1 lg:grid-cols-12 gap-10 h-full max-h-[85vh]">
                     <div class="lg:col-span-4 flex flex-col gap-6 overflow-y-auto pr-4">
                         <div class="space-y-4">
-                            <span
-                                class="bg-highlight text-white px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest">Desafío
-                                Final</span>
-                            <h2 class="text-3xl font-extrabold text-title">Filtros Multidimensionales</h2>
+                            <h2 class="text-3xl font-extrabold text-title">Cargando...</h2>
                             <p class="text-xs text-text-long leading-relaxed">
-                                Tienes 3 canales de venta. Tu misión final es extraer grupos específicos usando lógica
-                                combinada de conjuntos.
+                                Preparando desafío final...
+                            </p>
+                        </div>
+
+                        <!-- Current Question Panel (added) -->
+                        <div
+                            class="bg-white/50 border border-border p-5 rounded-2xl space-y-3 shadow-sm shadow-highlight/5">
+                            <div class="flex justify-between items-center">
+                                <span class="text-[10px] font-bold text-highlight uppercase tracking-tighter">Pregunta
+                                    <span id="question-index-3">1/1</span></span>
+                                <div class="flex gap-1">
+                                    <button onclick="changeQuestion(3, -1)"
+                                        class="p-1 hover:bg-slate-100 rounded text-slate-400 disabled:opacity-0"
+                                        id="prev-q-btn-3">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none"
+                                            viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M15 19l-7-7 7-7" />
+                                        </svg>
+                                    </button>
+                                    <button onclick="changeQuestion(3, 1)"
+                                        class="p-1 hover:bg-slate-100 rounded text-highlight disabled:opacity-0"
+                                        id="next-q-btn-3">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none"
+                                            viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M9 5l7 7-7 7" />
+                                        </svg>
+                                    </button>
+                                </div>
+                            </div>
+                            <p id="current-question-text-3" class="text-sm font-bold text-title leading-snug">
+                                ...
                             </p>
                         </div>
 
                         <div class="grid grid-cols-3 gap-2">
                             <div class="bg-accent/10 border border-accent/20 p-2 rounded-lg text-center">
-                                <span class="text-[8px] font-bold uppercase text-accent">WEB (A)</span>
-                                <p class="text-[10px] font-mono font-bold">58 cl</p>
+                                <span class="text-[8px] font-bold uppercase text-accent truncate block">WEB (A)</span>
+                                <p class="text-[10px] font-mono font-bold italic text-slate-500">Conjunto A</p>
                             </div>
                             <div class="bg-action/10 border border-action/20 p-2 rounded-lg text-center">
-                                <span class="text-[8px] font-bold uppercase text-action">MÓVIL (B)</span>
-                                <p class="text-[10px] font-mono font-bold">42 cl</p>
+                                <span class="text-[8px] font-bold uppercase text-action truncate block">MÓVIL (B)</span>
+                                <p class="text-[10px] font-mono font-bold italic text-slate-500">Conjunto B</p>
                             </div>
                             <div class="bg-purple-100 border border-purple-200 p-2 rounded-lg text-center">
-                                <span class="text-[8px] font-bold uppercase text-purple-600">TIENDA (C)</span>
-                                <p class="text-[10px] font-mono font-bold">35 cl</p>
+                                <span class="text-[8px] font-bold uppercase text-purple-600 truncate block">TIENDA
+                                    (C)</span>
+                                <p class="text-[10px] font-mono font-bold italic text-slate-500">Conjunto C</p>
                             </div>
                         </div>
 
@@ -640,32 +663,32 @@
                             <div
                                 class="flex-1 flex flex-col items-center justify-center p-8 select-none h-full overflow-hidden">
                                 <div class="relative w-72 h-72 flex-shrink-0 scale-90 md:scale-100">
-                                    <!-- Overlays for generic renderVenn compatibility -->
+                                    <!-- Overlays for 3nd-set Challenge -->
                                     <div id="int-overlay-a-3"
                                         class="absolute top-0 left-1/2 -translate-x-1/2 w-44 h-44 rounded-full transition-all duration-500 opacity-0 z-0">
                                     </div>
                                     <div id="int-overlay-b-3"
                                         class="absolute top-12 left-0 w-44 h-44 rounded-full transition-all duration-500 opacity-0 z-0">
                                     </div>
+                                    <div id="int-overlay-c-3"
+                                        class="absolute top-12 right-0 w-44 h-44 rounded-full transition-all duration-500 opacity-0 z-0">
+                                    </div>
                                     <div id="int-overlay-int-3" class="hidden"></div>
 
-                                    <div class="absolute top-0 left-1/2 -translate-x-1/2 w-44 h-44 rounded-full border-4 border-accent/40 bg-accent/5 flex items-start justify-center pt-6 z-10"
+                                    <div class="absolute top-0 left-1/2 -translate-x-1/2 w-44 h-44 rounded-full border-4 border-accent/40 bg-accent/5 flex items-start justify-center pt-2 z-10"
                                         id="venn-a-3">
                                         <span
-                                            class="text-[8px] font-bold text-accent uppercase tracking-widest px-4 text-center">Web
-                                            (A)</span>
+                                            class="text-[8px] font-bold text-accent uppercase tracking-widest px-4 text-center">A</span>
                                     </div>
-                                    <div class="absolute top-12 left-0 w-44 h-44 rounded-full border-4 border-action/40 bg-action/5 flex items-start justify-center pt-6 z-10"
+                                    <div class="absolute top-12 left-0 w-44 h-44 rounded-full border-4 border-action/40 bg-action/5 flex items-center justify-start pl-2 z-10"
                                         id="venn-b-3">
                                         <span
-                                            class="text-[8px] font-bold text-action uppercase tracking-widest px-4 text-center">Móvil
-                                            (B)</span>
+                                            class="text-[8px] font-bold text-action uppercase tracking-widest px-4 text-left rotate-[-45deg] origin-left">B</span>
                                     </div>
-                                    <div class="absolute top-12 right-0 w-44 h-44 rounded-full border-4 border-purple-400/40 bg-purple-500/5 flex items-start justify-center pt-6 z-10"
+                                    <div class="absolute top-12 right-0 w-44 h-44 rounded-full border-4 border-purple-400/40 bg-purple-500/5 flex items-center justify-end pr-2 z-10"
                                         id="venn-c-3">
                                         <span
-                                            class="text-[8px] font-bold text-purple-600 uppercase tracking-widest px-4 text-center">Tienda
-                                            (C)</span>
+                                            class="text-[8px] font-bold text-purple-600 uppercase tracking-widest px-4 text-right rotate-[45deg] origin-right">C</span>
                                     </div>
                                     <!-- Container for numbers (generic renderVenn compatibility) -->
                                     <div id="int-numbers-container-3" class="absolute inset-0 z-30 pointer-events-none">
@@ -919,12 +942,217 @@
             }
         ];
 
+        const ejerciciosTresSets = [
+            {
+                "titulo": "Club Deportivo Escolar",
+                "descripcion": "Se analiza la inscripción de alumnos en tres talleres deportivos: Fútbol, Tenis y Básquetbol.",
+                "conjuntos": {
+                    "A": {
+                        "nombre": "Fútbol",
+                        "estudiantes": ["Juan", "Pedro", "Diego", "Luis", "Ana"]
+                    },
+                    "B": {
+                        "nombre": "Tenis",
+                        "estudiantes": ["Ana", "Pedro", "Sofía", "Carla"]
+                    },
+                    "C": {
+                        "nombre": "Básquetbol",
+                        "estudiantes": ["Diego", "Sofía", "Lucas", "Juan"]
+                    }
+                },
+                "preguntas": [
+                    {
+                        "pregunta": "¿Quiénes están inscritos SOLO en Fútbol (y en ningún otro deporte)?",
+                        "soluciones": ["A-(B|C)", "A-B-C", "(A-B)-C"],
+                        "explicacion": "A los alumnos de Fútbol se les resta la unión de Tenis y Básquetbol, o se restan secuencialmente."
+                    },
+                    {
+                        "pregunta": "¿Quiénes juegan Fútbol y Tenis, pero NO Básquetbol?",
+                        "soluciones": ["(A&B)-C", "A&B-C"],
+                        "explicacion": "Intersección de A y B, excluyendo a los que están en C."
+                    },
+                    {
+                        "pregunta": "¿Quiénes están inscritos en los tres deportes simultáneamente?",
+                        "soluciones": ["A&B&C", "(A&B)&C", "A&(B&C)"],
+                        "explicacion": "Intersección triple: deben estar presentes en todos los conjuntos."
+                    },
+                    {
+                        "pregunta": "¿Quiénes juegan Tenis o Básquetbol, pero NO Fútbol?",
+                        "soluciones": ["(B|C)-A", "B|C-A"],
+                        "explicacion": "Unión de B y C, restando a los que pertenecen al conjunto A."
+                    }
+                ]
+            },
+            {
+                "titulo": "Ingredientes de Pizza",
+                "descripcion": "Una pizzería analiza los pedidos que incluyen ciertos ingredientes: Pepperoni, Champiñones y Aceitunas.",
+                "conjuntos": {
+                    "A": {
+                        "nombre": "Pepperoni",
+                        "estudiantes": ["Pedido1", "Pedido2", "Pedido3", "Pedido5"]
+                    },
+                    "B": {
+                        "nombre": "Champiñones",
+                        "estudiantes": ["Pedido2", "Pedido4", "Pedido5", "Pedido6"]
+                    },
+                    "C": {
+                        "nombre": "Aceitunas",
+                        "estudiantes": ["Pedido3", "Pedido5", "Pedido6", "Pedido7"]
+                    }
+                },
+                "preguntas": [
+                    {
+                        "pregunta": "¿Qué pedidos llevan Pepperoni o Champiñones, pero NO Aceitunas?",
+                        "soluciones": ["(A|B)-C", "A|B-C"],
+                        "explicacion": "Unión de los dos primeros ingredientes, excluyendo los pedidos que tienen Aceitunas."
+                    },
+                    {
+                        "pregunta": "¿Qué pedidos tienen exactamente los 3 ingredientes?",
+                        "soluciones": ["A&B&C", "(A&B)&C"],
+                        "explicacion": "Intersección de los tres conjuntos."
+                    },
+                    {
+                        "pregunta": "¿Qué pedidos tienen solo Aceitunas (ninguno de los otros dos)?",
+                        "soluciones": ["C-(A|B)", "C-A-B", "(C-A)-B"],
+                        "explicacion": "Conjunto C menos la unión de A y B, o restando cada conjunto por separado."
+                    },
+                    {
+                        "pregunta": "¿Qué pedidos tienen Champiñones y Aceitunas, pero no Pepperoni?",
+                        "soluciones": ["(B&C)-A", "B&C-A"],
+                        "explicacion": "Intersección de B y C, restando los elementos de A."
+                    }
+                ]
+            },
+            {
+                "titulo": "Requisitos de Postulación",
+                "descripcion": "Una empresa filtra candidatos según tres requisitos: Título Universitario, Inglés Avanzado y Experiencia Previa.",
+                "conjuntos": {
+                    "A": {
+                        "nombre": "Título",
+                        "estudiantes": ["Candidato1", "Candidato2", "Candidato3", "Candidato4"]
+                    },
+                    "B": {
+                        "nombre": "Inglés",
+                        "estudiantes": ["Candidato2", "Candidato3", "Candidato5", "Candidato6"]
+                    },
+                    "C": {
+                        "nombre": "Experiencia",
+                        "estudiantes": ["Candidato1", "Candidato2", "Candidato5", "Candidato7"]
+                    }
+                },
+                "preguntas": [
+                    {
+                        "pregunta": "¿Qué candidatos cumplen con tener Título y Experiencia, pero no saben Inglés?",
+                        "soluciones": ["(A&C)-B", "A&C-B"],
+                        "explicacion": "Intersección de A y C, excluyendo a los que están en B."
+                    },
+                    {
+                        "pregunta": "¿Qué candidatos cumplen con al menos uno de los requisitos?",
+                        "soluciones": ["A|B|C", "(A|B)|C", "A|(B|C)"],
+                        "explicacion": "Unión total de los tres conjuntos."
+                    },
+                    {
+                        "pregunta": "¿Qué candidatos tienen Título, pero carecen de los otros dos requisitos (Inglés y Experiencia)?",
+                        "soluciones": ["A-(B|C)", "A-B-C", "(A-B)-C"],
+                        "explicacion": "Candidatos que están únicamente en A y se restan los otros dos conjuntos."
+                    },
+                    {
+                        "pregunta": "¿Qué candidatos tienen Inglés o Experiencia, pero no tienen Título?",
+                        "soluciones": ["(B|C)-A", "B|C-A"],
+                        "explicacion": "Unión de requisitos B y C, eliminando a quienes tienen el requisito A."
+                    }
+                ]
+            },
+            {
+                "titulo": "Plataformas de Videojuegos",
+                "descripcion": "Se encuesta a un grupo de gamers sobre qué consolas poseen: PlayStation, Xbox y Nintendo Switch.",
+                "conjuntos": {
+                    "A": {
+                        "nombre": "PlayStation",
+                        "estudiantes": ["Gamer1", "Gamer2", "Gamer3", "Gamer4"]
+                    },
+                    "B": {
+                        "nombre": "Xbox",
+                        "estudiantes": ["Gamer2", "Gamer5", "Gamer6"]
+                    },
+                    "C": {
+                        "nombre": "Switch",
+                        "estudiantes": ["Gamer1", "Gamer3", "Gamer5", "Gamer7"]
+                    }
+                },
+                "preguntas": [
+                    {
+                        "pregunta": "¿Quiénes tienen PlayStation y Xbox, pero NO Switch?",
+                        "soluciones": ["(A&B)-C", "A&B-C"],
+                        "explicacion": "Intersección de A y B, quitando los elementos de C."
+                    },
+                    {
+                        "pregunta": "¿Quiénes poseen solo Nintendo Switch?",
+                        "soluciones": ["C-(A|B)", "C-A-B", "(C-A)-B"],
+                        "explicacion": "Conjunto C excluyendo cualquier gamer que tenga A o B."
+                    },
+                    {
+                        "pregunta": "¿Quiénes tienen PlayStation o Switch, pero NO Xbox?",
+                        "soluciones": ["(A|C)-B", "A|C-B"],
+                        "explicacion": "Unión de A y C, restando el conjunto B."
+                    },
+                    {
+                        "pregunta": "¿Quiénes poseen alguna de las tres consolas (cualquiera)?",
+                        "soluciones": ["A|B|C", "(A|B)|C"],
+                        "explicacion": "Unión de los tres conjuntos."
+                    }
+                ]
+            },
+            {
+                "titulo": "Destinos de Vacaciones",
+                "descripcion": "Una agencia de viajes clasifica a sus clientes según los destinos visitados: Playa, Montaña y Ciudad.",
+                "conjuntos": {
+                    "A": {
+                        "nombre": "Playa",
+                        "estudiantes": ["Cliente1", "Cliente2", "Cliente3", "Cliente5"]
+                    },
+                    "B": {
+                        "nombre": "Montaña",
+                        "estudiantes": ["Cliente2", "Cliente4", "Cliente5", "Cliente6"]
+                    },
+                    "C": {
+                        "nombre": "Ciudad",
+                        "estudiantes": ["Cliente1", "Cliente4", "Cliente5", "Cliente7"]
+                    }
+                },
+                "preguntas": [
+                    {
+                        "pregunta": "¿Quiénes han visitado los tres tipos de destino?",
+                        "soluciones": ["A&B&C", "(A&B)&C"],
+                        "explicacion": "Intersección triple: clientes presentes en las tres listas."
+                    },
+                    {
+                        "pregunta": "¿Quiénes visitaron solo Montaña (ni Playa ni Ciudad)?",
+                        "soluciones": ["B-(A|C)", "B-A-C", "(B-A)-C"],
+                        "explicacion": "Elementos exclusivos de B, restando la unión de A y C."
+                    },
+                    {
+                        "pregunta": "¿Quiénes visitaron Playa y Ciudad, pero NO Montaña?",
+                        "soluciones": ["(A&C)-B", "A&C-B"],
+                        "explicacion": "Intersección de A y C, excluyendo B."
+                    },
+                    {
+                        "pregunta": "¿Quiénes visitaron Montaña o Ciudad, pero NO Playa?",
+                        "soluciones": ["(B|C)-A", "B|C-A"],
+                        "explicacion": "Unión de B y C, restando los elementos de A."
+                    }
+                ]
+            }
+        ];
+
         let selectedExercises1 = [];
-        let currentQuestions = { 1: 0, 2: 0 };
+        let selectedExercise3 = null;
+        let currentQuestions = { 1: 0, 2: 0, 3: 0 };
         let tokens1 = [], tokens2 = [], tokens3 = [];
         let activeSets = {
             1: { A: new Set(), B: new Set() },
-            2: { A: new Set(), B: new Set() }
+            2: { A: new Set(), B: new Set() },
+            3: { A: new Set(), B: new Set(), C: new Set() }
         };
 
         // State Slide 2 (Challenge 2)
@@ -946,57 +1174,102 @@
             const shuffled = [...ejerciciosSets].sort(() => 0.5 - Math.random());
             selectedExercises1 = shuffled.slice(0, 2);
 
-            // Cargar ejercicio 0 en slide 1 y ejercicio 1 en slide 2
+            // Seleccionar 1 ejercicio al azar (3 sets)
+            selectedExercise3 = ejerciciosTresSets[Math.floor(Math.random() * ejerciciosTresSets.length)];
+
+            // Cargar ejercicios
             loadExercise(1, 0, 0);
             loadExercise(2, 1, 0);
+            loadExercise(3, 0, 0);
 
             updateNavigation();
         }
 
         function loadExercise(slide, exIdx, qIdx) {
+            let ex;
+            if (slide === 1 || slide === 2) {
+                ex = selectedExercises1[exIdx];
+            } else {
+                ex = selectedExercise3;
+            }
+
             currentQuestions[slide] = qIdx;
-            const ex = selectedExercises1[exIdx];
             const q = ex.preguntas[qIdx];
 
-            // Update Text
-            document.getElementById(`exercise-title-${slide}`).innerText = ex.titulo;
-            document.getElementById(`exercise-desc-${slide}`).innerText = ex.descripcion;
-            document.getElementById(`current-question-text-${slide}`).innerText = q.pregunta;
-            document.getElementById(`question-index-${slide}`).innerText = `${qIdx + 1}/${ex.preguntas.length}`;
-            document.getElementById(`lab-tag-${slide}`).innerText = `Desafío: ${exIdx + 1}/2`;
+            // Update UI
+            if (slide === 1 || slide === 2) {
+                document.getElementById(`exercise-title-${slide}`).innerText = ex.titulo;
+                document.getElementById(`exercise-desc-${slide}`).innerText = ex.descripcion;
+                document.getElementById(`current-question-text-${slide}`).innerText = q.pregunta;
+                document.getElementById(`question-index-${slide}`).innerText = `${qIdx + 1}/${ex.preguntas.length}`;
 
-            // Update Sets Info
-            document.getElementById(`set-a-name-${slide}`).innerText = `${ex.conjuntos.A.nombre} (A)`;
-            document.getElementById(`set-a-count-${slide}`).innerText = `${ex.conjuntos.A.estudiantes.length} alumnos`;
-            document.getElementById(`set-b-name-${slide}`).innerText = `${ex.conjuntos.B.nombre} (B)`;
-            document.getElementById(`set-b-count-${slide}`).innerText = `${ex.conjuntos.B.estudiantes.length} alumnos`;
+                document.getElementById(`set-a-name-${slide}`).innerText = `${ex.conjuntos.A.nombre} (A)`;
+                document.getElementById(`set-a-count-${slide}`).innerText = `${ex.conjuntos.A.estudiantes.length} alumnos`;
+                document.getElementById(`set-b-name-${slide}`).innerText = `${ex.conjuntos.B.nombre} (B)`;
+                document.getElementById(`set-b-count-${slide}`).innerText = `${ex.conjuntos.B.estudiantes.length} alumnos`;
 
-            // Labels in Venn
-            document.getElementById(`venn-a-label-${slide}`).innerText = ex.conjuntos.A.nombre;
-            document.getElementById(`venn-b-label-${slide}`).innerText = ex.conjuntos.B.nombre;
+                document.getElementById(`venn-a-label-${slide}`).innerText = ex.conjuntos.A.nombre;
+                document.getElementById(`venn-b-label-${slide}`).innerText = ex.conjuntos.B.nombre;
+            } else {
+                // Slide 3 (3 sets)
+                const s3 = document.getElementById('slide-3');
+                s3.querySelector('h2').innerText = ex.titulo;
+                s3.querySelector('p').innerText = ex.descripcion;
+                document.getElementById('current-question-text-3').innerText = q.pregunta;
+                document.getElementById('question-index-3').innerText = `${qIdx + 1}/${ex.preguntas.length}`;
+
+                const grid3 = s3.querySelector('.grid-cols-3');
+                const divs = grid3.querySelectorAll('div');
+                divs[0].querySelector('span').innerText = `${ex.conjuntos.A.nombre.toUpperCase()} (A)`;
+                divs[1].querySelector('span').innerText = `${ex.conjuntos.B.nombre.toUpperCase()} (B)`;
+                divs[2].querySelector('span').innerText = `${ex.conjuntos.C.nombre.toUpperCase()} (C)`;
+
+                divs[0].querySelector('p').innerText = `${ex.conjuntos.A.estudiantes.length} el`;
+                divs[1].querySelector('p').innerText = `${ex.conjuntos.B.estudiantes.length} el`;
+                divs[2].querySelector('p').innerText = `${ex.conjuntos.C.estudiantes.length} el`;
+
+                document.getElementById('venn-a-3').querySelector('span').innerText = ex.conjuntos.A.nombre;
+                document.getElementById('venn-b-3').querySelector('span').innerText = ex.conjuntos.B.nombre;
+                document.getElementById('venn-c-3').querySelector('span').innerText = ex.conjuntos.C.nombre;
+            }
 
             // Nav Buttons
-            document.getElementById(`prev-q-btn${slide === 1 ? '' : '-' + slide}`).disabled = qIdx === 0;
-            document.getElementById(`next-q-btn${slide === 1 ? '' : '-' + slide}`).disabled = qIdx === ex.preguntas.length - 1;
+            const suffix = slide === 1 ? '' : '-' + slide;
+            const prevBtn = document.getElementById(`prev-q-btn${suffix}`);
+            const nextBtn = document.getElementById(`next-q-btn${suffix}`);
+            if (prevBtn) prevBtn.disabled = qIdx === 0;
+            if (nextBtn) nextBtn.disabled = qIdx === ex.preguntas.length - 1;
 
             // Update Logic Sets
             activeSets[slide].A = new Set(ex.conjuntos.A.estudiantes);
             activeSets[slide].B = new Set(ex.conjuntos.B.estudiantes);
+            if (slide === 3) activeSets[slide].C = new Set(ex.conjuntos.C.estudiantes);
 
             // Reset UI
             clearExpression(slide);
-            document.getElementById(`terminal-${slide}`).innerHTML = '<div class="text-slate-600 italic">Esperando expresión...</div>';
-            document.getElementById(`logic-insight-${slide}`).classList.add('opacity-0');
-            document.getElementById(`logic-result-icon-${slide}`).classList.add('opacity-0');
+            const terminalId = slide === 3 ? 'complex-terminal-3' : `terminal-${slide}`;
+            const insightId = slide === 3 ? 'logic-insight-3' : `logic-insight-${slide}`;
+            const iconId = slide === 3 ? 'logic-result-icon-3' : `logic-result-icon-${slide}`;
+
+            document.getElementById(terminalId).innerHTML = '<div class="text-slate-600 italic">Esperando expresión...</div>';
+            document.getElementById(insightId).classList.add('opacity-0');
+            document.getElementById(iconId).classList.add('opacity-0');
 
             renderVenn(slide, '');
         }
 
         function changeQuestion(slide, dir) {
-            const exIdx = slide === 1 ? 0 : 1;
-            const ex = selectedExercises1[exIdx];
-            let nextQ = currentQuestions[slide] + dir;
+            let ex;
+            let exIdx = 0;
+            if (slide === 1 || slide === 2) {
+                exIdx = slide === 1 ? 0 : 1;
+                ex = selectedExercises1[exIdx];
+            } else {
+                ex = selectedExercise3;
+                exIdx = 0; // for internal use
+            }
 
+            let nextQ = currentQuestions[slide] + dir;
             if (nextQ >= 0 && nextQ < ex.preguntas.length) {
                 loadExercise(slide, exIdx, nextQ);
             }
@@ -1017,6 +1290,7 @@
 
             if (currentSlide === 1) renderVenn(1, '');
             if (currentSlide === 2) renderVenn(2, '');
+            if (currentSlide === 3) renderVenn(3, '');
         }
 
         function nextSlide() {
@@ -1074,7 +1348,7 @@
             renderVenn(slide, expr);
 
             setTimeout(() => {
-                const isCorrect = q.soluciones.includes(expr);
+                const isCorrect = q.soluciones.some(s => s.replace(/\s+/g, '') === expr);
                 const sA = activeSets[slide].A;
                 const sB = activeSets[slide].B;
 
@@ -1100,36 +1374,52 @@
         }
 
         function renderVenn(slide, op) {
-            const overlayA = document.getElementById(`int-overlay-a${slide === 1 ? '' : '-' + slide}`);
-            const overlayB = document.getElementById(`int-overlay-b${slide === 1 ? '' : '-' + slide}`);
-            const overlayInt = document.getElementById(`int-overlay-int${slide === 1 ? '' : '-' + slide}`);
-            const numContainer = document.getElementById(`int-numbers-container${slide === 1 ? '' : '-' + slide}`);
+            const suffix = slide === 1 ? '' : '-' + slide;
+            const overlayA = document.getElementById(`int-overlay-a${suffix}`);
+            const overlayB = document.getElementById(`int-overlay-b${suffix}`);
+            const overlayC = document.getElementById(`int-overlay-c${suffix}`);
+            const overlayInt = document.getElementById(`int-overlay-int${suffix}`);
+            const numContainer = document.getElementById(`int-numbers-container${suffix}`);
             const sA = activeSets[slide].A;
             const sB = activeSets[slide].B;
 
             // Reset
-            [overlayA, overlayB, overlayInt].forEach(el => el.classList.remove('bg-accent', 'bg-action', 'bg-highlight', 'opacity-100', 'opacity-40', 'opacity-60', 'bg-blue-200', 'bg-blue-300', 'bg-blue-400', 'bg-white'));
-            [overlayA, overlayB, overlayInt].forEach(el => el.classList.add('opacity-0'));
+            const overlays = [overlayA, overlayB, overlayInt];
+            if (overlayC) overlays.push(overlayC);
 
-            if (op === 'A|B' || op === 'B|A') {
-                overlayA.classList.add('bg-blue-200', 'opacity-100');
-                overlayB.classList.add('bg-blue-400', 'opacity-100');
-                overlayInt.classList.add('bg-blue-300', 'opacity-100');
-            } else if (op === 'A&B' || op === 'B&A') {
-                overlayInt.classList.add('bg-highlight', 'opacity-100');
-            } else if (op === 'A-B') {
-                overlayA.classList.add('bg-accent', 'opacity-60', 'opacity-100');
-                overlayInt.classList.add('bg-white', 'opacity-100');
-            } else if (op === 'B-A') {
-                overlayB.classList.add('bg-action', 'opacity-60', 'opacity-100');
-                overlayInt.classList.add('bg-white', 'opacity-100');
-            } else if (op === 'A^B' || op === 'B^A') {
-                overlayA.classList.add('bg-accent', 'opacity-40', 'opacity-100');
-                overlayB.classList.add('bg-action', 'opacity-40', 'opacity-100');
-                overlayInt.classList.add('bg-white', 'opacity-100');
+            overlays.forEach(el => {
+                if (el) {
+                    el.classList.remove('bg-accent', 'bg-action', 'bg-highlight', 'bg-purple-500', 'opacity-100', 'opacity-40', 'opacity-60', 'bg-blue-200', 'bg-blue-300', 'bg-blue-400', 'bg-white');
+                    el.classList.add('opacity-0');
+                }
+            });
+
+            // Basic 3nd-set / 2nd-set shading
+            if (op.includes('A')) overlayA.classList.add('bg-accent', 'opacity-40', 'opacity-100');
+            if (op.includes('B')) overlayB.classList.add('bg-action', 'opacity-40', 'opacity-100');
+            if (overlayC && op.includes('C')) overlayC.classList.add('bg-purple-500', 'opacity-40', 'opacity-100');
+
+            // pairwise intersections for Slide 1/2
+            if (slide < 3) {
+                if (op === 'A&B' || op === 'B&A') {
+                    [overlayA, overlayB].forEach(el => el.classList.replace('opacity-100', 'opacity-0'));
+                    overlayInt.classList.add('bg-highlight', 'opacity-100');
+                } else if (op === 'A-B') {
+                    overlayInt.classList.add('bg-white', 'opacity-100');
+                } else if (op === 'B-A') {
+                    overlayInt.classList.add('bg-white', 'opacity-100');
+                } else if (op === 'A^B' || op === 'B^A') {
+                    overlayInt.classList.add('bg-white', 'opacity-100');
+                } else if (op === 'A|B' || op === 'B|A') {
+                    overlayA.classList.replace('bg-accent', 'bg-blue-200');
+                    overlayB.classList.replace('bg-action', 'bg-blue-400');
+                    overlayInt.classList.add('bg-blue-300', 'opacity-100');
+                }
             }
 
             numContainer.innerHTML = '';
+            if (slide === 3) return; // No dibujar alumnos en el desafío de 3 conjuntos
+
             const all = Array.from(new Set([...sA, ...sB]));
             let idxA = 0, idxB = 0, idxInt = 0;
             all.forEach((name) => {
@@ -1167,13 +1457,18 @@
             const term = document.getElementById('complex-terminal-3');
             const insight = document.getElementById('logic-insight-3');
             if (!expr) return;
-            const valid = (expr === "(A&B)-C" || expr === "A&B-C" || expr === "(B&A)-C");
+
+            const q = selectedExercise3.preguntas[currentQuestions[3]];
+            const isCorrect = q.soluciones.includes(expr);
+
             term.innerHTML += `<div class="animate-fade-in"><span class="text-teal-400">>>></span> logic_engine.run(<span class="text-white">${expr}</span>)</div>`;
+            renderVenn(3, expr);
             setTimeout(() => {
-                if (valid) {
-                    term.innerHTML += `<div class="text-green-400 font-bold ml-6">EXIT: {'Bert'}</div>`;
+                const isCorrect = q.soluciones.some(s => s.replace(/\s+/g, '') === expr);
+                if (isCorrect) {
+                    term.innerHTML += `<div class="text-green-400 font-bold ml-6">EXIT: [OK]</div>`;
                     insight.classList.replace('opacity-0', 'opacity-100');
-                    document.getElementById('insight-text-3').innerText = "Misión cumplida. Has aislado el canal digital puro.";
+                    document.getElementById('insight-text-3').innerText = q.explicacion;
                     document.getElementById('logic-result-icon-3').classList.replace('opacity-0', 'opacity-100');
                 } else {
                     term.innerHTML += `<div class="text-red-400 ml-6">LOGIC_ERROR: No se cumple el objetivo.</div>`;
