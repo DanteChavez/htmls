@@ -496,10 +496,10 @@
                                         class="token-string">"E"</span>)</div>
                                 <div class="mt-4 flex items-center gap-2 whitespace-nowrap overflow-x-auto pb-2">
                                     <span class="token-variable">sub</span> = letras[<input type="number"
-                                        id="slice-start" value="1" min="0" max="4"
-                                        class="w-10 border rounded px-1 text-center bg-blue-50"> :
-                                    <input type="number" id="slice-end" value="4" min="1" max="5"
-                                        class="w-10 border rounded px-1 text-center bg-blue-50">]
+                                        id="slice-start" value="1" min="-5" max="4"
+                                        class="w-12 border rounded px-1 text-center bg-blue-50"> :
+                                    <input type="number" id="slice-end" value="4" min="-4" max="5"
+                                        class="w-12 border rounded px-1 text-center bg-blue-50">]
                                 </div>
                                 <div class="mt-2 text-action font-bold" id="slice-result-code"># Resultado: ("B", "C",
                                     "D")</div>
@@ -1133,27 +1133,46 @@
             const endInput = document.getElementById('slice-end');
             if (!startInput || !endInput) return;
 
-            const start = parseInt(startInput.value) || 0;
-            const end = parseInt(endInput.value) || 0;
             const items = ["A", "B", "C", "D", "E"];
+            const len = items.length;
+
+            let startVal = parseInt(startInput.value);
+            let endVal = parseInt(endInput.value);
+            if (isNaN(startVal)) startVal = 0;
+            if (isNaN(endVal)) endVal = 0;
+
+            const resolvePos = (idx) => {
+                if (idx < 0) return Math.max(0, len + idx);
+                return Math.min(len, idx);
+            };
+
+            const startPos = resolvePos(startVal);
+            const endPos = resolvePos(endVal);
+
+            // Logic for Python-style slicing results
+            const sliceResult = items.slice(startPos, endPos);
+
             const overlay = document.getElementById('slice-overlay');
             const resultDisplay = document.getElementById('slice-output');
             const resultCode = document.getElementById('slice-result-code');
 
             if (!overlay || !resultDisplay || !resultCode) return;
 
-            const safeStart = Math.max(0, Math.min(start, 4));
-            const safeEnd = Math.max(safeStart, Math.min(end, 5));
+            // Visual highlight (clamped for visualizer grid)
+            // The visual overlay should always go from the smaller index to the larger one for display
+            const visStart = Math.min(startPos, endPos);
+            const visEnd = Math.max(startPos, endPos);
 
             const itemWidth = 72;
-            overlay.style.left = `${safeStart * itemWidth}px`;
-            overlay.style.width = `${(safeEnd - safeStart) * itemWidth - 8}px`;
-            overlay.style.opacity = (safeEnd > safeStart) ? '1' : '0.2';
+            overlay.style.transition = 'all 0.3s ease';
+            overlay.style.left = `${startPos * itemWidth}px`;
+            overlay.style.width = `${Math.max(0, (endPos - startPos) * itemWidth - 8)}px`;
+            overlay.style.opacity = (endPos > startPos) ? '1' : '0.2'; // Only show if slice is valid
 
-            for (let i = 0; i < 5; i++) {
+            for (let i = 0; i < len; i++) {
                 const el = document.getElementById(`slice-item-${i}`);
                 if (el) {
-                    if (i >= safeStart && i < safeEnd) {
+                    if (i >= startPos && i < endPos) { // Highlight based on actual slice range
                         el.classList.add('border-action', 'bg-blue-50', 'text-action', 'scale-105');
                     } else {
                         el.classList.remove('border-action', 'bg-blue-50', 'text-action', 'scale-105');
