@@ -250,19 +250,9 @@
                                 <div class="mac-dot mac-green"></div>
                                 <span class="text-xs text-gray-500 font-mono ml-2">coordenadas.py</span>
                             </div>
-                            <div class="p-4 font-mono text-sm bg-block text-body leading-relaxed">
-                                <div><span class="token-variable">punto</span> = (<span class="token-number">10</span>,
-                                    <span class="token-number">20</span>, <span class="token-number">30</span>)
-                                </div>
-                                <div class="mt-2 text-gray-400 italic"># Acceso por índice</div>
-                                <div><span class="token-function">print</span>(punto[<span
-                                        class="token-number">0</span>])</div>
-                                <div><span class="token-function">print</span>(punto[-<span
-                                        class="token-number">1</span>])</div>
-                                <div class="mt-2 text-gray-400 italic"># Iteración</div>
-                                <div><span class="token-keyword">for</span> coord <span class="token-keyword">in</span>
-                                    punto:</div>
-                                <div class="pl-4"><span class="token-function">print</span>(coord)</div>
+                            <div class="p-4 font-mono text-sm bg-block text-body leading-relaxed"
+                                id="s3-code-container">
+                                <!-- Dynamic rendering of punto = (10, 20, 30) -->
                             </div>
                         </div>
 
@@ -292,30 +282,9 @@
                             Memoria</div>
 
                         <!-- Tuple Container -->
-                        <div
-                            class="flex items-center gap-2 bg-white p-4 rounded-xl border-2 border-accent shadow-lg relative z-10">
-                            <span
-                                class="absolute -top-3 left-4 bg-white px-2 text-xs font-bold text-accent">punto</span>
-
-                            <!-- Item 0 -->
-                            <div id="item-0"
-                                class="w-16 h-16 bg-gray-50 border border-gray-200 rounded flex flex-col items-center justify-center relative transition-all duration-300">
-                                <span class="text-xl font-mono font-bold text-body">10</span>
-                                <span class="absolute bottom-1 right-1 text-[10px] text-gray-400 font-mono">0</span>
-                            </div>
-                            <!-- Item 1 -->
-                            <div id="item-1"
-                                class="w-16 h-16 bg-gray-50 border border-gray-200 rounded flex flex-col items-center justify-center relative transition-all duration-300">
-                                <span class="text-xl font-mono font-bold text-body">20</span>
-                                <span class="absolute bottom-1 right-1 text-[10px] text-gray-400 font-mono">1</span>
-                            </div>
-                            <!-- Item 2 -->
-                            <div id="item-2"
-                                class="w-16 h-16 bg-gray-50 border border-gray-200 rounded flex flex-col items-center justify-center relative transition-all duration-300">
-                                <span class="text-xl font-mono font-bold text-body">30</span>
-                                <span class="absolute bottom-1 right-1 text-[10px] text-gray-400 font-mono">2</span>
-                                <span class="absolute top-1 left-1 text-[10px] text-gray-400 font-mono">-1</span>
-                            </div>
+                        <div id="s3-memory-container"
+                            class="flex items-center gap-2 bg-white p-4 rounded-xl border-2 border-accent shadow-lg relative z-10 transition-all">
+                            <!-- Dynamic items via updateSlide3() -->
                         </div>
 
                         <!-- Console Output -->
@@ -415,23 +384,37 @@
                                 <span class="text-xs text-gray-500 font-mono ml-2">operaciones.py</span>
                             </div>
                             <div class="p-6 font-mono text-sm bg-block text-body leading-relaxed">
-                                <div class="flex items-center gap-2">
-                                    <span class="token-variable">t1</span> = (<input type="number" id="t1-val-1"
-                                        value="1" class="w-8 border rounded text-center bg-blue-50">, <input
-                                        type="number" id="t1-val-2" value="2"
-                                        class="w-8 border rounded text-center bg-blue-50">)
+                                <div class="flex items-center gap-2 mb-2">
+                                    <span class="token-variable">t1</span> = (<span id="t1-inputs-container">
+                                        <input type="number" id="t1-val-0" value="1"
+                                            class="w-8 border rounded text-center bg-blue-50">,
+                                        <input type="number" id="t1-val-1" value="2"
+                                            class="w-8 border rounded text-center bg-blue-50">
+                                    </span>)
+                                    <button onclick="addElement(1)"
+                                        class="w-5 h-5 bg-action text-white rounded-full flex items-center justify-center text-xs hover:bg-action-hover focus:outline-none"
+                                        title="Añadir elemento a t1">+</button>
                                 </div>
-                                <div class="flex items-center gap-2">
-                                    <span class="token-variable">t2</span> = (<input type="number" id="t2-val-3"
-                                        value="3" class="w-8 border rounded text-center bg-green-50">, <input
-                                        type="number" id="t2-val-4" value="4"
-                                        class="w-8 border rounded text-center bg-green-50">)
+                                <div class="flex items-center gap-2 mb-2">
+                                    <span class="token-variable">t2</span> = (<span id="t2-inputs-container">
+                                        <input type="number" id="t2-val-0" value="3"
+                                            class="w-8 border rounded text-center bg-green-50">,
+                                        <input type="number" id="t2-val-1" value="4"
+                                            class="w-8 border rounded text-center bg-green-50">
+                                    </span>)
+                                    <button onclick="addElement(2)"
+                                        class="w-5 h-5 bg-action text-white rounded-full flex items-center justify-center text-xs hover:bg-action-hover focus:outline-none"
+                                        title="Añadir elemento a t2">+</button>
                                 </div>
                                 <div class="mt-2 text-gray-400 italic"># Concatenación (+)</div>
                                 <div><span class="token-variable">mixta</span> = t1 + t2</div>
                                 <div class="mt-2 text-gray-400 italic"># Pertenencia (in)</div>
-                                <div><span class="token-function">print</span>(<span id="search-val-display"
-                                        class="token-number">3</span> <span class="token-keyword">in</span> mixta)</div>
+                                <div class="flex items-center gap-1">
+                                    <span class="token-function">print</span>(<input type="number" id="search-val-input"
+                                        value="3"
+                                        class="w-8 border rounded text-center bg-yellow-50 font-bold text-action"> <span
+                                        class="token-keyword">in</span> mixta)
+                                </div>
                             </div>
                         </div>
 
@@ -440,8 +423,8 @@
                                 class="bg-action text-white px-6 py-3 rounded-lg shadow hover:bg-action-hover transition-colors font-medium">
                                 Concatenar Tuplas (+)
                             </button>
-                            <button onclick="checkMembership()"
-                                class="bg-white text-action border border-action px-6 py-3 rounded-lg shadow hover:bg-alt transition-colors font-medium">
+                            <button id="btn-check-membership" onclick="checkMembership()"
+                                class="bg-white text-action border-2 border-action px-6 py-3 rounded-lg shadow hover:bg-alt transition-all font-bold">
                                 Verificar '3' (in)
                             </button>
                         </div>
@@ -456,45 +439,36 @@
                         <div id="concat-stage" class="flex flex-col gap-12 items-center w-full">
                             <!-- Input Tuples -->
                             <div class="flex gap-8 items-center" id="input-tuples">
-                                <div
+                                <div id="v-t1-container"
                                     class="flex items-center gap-1 bg-white p-3 rounded-lg border-2 border-accent shadow relative">
                                     <span
                                         class="absolute -top-3 left-2 bg-white px-1 text-[10px] font-bold text-accent">t1</span>
                                     <div class="w-10 h-10 bg-blue-50 border border-blue-200 rounded flex items-center justify-center font-mono font-bold"
-                                        id="v-t1-1">
-                                        1</div>
+                                        id="v-t1-0">1</div>
                                     <div class="w-10 h-10 bg-blue-50 border border-blue-200 rounded flex items-center justify-center font-mono font-bold"
-                                        id="v-t1-2">
-                                        2</div>
+                                        id="v-t1-1">2</div>
                                 </div>
                                 <span class="text-2xl font-bold text-gray-300">+</span>
-                                <div
+                                <div id="v-t2-container"
                                     class="flex items-center gap-1 bg-white p-3 rounded-lg border-2 border-accent shadow relative">
                                     <span
                                         class="absolute -top-3 left-2 bg-white px-1 text-[10px] font-bold text-accent">t2</span>
                                     <div class="w-10 h-10 bg-green-50 border border-green-200 rounded flex items-center justify-center font-mono font-bold"
-                                        id="v-t2-3">
-                                        3</div>
+                                        id="v-t2-0">3</div>
                                     <div class="w-10 h-10 bg-green-50 border border-green-200 rounded flex items-center justify-center font-mono font-bold"
-                                        id="v-t2-4">
-                                        4</div>
+                                        id="v-t2-1">4</div>
                                 </div>
                             </div>
 
                             <!-- Result Tuple (Hidden initially) -->
                             <div id="result-tuple"
-                                class="flex items-center gap-1 bg-white p-4 rounded-xl border-4 border-action shadow-2xl relative scale-0 transition-all duration-500">
+                                class="flex items-center gap-1 bg-white p-4 rounded-xl border-4 border-action shadow-2xl relative scale-0 transition-all duration-500 overflow-x-auto max-w-full">
                                 <span
                                     class="absolute -top-4 left-4 bg-action text-white px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider">Nueva
                                     Tupla</span>
-                                <div class="w-12 h-12 bg-gray-50 border-2 border-gray-200 rounded flex items-center justify-center font-mono text-xl font-bold"
-                                    id="m-1">?</div>
-                                <div class="w-12 h-12 bg-gray-50 border-2 border-gray-200 rounded flex items-center justify-center font-mono text-xl font-bold"
-                                    id="m-2">?</div>
-                                <div class="w-12 h-12 bg-gray-50 border-2 border-gray-200 rounded flex items-center justify-center font-mono text-xl font-bold"
-                                    id="m-3">?</div>
-                                <div class="w-12 h-12 bg-gray-50 border-2 border-gray-200 rounded flex items-center justify-center font-mono text-xl font-bold"
-                                    id="m-4">?</div>
+                                <div id="result-elements" class="flex items-center gap-1">
+                                    <!-- Dynamic items m-0, m-1 ... -->
+                                </div>
                             </div>
                         </div>
 
@@ -784,6 +758,9 @@
         let currentSlide = 1;
         const totalSlides = 8;
         let mixtaCreated = false;
+        let t1Count = 2;
+        let t2Count = 2;
+        let puntoItems = [10, 20, 30];
         const slideCounter = document.getElementById('current-slide-num');
         const prevBtn = document.getElementById('prev-btn');
         const nextBtn = document.getElementById('next-btn');
@@ -847,123 +824,201 @@
         });
 
         // Slide 3 Interactions
+        function updateSlide3() {
+            const codeContainer = document.getElementById('s3-code-container');
+            const memoryContainer = document.getElementById('s3-memory-container');
+            if (!codeContainer || !memoryContainer) return;
+
+            // Update Code
+            const tupleString = puntoItems.join(', ');
+            codeContainer.innerHTML = `
+                <div><span class="token-variable">punto</span> = (<span id="punto-items-code">${puntoItems.map((v, i) => `
+                    <span class="relative group inline-block">
+                        <span class="token-number">${v}</span>${i < puntoItems.length - 1 ? ',' : ''}
+                        ${puntoItems.length > 1 ? `<button onclick="removeSlide3Item(${i})" class="absolute -top-4 left-1/2 -translate-x-1/2 bg-red-500 text-white rounded-full w-4 h-4 flex items-center justify-center text-[10px] opacity-0 group-hover:opacity-100 transition-opacity">×</button>` : ''}
+                    </span>`).join('')}</span>)
+                </div>
+                <div class="mt-2 text-gray-400 italic"># Acceso por índice</div>
+                <div><span class="token-function">print</span>(punto[<span class="token-number">0</span>])</div>
+                <div><span class="token-function">print</span>(punto[-<span class="token-number">1</span>])</div>
+                <div class="mt-2 text-gray-400 italic"># Iteración</div>
+                <div><span class="token-keyword">for</span> coord <span class="token-keyword">in</span> punto:</div>
+                <div class="pl-4"><span class="token-function">print</span>(coord)</div>
+            `;
+
+            // Update Memory Visualizer
+            memoryContainer.innerHTML = `
+                <span class="absolute -top-3 left-4 bg-white px-2 text-xs font-bold text-accent">punto</span>
+                ${puntoItems.map((v, i) => `
+                    <div id="item-${i}" class="w-16 h-16 bg-gray-50 border border-gray-200 rounded flex flex-col items-center justify-center relative transition-all duration-300">
+                        <span class="text-xl font-mono font-bold text-body">${v}</span>
+                        <span class="absolute bottom-1 right-1 text-[10px] text-gray-400 font-mono">${i}</span>
+                        ${i === puntoItems.length - 1 ? `<span class="absolute top-1 left-1 text-[10px] text-gray-400 font-mono">-1</span>` : ''}
+                    </div>
+                `).join('')}
+            `;
+        }
+
+        function removeSlide3Item(index) {
+            if (puntoItems.length <= 1) return;
+            puntoItems.splice(index, 1);
+            updateSlide3();
+            // Clear console to avoid confusion with old indices
+            const consoleBox = document.getElementById('access-console');
+            if (consoleBox) consoleBox.innerHTML = '<span class="opacity-50">Elemento borrado. Esperando ejecución...</span>';
+        }
+
         function simulateAccess(type) {
             const consoleBox = document.getElementById('access-console');
-            const items = [document.getElementById('item-0'), document.getElementById('item-1'), document.getElementById('item-2')];
+            const items = puntoItems.map((_, i) => document.getElementById(`item-${i}`));
             const buttons = [document.getElementById('btn-index0'), document.getElementById('btn-indexNeg'), document.getElementById('btn-loop')];
 
-            // Reset buttons
             buttons.forEach(btn => {
                 btn.classList.remove('bg-action', 'text-white', 'hover:bg-action-hover');
                 btn.classList.add('bg-white', 'text-action', 'border-action', 'hover:bg-alt');
             });
 
-            // Highlight active button
             const activeBtn = document.getElementById(`btn-${type}`);
             if (activeBtn) {
                 activeBtn.classList.remove('bg-white', 'text-action', 'hover:bg-alt');
                 activeBtn.classList.add('bg-action', 'text-white', 'hover:bg-action-hover');
             }
 
-
-            // Explicitly remove all potential highlight classes from items
             items.forEach(i => {
-                i.classList.remove('ring-4', 'ring-action', 'scale-110', 'bg-blue-100');
-                // Ensure default state
-                i.classList.add('bg-gray-50', 'border-gray-200');
+                if (i) {
+                    i.classList.remove('ring-4', 'ring-action', 'scale-110', 'bg-blue-100');
+                    i.classList.add('bg-gray-50', 'border-gray-200');
+                }
             });
 
             if (type === 'index0') {
-                consoleBox.innerHTML += `<div class="mb-1"><span class="text-green-400">>>></span> print(punto[0])</div>`;
+                consoleBox.innerHTML += `<div class="mb-1"><span class="text-green-400">>>>></span> print(punto[0])</div>`;
                 setTimeout(() => {
-                    consoleBox.innerHTML += `<div class="mb-2 text-white font-bold ml-4">10</div>`;
-                    // Highlight Item 0
-                    items[0].classList.remove('bg-gray-50', 'border-gray-200');
-                    items[0].classList.add('ring-4', 'ring-action', 'scale-110', 'bg-blue-100');
+                    consoleBox.innerHTML += `<div class="mb-2 text-white font-bold ml-4">${puntoItems[0]}</div>`;
+                    if (items[0]) {
+                        items[0].classList.remove('bg-gray-50', 'border-gray-200');
+                        items[0].classList.add('ring-4', 'ring-action', 'scale-110', 'bg-blue-100');
+                    }
                     consoleBox.scrollTop = consoleBox.scrollHeight;
                 }, 300);
             } else if (type === 'indexNeg') {
-                consoleBox.innerHTML += `<div class="mb-1"><span class="text-green-400">>>></span> print(punto[-1])</div>`;
+                consoleBox.innerHTML += `<div class="mb-1"><span class="text-green-400">>>>></span> print(punto[-1])</div>`;
                 setTimeout(() => {
-                    consoleBox.innerHTML += `<div class="mb-2 text-white font-bold ml-4">30</div>`;
-                    // Highlight Item 2
-                    items[2].classList.remove('bg-gray-50', 'border-gray-200');
-                    items[2].classList.add('ring-4', 'ring-action', 'scale-110', 'bg-blue-100');
+                    const lastIdx = puntoItems.length - 1;
+                    consoleBox.innerHTML += `<div class="mb-2 text-white font-bold ml-4">${puntoItems[lastIdx]}</div>`;
+                    if (items[lastIdx]) {
+                        items[lastIdx].classList.remove('bg-gray-50', 'border-gray-200');
+                        items[lastIdx].classList.add('ring-4', 'ring-action', 'scale-110', 'bg-blue-100');
+                    }
                     consoleBox.scrollTop = consoleBox.scrollHeight;
                 }, 300);
             } else if (type === 'loop') {
-                consoleBox.innerHTML += `<div class="mb-1"><span class="text-green-400">>>></span> for x in punto:...</div>`;
-
+                consoleBox.innerHTML += `<div class="mb-1"><span class="text-green-400">>>>></span> for x in punto:...</div>`;
                 let delay = 300;
                 items.forEach((item, idx) => {
                     setTimeout(() => {
-                        consoleBox.innerHTML += `<div class="text-white ml-4">${item.querySelector('span').innerText}</div>`;
-
-                        // Clear all
+                        consoleBox.innerHTML += `<div class="text-white ml-4">${puntoItems[idx]}</div>`;
                         items.forEach(i => {
-                            i.classList.remove('ring-4', 'ring-action', 'bg-blue-100', 'scale-110');
-                            i.classList.add('bg-gray-50', 'border-gray-200');
+                            if (i) {
+                                i.classList.remove('ring-4', 'ring-action', 'bg-blue-100', 'scale-110');
+                                i.classList.add('bg-gray-50', 'border-gray-200');
+                            }
                         });
-
-                        // Highlight current
                         item.classList.remove('bg-gray-50', 'border-gray-200');
                         item.classList.add('ring-4', 'ring-action', 'bg-blue-100');
-
                         consoleBox.scrollTop = consoleBox.scrollHeight;
                     }, delay);
                     delay += 600;
                 });
                 setTimeout(() => {
-                    // Final Clean
                     items.forEach(i => {
-                        i.classList.remove('ring-4', 'ring-action', 'bg-blue-100');
-                        i.classList.add('bg-gray-50', 'border-gray-200');
+                        if (i) i.classList.remove('ring-4', 'ring-action', 'bg-blue-100');
                     });
                 }, delay + 600);
             }
         }
 
         // Slide 5 Interactions
+        // Slide 5 Interactions
+        function addElement(tupleNum) {
+            const countVar = tupleNum === 1 ? t1Count : t2Count;
+            if (countVar >= 4) return;
+
+            const containerInputs = document.getElementById(`t${tupleNum}-inputs-container`);
+            const containerVisual = document.getElementById(`v-t${tupleNum}-container`);
+            if (!containerInputs || !containerVisual) return;
+
+            const newVal = countVar + 1 + (tupleNum === 1 ? 0 : 2);
+            const inputHtml = `, <input type="number" id="t${tupleNum}-val-${countVar}" value="${newVal}" class="w-8 border rounded text-center bg-${tupleNum === 1 ? 'blue' : 'green'}-50">`;
+            containerInputs.insertAdjacentHTML('beforeend', inputHtml);
+
+            const visualHtml = `<div class="w-10 h-10 bg-${tupleNum === 1 ? 'blue' : 'green'}-50 border border-${tupleNum === 1 ? 'blue' : 'green'}-200 rounded flex items-center justify-center font-mono font-bold" id="v-t${tupleNum}-${countVar}">${newVal}</div>`;
+            containerVisual.insertAdjacentHTML('beforeend', visualHtml);
+
+            if (tupleNum === 1) t1Count++; else t2Count++;
+
+            document.getElementById(`t${tupleNum}-val-${countVar}`).addEventListener('input', updateValueVisuals);
+            updateValueVisuals();
+        }
+
         function resetSlide5() {
             mixtaCreated = false;
+            t1Count = 2;
+            t2Count = 2;
+
             const resTuple = document.getElementById('result-tuple');
             const inTuples = document.getElementById('input-tuples');
             const opMsg = document.getElementById('op-message');
             const errBox = document.getElementById('concat-error');
+            const resElements = document.getElementById('result-elements');
 
-            if (resTuple) resTuple.classList.remove('scale-100');
-            if (resTuple) resTuple.classList.add('scale-0');
+            if (resTuple) {
+                resTuple.classList.remove('scale-100');
+                resTuple.classList.add('scale-0');
+            }
+            if (resElements) resElements.innerHTML = '';
+
+            const t1Inputs = document.getElementById('t1-inputs-container');
+            const t2Inputs = document.getElementById('t2-inputs-container');
+            if (t1Inputs) t1Inputs.innerHTML = '<input type="number" id="t1-val-0" value="1" class="w-8 border rounded text-center bg-blue-50">, <input type="number" id="t1-val-1" value="2" class="w-8 border rounded text-center bg-blue-50">';
+            if (t2Inputs) t2Inputs.innerHTML = '<input type="number" id="t2-val-0" value="3" class="w-8 border rounded text-center bg-green-50">, <input type="number" id="t2-val-1" value="4" class="w-8 border rounded text-center bg-green-50">';
+
+            const t1V = document.getElementById('v-t1-container');
+            const t2V = document.getElementById('v-t2-container');
+            if (t1V) t1V.innerHTML = `<span class="absolute -top-3 left-2 bg-white px-1 text-[10px] font-bold text-accent">t1</span><div class="w-10 h-10 bg-blue-50 border border-blue-200 rounded flex items-center justify-center font-mono font-bold" id="v-t1-0">1</div><div class="w-10 h-10 bg-blue-50 border border-blue-200 rounded flex items-center justify-center font-mono font-bold" id="v-t1-1">2</div>`;
+            if (t2V) t2V.innerHTML = `<span class="absolute -top-3 left-2 bg-white px-1 text-[10px] font-bold text-accent">t2</span><div class="w-10 h-10 bg-green-50 border border-green-200 rounded flex items-center justify-center font-mono font-bold" id="v-t2-0">3</div><div class="w-10 h-10 bg-green-50 border border-green-200 rounded flex items-center justify-center font-mono font-bold" id="v-t2-1">4</div>`;
 
             if (inTuples) {
                 inTuples.style.transition = 'none';
                 inTuples.style.transform = 'translateY(0)';
                 inTuples.style.opacity = '1';
                 void inTuples.offsetWidth;
-                updateValueVisuals();
             }
             if (opMsg) opMsg.classList.add('opacity-0');
             if (errBox) errBox.classList.add('opacity-0');
 
-            [1, 2, 3, 4].forEach(n => {
-                const el = document.getElementById(`m-${n}`);
-                if (el) {
-                    el.classList.remove('ring-4', 'ring-green-400', 'bg-green-100', 'scale-110');
-                    el.innerText = '?';
-                }
+            ['t1-val-0', 't1-val-1', 't2-val-0', 't2-val-1'].forEach(id => {
+                document.getElementById(id)?.addEventListener('input', updateValueVisuals);
             });
+            updateValueVisuals();
         }
 
         function updateValueVisuals() {
-            const v1 = document.getElementById('t1-val-1')?.value || '?';
-            const v2 = document.getElementById('t1-val-2')?.value || '?';
-            const v3 = document.getElementById('t2-val-3')?.value || '?';
-            const v4 = document.getElementById('t2-val-4')?.value || '?';
+            for (let i = 0; i < t1Count; i++) {
+                const val = document.getElementById(`t1-val-${i}`)?.value || '';
+                const vis = document.getElementById(`v-t1-${i}`);
+                if (vis) vis.innerText = val;
+            }
+            for (let i = 0; i < t2Count; i++) {
+                const val = document.getElementById(`t2-val-${i}`)?.value || '';
+                const vis = document.getElementById(`v-t2-${i}`);
+                if (vis) vis.innerText = val;
+            }
 
-            if (document.getElementById('v-t1-1')) document.getElementById('v-t1-1').innerText = v1;
-            if (document.getElementById('v-t1-2')) document.getElementById('v-t1-2').innerText = v2;
-            if (document.getElementById('v-t2-3')) document.getElementById('v-t2-3').innerText = v3;
-            if (document.getElementById('v-t2-4')) document.getElementById('v-t2-4').innerText = v4;
-            if (document.getElementById('search-val-display')) document.getElementById('search-val-display').innerText = v3;
+            // Slide 5 Button Update
+            const btn = document.getElementById('btn-check-membership');
+            const searchVal = document.getElementById('search-val-input')?.value || '?';
+            if (btn) btn.innerText = `Verificar si '${searchVal}' está en mixta`;
         }
 
         function animateConcat() {
@@ -971,14 +1026,21 @@
             const resultTuple = document.getElementById('result-tuple');
             const opMessage = document.getElementById('op-message');
             const errBox = document.getElementById('concat-error');
-            if (!inputTuples || !resultTuple || !opMessage) return;
+            const resElements = document.getElementById('result-elements');
+            if (!inputTuples || !resultTuple || !opMessage || !resElements) return;
 
             errBox?.classList.add('opacity-0');
+            resElements.innerHTML = '';
 
-            document.getElementById('m-1').innerText = document.getElementById('t1-val-1').value;
-            document.getElementById('m-2').innerText = document.getElementById('t1-val-2').value;
-            document.getElementById('m-3').innerText = document.getElementById('t2-val-3').value;
-            document.getElementById('m-4').innerText = document.getElementById('t2-val-4').value;
+            let idx = 0;
+            for (let i = 0; i < t1Count; i++) {
+                const val = document.getElementById(`t1-val-${i}`).value;
+                resElements.insertAdjacentHTML('beforeend', `<div class="w-12 h-12 bg-blue-50 border-2 border-blue-200 rounded flex items-center justify-center font-mono text-xl font-bold" id="m-${idx++}">${val}</div>`);
+            }
+            for (let i = 0; i < t2Count; i++) {
+                const val = document.getElementById(`t2-val-${i}`).value;
+                resElements.insertAdjacentHTML('beforeend', `<div class="w-12 h-12 bg-green-50 border-2 border-green-200 rounded flex items-center justify-center font-mono text-xl font-bold" id="m-${idx++}">${val}</div>`);
+            }
 
             inputTuples.style.transition = 'all 0.5s ease-in-out';
             inputTuples.style.transform = 'translateY(-20px)';
@@ -997,6 +1059,7 @@
         function checkMembership() {
             const opMessage = document.getElementById('op-message');
             const errBox = document.getElementById('concat-error');
+            const target = document.getElementById('search-val-input')?.value;
 
             if (!mixtaCreated) {
                 if (errBox) {
@@ -1010,22 +1073,29 @@
                 return;
             }
 
-            const item3 = document.getElementById('m-3');
-            if (!item3 || !opMessage) return;
+            const totalItems = t1Count + t2Count;
+            let foundIdx = -1;
+            for (let i = 0; i < totalItems; i++) {
+                const el = document.getElementById(`m-${i}`);
+                if (el) {
+                    el.classList.remove('ring-4', 'ring-green-400', 'bg-green-100', 'scale-110');
+                    if (el.innerText === target && foundIdx === -1) {
+                        foundIdx = i;
+                    }
+                }
+            }
 
-            [1, 2, 4].forEach(n => {
-                const el = document.getElementById(`m-${n}`);
-                if (el) el.classList.remove('ring-4', 'ring-green-400', 'bg-green-100');
-            });
+            if (foundIdx !== -1) {
+                const el = document.getElementById(`m-${foundIdx}`);
+                el.classList.add('ring-4', 'ring-green-400', 'bg-green-100', 'scale-110');
+                opMessage.innerText = `${target} in mixta -> True (¡Encontrado!)`;
+                setTimeout(() => el.classList.remove('scale-110'), 500);
+            } else {
+                opMessage.innerText = `${target} in mixta -> False (No existe)`;
+            }
 
-            item3.classList.add('ring-4', 'ring-green-400', 'bg-green-100', 'scale-110');
-            opMessage.innerText = `${document.getElementById('t2-val-3').value} in mixta -> True (¡Encontrado!)`;
             opMessage.classList.remove('opacity-0');
             opMessage.classList.add('opacity-100');
-
-            setTimeout(() => {
-                item3.classList.remove('scale-110');
-            }, 500);
         }
 
         // Slide 6 Interactions
@@ -1072,18 +1142,20 @@
 
         // Initialize listeners
         document.addEventListener('DOMContentLoaded', () => {
+            if (typeof updateSlide3 === 'function') updateSlide3();
             document.getElementById('slice-start')?.addEventListener('input', updateSlicing);
             document.getElementById('slice-end')?.addEventListener('input', updateSlicing);
 
-            // Sync Slide 5 inputs with their visuals
-            ['t1-val-1', 't1-val-2', 't2-val-3', 't2-val-4'].forEach(id => {
+            // Slide 5 Sync Init
+            ['t1-val-0', 't1-val-1', 't2-val-0', 't2-val-1', 'search-val-input'].forEach(id => {
                 document.getElementById(id)?.addEventListener('input', updateValueVisuals);
             });
+            if (typeof updateValueVisuals === 'function') updateValueVisuals();
         });
         setTimeout(() => {
             document.getElementById('slice-start')?.addEventListener('input', updateSlicing);
             document.getElementById('slice-end')?.addEventListener('input', updateSlicing);
-            ['t1-val-1', 't1-val-2', 't2-val-3', 't2-val-4'].forEach(id => {
+            ['t1-val-0', 't1-val-1', 't2-val-0', 't2-val-1', 'search-val-input'].forEach(id => {
                 document.getElementById(id)?.addEventListener('input', updateValueVisuals);
             });
         }, 100);
