@@ -391,9 +391,14 @@
                                         <input type="number" id="t1-val-1" value="2"
                                             class="w-8 border rounded text-center bg-blue-50">
                                     </span>)
-                                    <button onclick="addElement(1)"
-                                        class="w-5 h-5 bg-action text-white rounded-full flex items-center justify-center text-xs hover:bg-action-hover focus:outline-none"
-                                        title="Añadir elemento a t1">+</button>
+                                    <div class="inline-flex gap-1 items-center ml-1">
+                                        <button onclick="addElement(1)"
+                                            class="w-5 h-5 bg-action text-white rounded-full flex items-center justify-center text-xs hover:bg-action-hover focus:outline-none leading-none shadow-sm"
+                                            title="Añadir elemento a t1">+</button>
+                                        <button onclick="removeElement(1)"
+                                            class="w-5 h-5 bg-red-500 text-white rounded-full flex items-center justify-center text-xs hover:bg-red-600 focus:outline-none leading-none shadow-sm"
+                                            title="Quitar elemento de t1">−</button>
+                                    </div>
                                 </div>
                                 <div class="flex items-center gap-2 mb-2">
                                     <span class="token-variable">t2</span> = (<span id="t2-inputs-container">
@@ -402,9 +407,14 @@
                                         <input type="number" id="t2-val-1" value="4"
                                             class="w-8 border rounded text-center bg-green-50">
                                     </span>)
-                                    <button onclick="addElement(2)"
-                                        class="w-5 h-5 bg-action text-white rounded-full flex items-center justify-center text-xs hover:bg-action-hover focus:outline-none"
-                                        title="Añadir elemento a t2">+</button>
+                                    <div class="inline-flex gap-1 items-center ml-1">
+                                        <button onclick="addElement(2)"
+                                            class="w-5 h-5 bg-action text-white rounded-full flex items-center justify-center text-xs hover:bg-action-hover focus:outline-none leading-none shadow-sm"
+                                            title="Añadir elemento a t2">+</button>
+                                        <button onclick="removeElement(2)"
+                                            class="w-5 h-5 bg-red-500 text-white rounded-full flex items-center justify-center text-xs hover:bg-red-600 focus:outline-none leading-none shadow-sm"
+                                            title="Quitar elemento de t2">−</button>
+                                    </div>
                                 </div>
                                 <div class="mt-2 text-gray-400 italic"># Concatenación (+)</div>
                                 <div><span class="token-variable">mixta</span> = t1 + t2</div>
@@ -800,6 +810,7 @@
             nextBtn.classList.toggle('cursor-not-allowed', currentSlide === totalSlides);
 
             // Trigger Slide-Specific Inits
+            if (currentSlide === 3) updateSlide3();
             if (currentSlide === 5) resetSlide5();
             if (currentSlide === 6) updateSlicing();
         }
@@ -829,14 +840,24 @@
             const memoryContainer = document.getElementById('s3-memory-container');
             if (!codeContainer || !memoryContainer) return;
 
-            // Update Code
-            const tupleString = puntoItems.join(', ');
+            // Update Code Snippet with [+] and [-]
             codeContainer.innerHTML = `
-                <div><span class="token-variable">punto</span> = (<span id="punto-items-code">${puntoItems.map((v, i) => `
-                    <span class="relative group inline-block">
-                        <span class="token-number">${v}</span>${i < puntoItems.length - 1 ? ',' : ''}
-                        ${puntoItems.length > 1 ? `<button onclick="removeSlide3Item(${i})" class="absolute -top-4 left-1/2 -translate-x-1/2 bg-red-500 text-white rounded-full w-4 h-4 flex items-center justify-center text-[10px] opacity-0 group-hover:opacity-100 transition-opacity">×</button>` : ''}
-                    </span>`).join('')}</span>)
+                <div class="mb-2 text-[10px] text-action font-bold uppercase tracking-wider opacity-60">Control de Tupla:</div>
+                <div class="flex items-center gap-2 mb-4">
+                    <span class="token-variable">punto</span> = (<span id="punto-items-code">${puntoItems.map((v, i) => `
+                        <span class="relative inline-block px-1 rounded hover:bg-red-100 group cursor-pointer transition-colors" onclick="removeSlide3Item(${i})" title="Haz clic para borrar">
+                            <span class="token-number font-bold">${v}</span>${i < puntoItems.length - 1 ? ',' : ''}
+                        </span>`).join('')}</span>)
+                    
+                    <div class="flex gap-1 ml-2">
+                        <button onclick="addSlide3Item()" 
+                            class="w-6 h-6 bg-action text-white rounded-md flex items-center justify-center text-xs hover:bg-action-hover shadow-sm"
+                            title="Añadir elemento">+</button>
+                        ${puntoItems.length > 1 ? `
+                        <button onclick="removeSlide3Item(${puntoItems.length - 1})" 
+                            class="w-6 h-6 bg-red-500 text-white rounded-md flex items-center justify-center text-xs hover:bg-red-600 shadow-sm"
+                            title="Quitar último elemento">−</button>` : ''}
+                    </div>
                 </div>
                 <div class="mt-2 text-gray-400 italic"># Acceso por índice</div>
                 <div><span class="token-function">print</span>(punto[<span class="token-number">0</span>])</div>
@@ -848,15 +869,29 @@
 
             // Update Memory Visualizer
             memoryContainer.innerHTML = `
-                <span class="absolute -top-3 left-4 bg-white px-2 text-xs font-bold text-accent">punto</span>
+                <span class="absolute -top-3 left-4 bg-white px-2 text-xs font-bold text-accent">Memoria RAM</span>
+                <div class="flex items-center gap-4">
                 ${puntoItems.map((v, i) => `
-                    <div id="item-${i}" class="w-16 h-16 bg-gray-50 border border-gray-200 rounded flex flex-col items-center justify-center relative transition-all duration-300">
+                    <div id="item-${i}" class="w-16 h-16 bg-white border-2 border-accent/20 rounded-xl flex flex-col items-center justify-center relative transition-all duration-300 group shadow-sm hover:shadow-md hover:border-red-300">
                         <span class="text-xl font-mono font-bold text-body">${v}</span>
-                        <span class="absolute bottom-1 right-1 text-[10px] text-gray-400 font-mono">${i}</span>
-                        ${i === puntoItems.length - 1 ? `<span class="absolute top-1 left-1 text-[10px] text-gray-400 font-mono">-1</span>` : ''}
+                        <span class="absolute bottom-1 right-2 text-[10px] text-gray-400 font-mono">${i}</span>
+                        ${i === puntoItems.length - 1 ? `<span class="absolute top-1 left-2 text-[10px] text-gray-400 font-mono">-1</span>` : ''}
+                        
+                        ${puntoItems.length > 1 ? `
+                        <button onclick="removeSlide3Item(${i})" 
+                            class="absolute -top-2 -right-2 w-6 h-6 bg-red-500 text-white rounded-full flex items-center justify-center text-xs hover:bg-red-700 transition-colors border-2 border-white shadow-lg z-20 font-bold"
+                            title="Borrar elemento">×</button>` : ''}
                     </div>
                 `).join('')}
+                </div>
             `;
+        }
+
+        function addSlide3Item() {
+            if (puntoItems.length >= 5) return;
+            const lastVal = puntoItems[puntoItems.length - 1] || 0;
+            puntoItems.push(lastVal + 10);
+            updateSlide3();
         }
 
         function removeSlide3Item(index) {
@@ -949,7 +984,7 @@
             if (!containerInputs || !containerVisual) return;
 
             const newVal = countVar + 1 + (tupleNum === 1 ? 0 : 2);
-            const inputHtml = `, <input type="number" id="t${tupleNum}-val-${countVar}" value="${newVal}" class="w-8 border rounded text-center bg-${tupleNum === 1 ? 'blue' : 'green'}-50">`;
+            const inputHtml = `${countVar > 0 ? ', ' : ''}<input type="number" id="t${tupleNum}-val-${countVar}" value="${newVal}" class="w-8 border rounded text-center bg-${tupleNum === 1 ? 'blue' : 'green'}-50">`;
             containerInputs.insertAdjacentHTML('beforeend', inputHtml);
 
             const visualHtml = `<div class="w-10 h-10 bg-${tupleNum === 1 ? 'blue' : 'green'}-50 border border-${tupleNum === 1 ? 'blue' : 'green'}-200 rounded flex items-center justify-center font-mono font-bold" id="v-t${tupleNum}-${countVar}">${newVal}</div>`;
@@ -958,6 +993,33 @@
             if (tupleNum === 1) t1Count++; else t2Count++;
 
             document.getElementById(`t${tupleNum}-val-${countVar}`).addEventListener('input', updateValueVisuals);
+            updateValueVisuals();
+        }
+
+        function removeElement(tupleNum) {
+            const countVar = tupleNum === 1 ? t1Count : t2Count;
+            if (countVar <= 1) return;
+
+            const containerInputs = document.getElementById(`t${tupleNum}-inputs-container`);
+            const containerVisual = document.getElementById(`v-t${tupleNum}-container`);
+            if (!containerInputs || !containerVisual) return;
+
+            // Remove last elements
+            const lastIdx = countVar - 1;
+            const inputEl = document.getElementById(`t${tupleNum}-val-${lastIdx}`);
+            const visualEl = document.getElementById(`v-t${tupleNum}-${lastIdx}`);
+
+            if (inputEl) {
+                // Remove the preceding comma text node if exists
+                let prev = inputEl.previousSibling;
+                if (prev && prev.nodeType === 3 && prev.textContent.includes(',')) {
+                    prev.remove();
+                }
+                inputEl.remove();
+            }
+            if (visualEl) visualEl.remove();
+
+            if (tupleNum === 1) t1Count--; else t2Count--;
             updateValueVisuals();
         }
 
