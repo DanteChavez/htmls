@@ -267,20 +267,20 @@
                         </div>
 
                         <div class="grid grid-cols-1 gap-3">
-                            <button onclick="simulateAccess('index0')"
-                                class="bg-action text-white py-2 px-4 rounded hover:bg-action-hover text-sm font-medium transition-colors text-left flex justify-between items-center">
+                            <button id="btn-index0" onclick="simulateAccess('index0')"
+                                class="bg-white text-action border border-action py-2 px-4 rounded hover:bg-alt text-sm font-medium transition-colors text-left flex justify-between items-center group">
                                 <span>Ejecutar punto[0]</span>
-                                <span class="font-mono opacity-70">10</span>
+                                <span class="font-mono opacity-70 group-hover:opacity-100">10</span>
                             </button>
-                            <button onclick="simulateAccess('indexNeg')"
-                                class="bg-white text-action border border-action py-2 px-4 rounded hover:bg-alt text-sm font-medium transition-colors text-left flex justify-between items-center">
+                            <button id="btn-indexNeg" onclick="simulateAccess('indexNeg')"
+                                class="bg-white text-action border border-action py-2 px-4 rounded hover:bg-alt text-sm font-medium transition-colors text-left flex justify-between items-center group">
                                 <span>Ejecutar punto[-1]</span>
-                                <span class="font-mono opacity-70">30</span>
+                                <span class="font-mono opacity-70 group-hover:opacity-100">30</span>
                             </button>
-                            <button onclick="simulateAccess('loop')"
-                                class="bg-white text-action border border-action py-2 px-4 rounded hover:bg-alt text-sm font-medium transition-colors text-left flex justify-between items-center">
+                            <button id="btn-loop" onclick="simulateAccess('loop')"
+                                class="bg-white text-action border border-action py-2 px-4 rounded hover:bg-alt text-sm font-medium transition-colors text-left flex justify-between items-center group">
                                 <span>Ejecutar bucle for</span>
-                                <span class="font-mono opacity-70">Iterar</span>
+                                <span class="font-mono opacity-70 group-hover:opacity-100">Iterar</span>
                             </button>
                         </div>
                     </div>
@@ -620,14 +620,34 @@
         function simulateAccess(type) {
             const consoleBox = document.getElementById('access-console');
             const items = [document.getElementById('item-0'), document.getElementById('item-1'), document.getElementById('item-2')];
+            const buttons = [document.getElementById('btn-index0'), document.getElementById('btn-indexNeg'), document.getElementById('btn-loop')];
 
-            // Reset visual highlights
-            items.forEach(i => i.classList.remove('ring-4', 'ring-action', 'scale-110', 'bg-blue-100'));
+            // Reset buttons
+            buttons.forEach(btn => {
+                btn.classList.remove('bg-action', 'text-white', 'hover:bg-action-hover');
+                btn.classList.add('bg-white', 'text-action', 'border-action', 'hover:bg-alt');
+            });
+
+            // Highlight active button
+            const activeBtn = document.getElementById(`btn-${type}`);
+            if (activeBtn) {
+                activeBtn.classList.remove('bg-white', 'text-action', 'hover:bg-alt');
+                activeBtn.classList.add('bg-action', 'text-white', 'hover:bg-action-hover');
+            }
+
+            // Explicitly remove all potential highlight classes from items
+            items.forEach(i => {
+                i.classList.remove('ring-4', 'ring-action', 'scale-110', 'bg-blue-100');
+                // Ensure default state
+                i.classList.add('bg-gray-50', 'border-gray-200');
+            });
 
             if (type === 'index0') {
                 consoleBox.innerHTML += `<div class="mb-1"><span class="text-green-400">>>></span> print(punto[0])</div>`;
                 setTimeout(() => {
                     consoleBox.innerHTML += `<div class="mb-2 text-white font-bold ml-4">10</div>`;
+                    // Highlight Item 0
+                    items[0].classList.remove('bg-gray-50', 'border-gray-200');
                     items[0].classList.add('ring-4', 'ring-action', 'scale-110', 'bg-blue-100');
                     consoleBox.scrollTop = consoleBox.scrollHeight;
                 }, 300);
@@ -635,6 +655,8 @@
                 consoleBox.innerHTML += `<div class="mb-1"><span class="text-green-400">>>></span> print(punto[-1])</div>`;
                 setTimeout(() => {
                     consoleBox.innerHTML += `<div class="mb-2 text-white font-bold ml-4">30</div>`;
+                    // Highlight Item 2
+                    items[2].classList.remove('bg-gray-50', 'border-gray-200');
                     items[2].classList.add('ring-4', 'ring-action', 'scale-110', 'bg-blue-100');
                     consoleBox.scrollTop = consoleBox.scrollHeight;
                 }, 300);
@@ -645,14 +667,27 @@
                 items.forEach((item, idx) => {
                     setTimeout(() => {
                         consoleBox.innerHTML += `<div class="text-white ml-4">${item.querySelector('span').innerText}</div>`;
-                        items.forEach(i => i.classList.remove('ring-4', 'ring-action', 'bg-blue-100'));
+
+                        // Clear all
+                        items.forEach(i => {
+                            i.classList.remove('ring-4', 'ring-action', 'bg-blue-100', 'scale-110');
+                            i.classList.add('bg-gray-50', 'border-gray-200');
+                        });
+
+                        // Highlight current
+                        item.classList.remove('bg-gray-50', 'border-gray-200');
                         item.classList.add('ring-4', 'ring-action', 'bg-blue-100');
+
                         consoleBox.scrollTop = consoleBox.scrollHeight;
                     }, delay);
                     delay += 600;
                 });
                 setTimeout(() => {
-                    items.forEach(i => i.classList.remove('ring-4', 'ring-action', 'bg-blue-100'));
+                    // Final Clean
+                    items.forEach(i => {
+                        i.classList.remove('ring-4', 'ring-action', 'bg-blue-100');
+                        i.classList.add('bg-gray-50', 'border-gray-200');
+                    });
                 }, delay + 600);
             }
         }
