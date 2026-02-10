@@ -496,10 +496,12 @@
                                         class="token-string">"E"</span>)</div>
                                 <div class="mt-4 flex items-center gap-2 whitespace-nowrap overflow-x-auto pb-2">
                                     <span class="token-variable">sub</span> = letras[<input type="number"
-                                        id="slice-start" value="1" min="-5" max="4"
-                                        class="w-12 border rounded px-1 text-center bg-blue-50"> :
-                                    <input type="number" id="slice-end" value="4" min="-4" max="5"
-                                        class="w-12 border rounded px-1 text-center bg-blue-50">]
+                                        id="slice-start" value="1" min="-5" max="5"
+                                        class="w-12 border rounded px-1 text-center bg-blue-50"
+                                        oninput="updateSlicing()"> :
+                                    <input type="number" id="slice-end" value="4" min="-5" max="5"
+                                        class="w-12 border rounded px-1 text-center bg-blue-50"
+                                        oninput="updateSlicing()">]
                                 </div>
                                 <div class="mt-2 text-action font-bold" id="slice-result-code"># Resultado: ("B", "C",
                                     "D")</div>
@@ -1172,7 +1174,7 @@
             for (let i = 0; i < len; i++) {
                 const el = document.getElementById(`slice-item-${i}`);
                 if (el) {
-                    if (i >= startPos && i < endPos) { // Highlight based on actual slice range
+                    if (i >= startPos && i < endPos) {
                         el.classList.add('border-action', 'bg-blue-50', 'text-action', 'scale-105');
                     } else {
                         el.classList.remove('border-action', 'bg-blue-50', 'text-action', 'scale-105');
@@ -1180,12 +1182,11 @@
                 }
             }
 
-            const slice = items.slice(safeStart, safeEnd);
-            resultDisplay.innerHTML = slice.length > 0
-                ? slice.map(l => `<div class="w-10 h-10 bg-white border border-action rounded flex items-center justify-center">${l}</div>`).join('')
+            resultDisplay.innerHTML = sliceResult.length > 0
+                ? sliceResult.map(l => `<div class="w-10 h-10 bg-white border border-action rounded flex items-center justify-center">${l}</div>`).join('')
                 : '<span class="text-gray-400 text-xs italic">Tupla vacía ()</span>';
 
-            resultCode.innerText = `# Resultado: (${slice.length > 0 ? slice.map(l => `"${l}"`).join(', ') : ''})`;
+            resultCode.innerText = `# Resultado: (${sliceResult.length > 0 ? sliceResult.map(l => `"${l}"`).join(', ') : ''})`;
         }
 
         // Initialize listeners
