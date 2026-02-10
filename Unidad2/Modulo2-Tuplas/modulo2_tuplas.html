@@ -1,0 +1,743 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tuplas en Python</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        base: '#ffffff',
+                        alt: '#f1f5f9',
+                        title: '#003c58',
+                        accent: '#06717e',
+                        action: '#0055ad',
+                        'action-hover': '#399be2',
+                        highlight: '#0f6cbf',
+                        'text-on-dark': '#6ea2ee',
+                        desc: '#6da8e9',
+                        body: '#1e293b',
+                        border: '#e2e8f0',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+
+        .fade-in {
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* VS Code Light+ Token Colors */
+        .token-keyword {
+            color: #0000ff;
+        }
+
+        .token-function {
+            color: #795e26;
+        }
+
+        .token-string {
+            color: #a31515;
+        }
+
+        .token-number {
+            color: #098658;
+        }
+
+        .token-comment {
+            color: #008000;
+        }
+
+        .force-hidden {
+            display: none !important;
+        }
+
+        /* Mac Window Controls */
+        .mac-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            display: inline-block;
+            margin-right: 6px;
+        }
+
+        .mac-red {
+            background-color: #ff5f56;
+            border: 1px solid #e0443e;
+        }
+
+        .mac-yellow {
+            background-color: #ffbd2e;
+            border: 1px solid #dea123;
+        }
+
+        .mac-green {
+            background-color: #27c93f;
+            border: 1px solid #1aab29;
+        }
+    </style>
+</head>
+
+<body class="bg-alt h-screen w-screen overflow-hidden">
+
+    <!-- Main App Container -->
+    <div class="w-full h-full bg-base shadow-2xl border border-border flex flex-col overflow-hidden relative">
+
+        <!-- Header -->
+        <header class="h-16 border-b border-border flex items-center justify-between px-6 bg-base z-50">
+            <div class="flex items-center gap-2">
+                <span class="ml-4 text-title font-semibold text-lg">Unidad 1: Tuplas</span>
+            </div>
+            <div class="flex gap-2">
+                <span class="text-sm text-body"> <span id="current-slide-num">1</span>/6</span>
+            </div>
+        </header>
+
+        <!-- Content Area -->
+        <main class="flex-1 relative overflow-hidden">
+
+            <!-- Slide 1: Portada -->
+            <section id="slide-1"
+                class="slide active w-full h-full flex flex-col justify-center items-center text-center p-12">
+                <div class="mb-2">
+                    <span class="text-2xl font-bold text-accent uppercase tracking-widest">Unidad 1</span>
+                </div>
+                <h1 class="text-6xl font-bold text-title mb-4 tracking-tight">Tuplas (tuple) en Python</h1>
+                <p class="text-2xl text-accent font-light mb-12">Estructuras inmutables y ordenadas</p>
+
+                <div class="grid grid-cols-2 gap-8 max-w-2xl w-full mb-12">
+                    <div class="bg-alt p-6 rounded-xl border border-border">
+                        <h3 class="text-action font-semibold mb-2">Seguridad de Datos</h3>
+                        <p class="text-body text-sm">Aprenderás a proteger tu información contra modificaciones
+                            accidentales.</p>
+                    </div>
+                    <div class="bg-alt p-6 rounded-xl border border-border">
+                        <h3 class="text-action font-semibold mb-2">Orden Garantizado</h3>
+                        <p class="text-body text-sm">Estructuras secuenciales ideales para coordenadas, configuraciones
+                            y registros fijos.</p>
+                    </div>
+                </div>
+
+                <button onclick="nextSlide()"
+                    class="bg-action hover:bg-action-hover text-white px-8 py-3 rounded-lg shadow-lg transition-all transform hover:scale-105 font-medium flex items-center gap-2">
+                    Comenzar Experiencia
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd"
+                            d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z"
+                            clip-rule="evenodd" />
+                    </svg>
+                </button>
+                <div class="hidden">Cognitive Check: Learner understands that tuples are chosen intentionally, not
+                    accidentally.</div>
+            </section>
+
+            <!-- Slide 2: ¿Qué es una tupla? -->
+            <section id="slide-2" class="slide force-hidden w-full h-full flex items-center justify-center p-8">
+                <div class="max-w-5xl w-full grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+                    <div class="space-y-6">
+                        <h2 class="text-4xl font-bold text-title">¿Qué es una Tupla?</h2>
+                        <ul class="space-y-4 text-body text-lg">
+                            <li class="flex items-start gap-3">
+                                <span class="bg-accent text-white rounded-full p-1 mt-1"><svg class="w-4 h-4"
+                                        fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M5 13l4 4L19 7"></path>
+                                    </svg></span>
+                                <span><strong>Ordenada:</strong> Los elementos tienen una posición fija (índice 0, 1,
+                                    2...).</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <span class="bg-accent text-white rounded-full p-1 mt-1"><svg class="w-4 h-4"
+                                        fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M5 13l4 4L19 7"></path>
+                                    </svg></span>
+                                <span><strong>Indexada:</strong> Puedes acceder a valores específicos por su
+                                    posición.</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <span class="bg-accent text-white rounded-full p-1 mt-1"><svg class="w-4 h-4"
+                                        fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M5 13l4 4L19 7"></path>
+                                    </svg></span>
+                                <span><strong>Inmutable:</strong> Una vez creada, <em>no se puede cambiar</em>. Es "solo
+                                    lectura".</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="flex flex-col gap-8">
+                        <!-- Analogy -->
+                        <div class="bg-white p-6 rounded-xl border border-border shadow-sm">
+                            <h3 class="text-lg font-semibold text-action mb-4 w-full text-center">Analogía: Sobre vs
+                                Cuaderno</h3>
+                            <div class="flex gap-8 items-center justify-center">
+                                <div class="flex flex-col items-center group">
+                                    <div
+                                        class="w-24 h-32 bg-yellow-100 border-2 border-yellow-300 rounded relative shadow-md flex items-center justify-center transform transition-transform group-hover:-rotate-3">
+                                        <div class="absolute -top-3 w-full h-4 bg-gray-200 opacity-50 skew-x-12"></div>
+                                        <div class="text-4xl">✉️</div>
+                                        <div
+                                            class="absolute bottom-2 text-[10px] text-yellow-800 font-bold uppercase tracking-wider">
+                                            Sellado</div>
+                                    </div>
+                                    <span class="text-sm mt-3 font-bold text-accent">Tupla (Sobre)</span>
+                                    <p class="text-xs text-center text-gray-500 mt-1 max-w-[120px]">Lo que envías ya no
+                                        se puede editar.</p>
+                                </div>
+                                <div class="text-2xl text-gray-300">vs</div>
+                                <div class="flex flex-col items-center group">
+                                    <div
+                                        class="w-24 h-32 bg-white border-l-4 border-gray-300 shadow-sm relative flex items-center justify-center transform transition-transform group-hover:rotate-3">
+                                        <div
+                                            class="w-full h-full absolute inset-0 bg-[linear-gradient(transparent_95%,#e5e7eb_95%)] bg-[length:100%_1.5rem]">
+                                        </div>
+                                        <div class="text-4xl z-10">📝</div>
+                                        <div class="absolute -left-2 top-2 w-4 h-4 rounded-full bg-gray-400"></div>
+                                        <div class="absolute -left-2 top-8 w-4 h-4 rounded-full bg-gray-400"></div>
+                                        <div class="absolute -left-2 top-14 w-4 h-4 rounded-full bg-gray-400"></div>
+                                    </div>
+                                    <span class="text-sm mt-3 font-bold text-gray-600">Lista (Cuaderno)</span>
+                                    <p class="text-xs text-center text-gray-500 mt-1 max-w-[120px]">Puedes borrar y
+                                        reescribir hojas.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Slide 3: Acceso y Lectura -->
+            <section id="slide-3"
+                class="slide force-hidden w-full h-full flex flex-col items-center justify-center p-8">
+                <div class="max-w-5xl w-full grid grid-cols-1 lg:grid-cols-12 gap-8 h-full max-h-[80vh] items-center">
+                    <!-- Left: Code & Controls -->
+                    <div class="lg:col-span-5 flex flex-col gap-4">
+                        <h2 class="text-3xl font-bold text-title">Lectura de Tuplas</h2>
+                        <p class="text-body text-sm mb-4">Las tuplas son ideales para datos fijos como coordenadas o
+                            configuraciones.</p>
+
+                        <div class="bg-white rounded-lg border border-border overflow-hidden shadow-sm">
+                            <div class="bg-gray-100 px-4 py-2 flex items-center gap-2 border-b border-gray-200">
+                                <div class="mac-dot mac-red"></div>
+                                <div class="mac-dot mac-yellow"></div>
+                                <div class="mac-dot mac-green"></div>
+                                <span class="text-xs text-gray-500 font-mono ml-2">coordenadas.py</span>
+                            </div>
+                            <div class="p-4 font-mono text-sm bg-block text-body leading-relaxed">
+                                <div><span class="token-variable">punto</span> = (<span class="token-number">10</span>,
+                                    <span class="token-number">20</span>, <span class="token-number">30</span>)
+                                </div>
+                                <div class="mt-2 text-gray-400 italic"># Acceso por índice</div>
+                                <div><span class="token-function">print</span>(punto[<span
+                                        class="token-number">0</span>])</div>
+                                <div><span class="token-function">print</span>(punto[-<span
+                                        class="token-number">1</span>])</div>
+                                <div class="mt-2 text-gray-400 italic"># Iteración</div>
+                                <div><span class="token-keyword">for</span> coord <span class="token-keyword">in</span>
+                                    punto:</div>
+                                <div class="pl-4"><span class="token-function">print</span>(coord)</div>
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 gap-3">
+                            <button onclick="simulateAccess('index0')"
+                                class="bg-action text-white py-2 px-4 rounded hover:bg-action-hover text-sm font-medium transition-colors text-left flex justify-between items-center">
+                                <span>Ejecutar punto[0]</span>
+                                <span class="font-mono opacity-70">10</span>
+                            </button>
+                            <button onclick="simulateAccess('indexNeg')"
+                                class="bg-white text-action border border-action py-2 px-4 rounded hover:bg-alt text-sm font-medium transition-colors text-left flex justify-between items-center">
+                                <span>Ejecutar punto[-1]</span>
+                                <span class="font-mono opacity-70">30</span>
+                            </button>
+                            <button onclick="simulateAccess('loop')"
+                                class="bg-white text-action border border-action py-2 px-4 rounded hover:bg-alt text-sm font-medium transition-colors text-left flex justify-between items-center">
+                                <span>Ejecutar bucle for</span>
+                                <span class="font-mono opacity-70">Iterar</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Right: Visualizer -->
+                    <div
+                        class="lg:col-span-7 bg-alt rounded-2xl border border-border p-8 flex flex-col items-center justify-center relative overflow-hidden h-[400px]">
+                        <div class="absolute top-4 left-4 text-xs font-bold text-gray-400 uppercase tracking-widest">
+                            Memoria</div>
+
+                        <!-- Tuple Container -->
+                        <div
+                            class="flex items-center gap-2 bg-white p-4 rounded-xl border-2 border-accent shadow-lg relative z-10">
+                            <span
+                                class="absolute -top-3 left-4 bg-white px-2 text-xs font-bold text-accent">punto</span>
+
+                            <!-- Item 0 -->
+                            <div id="item-0"
+                                class="w-16 h-16 bg-gray-50 border border-gray-200 rounded flex flex-col items-center justify-center relative transition-all duration-300">
+                                <span class="text-xl font-mono font-bold text-body">10</span>
+                                <span class="absolute bottom-1 right-1 text-[10px] text-gray-400 font-mono">0</span>
+                            </div>
+                            <!-- Item 1 -->
+                            <div id="item-1"
+                                class="w-16 h-16 bg-gray-50 border border-gray-200 rounded flex flex-col items-center justify-center relative transition-all duration-300">
+                                <span class="text-xl font-mono font-bold text-body">20</span>
+                                <span class="absolute bottom-1 right-1 text-[10px] text-gray-400 font-mono">1</span>
+                            </div>
+                            <!-- Item 2 -->
+                            <div id="item-2"
+                                class="w-16 h-16 bg-gray-50 border border-gray-200 rounded flex flex-col items-center justify-center relative transition-all duration-300">
+                                <span class="text-xl font-mono font-bold text-body">30</span>
+                                <span class="absolute bottom-1 right-1 text-[10px] text-gray-400 font-mono">2</span>
+                                <span class="absolute top-1 left-1 text-[10px] text-gray-400 font-mono">-1</span>
+                            </div>
+                        </div>
+
+                        <!-- Console Output -->
+                        <div class="mt-8 w-full max-w-md bg-[#1e1e1e] rounded-lg p-4 font-mono text-xs text-gray-300 shadow-inner h-32 overflow-y-auto"
+                            id="access-console">
+                            <span class="opacity-50">Esperando ejecución...</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Slide 4: Inmutabilidad -->
+            <section id="slide-4"
+                class="slide force-hidden w-full h-full flex flex-col items-center justify-center p-8 bg-gradient-to-br from-red-50 to-white">
+                <div class="max-w-4xl w-full text-center mb-8">
+                    <h2 class="text-4xl font-bold text-title mb-4">Inmutabilidad: Lo que NO puedes hacer</h2>
+                    <p class="text-body text-lg">Muchos intentan modificar una tupla como si fuera una lista. <br>Veamos
+                        qué sucede realmente.</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-12 w-full max-w-5xl">
+                    <!-- List Example (Works) -->
+                    <div
+                        class="bg-white p-6 rounded-xl border border-green-200 shadow-sm opacity-60 hover:opacity-100 transition-opacity">
+                        <div class="flex items-center justify-between mb-4">
+                            <h3 class="font-bold text-green-700 flex items-center gap-2">
+                                <span class="bg-green-100 p-1 rounded">✅</span> Lista
+                            </h3>
+                            <span
+                                class="text-xs bg-green-50 text-green-600 px-2 py-1 rounded border border-green-100">Mutable</span>
+                        </div>
+                        <div class="font-mono text-sm bg-gray-50 p-3 rounded border border-gray-200 mb-3">
+                            <div class="text-gray-500">lista = [1, 2, 3]</div>
+                            <div class="font-bold text-blue-600">lista[0] = 99</div>
+                            <div class="text-gray-500">print(lista) # [99, 2, 3]</div>
+                        </div>
+                        <p class="text-sm text-gray-500">La lista permite cambiar sus elementos internos libremente.</p>
+                    </div>
+
+                    <!-- Tuple Example (Fails) -->
+                    <div
+                        class="bg-white p-6 rounded-xl border border-red-200 shadow-md ring-4 ring-transparent hover:ring-red-50 transition-all">
+                        <div class="flex items-center justify-between mb-4">
+                            <h3 class="font-bold text-red-700 flex items-center gap-2">
+                                <span class="bg-red-100 p-1 rounded">❌</span> Tupla
+                            </h3>
+                            <span
+                                class="text-xs bg-red-50 text-red-600 px-2 py-1 rounded border border-red-100">Inmutable</span>
+                        </div>
+                        <div class="font-mono text-sm bg-gray-50 p-3 rounded border border-gray-200 mb-3 relative">
+                            <div class="text-gray-500">tupla = (1, 2, 3)</div>
+                            <div class="font-bold text-red-600 cursor-pointer hover:bg-red-50 p-1 rounded transition-colors"
+                                onclick="triggerError()">tupla[0] = 99</div>
+                            <div class="text-gray-400 italic"># ¿Qué pasará aquí?</div>
+
+                            <!-- Interactive Error Click -->
+                            <div class="absolute right-2 top-8 animate-bounce cursor-pointer" onclick="triggerError()">
+                                <span class="bg-action text-white text-[10px] px-2 py-1 rounded shadow">¡Haz
+                                    Clic!</span>
+                            </div>
+                        </div>
+
+                        <!-- Error Display -->
+                        <div id="error-box"
+                            class="hidden mt-4 p-3 bg-[#2d0a0a] rounded border-l-4 border-red-500 font-mono text-xs text-red-200 shadow-inner">
+                            <span class="text-red-500 font-bold">TypeError:</span> 'tuple' object does not support item
+                            assignment
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Slide 5: Tuple Unpacking -->
+            <section id="slide-5"
+                class="slide force-hidden w-full h-full flex flex-col items-center justify-center p-8">
+                <div class="max-w-6xl w-full grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                    <div class="space-y-6">
+                        <h2 class="text-4xl font-bold text-title">Desempaquetado (Unpacking)</h2>
+                        <p class="text-body text-lg">Python permite asignar los elementos de una tupla a variables
+                            individuales en una sola línea. Es elegante y muy común.</p>
+
+                        <div class="bg-white rounded-lg border border-border overflow-hidden shadow-sm mt-8">
+                            <div class="bg-gray-100 px-4 py-2 flex items-center gap-2 border-b border-gray-200">
+                                <span class="text-xs text-gray-500 font-mono">script.py</span>
+                            </div>
+                            <div class="p-6 font-mono text-base bg-block text-body leading-relaxed">
+                                <div class="mb-4"><span class="text-gray-400"># Tupla con datos de un usuario</span>
+                                </div>
+                                <div class="mb-6">usuario = (<span class="token-string">"Ana"</span>, <span
+                                        class="token-number">25</span>, <span class="token-string">"Dev"</span>)</div>
+                                <div class="mb-4"><span class="text-gray-400"># Desempaquetado mágico ✨</span></div>
+                                <div class="flex items-center gap-2">
+                                    <span class="bg-blue-100 px-1 rounded text-blue-800 font-bold"
+                                        id="var-nombre">nombre</span>,
+                                    <span class="bg-green-100 px-1 rounded text-green-800 font-bold"
+                                        id="var-edad">edad</span>,
+                                    <span class="bg-purple-100 px-1 rounded text-purple-800 font-bold"
+                                        id="var-rol">rol</span>
+                                    = usuario
+                                </div>
+                            </div>
+                        </div>
+
+                        <button onclick="animateUnpacking()"
+                            class="bg-action text-white px-6 py-3 rounded-lg shadow hover:bg-action-hover transition-colors font-medium">
+                            Visualizar Asignación
+                        </button>
+                    </div>
+
+                    <!-- Animation Area -->
+                    <div
+                        class="h-64 relative bg-alt rounded-2xl border border-border w-full flex items-center justify-center overflow-visible">
+                        <!-- Source Tuple -->
+                        <div
+                            class="absolute top-10 flex gap-2 p-2 bg-white rounded-xl border border-gray-300 shadow-md z-10">
+                            <div id="src-0"
+                                class="w-20 h-10 bg-gray-50 border border-gray-200 rounded flex items-center justify-center text-sm font-bold text-gray-700">
+                                "Ana"</div>
+                            <div id="src-1"
+                                class="w-20 h-10 bg-gray-50 border border-gray-200 rounded flex items-center justify-center text-sm font-bold text-gray-700">
+                                25</div>
+                            <div id="src-2"
+                                class="w-20 h-10 bg-gray-50 border border-gray-200 rounded flex items-center justify-center text-sm font-bold text-gray-700">
+                                "Dev"</div>
+                        </div>
+
+                        <!-- Target Variables -->
+                        <div class="absolute bottom-10 flex gap-16 w-full justify-center">
+                            <div class="flex flex-col items-center gap-2">
+                                <div id="target-0"
+                                    class="w-20 h-16 border-2 border-dashed border-blue-300 rounded bg-blue-50 flex items-center justify-center text-blue-800 font-bold transition-all">
+                                    ?</div>
+                                <span class="text-xs font-mono font-bold text-blue-600">nombre</span>
+                            </div>
+                            <div class="flex flex-col items-center gap-2">
+                                <div id="target-1"
+                                    class="w-20 h-16 border-2 border-dashed border-green-300 rounded bg-green-50 flex items-center justify-center text-green-800 font-bold transition-all">
+                                    ?</div>
+                                <span class="text-xs font-mono font-bold text-green-600">edad</span>
+                            </div>
+                            <div class="flex flex-col items-center gap-2">
+                                <div id="target-2"
+                                    class="w-20 h-16 border-2 border-dashed border-purple-300 rounded bg-purple-50 flex items-center justify-center text-purple-800 font-bold transition-all">
+                                    ?</div>
+                                <span class="text-xs font-mono font-bold text-purple-600">rol</span>
+                            </div>
+                        </div>
+
+                        <!-- Flying Elements (Hidden initially) -->
+                        <div id="fly-0"
+                            class="absolute top-10 left-[calc(50%-70px)] w-20 h-10 bg-blue-100 border border-blue-400 text-blue-900 rounded flex items-center justify-center text-sm font-bold shadow-xl opacity-0 z-50">
+                            "Ana"</div>
+                        <div id="fly-1"
+                            class="absolute top-10 left-[calc(50%-0px)] w-20 h-10 bg-green-100 border border-green-400 text-green-900 rounded flex items-center justify-center text-sm font-bold shadow-xl opacity-0 z-50">
+                            25</div>
+                        <div id="fly-2"
+                            class="absolute top-10 left-[calc(50%+70px)] w-20 h-10 bg-purple-100 border border-purple-400 text-purple-900 rounded flex items-center justify-center text-sm font-bold shadow-xl opacity-0 z-50">
+                            "Dev"</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Slide 6: Cuándo usar Tuplas -->
+            <section id="slide-6"
+                class="slide force-hidden w-full h-full flex flex-col justify-center items-center p-8">
+                <h2 class="text-4xl font-bold text-title mb-8">¿Cuándo elegir una Tupla?</h2>
+
+                <div class="bg-white rounded-xl shadow-lg border border-border overflow-hidden w-full max-w-4xl mb-12">
+                    <table class="w-full text-left border-collapse">
+                        <thead>
+                            <tr class="bg-alt border-b border-border">
+                                <th class="p-4 text-sm font-semibold text-gray-500 uppercase tracking-wider">
+                                    Característica</th>
+                                <th
+                                    class="p-4 text-sm font-semibold text-action uppercase tracking-wider bg-blue-50/50">
+                                    Tupla (Tuple)</th>
+                                <th class="p-4 text-sm font-semibold text-gray-500 uppercase tracking-wider">Lista
+                                    (List)</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-gray-100">
+                            <tr class="hover:bg-gray-50">
+                                <td class="p-4 font-medium text-body">Mutabilidad</td>
+                                <td class="p-4 text-green-600 bg-blue-50/30 font-bold">Inmutable (Fija)</td>
+                                <td class="p-4 text-action">Mutable (Editable)</td>
+                            </tr>
+                            <tr class="hover:bg-gray-50">
+                                <td class="p-4 font-medium text-body">Uso Principal</td>
+                                <td class="p-4 text-body bg-blue-50/30">Datos que no deben cambiar (semánticamente
+                                    fijos)</td>
+                                <td class="p-4 text-body">Colecciones que crecerán o cambiarán</td>
+                            </tr>
+                            <tr class="hover:bg-gray-50">
+                                <td class="p-4 font-medium text-body">Velocidad</td>
+                                <td class="p-4 text-green-600 bg-blue-50/30 font-bold">Ligeramente más rápida</td>
+                                <td class="p-4 text-action">Estándar</td>
+                            </tr>
+                            <tr class="hover:bg-gray-50">
+                                <td class="p-4 font-medium text-body">Ejemplo Real</td>
+                                <td class="p-4 font-mono text-xs bg-blue-50/30">coord = (40.71, -74.00)</td>
+                                <td class="p-4 font-mono text-xs">usuarios = ["Ana", "Bob"]</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="max-w-2xl text-center space-y-4">
+                    <p class="text-2xl font-light text-accent">"Usar una tupla comunica tu intención: <br><strong>este
+                            dato es sagrado y no cambiará</strong>."</p>
+                    <div class="h-1 w-20 bg-action mx-auto rounded-full opacity-20"></div>
+                    <p class="text-sm text-gray-400">Fin del Módulo 2</p>
+                </div>
+            </section>
+
+        </main>
+
+        <footer class="h-14 bg-white border-t border-border flex items-center justify-between px-8 z-50">
+            <button id="prev-btn" onclick="prevSlide()"
+                class="flex items-center gap-2 text-slate-400 hover:text-title transition-colors font-bold text-xs uppercase tracking-widest disabled:opacity-0"
+                disabled>
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24"
+                    stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+                </svg>
+                Anterior
+            </button>
+
+            <button id="next-btn" onclick="nextSlide()"
+                class="flex items-center gap-2 text-action hover:text-highlight transition-colors font-bold text-xs uppercase tracking-widest disabled:opacity-0">
+                Siguiente
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24"
+                    stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                </svg>
+            </button>
+        </footer>
+    </div>
+
+    <script>
+        // Navigation Logic
+        let currentSlide = 1;
+        const totalSlides = 6;
+        const slideCounter = document.getElementById('current-slide-num');
+        const prevBtn = document.getElementById('prev-btn');
+        const nextBtn = document.getElementById('next-btn');
+
+        // Initial setup
+        document.querySelectorAll('.slide').forEach((slide, index) => {
+            if (index === 0) {
+                slide.classList.remove('force-hidden');
+                slide.classList.add('active');
+            } else {
+                slide.classList.add('force-hidden');
+                slide.classList.remove('active');
+            }
+        });
+
+        function updateSlide() {
+            document.querySelectorAll('.slide').forEach((slide, index) => {
+                if (index === currentSlide - 1) {
+                    slide.classList.remove('force-hidden');
+                    slide.classList.add('active', 'fade-in');
+                } else {
+                    slide.classList.add('force-hidden');
+                    slide.classList.remove('active', 'fade-in');
+                }
+            });
+            slideCounter.textContent = currentSlide;
+
+            // Update Buttons
+            prevBtn.disabled = currentSlide === 1;
+            nextBtn.disabled = currentSlide === totalSlides;
+
+            // Optional: visual update for disabled state if not handled by CSS entirely
+            prevBtn.classList.toggle('opacity-0', currentSlide === 1);
+            prevBtn.classList.toggle('cursor-not-allowed', currentSlide === 1);
+
+            nextBtn.classList.toggle('opacity-0', currentSlide === totalSlides);
+            nextBtn.classList.toggle('cursor-not-allowed', currentSlide === totalSlides);
+        }
+
+        function nextSlide() {
+            if (currentSlide < totalSlides) {
+                currentSlide++;
+                updateSlide();
+            }
+        }
+
+        function prevSlide() {
+            if (currentSlide > 1) {
+                currentSlide--;
+                updateSlide();
+            }
+        }
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === "ArrowRight") nextSlide();
+            if (e.key === "ArrowLeft") prevSlide();
+        });
+
+        // Slide 3 Interactions
+        function simulateAccess(type) {
+            const consoleBox = document.getElementById('access-console');
+            const items = [document.getElementById('item-0'), document.getElementById('item-1'), document.getElementById('item-2')];
+
+            // Reset visual highlights
+            items.forEach(i => i.classList.remove('ring-4', 'ring-action', 'scale-110', 'bg-blue-100'));
+
+            if (type === 'index0') {
+                consoleBox.innerHTML += `<div class="mb-1"><span class="text-green-400">>>></span> print(punto[0])</div>`;
+                setTimeout(() => {
+                    consoleBox.innerHTML += `<div class="mb-2 text-white font-bold ml-4">10</div>`;
+                    items[0].classList.add('ring-4', 'ring-action', 'scale-110', 'bg-blue-100');
+                    consoleBox.scrollTop = consoleBox.scrollHeight;
+                }, 300);
+            } else if (type === 'indexNeg') {
+                consoleBox.innerHTML += `<div class="mb-1"><span class="text-green-400">>>></span> print(punto[-1])</div>`;
+                setTimeout(() => {
+                    consoleBox.innerHTML += `<div class="mb-2 text-white font-bold ml-4">30</div>`;
+                    items[2].classList.add('ring-4', 'ring-action', 'scale-110', 'bg-blue-100');
+                    consoleBox.scrollTop = consoleBox.scrollHeight;
+                }, 300);
+            } else if (type === 'loop') {
+                consoleBox.innerHTML += `<div class="mb-1"><span class="text-green-400">>>></span> for x in punto:...</div>`;
+
+                let delay = 300;
+                items.forEach((item, idx) => {
+                    setTimeout(() => {
+                        consoleBox.innerHTML += `<div class="text-white ml-4">${item.querySelector('span').innerText}</div>`;
+                        items.forEach(i => i.classList.remove('ring-4', 'ring-action', 'bg-blue-100'));
+                        item.classList.add('ring-4', 'ring-action', 'bg-blue-100');
+                        consoleBox.scrollTop = consoleBox.scrollHeight;
+                    }, delay);
+                    delay += 600;
+                });
+                setTimeout(() => {
+                    items.forEach(i => i.classList.remove('ring-4', 'ring-action', 'bg-blue-100'));
+                }, delay + 600);
+            }
+        }
+
+        // Slide 4 Interaction
+        function triggerError() {
+            const errBox = document.getElementById('error-box');
+            errBox.classList.remove('hidden');
+            errBox.classList.add('animate-pulse');
+            setTimeout(() => errBox.classList.remove('animate-pulse'), 500);
+        }
+
+        // Slide 5 Animation
+        function animateUnpacking() {
+            const fly0 = document.getElementById('fly-0');
+            const fly1 = document.getElementById('fly-1');
+            const fly2 = document.getElementById('fly-2');
+
+            const target0 = document.getElementById('target-0');
+            const target1 = document.getElementById('target-1');
+            const target2 = document.getElementById('target-2');
+
+            // Reset
+            [fly0, fly1, fly2].forEach(el => {
+                el.style.transition = 'none';
+                el.style.opacity = '1';
+                el.style.transform = 'translate(0, 0)';
+            });
+            [target0, target1, target2].forEach(el => {
+                el.innerText = '?';
+                el.classList.add('border-dashed');
+                el.classList.remove('border-solid', 'bg-white');
+            });
+
+            // Trigger reflow
+            void fly0.offsetWidth;
+
+            // Animate
+            const targets = [
+                { fly: fly0, dest: target0, val: '"Ana"' },
+                { fly: fly1, dest: target1, val: '25' },
+                { fly: fly2, dest: target2, val: '"Dev"' }
+            ];
+
+            targets.forEach((t, i) => {
+                t.fly.style.transition = `all 1s ease-in-out ${i * 0.2}s`;
+
+                // Calculate distances
+                const startRect = t.fly.getBoundingClientRect();
+                const endRect = t.dest.getBoundingClientRect();
+                const deltaX = endRect.left - startRect.left + (endRect.width / 2 - startRect.width / 2); // centering fix roughly
+                const deltaY = endRect.top - startRect.top;
+
+                // Adjust for accurate landing (simple offset logic)
+                // Since fly elements are absolutely positioned relative to container, we need relative coordinates
+                // But simplified for visual effect:
+                // We know exactly where targets are: bottom-10 (approx 200px down) and spaced horizontally
+
+                // Let's hardcode relative moves for robustness in this simple demo
+                // container h-64 (256px). top-10 (40px). bottom-10 (40px from bottom).
+                // deltaY approx 256 - 40 - 40 - height(40) = 136px down.
+
+                // positions:
+                // fly0: center - 70px. target0: center - around 120px? no, complex flex.
+                // Let's use getBoundingClientRect properly relative to container
+
+                const container = t.fly.parentElement.getBoundingClientRect();
+                const flyRect = t.fly.getBoundingClientRect();
+                const destRect = t.dest.getBoundingClientRect();
+
+                const moveX = destRect.left - flyRect.left;
+                const moveY = destRect.top - flyRect.top;
+
+                t.fly.style.transform = `translate(${moveX}px, ${moveY}px)`;
+
+                // On finish
+                setTimeout(() => {
+                    t.dest.innerText = t.val;
+                    t.dest.classList.remove('border-dashed');
+                    t.dest.classList.add('border-solid', 'bg-white');
+                    t.fly.style.opacity = '0'; // Hide fly element after landing
+                }, 1000 + (i * 200));
+            });
+        }
+    </script>
+</body>
+
+</html>
