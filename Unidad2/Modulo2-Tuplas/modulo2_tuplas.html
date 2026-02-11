@@ -100,6 +100,10 @@
             background-color: #27c93f;
             border: 1px solid #1aab29;
         }
+
+        .bg-block {
+            background-color: #f8fafc;
+        }
     </style>
 </head>
 
@@ -111,10 +115,10 @@
         <!-- Header -->
         <header class="h-16 border-b border-border flex items-center justify-between px-6 bg-base z-50">
             <div class="flex items-center gap-2">
-                <span class="ml-4 text-title font-semibold text-lg">Unidad 1: Tuplas</span>
+                <span class="ml-4 text-title font-semibold text-lg">Unidad 2: Tuplas</span>
             </div>
             <div class="flex gap-2">
-                <span class="text-sm text-body"> <span id="current-slide-num">1</span>/8</span>
+                <span class="text-sm text-body"> <span id="current-slide-num">1</span>/9</span>
             </div>
         </header>
 
@@ -125,9 +129,9 @@
             <section id="slide-1"
                 class="slide active w-full h-full flex flex-col justify-center items-center text-center p-12">
                 <div class="mb-2">
-                    <span class="text-2xl font-bold text-accent uppercase tracking-widest">Unidad 1</span>
+                    <span class="text-2xl font-bold text-accent uppercase tracking-widest">Unidad 2</span>
                 </div>
-                <h1 class="text-6xl font-bold text-title mb-4 tracking-tight">Tuplas (tuple) en Python</h1>
+                <h1 class="text-6xl font-bold text-title mb-4 tracking-tight">Módulo 2: Tuplas </h1>
                 <p class="text-2xl text-accent font-light mb-12">Estructuras inmutables y ordenadas</p>
 
                 <div class="grid grid-cols-2 gap-8 max-w-2xl w-full mb-12">
@@ -305,8 +309,98 @@
                 </div>
             </section>
 
-            <!-- Slide 4: Inmutabilidad -->
+            <!-- Slide 4: Desempaquetado (Unpacking) -->
             <section id="slide-4"
+                class="slide force-hidden w-full h-full flex flex-col items-center justify-center p-8">
+                <div class="max-w-6xl w-full grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                    <div class="space-y-6">
+                        <h2 class="text-4xl font-bold text-title">Desempaquetado (Unpacking)</h2>
+                        <p class="text-body text-lg">Python permite asignar los elementos de una tupla a variables
+                            individuales en una sola línea. Es elegante y muy común.</p>
+
+                        <div class="bg-white rounded-lg border border-border overflow-hidden shadow-sm mt-8">
+                            <div class="bg-gray-100 px-4 py-2 flex items-center gap-2 border-b border-gray-200">
+                                <span class="text-xs text-gray-500 font-mono">script.py</span>
+                            </div>
+                            <div class="p-6 font-mono text-base bg-block text-body leading-relaxed">
+                                <div class="mb-4"><span class="text-gray-400"># Tupla con datos de un usuario</span>
+                                </div>
+                                <div class="mb-6">usuario = (<span class="token-string">"Ana"</span>, <span
+                                        class="token-number">25</span>, <span class="token-string">"Dev"</span>)</div>
+                                <div class="mb-4"><span class="text-gray-400"># Desempaquetado mágico ✨</span></div>
+                                <div class="flex items-center gap-2">
+                                    <span class="bg-blue-100 px-1 rounded text-blue-800 font-bold"
+                                        id="var-nombre">nombre</span>,
+                                    <span class="bg-green-100 px-1 rounded text-green-800 font-bold"
+                                        id="var-edad">edad</span>,
+                                    <span class="bg-purple-100 px-1 rounded text-purple-800 font-bold"
+                                        id="var-rol">rol</span>
+                                    = usuario
+                                </div>
+                            </div>
+                        </div>
+
+                        <button onclick="animateUnpacking()"
+                            class="bg-action text-white px-6 py-3 rounded-lg shadow hover:bg-action-hover transition-colors font-medium">
+                            Visualizar Asignación
+                        </button>
+                    </div>
+
+                    <!-- Animation Area -->
+                    <div
+                        class="h-64 relative bg-alt rounded-2xl border border-border w-full flex items-center justify-center overflow-visible">
+                        <!-- Source Tuple -->
+                        <div
+                            class="absolute top-10 flex gap-2 p-2 bg-white rounded-xl border border-gray-300 shadow-md z-10">
+                            <div id="src-0"
+                                class="w-20 h-10 bg-gray-50 border border-gray-200 rounded flex items-center justify-center text-sm font-bold text-gray-700">
+                                "Ana"</div>
+                            <div id="src-1"
+                                class="w-20 h-10 bg-gray-50 border border-gray-200 rounded flex items-center justify-center text-sm font-bold text-gray-700">
+                                25</div>
+                            <div id="src-2"
+                                class="w-20 h-10 bg-gray-50 border border-gray-200 rounded flex items-center justify-center text-sm font-bold text-gray-700">
+                                "Dev"</div>
+                        </div>
+
+                        <!-- Target Variables -->
+                        <div class="absolute bottom-10 flex gap-16 w-full justify-center">
+                            <div class="flex flex-col items-center gap-2">
+                                <div id="target-0"
+                                    class="w-20 h-16 border-2 border-dashed border-blue-300 rounded bg-blue-50 flex items-center justify-center text-blue-800 font-bold transition-all">
+                                    ?</div>
+                                <span class="text-xs font-mono font-bold text-blue-600">nombre</span>
+                            </div>
+                            <div class="flex flex-col items-center gap-2">
+                                <div id="target-1"
+                                    class="w-20 h-16 border-2 border-dashed border-green-300 rounded bg-green-50 flex items-center justify-center text-green-800 font-bold transition-all">
+                                    ?</div>
+                                <span class="text-xs font-mono font-bold text-green-600">edad</span>
+                            </div>
+                            <div class="flex flex-col items-center gap-2">
+                                <div id="target-2"
+                                    class="w-20 h-16 border-2 border-dashed border-purple-300 rounded bg-purple-50 flex items-center justify-center text-purple-800 font-bold transition-all">
+                                    ?</div>
+                                <span class="text-xs font-mono font-bold text-purple-600">rol</span>
+                            </div>
+                        </div>
+
+                        <!-- Flying Elements (Hidden initially) -->
+                        <div id="fly-0"
+                            class="absolute top-10 left-[calc(50%-70px)] w-20 h-10 bg-blue-100 border border-blue-400 text-blue-900 rounded flex items-center justify-center text-sm font-bold shadow-xl opacity-0 z-50">
+                            "Ana"</div>
+                        <div id="fly-1"
+                            class="absolute top-10 left-[calc(50%-0px)] w-20 h-10 bg-green-100 border border-green-400 text-green-900 rounded flex items-center justify-center text-sm font-bold shadow-xl opacity-0 z-50">
+                            25</div>
+                        <div id="fly-2"
+                            class="absolute top-10 left-[calc(50%+70px)] w-20 h-10 bg-purple-100 border border-purple-400 text-purple-900 rounded flex items-center justify-center text-sm font-bold shadow-xl opacity-0 z-50">
+                            "Dev"</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Slide 5: Inmutabilidad -->
+            <section id="slide-5"
                 class="slide force-hidden w-full h-full flex flex-col items-center justify-center p-8 bg-gradient-to-br from-red-50 to-white">
                 <div class="max-w-4xl w-full text-center mb-8">
                     <h2 class="text-4xl font-bold text-title mb-4">Inmutabilidad: Lo que NO puedes hacer</h2>
@@ -366,8 +460,8 @@
                 </div>
             </section>
 
-            <!-- Slide 5: Concatenación y Pertenencia -->
-            <section id="slide-5"
+            <!-- Slide 6: Concatenación y Pertenencia -->
+            <section id="slide-6"
                 class="slide force-hidden w-full h-full flex flex-col items-center justify-center p-8">
                 <div class="max-w-6xl w-full grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
                     <div class="space-y-6">
@@ -474,8 +568,8 @@
                 </div>
             </section>
 
-            <!-- Slide 6: Slicing (Rebanado) -->
-            <section id="slide-6"
+            <!-- Slide 7: Slicing (Rebanado) -->
+            <section id="slide-7"
                 class="slide force-hidden w-full h-full flex flex-col items-center justify-center p-8">
                 <div class="max-w-6xl w-full grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
                     <div class="space-y-6">
@@ -569,145 +663,147 @@
                 </div>
             </section>
 
-            <!-- Slide 7: Tuple Unpacking -->
-            <section id="slide-7"
+            <!-- Slide 8: Métodos .count() y .index() -->
+            <section id="slide-8"
                 class="slide force-hidden w-full h-full flex flex-col items-center justify-center p-8">
                 <div class="max-w-6xl w-full grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
                     <div class="space-y-6">
-                        <h2 class="text-4xl font-bold text-title">Desempaquetado (Unpacking)</h2>
-                        <p class="text-body text-lg">Python permite asignar los elementos de una tupla a variables
-                            individuales en una sola línea. Es elegante y muy común.</p>
+                        <h2 class="text-4xl font-bold text-title">Métodos Útiles: Búsqueda y Conteo</h2>
+                        <p class="text-body text-lg">Debido a su inmutabilidad, las tuplas tienen pocos métodos. Los más
+                            importantes son para <strong>localizar</strong> y <strong>contar</strong> elementos.</p>
 
-                        <div class="bg-white rounded-lg border border-border overflow-hidden shadow-sm mt-8">
+                        <div class="bg-white rounded-lg border border-border overflow-hidden shadow-sm mt-4">
                             <div class="bg-gray-100 px-4 py-2 flex items-center gap-2 border-b border-gray-200">
-                                <span class="text-xs text-gray-500 font-mono">script.py</span>
+                                <span class="text-xs text-gray-500 font-mono">metodos_tupla.py</span>
                             </div>
                             <div class="p-6 font-mono text-base bg-block text-body leading-relaxed">
-                                <div class="mb-4"><span class="text-gray-400"># Tupla con datos de un usuario</span>
-                                </div>
-                                <div class="mb-6">usuario = (<span class="token-string">"Ana"</span>, <span
-                                        class="token-number">25</span>, <span class="token-string">"Dev"</span>)</div>
-                                <div class="mb-4"><span class="text-gray-400"># Desempaquetado mágico ✨</span></div>
-                                <div class="flex items-center gap-2">
-                                    <span class="bg-blue-100 px-1 rounded text-blue-800 font-bold"
-                                        id="var-nombre">nombre</span>,
-                                    <span class="bg-green-100 px-1 rounded text-green-800 font-bold"
-                                        id="var-edad">edad</span>,
-                                    <span class="bg-purple-100 px-1 rounded text-purple-800 font-bold"
-                                        id="var-rol">rol</span>
-                                    = usuario
+                                <div><span class="token-variable">temas</span> = (<span
+                                        id="temas-inputs-container"></span>)</div>
+                                <div class="mt-4 space-y-2">
+                                    <div class="flex items-center gap-2">
+                                        <button onclick="simulateMethods('count')"
+                                            class="bg-blue-100 hover:bg-blue-200 text-blue-800 px-2 py-0.5 rounded text-sm font-bold transition-colors">temas.count(<input
+                                                type="text" id="count-target" value="física"
+                                                class="bg-transparent border-b border-blue-400 w-16 text-center focus:outline-none">
+                                            )</button>
+                                        <span class="text-gray-400 text-sm italic"># ¿Cuántas veces aparece?</span>
+                                    </div>
+                                    <div class="flex items-center gap-2">
+                                        <button onclick="simulateMethods('index')"
+                                            class="bg-green-100 hover:bg-green-200 text-green-800 px-2 py-0.5 rounded text-sm font-bold transition-colors">temas.index(<input
+                                                type="text" id="index-target" value="química"
+                                                class="bg-transparent border-b border-green-400 w-16 text-center focus:outline-none">)</button>
+                                        <span class="text-gray-400 text-sm italic"># ¿En qué posición está?</span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
 
-                        <button onclick="animateUnpacking()"
-                            class="bg-action text-white px-6 py-3 rounded-lg shadow hover:bg-action-hover transition-colors font-medium">
-                            Visualizar Asignación
-                        </button>
+                        <div
+                            class="p-4 bg-yellow-50 rounded-lg border border-yellow-100 text-xs text-yellow-800 flex gap-3">
+                            <svg class="w-8 h-8 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                            </svg>
+                            <div>
+                                <strong>Nota Extra:</strong> Si usas <code>.index()</code> con un valor que no existe,
+                                Python lanzará un <code>ValueError</code>. Siempre es bueno verificar con
+                                <code>in</code> primero.
+                            </div>
+                        </div>
                     </div>
 
-                    <!-- Animation Area -->
+                    <!-- Methods Visualizer -->
                     <div
-                        class="h-64 relative bg-alt rounded-2xl border border-border w-full flex items-center justify-center overflow-visible">
-                        <!-- Source Tuple -->
-                        <div
-                            class="absolute top-10 flex gap-2 p-2 bg-white rounded-xl border border-gray-300 shadow-md z-10">
-                            <div id="src-0"
-                                class="w-20 h-10 bg-gray-50 border border-gray-200 rounded flex items-center justify-center text-sm font-bold text-gray-700">
-                                "Ana"</div>
-                            <div id="src-1"
-                                class="w-20 h-10 bg-gray-50 border border-gray-200 rounded flex items-center justify-center text-sm font-bold text-gray-700">
-                                25</div>
-                            <div id="src-2"
-                                class="w-20 h-10 bg-gray-50 border border-gray-200 rounded flex items-center justify-center text-sm font-bold text-gray-700">
-                                "Dev"</div>
+                        class="bg-alt rounded-2xl border border-border p-8 flex flex-col items-center justify-center relative min-h-[400px]">
+                        <div class="absolute top-4 left-4 text-xs font-bold text-gray-400 uppercase tracking-widest">
+                            Memoria de "temas"</div>
+
+                        <div id="methods-memory" class="flex flex-wrap justify-center gap-4 max-w-md">
+                            <!-- tema-0, tema-1, etc. -->
                         </div>
 
-                        <!-- Target Variables -->
-                        <div class="absolute bottom-10 flex gap-16 w-full justify-center">
-                            <div class="flex flex-col items-center gap-2">
-                                <div id="target-0"
-                                    class="w-20 h-16 border-2 border-dashed border-blue-300 rounded bg-blue-50 flex items-center justify-center text-blue-800 font-bold transition-all">
-                                    ?</div>
-                                <span class="text-xs font-mono font-bold text-blue-600">nombre</span>
-                            </div>
-                            <div class="flex flex-col items-center gap-2">
-                                <div id="target-1"
-                                    class="w-20 h-16 border-2 border-dashed border-green-300 rounded bg-green-50 flex items-center justify-center text-green-800 font-bold transition-all">
-                                    ?</div>
-                                <span class="text-xs font-mono font-bold text-green-600">edad</span>
-                            </div>
-                            <div class="flex flex-col items-center gap-2">
-                                <div id="target-2"
-                                    class="w-20 h-16 border-2 border-dashed border-purple-300 rounded bg-purple-50 flex items-center justify-center text-purple-800 font-bold transition-all">
-                                    ?</div>
-                                <span class="text-xs font-mono font-bold text-purple-600">rol</span>
-                            </div>
+                        <!-- Result Display Area -->
+                        <div id="methods-result"
+                            class="mt-12 h-16 flex items-center justify-center text-2xl font-bold text-action opacity-0 transition-all scale-90">
+                            <!-- Result Text -->
                         </div>
-
-                        <!-- Flying Elements (Hidden initially) -->
-                        <div id="fly-0"
-                            class="absolute top-10 left-[calc(50%-70px)] w-20 h-10 bg-blue-100 border border-blue-400 text-blue-900 rounded flex items-center justify-center text-sm font-bold shadow-xl opacity-0 z-50">
-                            "Ana"</div>
-                        <div id="fly-1"
-                            class="absolute top-10 left-[calc(50%-0px)] w-20 h-10 bg-green-100 border border-green-400 text-green-900 rounded flex items-center justify-center text-sm font-bold shadow-xl opacity-0 z-50">
-                            25</div>
-                        <div id="fly-2"
-                            class="absolute top-10 left-[calc(50%+70px)] w-20 h-10 bg-purple-100 border border-purple-400 text-purple-900 rounded flex items-center justify-center text-sm font-bold shadow-xl opacity-0 z-50">
-                            "Dev"</div>
                     </div>
                 </div>
             </section>
+            <!-- Slide 9: Fin del Módulo -->
+            <section id="slide-9"
+                class="slide force-hidden w-full h-full flex flex-col items-center justify-center p-12 text-center">
+                <h2 class="text-4xl font-bold text-title mb-8">Módulo 2: Tuplas Finalizado</h2>
 
-            <!-- Slide 8: Cuándo usar Tuplas -->
-            <section id="slide-8"
-                class="slide force-hidden w-full h-full flex flex-col justify-center items-center p-8">
-                <h2 class="text-4xl font-bold text-title mb-8">¿Cuándo elegir una Tupla?</h2>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 w-full max-w-5xl">
+                    <!-- Column 1: Conceptos -->
+                    <div class="bg-white p-6 rounded-xl border border-border shadow-sm flex flex-col items-center">
+                        <div class="w-12 h-12 bg-accent/10 rounded-full flex items-center justify-center mb-4">
+                            <svg class="w-6 h-6 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01">
+                                </path>
+                            </svg>
+                        </div>
+                        <h3 class="font-bold text-title mb-2">Conceptos Clave</h3>
+                        <ul class="text-sm text-body space-y-2 text-left w-full px-4">
+                            <li class="flex items-center gap-2"><span
+                                    class="w-2 h-2 rounded-full bg-accent"></span>Colección
+                                <strong>Ordenada</strong>
+                            </li>
+                            <li class="flex items-center gap-2"><span
+                                    class="w-2 h-2 rounded-full bg-accent"></span>Elementos
+                                <strong>Inmutables</strong>
+                            </li>
+                            <li class="flex items-center gap-2"><span
+                                    class="w-2 h-2 rounded-full bg-accent"></span>Acceso por
+                                <strong>Índice</strong>
+                            </li>
+                        </ul>
+                    </div>
 
-                <div class="bg-white rounded-xl shadow-lg border border-border overflow-hidden w-full max-w-4xl mb-12">
-                    <table class="w-full text-left border-collapse">
-                        <thead>
-                            <tr class="bg-alt border-b border-border">
-                                <th class="p-4 text-sm font-semibold text-gray-500 uppercase tracking-wider">
-                                    Característica</th>
-                                <th
-                                    class="p-4 text-sm font-semibold text-action uppercase tracking-wider bg-blue-50/50">
-                                    Tupla (Tuple)</th>
-                                <th class="p-4 text-sm font-semibold text-gray-500 uppercase tracking-wider">Lista
-                                    (List)</th>
-                            </tr>
-                        </thead>
-                        <tbody class="divide-y divide-gray-100">
-                            <tr class="hover:bg-gray-50">
-                                <td class="p-4 font-medium text-body">Mutabilidad</td>
-                                <td class="p-4 text-green-600 bg-blue-50/30 font-bold">Inmutable (Fija)</td>
-                                <td class="p-4 text-action">Mutable (Editable)</td>
-                            </tr>
-                            <tr class="hover:bg-gray-50">
-                                <td class="p-4 font-medium text-body">Uso Principal</td>
-                                <td class="p-4 text-body bg-blue-50/30">Datos que no deben cambiar (semánticamente
-                                    fijos)</td>
-                                <td class="p-4 text-body">Colecciones que crecerán o cambiarán</td>
-                            </tr>
-                            <tr class="hover:bg-gray-50">
-                                <td class="p-4 font-medium text-body">Velocidad</td>
-                                <td class="p-4 text-green-600 bg-blue-50/30 font-bold">Ligeramente más rápida</td>
-                                <td class="p-4 text-action">Estándar</td>
-                            </tr>
-                            <tr class="hover:bg-gray-50">
-                                <td class="p-4 font-medium text-body">Ejemplo Real</td>
-                                <td class="p-4 font-mono text-xs bg-blue-50/30">coord = (40.71, -74.00)</td>
-                                <td class="p-4 font-mono text-xs">usuarios = ["Ana", "Bob"]</td>
-                            </tr>
-                        </tbody>
-                    </table>
+                    <!-- Column 2: Logros -->
+                    <div
+                        class="bg-white p-6 rounded-xl border border-border shadow-sm flex flex-col items-center relative overflow-hidden">
+                        <div class="absolute top-0 w-full h-1 bg-gradient-to-r from-action to-action-hover"></div>
+                        <div class="w-12 h-12 bg-action/10 rounded-full flex items-center justify-center mb-4">
+                            <svg class="w-6 h-6 text-action" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M5 13l4 4L19 7"></path>
+                            </svg>
+                        </div>
+                        <h3 class="font-bold text-title mb-2">Ahora puedes...</h3>
+                        <ul class="text-sm text-body space-y-2 text-left w-full px-4">
+                            <li class="flex items-center gap-2">✅ Agrupar datos heterogéneos fijos</li>
+                            <li class="flex items-center gap-2">✅ Garantizar integridad de los datos</li>
+                            <li class="flex items-center gap-2">✅ Usar desempaquetado elegante</li>
+                        </ul>
+                    </div>
+
+                    <!-- Column 3: Cuándo Usar -->
+                    <div
+                        class="bg-gray-50 p-6 rounded-xl border border-border dashed border-2 flex flex-col items-center">
+                        <div class="w-12 h-12 bg-gray-200 rounded-full flex items-center justify-center mb-4">
+                            <svg class="w-6 h-6 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                            </svg>
+                        </div>
+                        <h3 class="font-bold text-gray-700 mb-2">¿Cuándo NO usarlo?</h3>
+                        <p class="text-xs text-body mb-2 text-center">Si necesitas <strong>modificar</strong>
+                            (añadir/quitar) datos frecuentemente.</p>
+                        <p class="text-xs text-body text-center">Si la colección crece <strong>dinámicamente</strong>.
+                        </p>
+                    </div>
                 </div>
 
-                <div class="max-w-2xl text-center space-y-4">
-                    <p class="text-2xl font-light text-accent">"Usar una tupla comunica tu intención: <br><strong>este
-                            dato es sagrado y no cambiará</strong>."</p>
-                    <div class="h-1 w-20 bg-action mx-auto rounded-full opacity-20"></div>
-                    <p class="text-sm text-gray-400">Fin del Módulo 2</p>
+                <div class="mt-12">
+                    <p class="text-gray-400 text-sm mb-4">Has completado el Módulo 2 de la Unidad 2</p>
+                    <button onclick="restartModule()"
+                        class="bg-alt text-action hover:bg-gray-200 border border-border px-6 py-2 rounded-full text-sm font-medium transition-colors">
+                        Reiniciar Módulo
+                    </button>
                 </div>
             </section>
 
@@ -738,10 +834,11 @@
     <script>
         // Navigation Logic
         let currentSlide = 1;
-        const totalSlides = 8;
-        let puntoItems = [10, 20, 30];
+        const totalSlides = 9;
+        let puntoItems = [10, 20, 30]; // Static for Slide 3
         let t1Items = [1, 2];
         let t2Items = [3, 4];
+        let temasItems = ["física", "química", "física", "física"];
         let t1Count = 2; // Keep for compatibility or remove later
         let t2Count = 2;
         let mixtaCreated = false;
@@ -785,8 +882,9 @@
 
             // Trigger Slide-Specific Inits
             if (currentSlide === 3) updateSlide3();
-            if (currentSlide === 5) resetSlide5();
-            if (currentSlide === 6) updateSlicing();
+            if (currentSlide === 6) resetSlide5();
+            if (currentSlide === 7) updateSlicing();
+            if (currentSlide === 8) initSlide8();
         }
 
         function nextSlide() {
@@ -814,24 +912,14 @@
             const memoryContainer = document.getElementById('s3-memory-container');
             if (!codeContainer || !memoryContainer) return;
 
-            // Update Code Snippet with [+] and [-]
+            // Update Code Snippet (No buttons, no interactive spans)
             codeContainer.innerHTML = `
-                <div class="mb-2 text-[10px] text-action font-bold uppercase tracking-wider opacity-60">Control de Tupla:</div>
+                <div class="mb-2 text-[10px] text-action font-bold uppercase tracking-wider opacity-60">Estructura de la Tupla:</div>
                 <div class="flex items-center gap-2 mb-4">
                     <span class="token-variable">punto</span> = (<span id="punto-items-code">${puntoItems.map((v, i) => `
-                        <span class="relative inline-block px-1 rounded hover:bg-red-100 group cursor-pointer transition-colors" onclick="removeSlide3Item(${i})" title="Haz clic para borrar">
+                        <span class="px-1">
                             <span class="token-number font-bold">${v}</span>${i < puntoItems.length - 1 ? ',' : ''}
                         </span>`).join('')}</span>)
-                    
-                    <div class="flex gap-1 ml-2">
-                        <button onclick="addSlide3Item()" 
-                            class="w-6 h-6 bg-action text-white rounded-md flex items-center justify-center text-xs hover:bg-action-hover shadow-sm"
-                            title="Añadir elemento">+</button>
-                        ${puntoItems.length > 1 ? `
-                        <button onclick="removeSlide3Item(${puntoItems.length - 1})" 
-                            class="w-6 h-6 bg-red-500 text-white rounded-md flex items-center justify-center text-xs hover:bg-red-600 shadow-sm"
-                            title="Quitar último elemento">−</button>` : ''}
-                    </div>
                 </div>
                 <div class="mt-2 text-gray-400 italic"># Acceso por índice</div>
                 <div><span class="token-function">print</span>(punto[<span class="token-number">0</span>])</div>
@@ -841,20 +929,15 @@
                 <div class="pl-4"><span class="token-function">print</span>(coord)</div>
             `;
 
-            // Update Memory Visualizer
+            // Update Memory Visualizer (No "x" buttons)
             memoryContainer.innerHTML = `
                 <span class="absolute -top-3 left-4 bg-white px-2 text-xs font-bold text-accent">Memoria RAM</span>
                 <div class="flex items-center gap-4">
                 ${puntoItems.map((v, i) => `
-                    <div id="item-${i}" class="w-16 h-16 bg-white border-2 border-accent/20 rounded-xl flex flex-col items-center justify-center relative transition-all duration-300 group shadow-sm hover:shadow-md hover:border-red-300">
+                    <div id="item-${i}" class="w-16 h-16 bg-white border-2 border-accent/20 rounded-xl flex flex-col items-center justify-center relative transition-all duration-300 shadow-sm">
                         <span class="text-xl font-mono font-bold text-body">${v}</span>
                         <span class="absolute bottom-1 right-2 text-[10px] text-gray-400 font-mono">${i}</span>
                         ${i === puntoItems.length - 1 ? `<span class="absolute top-1 left-2 text-[10px] text-gray-400 font-mono">-1</span>` : ''}
-                        
-                        ${puntoItems.length > 1 ? `
-                        <button onclick="removeSlide3Item(${i})" 
-                            class="absolute -top-2 -right-2 w-6 h-6 bg-red-500 text-white rounded-full flex items-center justify-center text-xs hover:bg-red-700 transition-colors border-2 border-white shadow-lg z-20 font-bold"
-                            title="Borrar elemento">×</button>` : ''}
                     </div>
                 `).join('')}
                 </div>
@@ -1288,6 +1371,93 @@
                     t.fly.style.opacity = '0'; // Hide fly element after landing
                 }, 1000 + (i * 200));
             });
+        }
+
+        // Slide 8 Methods Logic
+        function initSlide8() {
+            const containerInputs = document.getElementById('temas-inputs-container');
+            const containerMemory = document.getElementById('methods-memory');
+            const resultArea = document.getElementById('methods-result');
+            if (!containerInputs || !containerMemory || !resultArea) return;
+
+            resultArea.classList.add('opacity-0');
+            resultArea.innerText = '';
+
+            // Update Inputs in Code
+            containerInputs.innerHTML = temasItems.map((v, i) => `
+                <input type="text" id="tema-input-${i}" value="${v}" 
+                    oninput="temasItems[${i}] = this.value; updateMethodsVisuals()"
+                    class="w-16 border-b border-gray-300 rounded-none text-center bg-blue-50/30 text-xs focus:border-action outline-none">
+            `).join(', ');
+
+            // Update Memory Visualizer
+            containerMemory.innerHTML = temasItems.map((v, i) => `
+                <div id="tema-${i}" class="w-16 h-16 bg-white border-2 border-accent/20 rounded-xl flex flex-col items-center justify-center relative transition-all duration-300 shadow-sm">
+                    <span class="text-[10px] font-bold text-body v-val text-center px-1">${v}</span>
+                    <span class="absolute bottom-1 right-2 text-[10px] text-gray-400 font-mono">${i}</span>
+                </div>
+            `).join('');
+        }
+
+        function updateMethodsVisuals() {
+            temasItems.forEach((v, i) => {
+                const vis = document.getElementById(`tema-${i}`);
+                if (vis) {
+                    const valSpan = vis.querySelector('.v-val');
+                    if (valSpan) valSpan.innerText = v;
+                }
+            });
+        }
+
+        function simulateMethods(method) {
+            const resultArea = document.getElementById('methods-result');
+            const items = temasItems.map((_, i) => document.getElementById(`tema-${i}`));
+            const target = method === 'count'
+                ? document.getElementById('count-target').value
+                : document.getElementById('index-target').value;
+
+            // Clear highlights
+            items.forEach(el => el.classList.remove('ring-4', 'ring-action', 'bg-blue-50', 'scale-110', 'ring-green-400', 'bg-green-50'));
+            resultArea.classList.remove('opacity-100', 'scale-100');
+            resultArea.classList.add('opacity-0', 'scale-90', 'text-red-500');
+
+            setTimeout(() => {
+                if (method === 'count') {
+                    let count = 0;
+                    temasItems.forEach((t, i) => {
+                        if (t === target) {
+                            count++;
+                            items[i].classList.add('ring-4', 'ring-action', 'bg-blue-50', 'scale-110');
+                        }
+                    });
+                    resultArea.innerText = `Resultado temas.count("${target}"): ${count}`;
+                    resultArea.classList.remove('text-green-600', 'text-red-500');
+                    resultArea.classList.add('text-action');
+                } else {
+                    const idx = temasItems.indexOf(target);
+                    if (idx !== -1) {
+                        items[idx].classList.add('ring-4', 'ring-green-400', 'bg-green-50', 'scale-110');
+                        resultArea.innerText = `Índice encontrado temas.index("${target}"): ${idx}`;
+                        resultArea.classList.remove('text-action', 'text-red-500');
+                        resultArea.classList.add('text-green-600');
+                    } else {
+                        resultArea.innerText = `ValueError: "${target}" no está en tupla`;
+                        resultArea.classList.add('text-red-500');
+                    }
+                }
+                resultArea.classList.remove('opacity-0', 'scale-90');
+                resultArea.classList.add('opacity-100', 'scale-100');
+            }, 300);
+        }
+
+        function restartModule() {
+            currentSlide = 1;
+            updateSlide();
+            // Clear console
+            const consoleBox = document.getElementById('access-console');
+            if (consoleBox) consoleBox.innerHTML = '';
+            // Reset other states if needed
+            mixtaCreated = false;
         }
     </script>
 </body>
