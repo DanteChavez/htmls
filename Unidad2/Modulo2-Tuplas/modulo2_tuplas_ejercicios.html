@@ -163,17 +163,25 @@
 
         <!-- Slide 1: Intro -->
         <section id="slide-1"
-            class="slide active w-full h-full flex flex-col justify-center items-center text-center p-12 bg-alt">
-            <div
-                class="w-24 h-24 bg-white rounded-3xl shadow-lg flex items-center justify-center mb-8 border border-border">
-                <span class="text-6xl">🎮</span>
+            class="slide active w-full h-full flex flex-col justify-center items-center text-center p-12 bg-white">
+
+            <div class="space-y-2 mb-12">
+                <h2 class="text-blue-600 font-bold tracking-widest uppercase text-sm">Unidad 2</h2>
+                <h1 class="text-5xl font-black text-title tracking-tight">Módulo 1: <span
+                        class="text-blue-700">Ejercicios de Sets</span></h1>
+                <div class="h-1.5 w-24 bg-blue-600 mx-auto rounded-full mt-4"></div>
+                <p class="text-xl text-body pt-4 font-medium italic opacity-80 text-center max-w-2xl">Práctica de
+                    operaciones y aplicaciones lógicas en Python</p>
             </div>
-            <h1 class="text-5xl font-bold text-title mb-6">Simulador de Tuplas</h1>
-            <p class="text-xl text-body mb-12 max-w-2xl">Aprende haciendo. Experimenta con las consecuencias de usar
-                tuplas incorrectamente y descubre por qué son esenciales.</p>
+
             <button onclick="nextSlide()"
-                class="bg-action hover:bg-action-hover text-white px-8 py-4 rounded-xl shadow-lg transition-transform hover:scale-105 font-bold text-lg flex items-center gap-2">
-                Comenzar Desafíos ->
+                class="bg-action hover:bg-action-hover text-white px-10 py-5 rounded-2xl shadow-2xl transition-all hover:scale-105 active:scale-95 font-bold text-xl flex items-center gap-3">
+                Comenzar Desafíos
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"
+                    class="animate-pulse">
+                    <polyline points="9 18 15 12 9 6"></polyline>
+                </svg>
             </button>
         </section>
 
@@ -283,44 +291,84 @@
 
         <!-- Slide: Intermediate Completion Section -->
         <section id="slide-intermediate-completion"
-            class="slide w-full h-full flex flex-col justify-center items-center p-12 bg-white">
-            <div class="text-7xl mb-6 flex flex-col items-center">
-                <span>🏆</span>
-                <div class="w-32 h-1 bg-gradient-to-r from-transparent via-yellow-400 to-transparent mt-2"></div>
-            </div>
-            <h1 class="text-4xl font-bold text-title mb-4">Módulo de Ejercicios Finalizado</h1>
-            <p class="text-xl text-body mb-10 max-w-2xl text-center leading-relaxed">¡Felicidades! Has completado con
-                éxito los niveles Básico y Operaciones Comunes. Ya tienes una base sólida sobre el uso de tuplas.</p>
+            class="slide w-full h-full flex flex-col justify-center items-center p-12 bg-white relative">
+            <div class="text-8xl mb-6 animate-bounce">🏆</div>
+            <h1 class="text-5xl font-black text-title mb-4 tracking-tight text-center">Nivel Básico Superado</h1>
+            <div class="h-1 w-32 bg-blue-600 mb-8 rounded-full"></div>
 
-            <div class="flex flex-col items-center gap-6">
+            <p class="text-2xl text-body mb-12 max-w-3xl text-center leading-relaxed font-medium">
+                Has demostrado dominio sobre la <span class="text-blue-700 font-bold">inmutabilidad</span> y las
+                operaciones fundamentales.
+                ¿Estás listo para el nivel de experto?
+            </p>
+
+            <div class="flex flex-col items-center gap-10">
                 <button onclick="nextSlide()"
-                    class="bg-action hover:bg-action-hover text-white px-10 py-5 rounded-2xl shadow-xl font-bold text-xl flex items-center gap-3 transition-all hover:scale-105 active:scale-95 group">
+                    class="bg-action hover:bg-action-hover text-white px-8 py-4 rounded-xl shadow-xl font-bold text-lg flex items-center gap-3 transition-all hover:scale-105 active:scale-95 group">
                     Optativo: Ejercicios Difíciles
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
                         stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"
-                        class="group-hover:translate-x-1 transition-transform">
+                        class="group-hover:translate-x-1 transition-transform animate-pulse">
                         <polyline points="9 18 15 12 9 6"></polyline>
                     </svg>
                 </button>
-                <p class="text-gray-400 text-sm italic">Prepárate para trampas lógicas y conceptos avanzados</p>
+                <p class="text-gray-400 font-bold tracking-widest uppercase text-xs">Atención: Se incrementará la
+                    complejidad lógica</p>
             </div>
+
+            <!-- Professional Footer -->
+            <footer class="absolute bottom-10 inset-x-0 flex justify-between px-20 items-center opacity-40 select-none">
+                <div class="flex flex-col">
+                    <span class="font-bold text-sm tracking-tight">Universidad de Valparaíso</span>
+                    <span class="text-xs">Escuela de Ingeniería Informática</span>
+                </div>
+                <div class="text-right">
+                    <span class="block text-xs font-bold uppercase tracking-widest">Programación 1 | PRO121</span>
+                    <span class="text-[10px] opacity-80">Unidad 2: Tuplas (Ejercicios)</span>
+                </div>
+            </footer>
         </section>
 
         <!-- Slide: Final Completion Section -->
         <section id="slide-final-completion"
-            class="slide w-full h-full flex flex-col justify-center items-center p-12 bg-white text-center">
-            <div class="text-8xl mb-6">🎯</div>
-            <h1 class="text-5xl font-bold text-title mb-6">Módulo Completo Finalizado</h1>
-            <p class="text-2xl text-body mb-10 max-w-3xl leading-relaxed">¡Increíble! Has dominado desde los conceptos
-                básicos hasta las trampas más complejas de las Tuplas en Python. Ya eres un experto en estructuras de
-                datos inmutables.</p>
+            class="slide w-full h-full flex flex-col justify-center items-center p-12 bg-slate-50 relative overflow-hidden">
+            <!-- Background Decoration -->
+            <div class="absolute -top-20 -right-20 w-64 h-64 bg-blue-100 rounded-full blur-3xl opacity-50"></div>
+            <div class="absolute -bottom-20 -left-20 w-64 h-64 bg-blue-100 rounded-full blur-3xl opacity-50"></div>
 
-            <div class="flex gap-4">
+            <div class="text-9xl mb-8 drop-shadow-2xl">🎯</div>
+            <h1 class="text-6xl font-black text-title mb-6 tracking-tight text-center">Módulo Completado</h1>
+            <div class="h-2 w-48 bg-blue-600 mb-10 rounded-full"></div>
+
+            <p class="text-2xl text-body mb-12 max-w-4xl text-center leading-relaxed font-medium px-4">
+                ¡Felicidades! Has finalizado exitosamente el simulador de tuplas.
+                Ahora posees las habilidades necesarias para manejar estructuras de datos inmutables con precisión
+                arquitectónica.
+            </p>
+
+            <div class="flex gap-6">
                 <button onclick="location.reload()"
-                    class="bg-gray-100 hover:bg-gray-200 text-gray-700 px-8 py-4 rounded-xl font-bold transition-all shadow-sm hover:shadow-md active:scale-95">
+                    class="bg-white hover:bg-gray-100 text-gray-700 px-10 py-5 rounded-2xl font-black transition-all shadow-xl hover:shadow-2xl active:scale-95 border border-gray-200">
                     Reiniciar Todo
                 </button>
             </div>
+
+            <!-- Professional Footer -->
+            <footer
+                class="absolute bottom-10 inset-x-0 flex justify-between px-20 items-center opacity-60 select-none border-t border-gray-200 pt-6">
+                <div class="flex items-center gap-4">
+                    <img src="https://sitios.uv.cl/images/logo_uv.png" alt="UV" class="h-10 grayscale opacity-80">
+                    <div class="flex flex-col border-l pl-4 border-gray-300">
+                        <span class="font-bold text-sm tracking-tight">Universidad de Valparaíso</span>
+                        <span class="text-xs">Escuela de Ingeniería Informática</span>
+                    </div>
+                </div>
+                <div class="text-right">
+                    <span class="block text-xs font-bold uppercase tracking-widest text-[#007acc]">Programación 1 |
+                        PRO121</span>
+                    <span class="text-[10px] text-body opacity-80">Unidad 2: Tuplas (Finalizado)</span>
+                </div>
+            </footer>
         </section>
 
         <button id="floating-next-btn" onclick="nextSlide()"
@@ -924,9 +972,10 @@
                             </div>
                         </aside>
 
-                        <main class="flex-1 flex flex-col bg-white min-w-0">
-                            <div class="flex items-center justify-between bg-[#f3f3f3] h-9 flex-shrink-0 select-none border-b border-border">
-                                <div class="flex items-center gap-2 px-3 py-2 bg-white text-[13px] text-[#333333] border-t border-[#007acc] h-full min-w-[140px]">
+                        <main class="flex-1 overflow-hidden bg-white min-w-0 grid grid-rows-[36px_1fr_240px]">
+                            <!-- Tab Bar (Fixed 36px) -->
+                            <div class="flex items-center justify-between bg-[#f3f3f3] select-none border-b border-border h-full">
+                                <div class="flex items-center gap-2 px-3 h-full bg-white text-[13px] text-[#333333] border-t border-[#007acc] min-w-[140px]">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4 text-blue-600"><path d="M14 2v4a2 2 0 0 0 2 2h4"></path><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7z"></path></svg>
                                     <span>ejercicio_${data.id}.py</span>
                                 </div>
@@ -937,12 +986,14 @@
                                 </div>
                             </div>
 
-                            <div class="flex-1 overflow-auto relative font-code py-4" id="editor-scroller">
+                            <!-- Editor Area (Flexible) -->
+                            <div class="overflow-auto relative font-code py-4" id="editor-scroller">
                                 ${codeLinesHTML}
                             </div>
 
-                            <div class="h-1/3 min-h-[200px] bg-white border-t border-border flex flex-col text-[#333333] font-mono text-xs flex-shrink-0">
-                                <div class="px-4 py-2 flex items-center justify-between text-[#616161] border-b border-border bg-[#f3f3f3]">
+                            <!-- Terminal Area (Fixed 240px) -->
+                            <div class="bg-white border-t border-border flex flex-col text-[#333333] font-mono text-xs overflow-hidden h-full">
+                                <div class="h-9 px-4 flex items-center justify-between text-[#616161] border-b border-border bg-[#f3f3f3] flex-shrink-0">
                                     <div class="flex items-center gap-6 uppercase text-[11px] tracking-wide">
                                         <span class="text-[#333333] border-b-2 border-[#007acc] pb-1 cursor-pointer font-bold">Terminal</span>
                                         <span class="opacity-60 cursor-pointer">Console</span>
@@ -954,8 +1005,8 @@
                                         </button>
                                     </div>
                                 </div>
-                                <div id="terminal-body" class="flex-1 p-4 overflow-y-auto font-mono text-[13px] leading-6 text-[#333333]">
-                                    <div class="mb-1 opacity-50 italic">Microsoft (R) PowerShell - TUPLAS Edition v1.0</div>
+                                <div id="terminal-body" class="h-[204px] p-4 overflow-y-auto font-mono text-[13px] leading-6 text-[#333333]">
+                                    <div class="mb-1 opacity-50 italic">Microsoft (R) PowerShell</div>
                                     <div class="mb-3 text-[#333333] flex items-center gap-2">
                                         <span class="text-green-600 font-bold">PS</span> 
                                         <span>C:\\Users\\Estudiante\\Tuplas></span> 
