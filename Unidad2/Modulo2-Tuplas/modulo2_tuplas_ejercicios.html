@@ -453,353 +453,68 @@
 
         // Data for Dynamic Exercises
         const ejercicios = [
-            // EJERCICIO 1: ACCESO BÁSICO (Índices)
+            // EJERCICIO 1: SINTAXIS DE ACCESO (El error más común de novatos)
             {
-                titulo: "Paleta de Colores RGB",
+                id: 1,
+                titulo: "Acceso a Elementos",
                 dificultad: "⭐",
+
+                // El código que se muestra al usuario
                 codigo: [
-                    { num: 1, texto: "# Los colores en web suelen representarse como tuplas (R, G, B)", destacar: false, tiene_error: false },
-                    { num: 2, texto: "verde_corporativo = (0, 255, 128)", destacar: false, tiene_error: false },
-                    { num: 3, texto: "", destacar: false, tiene_error: false },
-                    { num: 4, texto: "# Queremos extraer solo el componente Rojo (R)", destacar: false, tiene_error: false },
-                    { num: 5, texto: "componente_rojo = verde_corporativo(0)", destacar: true, tiene_error: true },
-                    { num: 6, texto: "print(f'Nivel de rojo: {componente_rojo}')", destacar: false, tiene_error: false }
+                    { num: 1, texto: "colores = ('Rojo', 'Verde', 'Azul')" },
+                    { num: 2, texto: "# Queremos obtener el primer color" },
+                    { num: 3, texto: "primer_color = colores(0)" }, // ERROR AQUÍ
+                    { num: 4, texto: "print(primer_color)" }
                 ],
-                error: {
+
+                // Lo que el usuario ve en la "terminal"
+                consola: {
                     tipo: "TypeError",
-                    mensaje: "'tuple' object is not callable"
+                    mensaje: "'tuple' object is not callable",
+                    detalle: "Traceback (most recent call last):\n  File 'main.py', line 3, in <module>\n    primer_color = colores(0)"
                 },
-                parte1: {
-                    pregunta: "¿Por qué falla la línea 5?",
-                    opciones: [
-                        { id: "A", linea: 5, descripcion: "Se están usando paréntesis () en lugar de corchetes [] para acceder al índice.", correcta: true },
-                        { id: "B", linea: 2, descripcion: "La tupla no se definió correctamente.", correcta: false },
-                        { id: "C", linea: 5, descripcion: "Las tuplas no tienen índices porque son inmutables.", correcta: false }
-                    ],
-                    pistas: ["¿Cómo accedes a un elemento de una lista?", "Los paréntesis () se usan para llamar funciones, los corchetes [] para índices."],
-                    feedback_correcto: "¡Correcto! En Python, tanto listas como tuplas usan corchetes [] para acceder a sus posiciones.",
-                    feedback_incorrecto: "Fíjate en los símbolos usados alrededor del número 0."
-                },
-                parte2: {
-                    instruccion: "Corrige la línea 5 para acceder al primer elemento:",
-                    linea_a_arreglar: 5,
-                    codigo_inicial: "componente_rojo = verde_corporativo(0)",
+
+                // La lógica de validación
+                interaccion: {
+                    linea_error: 3, // El usuario debe hacer click en esta línea primero
+                    instruccion_fix: "Corrige la sintaxis para acceder al índice 0:",
+                    codigo_inicial: "primer_color = colores(0)",
                     soluciones_validas: [
-                        "componente_rojo=verde_corporativo[0]",
-                        "componente_rojo=0" // Por si el alumno hardcodea, aunque no es ideal
+                        "primer_color=colores[0]"
                     ],
-                    pistas: ["Cambia los paréntesis por corchetes."]
-                },
-                concepto_practicado: "Acceso por Índice"
+                    pista: "Los paréntesis () son para llamar funciones. Los corchetes [] son para índices."
+                }
             },
 
-            // EJERCICIO 2: INMUTABILIDAD (El clásico GPS)
+            // EJERCICIO 2: INMUTABILIDAD (Intentar cambiar un valor)
             {
-                titulo: "Historial de Ubicaciones",
+                id: 2,
+                titulo: "Modificación Prohibida",
                 dificultad: "⭐⭐",
+
                 codigo: [
-                    { num: 1, texto: "def agregar_parada(ruta_actual, nueva_parada):", destacar: false, tiene_error: false },
-                    { num: 2, texto: "    # ruta_actual es una tupla de coordenadas", destacar: false, tiene_error: false },
-                    { num: 3, texto: "    # Intentamos modificar la ruta", destacar: false, tiene_error: false },
-                    { num: 4, texto: "    ruta_actual[0] = nueva_parada", destacar: true, tiene_error: true },
-                    { num: 5, texto: "    return ruta_actual", destacar: false, tiene_error: false },
-                    { num: 6, texto: "", destacar: false, tiene_error: false },
-                    { num: 7, texto: "ruta = ('Casa', 'Oficina', 'Gimnasio')", destacar: false, tiene_error: false },
-                    { num: 8, texto: "nueva_ruta = agregar_parada(ruta, 'Supermercado')", destacar: false, tiene_error: false }
+                    { num: 1, texto: "config = ('192.168.1.1', 8080)" },
+                    { num: 2, texto: "# Intentamos cambiar el puerto a 443" },
+                    { num: 3, texto: "config[1] = 443" }, // ERROR AQUÍ
+                    { num: 4, texto: "print(config)" }
                 ],
-                error: {
+
+                consola: {
                     tipo: "TypeError",
-                    mensaje: "'tuple' object does not support item assignment"
+                    mensaje: "'tuple' object does not support item assignment",
+                    detalle: "Traceback (most recent call last):\n  File 'main.py', line 3, in <module>\n    config[1] = 443"
                 },
-                parte1: {
-                    pregunta: "¿Cuál es el problema con la lógica de actualización?",
-                    opciones: [
-                        { id: "A", linea: 4, descripcion: "El índice 0 no existe.", correcta: false },
-                        { id: "B", linea: 4, descripcion: "Estás intentando cambiar el contenido de una tupla existente.", correcta: true },
-                        { id: "C", linea: 1, descripcion: "La función no recibe los parámetros correctos.", correcta: false }
-                    ],
-                    pistas: ["Las tuplas son 'read-only' (solo lectura).", "No puedes reasignar un elemento usando `tupla[i] = valor`."],
-                    feedback_correcto: "¡Exacto! Para 'modificar' una tupla, debes crear una nueva.",
-                    feedback_incorrecto: "Recuerda la diferencia principal entre listas y tuplas."
-                },
-                parte2: {
-                    instruccion: "Reescribe la línea 4 para concatenar la nueva parada al final (creando una nueva tupla):",
-                    linea_a_arreglar: 4,
-                    codigo_inicial: "    ruta_actual[0] = nueva_parada",
-                    soluciones_validas: [
-                        "ruta_actual=ruta_actual+(nueva_parada,)",
-                        "return ruta_actual+(nueva_parada,)",
-                        "ruta_actual=(*ruta_actual,nueva_parada)"
-                    ],
-                    pistas: ["Usa el operador + para concatenar.", "Recuerda que para sumar un solo elemento, debe ser una tupla: (elemento,)"]
-                },
-                concepto_practicado: "Inmutabilidad"
-            },
 
-            // EJERCICIO 3: DESEMPAQUETADO (Sensores IoT)
-            {
-                titulo: "Lectura de Sensores IoT",
-                dificultad: "⭐⭐⭐",
-                codigo: [
-                    { num: 1, texto: "def leer_sensor():", destacar: false, tiene_error: false },
-                    { num: 2, texto: "    # Retorna ID, Voltaje, Temperatura, Estado", destacar: false, tiene_error: false },
-                    { num: 3, texto: "    return ('SENSOR_01', 3.3, 24.5, 'ACTIVO')", destacar: false, tiene_error: false },
-                    { num: 4, texto: "", destacar: false, tiene_error: false },
-                    { num: 5, texto: "# Procesamiento de datos", destacar: false, tiene_error: false },
-                    { num: 6, texto: "id_sensor, voltaje, temp = leer_sensor()", destacar: true, tiene_error: true },
-                    { num: 7, texto: "print(f'Sensor {id_sensor}: {temp}°C')", destacar: false, tiene_error: false }
-                ],
-                error: {
-                    tipo: "ValueError",
-                    mensaje: "too many values to unpack (expected 3)"
-                },
-                parte1: {
-                    pregunta: "¿Por qué falla el desempaquetado?",
-                    opciones: [
-                        { id: "A", linea: 6, descripcion: "Hay más datos retornados (4) que variables receptoras (3).", correcta: true },
-                        { id: "B", linea: 3, descripcion: "La función retorna una lista, no una tupla.", correcta: false },
-                        { id: "C", linea: 6, descripcion: "Las variables deben tener el mismo nombre que los datos.", correcta: false }
-                    ],
-                    pistas: ["Cuenta los elementos en la línea 3.", "Cuenta las variables en la línea 6."],
-                    feedback_correcto: "Correcto. El balance debe ser exacto: 4 datos requieren 4 variables (o usar *).",
-                    feedback_incorrecto: "Compara la cantidad de comas en el retorno vs. la asignación."
-                },
-                parte2: {
-                    instruccion: "Arregla la línea 6 usando un guion bajo (_) para ignorar el 'Estado' final:",
-                    linea_a_arreglar: 6,
-                    codigo_inicial: "id_sensor, voltaje, temp = leer_sensor()",
+                interaccion: {
+                    linea_error: 3,
+                    instruccion_fix: "No puedes editar la tupla. Crea una nueva con el puerto 443:",
+                    codigo_inicial: "config[1] = 443",
                     soluciones_validas: [
-                        "id_sensor,voltaje,temp,_=leer_sensor()",
-                        "id_sensor,voltaje,temp,estado=leer_sensor()", // Aceptamos si crean variable
-                        "id_sensor,voltaje,temp,*_=leer_sensor()" // Avanzado
+                        "config=(config[0],443)",
+                        "config=('192.168.1.1',443)"
                     ],
-                    pistas: ["Agrega una cuarta variable al final.", "Usa _ si no te interesa guardar el cuarto valor."]
-                },
-                concepto_practicado: "Desempaquetado (Unpacking)"
-            },
-
-            // EJERCICIO 4: TUPLAS vs LISTAS (Carrito de compras)
-            {
-                titulo: "Carrito de Compras",
-                dificultad: "⭐⭐",
-                codigo: [
-                    { num: 1, texto: "# Lista de productos. Cada producto es una tupla (nombre, precio)", destacar: false, tiene_error: false },
-                    { num: 2, texto: "carrito = [('Leche', 2.50), ('Pan', 1.00)]", destacar: false, tiene_error: false },
-                    { num: 3, texto: "", destacar: false, tiene_error: false },
-                    { num: 4, texto: "# El cliente quiere agregar Huevos", destacar: false, tiene_error: false },
-                    { num: 5, texto: "nuevo_producto = ('Huevos', 3.00)", destacar: false, tiene_error: false },
-                    { num: 6, texto: "", destacar: false, tiene_error: false },
-                    { num: 7, texto: "# Intentamos agregarlo al carrito", destacar: false, tiene_error: false },
-                    { num: 8, texto: "carrito = carrito.append(nuevo_producto)", destacar: true, tiene_error: true },
-                    { num: 9, texto: "print(carrito)", destacar: false, tiene_error: false }
-                ],
-                error: {
-                    tipo: "Lógica / NoneType",
-                    mensaje: "El código no falla, pero imprime 'None' en vez de la lista."
-                },
-                parte1: {
-                    pregunta: "Este código no da error, pero 'carrito' se vuelve None. ¿Por qué?",
-                    opciones: [
-                        { id: "A", linea: 8, descripcion: "No se pueden meter tuplas dentro de listas.", correcta: false },
-                        { id: "B", linea: 8, descripcion: "El método .append() modifica la lista in-situ y retorna None, no la nueva lista.", correcta: true },
-                        { id: "C", linea: 5, descripcion: "La tupla nuevo_producto está mal formada.", correcta: false }
-                    ],
-                    pistas: ["¿Qué devuelve el método .append()? ¿La lista modificada o nada?", "Append cambia el objeto original, no necesitas reasignarlo."],
-                    feedback_correcto: "¡Muy bien! Este es un error común. Append no retorna nada (None), solo actúa.",
-                    feedback_incorrecto: "Revisa la documentación de .append(). ¿Es una función pura o modifica el objeto?"
-                },
-                parte2: {
-                    instruccion: "Corrige la línea 8 para agregar el producto correctamente:",
-                    linea_a_arreglar: 8,
-                    codigo_inicial: "carrito = carrito.append(nuevo_producto)",
-                    soluciones_validas: [
-                        "carrito.append(nuevo_producto)",
-                        "carrito=carrito+[nuevo_producto]", // Concatenación de listas es válida
-                        "carrito+=[nuevo_producto]"
-                    ],
-                    pistas: ["Simplemente llama al método sin asignar el resultado a una variable.", "Borra 'carrito =' del inicio."]
-                },
-                concepto_practicado: "Métodos de Lista vs Retorno"
-            },
-
-            // EJERCICIO 5: INTERCAMBIO DE VARIABLES (Swapping)
-            {
-                titulo: "Ranking de Jugadores",
-                dificultad: "⭐⭐⭐",
-                codigo: [
-                    { num: 1, texto: "jugador_1 = 'Ana'", destacar: false, tiene_error: false },
-                    { num: 2, texto: "jugador_2 = 'Beto'", destacar: false, tiene_error: false },
-                    { num: 3, texto: "", destacar: false, tiene_error: false },
-                    { num: 4, texto: "# Ana pierde, Beto gana. Necesitamos intercambiar puestos.", destacar: false, tiene_error: false },
-                    { num: 5, texto: "# Forma incorrecta que pierde datos:", destacar: false, tiene_error: false },
-                    { num: 6, texto: "jugador_1 = jugador_2", destacar: true, tiene_error: true },
-                    { num: 7, texto: "jugador_2 = jugador_1", destacar: true, tiene_error: true },
-                    { num: 8, texto: "", destacar: false, tiene_error: false },
-                    { num: 9, texto: "print(f'1: {jugador_1}, 2: {jugador_2}') # Imprime Beto, Beto", destacar: false, tiene_error: false }
-                ],
-                error: {
-                    tipo: "Error Lógico",
-                    mensaje: "Se perdió el valor original de jugador_1"
-                },
-                parte1: {
-                    pregunta: "¿Por qué al final ambos son 'Beto'?",
-                    opciones: [
-                        { id: "A", linea: 6, descripcion: "Al asignar j2 a j1, el valor 'Ana' se sobrescribe y se pierde antes de poder pasarlo a j2.", correcta: true },
-                        { id: "B", linea: 7, descripcion: "Python no permite reasignar strings.", correcta: false },
-                        { id: "C", linea: 9, descripcion: "El print está usando mal el f-string.", correcta: false }
-                    ],
-                    pistas: ["Sigue la ejecución paso a paso mentalmente.", "En la línea 7, ¿cuánto vale jugador_1?"],
-                    feedback_correcto: "Exacto. Necesitas una variable temporal o usar la sintaxis de tuplas de Python.",
-                    feedback_incorrecto: "Si en la línea 6 `j1` pasa a valer 'Beto', ¿qué valor se asigna en la línea 7?"
-                },
-                parte2: {
-                    instruccion: "Usa empaquetado/desempaquetado de tuplas para intercambiar ambas variables en la línea 6 (borra la 7 después):",
-                    linea_a_arreglar: 6,
-                    codigo_inicial: "jugador_1 = jugador_2",
-                    soluciones_validas: [
-                        "jugador_1,jugador_2=jugador_2,jugador_1",
-                        "jugador_2,jugador_1=jugador_1,jugador_2"
-                    ],
-                    pistas: ["En Python puedes hacer: a, b = b, a", "Esto crea una tupla temporal implícita."]
-                },
-                concepto_practicado: "Swapping (Intercambio)"
-            },
-
-            // EJERCICIO 6: TUPLA DE UN ELEMENTO (El error de sintaxis)
-            {
-                titulo: "Configuración del Servidor",
-                dificultad: "⭐⭐⭐⭐",
-                codigo: [
-                    { num: 1, texto: "def conectar_servidor(ip, puertos_abiertos):", destacar: false, tiene_error: false },
-                    { num: 2, texto: "    for puerto in puertos_abiertos:", destacar: false, tiene_error: false },
-                    { num: 3, texto: "        print(f'Conectando a {ip}:{puerto}...')", destacar: false, tiene_error: false },
-                    { num: 4, texto: "", destacar: false, tiene_error: false },
-                    { num: 5, texto: "# Configuración", destacar: false, tiene_error: false },
-                    { num: 6, texto: "ip = '192.168.1.1'", destacar: false, tiene_error: false },
-                    { num: 7, texto: "# Solo queremos abrir el puerto 80", destacar: false, tiene_error: false },
-                    { num: 8, texto: "puertos = (80)", destacar: true, tiene_error: true },
-                    { num: 9, texto: "", destacar: false, tiene_error: false },
-                    { num: 10, texto: "conectar_servidor(ip, puertos)", destacar: false, tiene_error: false }
-                ],
-                error: {
-                    tipo: "TypeError",
-                    mensaje: "'int' object is not iterable"
-                },
-                parte1: {
-                    pregunta: "El bucle for falla. ¿Qué tipo de dato es realmente la variable 'puertos'?",
-                    opciones: [
-                        { id: "A", linea: 8, descripcion: "Es una tupla con un elemento.", correcta: false },
-                        { id: "B", linea: 8, descripcion: "Es un número entero (int). Los paréntesis son matemáticos aquí, no de tupla.", correcta: true },
-                        { id: "C", linea: 8, descripcion: "Es una lista vacía.", correcta: false }
-                    ],
-                    pistas: ["Verifica el tipo: type((80)).", "¿Qué define a una tupla? ¿Los paréntesis o la coma?"],
-                    feedback_correcto: "¡Correcto! (80) es un número. (80,) es una tupla. La coma es el constructor de la tupla.",
-                    feedback_incorrecto: "En Python, (5 + 5) es 10. Los paréntesis agrupan expresiones. ¿Qué falta para decir que es una colección?"
-                },
-                parte2: {
-                    instruccion: "Arregla la línea 8 para que sea una tupla de un solo elemento:",
-                    linea_a_arreglar: 8,
-                    codigo_inicial: "puertos = (80)",
-                    soluciones_validas: [
-                        "puertos=(80,)",
-                        "puertos=80,", // Válido en Python (tupla sin paréntesis)
-                        "puertos=tuple([80])"
-                    ],
-                    pistas: ["Agrega una coma después del número."]
-                },
-                concepto_practicado: "Tuplas de un elemento (Singleton)"
-            },
-
-            // EJERCICIO 7: RETORNO MÚLTIPLE Y VALIDACIÓN
-            {
-                titulo: "Autenticación de Usuario",
-                dificultad: "⭐⭐",
-                codigo: [
-                    { num: 1, texto: "def login(usuario, password):", destacar: false, tiene_error: false },
-                    { num: 2, texto: "    if password == '1234':", destacar: false, tiene_error: false },
-                    { num: 3, texto: "        return (True, 'Acceso concedido')", destacar: false, tiene_error: false },
-                    { num: 4, texto: "    else:", destacar: false, tiene_error: false },
-                    { num: 5, texto: "        return (False, 'Password incorrecto')", destacar: false, tiene_error: false },
-                    { num: 6, texto: "", destacar: false, tiene_error: false },
-                    { num: 7, texto: "resultado = login('admin', '0000')", destacar: false, tiene_error: false },
-                    { num: 8, texto: "", destacar: false, tiene_error: false },
-                    { num: 9, texto: "# Verificamos si entró", destacar: false, tiene_error: false },
-                    { num: 10, texto: "if resultado == True:", destacar: true, tiene_error: true },
-                    { num: 11, texto: "    print('Bienvenido')", destacar: false, tiene_error: false }
-                ],
-                error: {
-                    tipo: "Lógica",
-                    mensaje: "La condición nunca se cumple aunque el login sea exitoso."
-                },
-                parte1: {
-                    pregunta: "¿Por qué la comparación 'resultado == True' siempre es falsa o incorrecta?",
-                    opciones: [
-                        { id: "A", linea: 10, descripcion: "Porque 'resultado' es una tupla (bool, str), nunca es igual a un booleano puro.", correcta: true },
-                        { id: "B", linea: 3, descripcion: "Porque True debe ir entre comillas.", correcta: false },
-                        { id: "C", linea: 5, descripcion: "Porque la función retorna un diccionario.", correcta: false }
-                    ],
-                    pistas: ["resultado contiene (False, 'Password incorrecto').", "¿(True, 'Msg') == True?"],
-                    feedback_correcto: "Exacto. Estás comparando una Tupla con un Booleano. Debes acceder al primer elemento de la tupla.",
-                    feedback_incorrecto: "Revisa qué tipo de dato retorna exactamente la función login."
-                },
-                parte2: {
-                    instruccion: "Modifica la condición en la línea 10 para evaluar solo el primer elemento de la tupla:",
-                    linea_a_arreglar: 10,
-                    codigo_inicial: "if resultado == True:",
-                    soluciones_validas: [
-                        "if resultado[0]==True:",
-                        "if resultado[0]:", // Pythonic
-                        "if resultado[0]is True:"
-                    ],
-                    pistas: ["Usa índices para obtener el booleano.", "El éxito está en la posición 0."]
-                },
-                concepto_practicado: "Manejo de Retornos Múltiples"
-            },
-
-            // EJERCICIO 8: MÉTODOS DE TUPLAS (Count/Index)
-            {
-                titulo: "Análisis de Encuesta",
-                dificultad: "⭐⭐",
-                codigo: [
-                    { num: 1, texto: "respuestas = ('Si', 'No', 'Si', 'Tal vez', 'Si', 'No')", destacar: false, tiene_error: false },
-                    { num: 2, texto: "", destacar: false, tiene_error: false },
-                    { num: 3, texto: "# Queremos saber cuántas personas dijeron 'Si'", destacar: false, tiene_error: false },
-                    { num: 4, texto: "conteo_si = 0", destacar: false, tiene_error: false },
-                    { num: 5, texto: "", destacar: false, tiene_error: false },
-                    { num: 6, texto: "# Forma ineficiente manual:", destacar: false, tiene_error: false },
-                    { num: 7, texto: "for r in respuestas:", destacar: false, tiene_error: false },
-                    { num: 8, texto: "    if r == 'Si': conteo_si += 1", destacar: false, tiene_error: false },
-                    { num: 9, texto: "", destacar: false, tiene_error: false },
-                    { num: 10, texto: "# Forma eficiente usando métodos de tupla:", destacar: false, tiene_error: false },
-                    { num: 11, texto: "conteo_si = respuestas.find('Si')", destacar: true, tiene_error: true },
-                    { num: 12, texto: "print(conteo_si)", destacar: false, tiene_error: false }
-                ],
-                error: {
-                    tipo: "AttributeError",
-                    mensaje: "'tuple' object has no attribute 'find'"
-                },
-                parte1: {
-                    pregunta: "El método .find() es de strings, no de tuplas. ¿Qué método sirve para contar ocurrencias?",
-                    opciones: [
-                        { id: "A", linea: 11, descripcion: ".count()", correcta: true },
-                        { id: "B", linea: 11, descripcion: ".index()", correcta: false },
-                        { id: "C", linea: 11, descripcion: ".sum()", correcta: false }
-                    ],
-                    pistas: ["Tuplas tienen muy pocos métodos.", ".index() busca la posición, el otro cuenta la cantidad."],
-                    feedback_correcto: "¡Correcto! Las tuplas solo tienen dos métodos principales: .count() y .index().",
-                    feedback_incorrecto: "Revisa los métodos disponibles para tuplas. ¿Cuál suena a 'contar'?"
-                },
-                parte2: {
-                    instruccion: "Corrige la línea 11 para usar el método adecuado:",
-                    linea_a_arreglar: 11,
-                    codigo_inicial: "conteo_si = respuestas.find('Si')",
-                    soluciones_validas: [
-                        "conteo_si=respuestas.count('Si')",
-                        "conteo_si=respuestas.count(\"Si\")"
-                    ],
-                    pistas: ["Reemplaza find por count."]
-                },
-                concepto_practicado: "Métodos Nativos (.count)"
+                    pista: "Debes reasignar la variable 'config' completa con una nueva tupla."
+                }
             }
         ];
 
@@ -824,75 +539,56 @@
 
             let codeHTML = '';
             data.codigo.forEach(line => {
-                const bgClass = line.destacar ? 'bg-red-50/50' : '';
-                codeHTML += `<div class="flex hover:bg-gray-100 ${bgClass}"><span class="w-8 text-right mr-4 text-gray-400 select-none">${line.num}</span><pre class="font-mono text-sm text-body"><code>${formatCode(line.texto)}</code></pre></div>`;
+                // Interactive lines: Add cursor-pointer and hover effect
+                codeHTML += `<div onclick="checkLine(${line.num})" class="group flex hover:bg-gray-100 cursor-pointer transition-colors border-l-4 border-transparent hover:border-blue-400 relative">
+                                <span class="w-8 text-right mr-4 text-gray-400 select-none group-hover:text-blue-500 font-mono">${line.num}</span>
+                                <pre class="font-mono text-sm text-body flex-1"><code>${formatCode(line.texto)}</code></pre>
+                                <div class="hidden group-hover:block absolute right-2 text-xs text-blue-400 font-bold">🔍 Inspeccionar</div>
+                             </div>`;
             });
 
             container.innerHTML = `
-                <div class="max-w-7xl w-full grid grid-cols-1 lg:grid-cols-2 gap-8 h-full">
-                    <!-- Left Column: Editor & Terminal Stack -->
-                    <div class="flex flex-col gap-6 h-full min-h-0">
-                        <!-- Code Editor Window -->
-                        <div class="flex flex-col flex-[3] bg-white rounded-xl shadow-lg border border-border overflow-hidden min-h-0">
-                            <div class="bg-gray-100 px-4 py-2 flex items-center justify-between border-b border-gray-200">
-                                 <div class="flex items-center gap-2">
-                                    <div class="mac-dot mac-red"></div>
-                                    <div class="mac-dot mac-yellow"></div>
-                                    <div class="mac-dot mac-green"></div>
-                                    <span class="text-xs text-gray-500 font-mono ml-2">buggy_script.py</span>
-                                 </div>
-                                 <span class="text-xs font-bold text-gray-400 uppercase tracking-widest">${data.dificultad}</span>
-                            </div>
-                            <div class="p-4 overflow-y-auto flex-1 bg-white" id="code-view">${codeHTML}</div>
-                        </div>
-
-                        <!-- Separate Terminal Window -->
-                        <div class="flex flex-col flex-1 bg-[#1e1e1e] rounded-xl shadow-lg border border-gray-900 border-t border-t-gray-700 overflow-hidden min-h-0">
-                            <div class="bg-[#2d2d2d] px-4 py-2 flex items-center border-b border-gray-800">
-                                 <div class="flex items-center gap-2">
-                                    <div class="mac-dot mac-red"></div>
-                                    <div class="mac-dot mac-yellow"></div>
-                                    <div class="mac-dot mac-green"></div>
-                                    <span class="text-xs text-gray-400 font-mono ml-2 uppercase tracking-tighter opacity-70">Terminal</span>
-                                 </div>
-                            </div>
-                            <div class="p-4 overflow-y-auto flex-1 text-xs font-mono text-red-300">
-                                <span class="text-gray-500">Traceback (most recent call last):</span><br>
-                                &nbsp;&nbsp;File "buggy_script.py", line <span class="text-yellow-300">?</span>, in &lt;module&gt;<br>
-                                <span class="text-red-500 font-bold">${data.error.tipo}:</span> ${data.error.mensaje}
+                <div class="max-w-6xl w-full grid grid-cols-1 lg:grid-cols-2 gap-8 h-full">
+                    <!-- Left Column: Instructions & Console -->
+                    <div class="flex flex-col gap-6 h-full justify-center">
+                        <div>
+                            <span class="text-accent text-sm font-bold uppercase tracking-wider mb-2 block">D E B U G G I N G</span>
+                            <h2 class="text-4xl font-bold text-title mb-4">${data.titulo}</h2>
+                            <p class="text-body text-lg mb-6">Analiza el error en la terminal y haz clic en la línea de código que lo causa para repararlo.</p>
+                            
+                            <div class="bg-[#1e1e1e] rounded-xl shadow-lg border border-gray-900 overflow-hidden font-mono text-sm leading-relaxed">
+                                <div class="bg-[#2d2d2d] px-4 py-2 flex items-center gap-2 border-b border-gray-800">
+                                    <div class="w-3 h-3 rounded-full bg-red-500"></div>
+                                    <div class="w-3 h-3 rounded-full bg-yellow-500"></div>
+                                    <div class="w-3 h-3 rounded-full bg-green-500"></div>
+                                    <span class="ml-2 text-gray-400 text-xs">Terminal Output</span>
+                                </div>
+                                <div class="p-4 text-gray-300">
+                                    <div class="text-red-400 font-bold mb-2">🚫 ${data.consola.tipo}: ${data.consola.mensaje}</div>
+                                    <div class="text-gray-500 text-xs whitespace-pre-wrap">${data.consola.detalle}</div>
+                                </div>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Right Column: Challenge Interface -->
-                    <div class="flex flex-col justify-center space-y-6 p-4">
-                        <div>
-                            <span class="text-accent text-sm font-bold uppercase tracking-wider mb-2 block">${data.concepto_practicado}</span>
-                            <h2 class="text-3xl font-bold text-title mb-2">${data.titulo}</h2>
-                            <p class="text-body text-lg font-medium">${data.parte1.pregunta}</p>
+                    <!-- Right Column: Interactive Code Editor -->
+                    <div class="flex flex-col h-full justify-center">
+                         <div class="bg-white rounded-xl shadow-2xl border border-border overflow-hidden ring-4 ring-black/5">
+                            <div class="bg-gray-50 px-4 py-3 flex items-center justify-between border-b border-gray-200">
+                                 <div class="flex items-center gap-2">
+                                    <div class="w-3 h-3 rounded-full bg-gray-300"></div>
+                                    <div class="w-3 h-3 rounded-full bg-gray-300"></div>
+                                    <span class="text-xs text-gray-500 font-mono ml-2">buggy_script.py</span>
+                                 </div>
+                                 <div class="text-xs font-bold px-2 py-1 bg-gray-200 rounded text-gray-500">READ-ONLY VIEW</div>
+                            </div>
+                            <div class="p-0 bg-white" id="code-view">
+                                ${codeHTML}
+                            </div>
+                            <div class="bg-gray-50 p-3 text-center border-t border-gray-100 text-xs text-gray-400">
+                                👉 Haz clic en la línea del error
+                            </div>
                         </div>
-
-                        <div class="space-y-3">
-                            ${data.parte1.opciones.map(opt => `
-                                <button onclick="checkOption(this, ${opt.correcta}, '${opt.id}')" 
-                                    class="w-full text-left p-4 rounded-xl border-2 border-border hover:border-action hover:bg-blue-50 transition-all group relative">
-                                    <div class="flex items-start gap-4">
-                                        <div class="w-8 h-8 rounded-full bg-block text-gray-500 font-bold flex items-center justify-center shrink-0 border border-gray-200 group-hover:border-action group-hover:text-action">${opt.id}</div>
-                                        <div class="text-sm text-body group-hover:text-action-dark">
-                                            <span class="font-bold text-accent mr-1">Línea ${opt.linea}:</span> ${opt.descripcion}
-                                        </div>
-                                    </div>
-                                    <div class="feedback-msg hidden mt-2 text-xs font-bold pl-12"></div>
-                                </button>
-                            `).join('')}
-                        </div>
-
-                        <div class="flex justify-between items-center mt-4">
-                            <button onclick="toggleHint('main')" class="text-accent text-sm hover:underline flex items-center gap-1 transition-colors">
-                                <span>💡</span> <span id="hint-text-main">Ver Pista</span>
-                            </button>
-                        </div>
-                        <div id="main-hint-area" class="hidden bg-yellow-50 p-3 rounded text-sm text-yellow-800 border border-yellow-200"></div>
                     </div>
                 </div>
             `;
@@ -910,41 +606,32 @@
                 .replace(/(#.*)/g, '<span class="token-comment">$1</span>');
         }
 
-        function checkOption(btn, isCorrect, id) {
-            // Reset styles
-            const allBtns = btn.parentElement.querySelectorAll('button');
-            allBtns.forEach(b => {
-                b.classList.remove('border-green-500', 'bg-green-50', 'border-red-500', 'bg-red-50');
-                b.querySelector('.feedback-msg').classList.add('hidden');
-            });
+        function checkLine(lineNum) {
+            const data = ejercicios[currentExerciseIndex];
+            const correctLine = data.interaccion.linea_error;
 
-            const msgEl = btn.querySelector('.feedback-msg');
-            const data = ejercicios[currentExerciseIndex].parte1;
-
-            if (isCorrect) {
-                btn.classList.add('border-green-500', 'bg-green-50');
-                msgEl.textContent = data.feedback_correcto;
-                msgEl.classList.remove('hidden', 'text-red-600');
-                msgEl.classList.add('text-green-700');
-
-                // Trigger Part 2 Modal after delay
-                setTimeout(() => openModal(), 1500);
+            if (lineNum === correctLine) {
+                // Success: Correct line found
+                openModal();
             } else {
-                btn.classList.add('border-red-500', 'bg-red-50');
-                msgEl.textContent = data.feedback_incorrecto;
-                msgEl.classList.remove('hidden', 'text-green-700');
-                msgEl.classList.add('text-red-600');
+                // Failure: Incorrect line
+                const codeView = document.getElementById('code-view');
+                codeView.classList.add('animate-shake'); // Assuming shake animation exists or add a small specific shake
+                setTimeout(() => codeView.classList.remove('animate-shake'), 500);
+
+                // Optional: Show visual feedback, e.g., toast or inline message
+                // For now, shake is clear enough for interactive click
             }
         }
 
         // Modal Logic
         function openModal() {
-            const data = ejercicios[currentExerciseIndex].parte2;
+            const data = ejercicios[currentExerciseIndex].interaccion;
             const modal = document.getElementById('correction-modal');
             const content = document.getElementById('modal-content');
 
-            document.getElementById('modal-instruction').textContent = data.instruccion;
-            document.getElementById('modal-line-num').textContent = data.linea_a_arreglar;
+            document.getElementById('modal-instruction').textContent = data.instruccion_fix;
+            document.getElementById('modal-line-num').textContent = data.linea_error;
             document.getElementById('modal-code-input').value = data.codigo_inicial;
             document.getElementById('modal-feedback').textContent = '';
             document.getElementById('modal-feedback').className = 'h-6 text-sm font-bold';
@@ -992,7 +679,7 @@
 
         function validateCorrection() {
             const input = document.getElementById('modal-code-input').value;
-            const data = ejercicios[currentExerciseIndex].parte2;
+            const data = ejercicios[currentExerciseIndex].interaccion;
             const feedback = document.getElementById('modal-feedback');
 
             // Normalize: remove ALL whitespace for comparison
@@ -1029,14 +716,13 @@
 
         function toggleHint(context) {
             const data = ejercicios[currentExerciseIndex];
-            const hints = context === 'main' ? data.parte1.pistas : data.parte2.pistas;
+            // In new format, hints are inside interaccion object, single hint string
+            const hint = data.interaccion.pista;
             const area = context === 'main' ? document.getElementById('main-hint-area') : document.getElementById('modal-hint-area');
 
-            if (currentHintIndex < hints.length) {
-                area.textContent = `💡 Pista ${currentHintIndex + 1}: ${hints[currentHintIndex]}`;
-                area.classList.remove('hidden');
-                currentHintIndex = (currentHintIndex + 1) % hints.length; // Cycle or stop? User asked for optional hints. Cycling is safe.
-            }
+            // Simple reveal since it's just one hint per exercise usually in this structure
+            area.textContent = `💡 Pista: ${hint}`;
+            area.classList.remove('hidden');
         }
 
         // Updated Navigation with Logic Hooks
