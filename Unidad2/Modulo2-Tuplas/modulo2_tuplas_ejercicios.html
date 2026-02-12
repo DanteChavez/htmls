@@ -1,0 +1,1100 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Módulo 2: Tuplas - Ejercicios Interactivos</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        base: '#ffffff',
+                        alt: '#f1f5f9',
+                        title: '#003c58',
+                        accent: '#06717e',
+                        action: '#0055ad',
+                        'action-hover': '#399be2',
+                        highlight: '#0f6cbf',
+                        'text-on-dark': '#6ea2ee',
+                        desc: '#6da8e9',
+                        body: '#1e293b',
+                        border: '#e2e8f0',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+
+        .slide {
+            display: none !important;
+        }
+
+        .slide.active {
+            display: flex !important;
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .invisible-modal {
+            opacity: 0 !important;
+            pointer-events: none !important;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        /* VS Code Light+ Token Colors */
+        .token-keyword {
+            color: #0000ff;
+        }
+
+        .token-function {
+            color: #795e26;
+        }
+
+        .token-string {
+            color: #a31515;
+        }
+
+        .token-number {
+            color: #098658;
+        }
+
+        .token-comment {
+            color: #008000;
+        }
+
+        /* Mac Window Controls */
+        .mac-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            display: inline-block;
+            margin-right: 6px;
+        }
+
+        .mac-red {
+            background-color: #ff5f56;
+            border: 1px solid #e0443e;
+        }
+
+        .mac-yellow {
+            background-color: #ffbd2e;
+            border: 1px solid #dea123;
+        }
+
+        .mac-green {
+            background-color: #27c93f;
+            border: 1px solid #1aab29;
+        }
+
+        .bg-block {
+            background-color: #f8fafc;
+        }
+
+        /* Drag & Drop Styles */
+        .draggable {
+            cursor: grab;
+        }
+
+        .draggable:active {
+            cursor: grabbing;
+        }
+
+        .drop-zone {
+            transition: all 0.2s;
+        }
+
+        .drop-zone.drag-over {
+            background-color: #e0f2fe;
+            border-color: #0055ad;
+        }
+    </style>
+</head>
+
+<body class="bg-base text-body h-screen flex flex-col overflow-hidden">
+
+    <!-- Header -->
+    <header class="bg-white border-b border-border h-16 flex items-center justify-between px-8 shadow-sm z-50">
+        <div class="flex items-center gap-4">
+            <div class="w-8 h-8 bg-action rounded-lg flex items-center justify-center text-white font-bold">PY</div>
+            <span class="text-xl font-bold text-title">Módulo 2: Tuplas <span class="text-accent font-light">|
+                    Ejercicios</span></span>
+        </div>
+        <div class="flex gap-4 text-sm font-medium text-gray-500">
+            <span>Progreso: <span id="current-slide">1</span>/<span id="total-slides-display">8</span></span>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-1 relative overflow-hidden">
+
+        <!-- Slide 1: Intro -->
+        <section id="slide-1"
+            class="slide active w-full h-full flex flex-col justify-center items-center text-center p-12 bg-alt">
+            <div
+                class="w-24 h-24 bg-white rounded-3xl shadow-lg flex items-center justify-center mb-8 border border-border">
+                <span class="text-6xl">🎮</span>
+            </div>
+            <h1 class="text-5xl font-bold text-title mb-6">Simulador de Tuplas</h1>
+            <p class="text-xl text-body mb-12 max-w-2xl">Aprende haciendo. Experimenta con las consecuencias de usar
+                tuplas incorrectamente y descubre por qué son esenciales.</p>
+            <button onclick="nextSlide()"
+                class="bg-action hover:bg-action-hover text-white px-8 py-4 rounded-xl shadow-lg transition-transform hover:scale-105 font-bold text-lg flex items-center gap-2">
+                Comenzar Desafíos ->
+            </button>
+        </section>
+
+        <!-- Dynamic Exercise Container (Replaces Slides 2, 3, 4...) -->
+        <section id="exercise-container" class="slide w-full h-full flex flex-col items-center justify-center p-8">
+            <!-- Content injected by JS -->
+        </section>
+
+        <!-- Correction Modal -->
+        <div id="correction-modal"
+            class="fixed inset-0 bg-black/50 hidden items-center justify-center z-[100] backdrop-blur-sm transition-all duration-300">
+            <div class="bg-white rounded-xl shadow-2xl w-full max-w-2xl overflow-hidden transform transition-all scale-95 opacity-0"
+                id="modal-content">
+                <div class="bg-action p-4 flex justify-between items-center">
+                    <h3 class="text-white font-bold text-lg flex items-center gap-2">
+                        <span>🛠️</span> Reparar Código
+                    </h3>
+                </div>
+                <div class="p-6 space-y-4">
+                    <p class="text-body text-sm" id="modal-instruction">Instrucción...</p>
+
+                    <div
+                        class="bg-[#1e1e1e] rounded-lg p-4 font-mono text-sm text-gray-300 border border-gray-700 relative">
+                        <div class="absolute top-2 right-2 text-xs text-gray-500">editor.py</div>
+                        <div class="flex gap-4">
+                            <span class="text-gray-600 select-none" id="modal-line-num">00</span>
+                            <input type="text" id="modal-code-input"
+                                class="bg-transparent border-none text-white focus:ring-0 w-full p-0 font-mono"
+                                spellcheck="false" autocomplete="off">
+                        </div>
+                    </div>
+
+                    <div id="modal-feedback" class="h-6 text-sm font-bold"></div>
+
+                    <div class="flex justify-between items-center pt-4">
+                        <button onclick="toggleHint('modal')"
+                            class="text-accent text-sm hover:underline flex items-center gap-1">
+                            <span>💡</span> Pista
+                        </button>
+                        <div class="flex gap-3">
+                            <button onclick="toggleModalVisibility()"
+                                class="px-4 py-2 border-2 border-action text-action hover:bg-blue-50 rounded-lg font-bold transition-all text-sm">
+                                👁️ Ver código completo
+                            </button>
+                            <button onclick="validateCorrection()"
+                                class="bg-action text-white px-6 py-2 rounded-lg hover:bg-action-hover font-bold shadow-lg">
+                                Aplicar Corrección
+                            </button>
+                        </div>
+                    </div>
+                    <!-- Modal Hint Area -->
+                    <div id="modal-hint-area"
+                        class="hidden bg-yellow-50 p-3 rounded text-sm text-yellow-800 border border-yellow-200 mt-2">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Floating Restore Button -->
+        <button id="restore-modal-btn" onclick="toggleModalVisibility()"
+            class="fixed bottom-24 right-8 bg-action hover:bg-action-hover text-white px-6 py-3 rounded-full shadow-2xl z-[110] transition-all transform scale-0 opacity-0 flex items-center gap-2 font-bold pointer-events-none">
+            <span>🛠️</span> Regresar al Editor
+        </button>
+
+        <!-- Slide 5: Sets -->
+        <section id="slide-5" class="slide w-full h-full flex flex-col items-center justify-center p-8">
+            <h2 class="text-3xl font-bold text-title mb-8">4. Tuplas dentro de Sets</h2>
+            <p class="text-body mb-6">Los Sets necesitan elementos "hashables" (inmutables). Intenta crear un set de
+                puntos.</p>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 w-full max-w-5xl">
+                <!-- Editor -->
+                <div class="bg-[#1e1e1e] p-6 rounded-xl shadow-2xl border border-gray-700 font-mono text-gray-300">
+                    <div class="flex gap-2 mb-4 border-b border-gray-700 pb-2">
+                        <div class="mac-dot mac-red"></div>
+                        <div class="mac-dot mac-yellow"></div>
+                        <div class="mac-dot mac-green"></div>
+                        <span class="text-gray-500 text-xs ml-auto">main.py</span>
+                    </div>
+                    <div class="mb-4 text-green-400"># Intenta definir un set de coordenadas: (1,2) y (3,4)</div>
+                    <div>puntos = <input type="text" id="set-input" placeholder="{ ... }"
+                            class="bg-gray-800 text-white border-none focus:ring-1 focus:ring-blue-500 rounded px-2 py-1 w-full mt-1 font-mono">
+                    </div>
+                    <button onclick="runSetCode()"
+                        class="mt-4 bg-green-600 hover:bg-green-700 text-white px-4 py-1 rounded text-sm transition-colors">▶
+                        Run</button>
+                </div>
+
+                <!-- Console -->
+                <div class="bg-black p-6 rounded-xl border border-gray-800 font-mono text-sm h-64 overflow-y-auto"
+                    id="set-console">
+                    <span class="text-gray-500">Terminal ready...</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 6: Nested List -->
+        <section id="slide-6" class="slide w-full h-full flex flex-col items-center justify-center p-8">
+            <h2 class="text-3xl font-bold text-title mb-4">5. Listas dentro de Tuplas</h2>
+            <p class="text-body mb-8 text-center max-w-2xl">La tupla es inmutable (su estructura no cambia), pero si
+                contiene una lista, ¡el contenido de esa lista SÍ puede cambiar!</p>
+
+            <div
+                class="bg-white p-8 rounded-2xl shadow-lg border border-border flex items-center gap-4 text-2xl font-mono">
+                <span class="text-gray-400">t = (</span>
+                <span class="text-accent font-bold">1</span>
+                <span class="text-gray-400">,</span>
+
+                <!-- Mutable Inner List -->
+                <div class="bg-yellow-50 border-2 border-yellow-200 rounded px-4 py-2 flex gap-2 cursor-pointer hover:bg-yellow-100 transition-colors relative group"
+                    onclick="modifyInnerList()">
+                    <span class="text-gray-500">[</span>
+                    <span id="inner-list-content" class="text-action font-bold">2, 3</span>
+                    <span class="text-gray-500">]</span>
+
+                    <span
+                        class="absolute -top-8 left-1/2 transform -translate-x-1/2 bg-yellow-200 text-yellow-900 text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">Click
+                        para modificar lista</span>
+                </div>
+
+                <span class="text-gray-400">)</span>
+            </div>
+
+            <div class="mt-8 flex gap-4">
+                <button onclick="tryResult('success')"
+                    class="bg-green-100 text-green-800 px-6 py-3 rounded-lg font-bold hover:bg-green-200 transition-colors">
+                    t[1].append(4) ✅
+                </button>
+                <button onclick="tryResult('fail')"
+                    class="bg-red-100 text-red-800 px-6 py-3 rounded-lg font-bold hover:bg-red-200 transition-colors">
+                    t[1] = [5, 6] ❌
+                </button>
+            </div>
+
+            <div id="nested-feedback" class="mt-8 h-12 font-bold text-lg"></div>
+        </section>
+
+        <!-- Slide 7: Return Values -->
+        <section id="slide-7" class="slide w-full h-full flex flex-col items-center justify-center p-8">
+            <h2 class="text-3xl font-bold text-title mb-8">6. Función Misteriosa</h2>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 w-full max-w-6xl items-center">
+                <div class="bg-white p-6 rounded-xl border border-border shadow-sm">
+                    <div class="font-mono text-sm md:text-base space-y-1">
+                        <div><span class="token-keyword">def</span> <span class="token-function">procesar</span>():
+                        </div>
+                        <div class="pl-4"><span class="token-keyword">return</span> <span
+                                class="token-number">10</span>, <span class="token-number">20</span></div>
+                    </div>
+                </div>
+
+                <div class="space-y-6">
+                    <button onclick="showReturnScenario('single')"
+                        class="w-full text-left bg-white p-4 rounded-xl border-2 border-transparent hover:border-action shadow-sm transition-all group">
+                        <div class="font-mono text-lg mb-2 group-hover:text-action">x = procesar()</div>
+                        <div id="scenario-single" class="hidden text-sm bg-block p-2 rounded border border-gray-200">
+                            <span class="token-comment"># x recibe la tupla completa</span><br>
+                            print(x) <span class="text-gray-400">-></span> <span class="font-bold text-accent">(10,
+                                20)</span>
+                        </div>
+                    </button>
+
+                    <button onclick="showReturnScenario('unpack')"
+                        class="w-full text-left bg-white p-4 rounded-xl border-2 border-transparent hover:border-accent shadow-sm transition-all group">
+                        <div class="font-mono text-lg mb-2 group-hover:text-accent">a, b = procesar()</div>
+                        <div id="scenario-unpack" class="hidden text-sm bg-block p-2 rounded border border-gray-200">
+                            <span class="token-comment"># Desempaquetado automático</span><br>
+                            print(a) <span class="text-gray-400">-></span> <span
+                                class="font-bold text-action">10</span><br>
+                            print(b) <span class="text-gray-400">-></span> <span class="font-bold text-action">20</span>
+                        </div>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 8: Stability Game -->
+        <section id="slide-8" class="slide w-full h-full flex flex-col items-center justify-center p-8 bg-gray-50">
+            <h2 class="text-3xl font-bold text-title mb-4">7. Juego de Estabilidad</h2>
+            <p class="text-body mb-8">Elige la estructura correcta para guardar la configuración del servidor.</p>
+
+            <div class="flex justify-center gap-8 mb-12">
+                <button onclick="setConfigType('list')" id="btn-list"
+                    class="px-6 py-3 bg-white border-2 border-border rounded-lg font-mono hover:bg-gray-50 transition-all">
+                    config = ["server", 8080]
+                </button>
+                <button onclick="setConfigType('tuple')" id="btn-tuple"
+                    class="px-6 py-3 bg-white border-2 border-border rounded-lg font-mono hover:bg-gray-50 transition-all">
+                    config = ("server", 8080)
+                </button>
+            </div>
+
+            <div id="server-box"
+                class="w-64 h-40 bg-gray-800 rounded-xl border-4 border-gray-600 flex items-center justify-center relative shadow-2xl transition-all duration-300">
+                <div class="text-green-500 font-mono text-xs absolute top-2 left-2">● Online</div>
+                <div class="text-4xl">🖥️</div>
+                <div id="shield"
+                    class="absolute inset-0 border-4 border-accent rounded-lg opacity-0 transition-opacity duration-300 pointer-events-none">
+                </div>
+            </div>
+
+            <button onclick="attackServer()"
+                class="mt-12 bg-red-600 hover:bg-red-700 text-white px-8 py-4 rounded-full font-bold shadow-lg shadow-red-200 animate-pulse">
+                💀 SIMULAR ATAQUE
+            </button>
+
+            <div id="attack-result" class="mt-4 font-bold text-lg min-h-[1.5rem]"></div>
+        </section>
+
+        <!-- Slide 9: Mini Project -->
+        <section id="slide-9" class="slide w-full h-full flex flex-col items-center justify-center p-8">
+            <h2 class="text-3xl font-bold text-title mb-8">8. Mini Proyecto: Sistema de Notas</h2>
+            <div class="w-full max-w-5xl grid grid-cols-1 lg:grid-cols-2 gap-8 h-full max-h-[60vh]">
+                <!-- Code Builder -->
+                <div class="bg-white p-6 rounded-xl border border-border shadow-sm flex flex-col">
+                    <h3 class="font-bold text-title mb-4">Constructor de Lógica</h3>
+                    <div class="space-y-4 flex-1">
+                        <div class="bg-block p-3 rounded font-mono text-xs mb-4">
+                            estudiantes = [<br>
+                            &nbsp;&nbsp;("Ana", 20, 9.5),<br>
+                            &nbsp;&nbsp;("Juan", 21, 5.8)<br>
+                            ]
+                        </div>
+
+                        <div id="step-1" class="opacity-100 transition-opacity">
+                            <p class="text-sm font-bold mb-2">1. Validar Nombres</p>
+                            <button onclick="runProjectStep(1)"
+                                class="w-full text-left bg-alt p-3 rounded border border-border hover:border-action text-sm font-mono transition-colors">
+                                for e in estudiantes: print(e[0])
+                            </button>
+                        </div>
+
+                        <div id="step-2" class="opacity-50 pointer-events-none transition-opacity">
+                            <p class="text-sm font-bold mb-2 mt-2">2. Calcular Promedio General</p>
+                            <button onclick="runProjectStep(2)"
+                                class="w-full text-left bg-alt p-3 rounded border border-border hover:border-action text-sm font-mono transition-colors">
+                                sum([e[2] for e in estudiantes]) / len(estudiantes)
+                            </button>
+                        </div>
+
+                        <div id="step-3" class="opacity-50 pointer-events-none transition-opacity">
+                            <p class="text-sm font-bold mb-2 mt-2">3. Encontrar Mejor Alumno</p>
+                            <button onclick="runProjectStep(3)"
+                                class="w-full text-left bg-alt p-3 rounded border border-border hover:border-action text-sm font-mono transition-colors">
+                                max(estudiantes, key=lambda x: x[2])
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Live Output -->
+                <div
+                    class="bg-[#1e1e1e] p-6 rounded-xl border border-gray-700 shadow-2xl font-mono text-sm text-gray-300 overflow-y-auto">
+                    <div class="flex gap-2 mb-4 border-b border-gray-700 pb-2">
+                        <span class="text-gray-500">Output</span>
+                    </div>
+                    <div id="project-output" class="space-y-2"></div>
+                </div>
+            </div>
+            <div class="mt-8 flex gap-4">
+                <button onclick="resetProject()" class="text-gray-400 hover:text-gray-600 underline">Reiniciar</button>
+                <div id="project-complete" class="hidden text-green-600 font-bold items-center gap-2">
+                    <span>✨ Sistema Construido Exitosamente</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Navigation -->
+        <div class="fixed bottom-8 left-0 right-0 flex justify-center gap-4 z-50">
+            <button onclick="prevSlide()" id="prev-btn"
+                class="bg-white hover:bg-gray-50 text-body p-3 rounded-full shadow-lg border border-border disabled:opacity-50 disabled:cursor-not-allowed transition-all">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+                </svg>
+            </button>
+            <button onclick="nextSlide()" id="next-btn"
+                class="bg-white hover:bg-gray-50 text-body p-3 rounded-full shadow-lg border border-border disabled:opacity-50 disabled:cursor-not-allowed transition-all">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                </svg>
+            </button>
+        </div>
+
+    </main>
+
+    <script>
+
+
+        // Data for Dynamic Exercises
+        const ejercicios = [
+            // EJERCICIO 1: ACCESO BÁSICO (Índices)
+            {
+                titulo: "Paleta de Colores RGB",
+                dificultad: "⭐",
+                codigo: [
+                    { num: 1, texto: "# Los colores en web suelen representarse como tuplas (R, G, B)", destacar: false, tiene_error: false },
+                    { num: 2, texto: "verde_corporativo = (0, 255, 128)", destacar: false, tiene_error: false },
+                    { num: 3, texto: "", destacar: false, tiene_error: false },
+                    { num: 4, texto: "# Queremos extraer solo el componente Rojo (R)", destacar: false, tiene_error: false },
+                    { num: 5, texto: "componente_rojo = verde_corporativo(0)", destacar: true, tiene_error: true },
+                    { num: 6, texto: "print(f'Nivel de rojo: {componente_rojo}')", destacar: false, tiene_error: false }
+                ],
+                error: {
+                    tipo: "TypeError",
+                    mensaje: "'tuple' object is not callable"
+                },
+                parte1: {
+                    pregunta: "¿Por qué falla la línea 5?",
+                    opciones: [
+                        { id: "A", linea: 5, descripcion: "Se están usando paréntesis () en lugar de corchetes [] para acceder al índice.", correcta: true },
+                        { id: "B", linea: 2, descripcion: "La tupla no se definió correctamente.", correcta: false },
+                        { id: "C", linea: 5, descripcion: "Las tuplas no tienen índices porque son inmutables.", correcta: false }
+                    ],
+                    pistas: ["¿Cómo accedes a un elemento de una lista?", "Los paréntesis () se usan para llamar funciones, los corchetes [] para índices."],
+                    feedback_correcto: "¡Correcto! En Python, tanto listas como tuplas usan corchetes [] para acceder a sus posiciones.",
+                    feedback_incorrecto: "Fíjate en los símbolos usados alrededor del número 0."
+                },
+                parte2: {
+                    instruccion: "Corrige la línea 5 para acceder al primer elemento:",
+                    linea_a_arreglar: 5,
+                    codigo_inicial: "componente_rojo = verde_corporativo(0)",
+                    soluciones_validas: [
+                        "componente_rojo=verde_corporativo[0]",
+                        "componente_rojo=0" // Por si el alumno hardcodea, aunque no es ideal
+                    ],
+                    pistas: ["Cambia los paréntesis por corchetes."]
+                },
+                concepto_practicado: "Acceso por Índice"
+            },
+
+            // EJERCICIO 2: INMUTABILIDAD (El clásico GPS)
+            {
+                titulo: "Historial de Ubicaciones",
+                dificultad: "⭐⭐",
+                codigo: [
+                    { num: 1, texto: "def agregar_parada(ruta_actual, nueva_parada):", destacar: false, tiene_error: false },
+                    { num: 2, texto: "    # ruta_actual es una tupla de coordenadas", destacar: false, tiene_error: false },
+                    { num: 3, texto: "    # Intentamos modificar la ruta", destacar: false, tiene_error: false },
+                    { num: 4, texto: "    ruta_actual[0] = nueva_parada", destacar: true, tiene_error: true },
+                    { num: 5, texto: "    return ruta_actual", destacar: false, tiene_error: false },
+                    { num: 6, texto: "", destacar: false, tiene_error: false },
+                    { num: 7, texto: "ruta = ('Casa', 'Oficina', 'Gimnasio')", destacar: false, tiene_error: false },
+                    { num: 8, texto: "nueva_ruta = agregar_parada(ruta, 'Supermercado')", destacar: false, tiene_error: false }
+                ],
+                error: {
+                    tipo: "TypeError",
+                    mensaje: "'tuple' object does not support item assignment"
+                },
+                parte1: {
+                    pregunta: "¿Cuál es el problema con la lógica de actualización?",
+                    opciones: [
+                        { id: "A", linea: 4, descripcion: "El índice 0 no existe.", correcta: false },
+                        { id: "B", linea: 4, descripcion: "Estás intentando cambiar el contenido de una tupla existente.", correcta: true },
+                        { id: "C", linea: 1, descripcion: "La función no recibe los parámetros correctos.", correcta: false }
+                    ],
+                    pistas: ["Las tuplas son 'read-only' (solo lectura).", "No puedes reasignar un elemento usando `tupla[i] = valor`."],
+                    feedback_correcto: "¡Exacto! Para 'modificar' una tupla, debes crear una nueva.",
+                    feedback_incorrecto: "Recuerda la diferencia principal entre listas y tuplas."
+                },
+                parte2: {
+                    instruccion: "Reescribe la línea 4 para concatenar la nueva parada al final (creando una nueva tupla):",
+                    linea_a_arreglar: 4,
+                    codigo_inicial: "    ruta_actual[0] = nueva_parada",
+                    soluciones_validas: [
+                        "ruta_actual=ruta_actual+(nueva_parada,)",
+                        "return ruta_actual+(nueva_parada,)",
+                        "ruta_actual=(*ruta_actual,nueva_parada)"
+                    ],
+                    pistas: ["Usa el operador + para concatenar.", "Recuerda que para sumar un solo elemento, debe ser una tupla: (elemento,)"]
+                },
+                concepto_practicado: "Inmutabilidad"
+            },
+
+            // EJERCICIO 3: DESEMPAQUETADO (Sensores IoT)
+            {
+                titulo: "Lectura de Sensores IoT",
+                dificultad: "⭐⭐⭐",
+                codigo: [
+                    { num: 1, texto: "def leer_sensor():", destacar: false, tiene_error: false },
+                    { num: 2, texto: "    # Retorna ID, Voltaje, Temperatura, Estado", destacar: false, tiene_error: false },
+                    { num: 3, texto: "    return ('SENSOR_01', 3.3, 24.5, 'ACTIVO')", destacar: false, tiene_error: false },
+                    { num: 4, texto: "", destacar: false, tiene_error: false },
+                    { num: 5, texto: "# Procesamiento de datos", destacar: false, tiene_error: false },
+                    { num: 6, texto: "id_sensor, voltaje, temp = leer_sensor()", destacar: true, tiene_error: true },
+                    { num: 7, texto: "print(f'Sensor {id_sensor}: {temp}°C')", destacar: false, tiene_error: false }
+                ],
+                error: {
+                    tipo: "ValueError",
+                    mensaje: "too many values to unpack (expected 3)"
+                },
+                parte1: {
+                    pregunta: "¿Por qué falla el desempaquetado?",
+                    opciones: [
+                        { id: "A", linea: 6, descripcion: "Hay más datos retornados (4) que variables receptoras (3).", correcta: true },
+                        { id: "B", linea: 3, descripcion: "La función retorna una lista, no una tupla.", correcta: false },
+                        { id: "C", linea: 6, descripcion: "Las variables deben tener el mismo nombre que los datos.", correcta: false }
+                    ],
+                    pistas: ["Cuenta los elementos en la línea 3.", "Cuenta las variables en la línea 6."],
+                    feedback_correcto: "Correcto. El balance debe ser exacto: 4 datos requieren 4 variables (o usar *).",
+                    feedback_incorrecto: "Compara la cantidad de comas en el retorno vs. la asignación."
+                },
+                parte2: {
+                    instruccion: "Arregla la línea 6 usando un guion bajo (_) para ignorar el 'Estado' final:",
+                    linea_a_arreglar: 6,
+                    codigo_inicial: "id_sensor, voltaje, temp = leer_sensor()",
+                    soluciones_validas: [
+                        "id_sensor,voltaje,temp,_=leer_sensor()",
+                        "id_sensor,voltaje,temp,estado=leer_sensor()", // Aceptamos si crean variable
+                        "id_sensor,voltaje,temp,*_=leer_sensor()" // Avanzado
+                    ],
+                    pistas: ["Agrega una cuarta variable al final.", "Usa _ si no te interesa guardar el cuarto valor."]
+                },
+                concepto_practicado: "Desempaquetado (Unpacking)"
+            },
+
+            // EJERCICIO 4: TUPLAS vs LISTAS (Carrito de compras)
+            {
+                titulo: "Carrito de Compras",
+                dificultad: "⭐⭐",
+                codigo: [
+                    { num: 1, texto: "# Lista de productos. Cada producto es una tupla (nombre, precio)", destacar: false, tiene_error: false },
+                    { num: 2, texto: "carrito = [('Leche', 2.50), ('Pan', 1.00)]", destacar: false, tiene_error: false },
+                    { num: 3, texto: "", destacar: false, tiene_error: false },
+                    { num: 4, texto: "# El cliente quiere agregar Huevos", destacar: false, tiene_error: false },
+                    { num: 5, texto: "nuevo_producto = ('Huevos', 3.00)", destacar: false, tiene_error: false },
+                    { num: 6, texto: "", destacar: false, tiene_error: false },
+                    { num: 7, texto: "# Intentamos agregarlo al carrito", destacar: false, tiene_error: false },
+                    { num: 8, texto: "carrito = carrito.append(nuevo_producto)", destacar: true, tiene_error: true },
+                    { num: 9, texto: "print(carrito)", destacar: false, tiene_error: false }
+                ],
+                error: {
+                    tipo: "Lógica / NoneType",
+                    mensaje: "El código no falla, pero imprime 'None' en vez de la lista."
+                },
+                parte1: {
+                    pregunta: "Este código no da error, pero 'carrito' se vuelve None. ¿Por qué?",
+                    opciones: [
+                        { id: "A", linea: 8, descripcion: "No se pueden meter tuplas dentro de listas.", correcta: false },
+                        { id: "B", linea: 8, descripcion: "El método .append() modifica la lista in-situ y retorna None, no la nueva lista.", correcta: true },
+                        { id: "C", linea: 5, descripcion: "La tupla nuevo_producto está mal formada.", correcta: false }
+                    ],
+                    pistas: ["¿Qué devuelve el método .append()? ¿La lista modificada o nada?", "Append cambia el objeto original, no necesitas reasignarlo."],
+                    feedback_correcto: "¡Muy bien! Este es un error común. Append no retorna nada (None), solo actúa.",
+                    feedback_incorrecto: "Revisa la documentación de .append(). ¿Es una función pura o modifica el objeto?"
+                },
+                parte2: {
+                    instruccion: "Corrige la línea 8 para agregar el producto correctamente:",
+                    linea_a_arreglar: 8,
+                    codigo_inicial: "carrito = carrito.append(nuevo_producto)",
+                    soluciones_validas: [
+                        "carrito.append(nuevo_producto)",
+                        "carrito=carrito+[nuevo_producto]", // Concatenación de listas es válida
+                        "carrito+=[nuevo_producto]"
+                    ],
+                    pistas: ["Simplemente llama al método sin asignar el resultado a una variable.", "Borra 'carrito =' del inicio."]
+                },
+                concepto_practicado: "Métodos de Lista vs Retorno"
+            },
+
+            // EJERCICIO 5: INTERCAMBIO DE VARIABLES (Swapping)
+            {
+                titulo: "Ranking de Jugadores",
+                dificultad: "⭐⭐⭐",
+                codigo: [
+                    { num: 1, texto: "jugador_1 = 'Ana'", destacar: false, tiene_error: false },
+                    { num: 2, texto: "jugador_2 = 'Beto'", destacar: false, tiene_error: false },
+                    { num: 3, texto: "", destacar: false, tiene_error: false },
+                    { num: 4, texto: "# Ana pierde, Beto gana. Necesitamos intercambiar puestos.", destacar: false, tiene_error: false },
+                    { num: 5, texto: "# Forma incorrecta que pierde datos:", destacar: false, tiene_error: false },
+                    { num: 6, texto: "jugador_1 = jugador_2", destacar: true, tiene_error: true },
+                    { num: 7, texto: "jugador_2 = jugador_1", destacar: true, tiene_error: true },
+                    { num: 8, texto: "", destacar: false, tiene_error: false },
+                    { num: 9, texto: "print(f'1: {jugador_1}, 2: {jugador_2}') # Imprime Beto, Beto", destacar: false, tiene_error: false }
+                ],
+                error: {
+                    tipo: "Error Lógico",
+                    mensaje: "Se perdió el valor original de jugador_1"
+                },
+                parte1: {
+                    pregunta: "¿Por qué al final ambos son 'Beto'?",
+                    opciones: [
+                        { id: "A", linea: 6, descripcion: "Al asignar j2 a j1, el valor 'Ana' se sobrescribe y se pierde antes de poder pasarlo a j2.", correcta: true },
+                        { id: "B", linea: 7, descripcion: "Python no permite reasignar strings.", correcta: false },
+                        { id: "C", linea: 9, descripcion: "El print está usando mal el f-string.", correcta: false }
+                    ],
+                    pistas: ["Sigue la ejecución paso a paso mentalmente.", "En la línea 7, ¿cuánto vale jugador_1?"],
+                    feedback_correcto: "Exacto. Necesitas una variable temporal o usar la sintaxis de tuplas de Python.",
+                    feedback_incorrecto: "Si en la línea 6 `j1` pasa a valer 'Beto', ¿qué valor se asigna en la línea 7?"
+                },
+                parte2: {
+                    instruccion: "Usa empaquetado/desempaquetado de tuplas para intercambiar ambas variables en la línea 6 (borra la 7 después):",
+                    linea_a_arreglar: 6,
+                    codigo_inicial: "jugador_1 = jugador_2",
+                    soluciones_validas: [
+                        "jugador_1,jugador_2=jugador_2,jugador_1",
+                        "jugador_2,jugador_1=jugador_1,jugador_2"
+                    ],
+                    pistas: ["En Python puedes hacer: a, b = b, a", "Esto crea una tupla temporal implícita."]
+                },
+                concepto_practicado: "Swapping (Intercambio)"
+            },
+
+            // EJERCICIO 6: TUPLA DE UN ELEMENTO (El error de sintaxis)
+            {
+                titulo: "Configuración del Servidor",
+                dificultad: "⭐⭐⭐⭐",
+                codigo: [
+                    { num: 1, texto: "def conectar_servidor(ip, puertos_abiertos):", destacar: false, tiene_error: false },
+                    { num: 2, texto: "    for puerto in puertos_abiertos:", destacar: false, tiene_error: false },
+                    { num: 3, texto: "        print(f'Conectando a {ip}:{puerto}...')", destacar: false, tiene_error: false },
+                    { num: 4, texto: "", destacar: false, tiene_error: false },
+                    { num: 5, texto: "# Configuración", destacar: false, tiene_error: false },
+                    { num: 6, texto: "ip = '192.168.1.1'", destacar: false, tiene_error: false },
+                    { num: 7, texto: "# Solo queremos abrir el puerto 80", destacar: false, tiene_error: false },
+                    { num: 8, texto: "puertos = (80)", destacar: true, tiene_error: true },
+                    { num: 9, texto: "", destacar: false, tiene_error: false },
+                    { num: 10, texto: "conectar_servidor(ip, puertos)", destacar: false, tiene_error: false }
+                ],
+                error: {
+                    tipo: "TypeError",
+                    mensaje: "'int' object is not iterable"
+                },
+                parte1: {
+                    pregunta: "El bucle for falla. ¿Qué tipo de dato es realmente la variable 'puertos'?",
+                    opciones: [
+                        { id: "A", linea: 8, descripcion: "Es una tupla con un elemento.", correcta: false },
+                        { id: "B", linea: 8, descripcion: "Es un número entero (int). Los paréntesis son matemáticos aquí, no de tupla.", correcta: true },
+                        { id: "C", linea: 8, descripcion: "Es una lista vacía.", correcta: false }
+                    ],
+                    pistas: ["Verifica el tipo: type((80)).", "¿Qué define a una tupla? ¿Los paréntesis o la coma?"],
+                    feedback_correcto: "¡Correcto! (80) es un número. (80,) es una tupla. La coma es el constructor de la tupla.",
+                    feedback_incorrecto: "En Python, (5 + 5) es 10. Los paréntesis agrupan expresiones. ¿Qué falta para decir que es una colección?"
+                },
+                parte2: {
+                    instruccion: "Arregla la línea 8 para que sea una tupla de un solo elemento:",
+                    linea_a_arreglar: 8,
+                    codigo_inicial: "puertos = (80)",
+                    soluciones_validas: [
+                        "puertos=(80,)",
+                        "puertos=80,", // Válido en Python (tupla sin paréntesis)
+                        "puertos=tuple([80])"
+                    ],
+                    pistas: ["Agrega una coma después del número."]
+                },
+                concepto_practicado: "Tuplas de un elemento (Singleton)"
+            },
+
+            // EJERCICIO 7: RETORNO MÚLTIPLE Y VALIDACIÓN
+            {
+                titulo: "Autenticación de Usuario",
+                dificultad: "⭐⭐",
+                codigo: [
+                    { num: 1, texto: "def login(usuario, password):", destacar: false, tiene_error: false },
+                    { num: 2, texto: "    if password == '1234':", destacar: false, tiene_error: false },
+                    { num: 3, texto: "        return (True, 'Acceso concedido')", destacar: false, tiene_error: false },
+                    { num: 4, texto: "    else:", destacar: false, tiene_error: false },
+                    { num: 5, texto: "        return (False, 'Password incorrecto')", destacar: false, tiene_error: false },
+                    { num: 6, texto: "", destacar: false, tiene_error: false },
+                    { num: 7, texto: "resultado = login('admin', '0000')", destacar: false, tiene_error: false },
+                    { num: 8, texto: "", destacar: false, tiene_error: false },
+                    { num: 9, texto: "# Verificamos si entró", destacar: false, tiene_error: false },
+                    { num: 10, texto: "if resultado == True:", destacar: true, tiene_error: true },
+                    { num: 11, texto: "    print('Bienvenido')", destacar: false, tiene_error: false }
+                ],
+                error: {
+                    tipo: "Lógica",
+                    mensaje: "La condición nunca se cumple aunque el login sea exitoso."
+                },
+                parte1: {
+                    pregunta: "¿Por qué la comparación 'resultado == True' siempre es falsa o incorrecta?",
+                    opciones: [
+                        { id: "A", linea: 10, descripcion: "Porque 'resultado' es una tupla (bool, str), nunca es igual a un booleano puro.", correcta: true },
+                        { id: "B", linea: 3, descripcion: "Porque True debe ir entre comillas.", correcta: false },
+                        { id: "C", linea: 5, descripcion: "Porque la función retorna un diccionario.", correcta: false }
+                    ],
+                    pistas: ["resultado contiene (False, 'Password incorrecto').", "¿(True, 'Msg') == True?"],
+                    feedback_correcto: "Exacto. Estás comparando una Tupla con un Booleano. Debes acceder al primer elemento de la tupla.",
+                    feedback_incorrecto: "Revisa qué tipo de dato retorna exactamente la función login."
+                },
+                parte2: {
+                    instruccion: "Modifica la condición en la línea 10 para evaluar solo el primer elemento de la tupla:",
+                    linea_a_arreglar: 10,
+                    codigo_inicial: "if resultado == True:",
+                    soluciones_validas: [
+                        "if resultado[0]==True:",
+                        "if resultado[0]:", // Pythonic
+                        "if resultado[0]is True:"
+                    ],
+                    pistas: ["Usa índices para obtener el booleano.", "El éxito está en la posición 0."]
+                },
+                concepto_practicado: "Manejo de Retornos Múltiples"
+            },
+
+            // EJERCICIO 8: MÉTODOS DE TUPLAS (Count/Index)
+            {
+                titulo: "Análisis de Encuesta",
+                dificultad: "⭐⭐",
+                codigo: [
+                    { num: 1, texto: "respuestas = ('Si', 'No', 'Si', 'Tal vez', 'Si', 'No')", destacar: false, tiene_error: false },
+                    { num: 2, texto: "", destacar: false, tiene_error: false },
+                    { num: 3, texto: "# Queremos saber cuántas personas dijeron 'Si'", destacar: false, tiene_error: false },
+                    { num: 4, texto: "conteo_si = 0", destacar: false, tiene_error: false },
+                    { num: 5, texto: "", destacar: false, tiene_error: false },
+                    { num: 6, texto: "# Forma ineficiente manual:", destacar: false, tiene_error: false },
+                    { num: 7, texto: "for r in respuestas:", destacar: false, tiene_error: false },
+                    { num: 8, texto: "    if r == 'Si': conteo_si += 1", destacar: false, tiene_error: false },
+                    { num: 9, texto: "", destacar: false, tiene_error: false },
+                    { num: 10, texto: "# Forma eficiente usando métodos de tupla:", destacar: false, tiene_error: false },
+                    { num: 11, texto: "conteo_si = respuestas.find('Si')", destacar: true, tiene_error: true },
+                    { num: 12, texto: "print(conteo_si)", destacar: false, tiene_error: false }
+                ],
+                error: {
+                    tipo: "AttributeError",
+                    mensaje: "'tuple' object has no attribute 'find'"
+                },
+                parte1: {
+                    pregunta: "El método .find() es de strings, no de tuplas. ¿Qué método sirve para contar ocurrencias?",
+                    opciones: [
+                        { id: "A", linea: 11, descripcion: ".count()", correcta: true },
+                        { id: "B", linea: 11, descripcion: ".index()", correcta: false },
+                        { id: "C", linea: 11, descripcion: ".sum()", correcta: false }
+                    ],
+                    pistas: ["Tuplas tienen muy pocos métodos.", ".index() busca la posición, el otro cuenta la cantidad."],
+                    feedback_correcto: "¡Correcto! Las tuplas solo tienen dos métodos principales: .count() y .index().",
+                    feedback_incorrecto: "Revisa los métodos disponibles para tuplas. ¿Cuál suena a 'contar'?"
+                },
+                parte2: {
+                    instruccion: "Corrige la línea 11 para usar el método adecuado:",
+                    linea_a_arreglar: 11,
+                    codigo_inicial: "conteo_si = respuestas.find('Si')",
+                    soluciones_validas: [
+                        "conteo_si=respuestas.count('Si')",
+                        "conteo_si=respuestas.count(\"Si\")"
+                    ],
+                    pistas: ["Reemplaza find por count."]
+                },
+                concepto_practicado: "Métodos Nativos (.count)"
+            }
+        ];
+
+        let currentExerciseIndex = 0;
+        let currentHintIndex = 0;
+        let exercisesSolved = [false, false]; // Tracking for dynamic exercises
+
+        function loadRefactoredExercise() {
+            const container = document.getElementById('exercise-container');
+            if (currentSlide === 2 || currentSlide === 3) {
+                // Determine exercise index based on slide (Slide 2 -> Index 0, Slide 3 -> Index 1)
+                const exIndex = currentSlide - 2;
+                renderExercise(exIndex);
+                currentExerciseIndex = exIndex;
+            }
+        }
+
+        function renderExercise(index) {
+            const data = ejercicios[index];
+            const container = document.getElementById('exercise-container');
+            currentHintIndex = 0;
+
+            let codeHTML = '';
+            data.codigo.forEach(line => {
+                const bgClass = line.destacar ? 'bg-red-50/50' : '';
+                codeHTML += `<div class="flex hover:bg-gray-100 ${bgClass}"><span class="w-8 text-right mr-4 text-gray-400 select-none">${line.num}</span><pre class="font-mono text-sm text-body"><code>${formatCode(line.texto)}</code></pre></div>`;
+            });
+
+            container.innerHTML = `
+                <div class="max-w-7xl w-full grid grid-cols-1 lg:grid-cols-2 gap-8 h-full">
+                    <!-- Left Column: Editor & Terminal Stack -->
+                    <div class="flex flex-col gap-6 h-full min-h-0">
+                        <!-- Code Editor Window -->
+                        <div class="flex flex-col flex-[3] bg-white rounded-xl shadow-lg border border-border overflow-hidden min-h-0">
+                            <div class="bg-gray-100 px-4 py-2 flex items-center justify-between border-b border-gray-200">
+                                 <div class="flex items-center gap-2">
+                                    <div class="mac-dot mac-red"></div>
+                                    <div class="mac-dot mac-yellow"></div>
+                                    <div class="mac-dot mac-green"></div>
+                                    <span class="text-xs text-gray-500 font-mono ml-2">buggy_script.py</span>
+                                 </div>
+                                 <span class="text-xs font-bold text-gray-400 uppercase tracking-widest">${data.dificultad}</span>
+                            </div>
+                            <div class="p-4 overflow-y-auto flex-1 bg-white" id="code-view">${codeHTML}</div>
+                        </div>
+
+                        <!-- Separate Terminal Window -->
+                        <div class="flex flex-col flex-1 bg-[#1e1e1e] rounded-xl shadow-lg border border-gray-900 border-t border-t-gray-700 overflow-hidden min-h-0">
+                            <div class="bg-[#2d2d2d] px-4 py-2 flex items-center border-b border-gray-800">
+                                 <div class="flex items-center gap-2">
+                                    <div class="mac-dot mac-red"></div>
+                                    <div class="mac-dot mac-yellow"></div>
+                                    <div class="mac-dot mac-green"></div>
+                                    <span class="text-xs text-gray-400 font-mono ml-2 uppercase tracking-tighter opacity-70">Terminal</span>
+                                 </div>
+                            </div>
+                            <div class="p-4 overflow-y-auto flex-1 text-xs font-mono text-red-300">
+                                <span class="text-gray-500">Traceback (most recent call last):</span><br>
+                                &nbsp;&nbsp;File "buggy_script.py", line <span class="text-yellow-300">?</span>, in &lt;module&gt;<br>
+                                <span class="text-red-500 font-bold">${data.error.tipo}:</span> ${data.error.mensaje}
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right Column: Challenge Interface -->
+                    <div class="flex flex-col justify-center space-y-6 p-4">
+                        <div>
+                            <span class="text-accent text-sm font-bold uppercase tracking-wider mb-2 block">${data.concepto_practicado}</span>
+                            <h2 class="text-3xl font-bold text-title mb-2">${data.titulo}</h2>
+                            <p class="text-body text-lg font-medium">${data.parte1.pregunta}</p>
+                        </div>
+
+                        <div class="space-y-3">
+                            ${data.parte1.opciones.map(opt => `
+                                <button onclick="checkOption(this, ${opt.correcta}, '${opt.id}')" 
+                                    class="w-full text-left p-4 rounded-xl border-2 border-border hover:border-action hover:bg-blue-50 transition-all group relative">
+                                    <div class="flex items-start gap-4">
+                                        <div class="w-8 h-8 rounded-full bg-block text-gray-500 font-bold flex items-center justify-center shrink-0 border border-gray-200 group-hover:border-action group-hover:text-action">${opt.id}</div>
+                                        <div class="text-sm text-body group-hover:text-action-dark">
+                                            <span class="font-bold text-accent mr-1">Línea ${opt.linea}:</span> ${opt.descripcion}
+                                        </div>
+                                    </div>
+                                    <div class="feedback-msg hidden mt-2 text-xs font-bold pl-12"></div>
+                                </button>
+                            `).join('')}
+                        </div>
+
+                        <div class="flex justify-between items-center mt-4">
+                            <button onclick="toggleHint('main')" class="text-accent text-sm hover:underline flex items-center gap-1 transition-colors">
+                                <span>💡</span> <span id="hint-text-main">Ver Pista</span>
+                            </button>
+                        </div>
+                        <div id="main-hint-area" class="hidden bg-yellow-50 p-3 rounded text-sm text-yellow-800 border border-yellow-200"></div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function formatCode(text) {
+            // Simple syntax highlighting for display
+            return text
+                .replace(/def /g, '<span class="token-keyword">def </span>')
+                .replace(/return /g, '<span class="token-keyword">return </span>')
+                .replace(/if /g, '<span class="token-keyword">if </span>')
+                .replace(/print/g, '<span class="token-function">print</span>')
+                .replace(/([0-9\.]+)/g, '<span class="token-number">$1</span>')
+                .replace(/('.*?')/g, '<span class="token-string">$1</span>')
+                .replace(/(#.*)/g, '<span class="token-comment">$1</span>');
+        }
+
+        function checkOption(btn, isCorrect, id) {
+            // Reset styles
+            const allBtns = btn.parentElement.querySelectorAll('button');
+            allBtns.forEach(b => {
+                b.classList.remove('border-green-500', 'bg-green-50', 'border-red-500', 'bg-red-50');
+                b.querySelector('.feedback-msg').classList.add('hidden');
+            });
+
+            const msgEl = btn.querySelector('.feedback-msg');
+            const data = ejercicios[currentExerciseIndex].parte1;
+
+            if (isCorrect) {
+                btn.classList.add('border-green-500', 'bg-green-50');
+                msgEl.textContent = data.feedback_correcto;
+                msgEl.classList.remove('hidden', 'text-red-600');
+                msgEl.classList.add('text-green-700');
+
+                // Trigger Part 2 Modal after delay
+                setTimeout(() => openModal(), 1500);
+            } else {
+                btn.classList.add('border-red-500', 'bg-red-50');
+                msgEl.textContent = data.feedback_incorrecto;
+                msgEl.classList.remove('hidden', 'text-green-700');
+                msgEl.classList.add('text-red-600');
+            }
+        }
+
+        // Modal Logic
+        function openModal() {
+            const data = ejercicios[currentExerciseIndex].parte2;
+            const modal = document.getElementById('correction-modal');
+            const content = document.getElementById('modal-content');
+
+            document.getElementById('modal-instruction').textContent = data.instruccion;
+            document.getElementById('modal-line-num').textContent = data.linea_a_arreglar;
+            document.getElementById('modal-code-input').value = data.codigo_inicial;
+            document.getElementById('modal-feedback').textContent = '';
+            document.getElementById('modal-feedback').className = 'h-6 text-sm font-bold';
+
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            setTimeout(() => {
+                content.classList.remove('scale-95', 'opacity-0');
+                content.classList.add('scale-100', 'opacity-100');
+            }, 10);
+
+            currentHintIndex = 0; // Reset hints for modal part
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('correction-modal');
+            const content = document.getElementById('modal-content');
+            content.classList.remove('scale-100', 'opacity-100');
+            content.classList.add('scale-95', 'opacity-0');
+            setTimeout(() => {
+                modal.classList.remove('flex');
+                modal.classList.add('hidden');
+                // Ensure restore button is hidden if modal is closed
+                const restoreBtn = document.getElementById('restore-modal-btn');
+                restoreBtn.classList.add('scale-0', 'opacity-0', 'pointer-events-none');
+            }, 200);
+        }
+
+        function toggleModalVisibility() {
+            const modal = document.getElementById('correction-modal');
+            const restoreBtn = document.getElementById('restore-modal-btn');
+
+            if (modal.classList.contains('invisible-modal')) {
+                // Restore
+                modal.classList.remove('invisible-modal', 'pointer-events-none', 'opacity-0');
+                restoreBtn.classList.remove('scale-100', 'opacity-100');
+                restoreBtn.classList.add('scale-0', 'opacity-0', 'pointer-events-none');
+            } else {
+                // Minimize
+                modal.classList.add('invisible-modal', 'pointer-events-none', 'opacity-0');
+                restoreBtn.classList.remove('scale-0', 'opacity-0', 'pointer-events-none');
+                restoreBtn.classList.add('scale-100', 'opacity-100');
+            }
+        }
+
+        function validateCorrection() {
+            const input = document.getElementById('modal-code-input').value;
+            const data = ejercicios[currentExerciseIndex].parte2;
+            const feedback = document.getElementById('modal-feedback');
+
+            // Normalize: remove ALL whitespace for comparison
+            const normalizedInput = input.replace(/\s+/g, '');
+            const valid = data.soluciones_validas.some(s => {
+                const normalizedS = s.replace(/\s+/g, '');
+                if (normalizedS.includes('_')) {
+                    // Escape regex special chars but keep _ as wildcard
+                    const escaped = normalizedS.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+                    // Replace _ with regex pattern for any identifier/string
+                    const pattern = new RegExp('^' + escaped.replace(/_/g, '[a-zA-Z0-9_\\*]+') + '$');
+                    return pattern.test(normalizedInput);
+                }
+                return normalizedS === normalizedInput;
+            });
+
+            if (valid) {
+                feedback.textContent = "✨ ¡Solución Correcta! Código Reparado.";
+                feedback.className = "h-6 text-sm font-bold text-green-600";
+
+                // Mark as solved
+                exercisesSolved[currentExerciseIndex] = true;
+
+                setTimeout(() => {
+                    closeModal();
+                    updateSlide(); // Unlock navigation
+                    nextSlide();
+                }, 1500);
+            } else {
+                feedback.textContent = "⚠️ Solución incorrecta. Intenta de nuevo.";
+                feedback.className = "h-6 text-sm font-bold text-red-500 animate-pulse";
+            }
+        }
+
+        function toggleHint(context) {
+            const data = ejercicios[currentExerciseIndex];
+            const hints = context === 'main' ? data.parte1.pistas : data.parte2.pistas;
+            const area = context === 'main' ? document.getElementById('main-hint-area') : document.getElementById('modal-hint-area');
+
+            if (currentHintIndex < hints.length) {
+                area.textContent = `💡 Pista ${currentHintIndex + 1}: ${hints[currentHintIndex]}`;
+                area.classList.remove('hidden');
+                currentHintIndex = (currentHintIndex + 1) % hints.length; // Cycle or stop? User asked for optional hints. Cycling is safe.
+            }
+        }
+
+        // Updated Navigation with Logic Hooks
+        let currentSlide = 1;
+        const totalSlides = 8; // Refactored count (Intro + 2 Exercises + 5 original remaining)
+
+        function updateSlide() {
+            // Mapping Logic:
+            // Slide 1 (Intro) -> DOM 0
+            // Slide 2 & 3 (Exercises) -> DOM 1
+            // Slide 4+ -> DOM n-2
+            const slides = document.querySelectorAll('.slide');
+            let activePhysicalIndex = 0;
+
+            if (currentSlide === 1) activePhysicalIndex = 0;
+            else if (currentSlide === 2 || currentSlide === 3) activePhysicalIndex = 1;
+            else activePhysicalIndex = currentSlide - 2;
+
+            slides.forEach((s, i) => {
+                if (i === activePhysicalIndex) {
+                    s.classList.add('active');
+                } else {
+                    s.classList.remove('active');
+                }
+            });
+            document.getElementById('current-slide').textContent = currentSlide;
+            document.getElementById('total-slides-display').textContent = totalSlides; // Update header info if needed
+
+            document.getElementById('prev-btn').disabled = currentSlide === 1;
+
+            // Next button is disabled if:
+            // 1. We are at the last slide
+            // 2. We are on Exercise 1 (Slide 2) and it's not solved
+            // 3. We are on Exercise 2 (Slide 3) and it's not solved
+            let isExerciseSlide = (currentSlide === 2 || currentSlide === 3);
+            let exerciseIndex = currentSlide - 2;
+            let nextDisabled = currentSlide === totalSlides || (isExerciseSlide && !exercisesSolved[exerciseIndex]);
+
+            document.getElementById('next-btn').disabled = nextDisabled;
+
+            // Trigger Dynamic Load if needed
+            if (currentSlide === 2 || currentSlide === 3) {
+                loadRefactoredExercise();
+            }
+        }
+
+        function nextSlide() { if (currentSlide < totalSlides) { currentSlide++; updateSlide(); } }
+        function prevSlide() { if (currentSlide > 1) { currentSlide--; updateSlide(); } }
+
+        // Keyboard Navigation (Preserved)
+        document.addEventListener('keydown', (e) => {
+            if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+            if (e.key === 'ArrowRight') nextSlide();
+            if (e.key === 'ArrowLeft') prevSlide();
+        });
+
+
+    </script>
+</body>
+
+</html>
