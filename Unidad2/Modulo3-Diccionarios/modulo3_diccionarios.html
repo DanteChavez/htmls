@@ -349,14 +349,14 @@
         </section>
 
         <!-- Slide 3: Desafío Interactivo -->
-        <section id="slide-3" class="slide flex-col p-8 overflow-y-auto custom-scrollbar">
-            <div class="max-w-7xl mx-auto w-full h-full flex flex-col">
+        <section id="slide-3" class="slide flex-col p-4 overflow-hidden">
+            <div class="w-full h-full flex flex-col">
                 <!-- Data & Context Header -->
-                <div class="mb-6 flex justify-between items-end border-b pb-4">
+                <div class="mb-4 flex justify-between items-end border-b pb-2 shrink-0">
                     <div>
                         <h2 class="text-accent font-black uppercase tracking-widest text-xs mb-1">Aprende probando</h2>
-                        <h1 class="text-3xl font-black text-primary">Corrección de Inventario</h1>
-                        <p class="text-sm text-gray-500 max-w-2xl mt-1"><strong>Misión:</strong> El sistema ha
+                        <h1 class="text-2xl font-black text-primary">Corrección de Inventario</h1>
+                        <p class="text-xs text-gray-500 max-w-4xl mt-1"><strong>Misión:</strong> El sistema ha
                             registrado mal el stock. Tu objetivo es dejar el inventario <strong>exactamente</strong>
                             así: <span class="font-mono bg-gray-100 px-1 rounded text-primary">laptop: 20</span>, <span
                                 class="font-mono bg-gray-100 px-1 rounded text-primary">mouse: 45</span>, <span
@@ -366,9 +366,9 @@
                     </div>
                     <!-- Progress -->
                     <div class="flex flex-col items-end gap-1">
-                        <span class="text-xs font-bold uppercase tracking-widest text-gray-400">Progreso de
+                        <span class="text-[10px] font-bold uppercase tracking-widest text-gray-400">Progreso de
                             Reparación</span>
-                        <div class="w-48 h-3 bg-gray-100 rounded-full overflow-hidden border border-gray-200">
+                        <div class="w-32 h-2 bg-gray-100 rounded-full overflow-hidden border border-gray-200">
                             <div id="game-progress" class="h-full bg-action transition-all duration-500 w-0"></div>
                         </div>
                     </div>
@@ -376,73 +376,10 @@
 
                 <div class="grid grid-cols-12 gap-6 flex-1 min-h-0">
 
-                    <!-- Left: Requirements & Tools -->
+                    <!-- Left: Editor & Tools (4 cols) -->
                     <div class="col-span-4 flex flex-col gap-4">
-
-                        <!-- Toolbox -->
-                        <div class="bg-primary/5 rounded-2xl border border-primary/10 p-5">
-                            <h3 class="font-black text-primary uppercase text-xs tracking-widest mb-3">Caja de
-                                Herramientas</h3>
-                            <div class="grid grid-cols-1 gap-2">
-                                <button onclick="selectTool('access')"
-                                    class="tool-btn group relative flex items-center justify-between p-3 bg-white border border-border rounded-xl hover:border-action hover:shadow-md transition-all text-left">
-                                    <div>
-                                        <div class="font-bold text-primary text-sm">Acceder a valor</div>
-                                        <div class="font-mono text-[10px] text-gray-400">diccionario["clave"]</div>
-                                    </div>
-                                    <div
-                                        class="opacity-0 group-hover:opacity-100 absolute right-full mr-2 bg-gray-800 text-white text-xs p-2 rounded w-48 z-50 pointer-events-none">
-                                        Consulta el valor de una clave sin modificarla.</div>
-                                </button>
-                                <button onclick="selectTool('modify')"
-                                    class="tool-btn group relative flex items-center justify-between p-3 bg-white border border-border rounded-xl hover:border-action hover:shadow-md transition-all text-left">
-                                    <div>
-                                        <div class="font-bold text-primary text-sm">Modificar valor</div>
-                                        <div class="font-mono text-[10px] text-gray-400">dicc["clave"] = valor</div>
-                                    </div>
-                                    <div
-                                        class="opacity-0 group-hover:opacity-100 absolute right-full mr-2 bg-gray-800 text-white text-xs p-2 rounded w-48 z-50 pointer-events-none">
-                                        Cambia el valor asociado a una clave existente.</div>
-                                </button>
-                                <button onclick="selectTool('add')"
-                                    class="tool-btn group relative flex items-center justify-between p-3 bg-white border border-border rounded-xl hover:border-action hover:shadow-md transition-all text-left">
-                                    <div>
-                                        <div class="font-bold text-primary text-sm">Agregar clave</div>
-                                        <div class="font-mono text-[10px] text-gray-400">dicc["nueva"] = valor</div>
-                                    </div>
-                                    <div
-                                        class="opacity-0 group-hover:opacity-100 absolute right-full mr-2 bg-gray-800 text-white text-xs p-2 rounded w-48 z-50 pointer-events-none">
-                                        Crea una nueva pareja clave-valor en el diccionario.</div>
-                                </button>
-                                <button onclick="selectTool('delete')"
-                                    class="tool-btn group relative flex items-center justify-between p-3 bg-white border border-border rounded-xl hover:border-action hover:shadow-md transition-all text-left">
-                                    <div>
-                                        <div class="font-bold text-primary text-sm">Eliminar clave</div>
-                                        <div class="font-mono text-[10px] text-gray-400">del dicc["clave"]</div>
-                                    </div>
-                                    <div
-                                        class="opacity-0 group-hover:opacity-100 absolute right-full mr-2 bg-gray-800 text-white text-xs p-2 rounded w-48 z-50 pointer-events-none">
-                                        Borra permanentemente una clave y su valor.</div>
-                                </button>
-                                <button onclick="selectTool('loop')"
-                                    class="tool-btn group relative flex items-center justify-between p-3 bg-white border border-border rounded-xl hover:border-action hover:shadow-md transition-all text-left">
-                                    <div>
-                                        <div class="font-bold text-primary text-sm">Recorrer / Loop</div>
-                                        <div class="font-mono text-[10px] text-gray-400">for k,v in dicc.items()</div>
-                                    </div>
-                                    <div
-                                        class="opacity-0 group-hover:opacity-100 absolute right-full mr-2 bg-gray-800 text-white text-xs p-2 rounded w-48 z-50 pointer-events-none">
-                                        Muestra todos los elementos del diccionario uno por uno.</div>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Center & Right: Workspace -->
-                    <div class="col-span-8 flex flex-col gap-6">
-
-                        <!-- IDE/Editor Area -->
-                        <div class="code-window shadow-lg flex-none">
+                        <!-- IDE/Editor Area (Top) -->
+                        <div class="code-window shadow-lg flex-none h-48">
                             <div class="code-header bg-gray-100 justify-between">
                                 <div class="flex gap-2">
                                     <div class="mac-dot mac-red"></div>
@@ -455,7 +392,7 @@
                                     entrada...</span>
                             </div>
 
-                            <div class="p-6 bg-white min-h-[140px] flex flex-col justify-center items-center gap-4 transition-all"
+                            <div class="p-6 bg-white flex flex-col justify-center items-center gap-4 transition-all h-full overflow-hidden"
                                 id="workspace-area">
                                 <!-- Dynamic Input Forms injected here -->
                                 <div class="text-center text-gray-400 animate-pulse">
@@ -464,71 +401,117 @@
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                             d="M15 15l-2 5L9 9l11 4-5 2zm0 0l5 5M7.188 2.239l.777 2.897M5.136 7.965l-2.898-.777M13.95 4.05l-2.122 2.122m-5.657 5.656l-2.12 2.122" />
                                     </svg>
-                                    <p class="text-sm font-medium">Selecciona una herramienta del panel izquierdo</p>
+                                    <p class="text-xs font-medium">Selecciona una herramienta abajo</p>
                                 </div>
                             </div>
                         </div>
 
-                        <!-- Visualization Area -->
-                        <div class="grid grid-cols-2 gap-6 flex-1">
-                            <!-- Current Inventory State -->
+                        <!-- Toolbox (Bottom) - Using grid-cols-2 for compact layout if needed, or stick to list -->
+                        <div
+                            class="bg-primary/5 rounded-2xl border border-primary/10 p-4 flex-1 overflow-y-auto custom-scrollbar">
+                            <h3 class="font-black text-primary uppercase text-xs tracking-widest mb-3">Caja de
+                                Herramientas</h3>
+                            <div class="grid grid-cols-1 gap-2">
+                                <button onclick="selectTool('access')"
+                                    class="tool-btn group relative flex items-center justify-between p-3 bg-white border border-border rounded-xl hover:border-action hover:shadow-md transition-all text-left">
+                                    <div>
+                                        <div class="font-bold text-primary text-sm">Acceder a valor</div>
+                                        <div class="font-mono text-[10px] text-gray-400">diccionario["clave"]</div>
+                                    </div>
+                                </button>
+                                <button onclick="selectTool('modify')"
+                                    class="tool-btn group relative flex items-center justify-between p-3 bg-white border border-border rounded-xl hover:border-action hover:shadow-md transition-all text-left">
+                                    <div>
+                                        <div class="font-bold text-primary text-sm">Modificar valor</div>
+                                        <div class="font-mono text-[10px] text-gray-400">dicc["clave"] = valor</div>
+                                    </div>
+                                </button>
+                                <button onclick="selectTool('add')"
+                                    class="tool-btn group relative flex items-center justify-between p-3 bg-white border border-border rounded-xl hover:border-action hover:shadow-md transition-all text-left">
+                                    <div>
+                                        <div class="font-bold text-primary text-sm">Agregar clave</div>
+                                        <div class="font-mono text-[10px] text-gray-400">dicc["nueva"] = valor</div>
+                                    </div>
+                                </button>
+                                <button onclick="selectTool('delete')"
+                                    class="tool-btn group relative flex items-center justify-between p-3 bg-white border border-border rounded-xl hover:border-action hover:shadow-md transition-all text-left">
+                                    <div>
+                                        <div class="font-bold text-primary text-sm">Eliminar clave</div>
+                                        <div class="font-mono text-[10px] text-gray-400">del dicc["clave"]</div>
+                                    </div>
+                                </button>
+                                <button onclick="selectTool('loop')"
+                                    class="tool-btn group relative flex items-center justify-between p-3 bg-white border border-border rounded-xl hover:border-action hover:shadow-md transition-all text-left">
+                                    <div>
+                                        <div class="font-bold text-primary text-sm">Recorrer / Loop</div>
+                                        <div class="font-mono text-[10px] text-gray-400">for k,v in dicc.items()</div>
+                                    </div>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Center: Console Output (4 cols) -->
+                    <div class="col-span-4 flex flex-col h-full">
+                        <div
+                            class="bg-white rounded-2xl border border-border p-5 shadow-sm flex-1 flex flex-col h-full overflow-hidden">
+                            <h3
+                                class="font-black text-primary uppercase text-xs tracking-widest mb-3 border-b pb-2 flex items-center gap-2">
+                                <span class="bg-gray-100 p-1 rounded">💻</span> Salida de Consola
+                            </h3>
+                            <div id="game-console"
+                                class="flex-1 font-mono text-xs text-gray-600 overflow-y-auto custom-scrollbar space-y-2 bg-gray-50 p-3 rounded-lg border border-gray-100">
+                                <div class="opacity-50 italic"># Los resultados aparecerán aquí...</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right: RAM (4 cols) -->
+                    <div class="col-span-4 flex flex-col h-full">
+                        <div
+                            class="bg-[#1e1e1e] rounded-2xl p-5 shadow-2xl overflow-hidden flex flex-col relative group border border-gray-700 h-full">
                             <div
-                                class="bg-[#1e1e1e] rounded-2xl p-6 shadow-2xl overflow-hidden flex flex-col relative group border border-gray-700">
-                                <div
-                                    class="absolute top-4 right-4 text-[10px] font-bold text-gray-500 bg-gray-800 px-2 py-1 rounded">
-                                    MEMORIA RAM</div>
-                                <h4 class="font-mono text-gray-400 text-xs mb-4 border-b border-gray-700 pb-2">
-                                    inventario = {</h4>
-                                <div id="live-inventory"
-                                    class="font-mono text-sm space-y-1 flex-1 overflow-y-auto custom-scrollbar">
-                                    <!-- Dictionary Items -->
-                                </div>
-                                <h4 class="font-mono text-gray-400 text-xs mt-2">}</h4>
+                                class="absolute top-4 right-4 text-[10px] font-bold text-gray-500 bg-gray-800 px-2 py-1 rounded">
+                                MEMORIA RAM</div>
+                            <h4 class="font-mono text-gray-400 text-xs mb-4 border-b border-gray-700 pb-2">inventario =
+                                {</h4>
+                            <div id="live-inventory"
+                                class="font-mono text-sm space-y-1 flex-1 overflow-y-auto custom-scrollbar pl-2">
+                                <!-- Dictionary Items -->
                             </div>
-
-                            <!-- Console Output -->
-                            <div class="bg-white rounded-2xl border border-border p-6 shadow-sm flex flex-col">
-                                <h3
-                                    class="font-black text-primary uppercase text-xs tracking-widest mb-3 border-b pb-2">
-                                    Salida de Consola</h3>
-                                <div id="game-console"
-                                    class="flex-1 font-mono text-xs text-gray-600 overflow-y-auto custom-scrollbar space-y-2">
-                                    <div class="opacity-50 italic"># Los resultados aparecerán aquí...</div>
-                                </div>
-                            </div>
+                            <h4 class="font-mono text-gray-400 text-xs mt-2">}</h4>
                         </div>
-
                     </div>
                 </div>
-            </div>
 
-            <!-- Success Modal (Hidden by default) -->
-            <div id="success-modal"
-                class="absolute inset-0 bg-primary/90 backdrop-blur-sm z-50 hidden flex-col items-center justify-center text-center p-8 animate-in fade-in duration-500">
-                <div class="bg-white rounded-[2rem] p-12 max-w-lg shadow-2xl transform scale-100 transition-transform">
+                <!-- Success Modal (Hidden by default) -->
+                <div id="success-modal"
+                    class="absolute inset-0 bg-primary/90 backdrop-blur-sm z-50 hidden flex-col items-center justify-center text-center p-8 animate-in fade-in duration-500">
                     <div
-                        class="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center text-4xl mb-6 mx-auto">
-                        🎉</div>
-                    <h2 class="text-3xl font-black text-primary mb-2">¡Inventario Corregido!</h2>
-                    <p class="text-gray-500 mb-8">Has dominado las operaciones de diccionario para solucionar el
-                        problema.</p>
-                    <div
-                        class="bg-muted p-4 rounded-xl font-mono text-xs text-left text-primary mb-8 border border-border">
-                        {<br>
-                        &nbsp;&nbsp;"laptop": 20,<br>
-                        &nbsp;&nbsp;"mouse": 45,<br>
-                        &nbsp;&nbsp;"teclado": 30,<br>
-                        &nbsp;&nbsp;"impresora": 5<br>
-                        }
+                        class="bg-white rounded-[2rem] p-12 max-w-lg shadow-2xl transform scale-100 transition-transform">
+                        <div
+                            class="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center text-4xl mb-6 mx-auto">
+                            🎉</div>
+                        <h2 class="text-3xl font-black text-primary mb-2">¡Inventario Corregido!</h2>
+                        <p class="text-gray-500 mb-8">Has dominado las operaciones de diccionario para solucionar el
+                            problema.</p>
+                        <div
+                            class="bg-muted p-4 rounded-xl font-mono text-xs text-left text-primary mb-8 border border-border">
+                            {<br>
+                            &nbsp;&nbsp;"laptop": 20,<br>
+                            &nbsp;&nbsp;"mouse": 45,<br>
+                            &nbsp;&nbsp;"teclado": 30,<br>
+                            &nbsp;&nbsp;"impresora": 5<br>
+                            }
+                        </div>
+                        <button onclick="nextSlide()"
+                            class="w-full bg-action hover:bg-action-hover text-white font-bold py-4 rounded-xl shadow-lg hover:scale-105 transition-all">Continuar
+                            Aprendiendo</button>
+                        <button onclick="resetGame()"
+                            class="mt-4 text-xs font-bold text-gray-400 hover:text-primary uppercase tracking-widest">Reiniciar
+                            Desafío</button>
                     </div>
-                    <button onclick="nextSlide()"
-                        class="w-full bg-action hover:bg-action-hover text-white font-bold py-4 rounded-xl shadow-lg hover:scale-105 transition-all">Continuar
-                        Aprendiendo</button>
-                    <button onclick="resetGame()"
-                        class="mt-4 text-xs font-bold text-gray-400 hover:text-primary uppercase tracking-widest">Reiniciar
-                        Desafío</button>
                 </div>
-            </div>
         </section>
 
         <script>
