@@ -1,0 +1,1343 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Módulo 03: Diccionarios en Python</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Fira+Code:wght@400;500&display=swap"
+        rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        base: '#ffffff',
+                        muted: '#f1f5f9',
+                        primary: '#003c58',
+                        accent: '#06717e',
+                        action: '#0055ad',
+                        'action-hover': '#399be2',
+                        dark: '#0f6cbf',
+                        'sky-text': '#6ea2ee',
+                        'muted-text': '#6da8e9',
+                        'deep-text': '#1e293b',
+                        border: '#e2e8f0',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        mono: ['Fira Code', 'monospace'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            transition: background-color 0.3s ease;
+        }
+
+        .slide {
+            display: none;
+            width: 100%;
+            height: 100%;
+        }
+
+        .slide.active {
+            display: flex;
+            animation: fadeIn 0.4s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* VS Code Light+ Theme Colors */
+        .token-function {
+            color: #795E26;
+        }
+
+        .token-type {
+            color: #267f99;
+        }
+
+        .token-keyword {
+            color: #AF00DB;
+        }
+
+        .token-variable {
+            color: #001080;
+        }
+
+        .token-string {
+            color: #a31515;
+        }
+
+        .token-number {
+            color: #098658;
+        }
+
+        .token-comment {
+            color: #008000;
+            font-style: italic;
+        }
+
+        .mac-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+
+        .mac-red {
+            background: #ff5f56;
+        }
+
+        .mac-yellow {
+            background: #ffbd2e;
+        }
+
+        .mac-green {
+            background: #27c93f;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 10px;
+        }
+
+        .code-window {
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            overflow: hidden;
+            background: #ffffff;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+        }
+
+        .code-header {
+            background: #f8fafc;
+            border-bottom: 1px solid #e2e8f0;
+            padding: 10px 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .code-body {
+            padding: 20px;
+            font-family: 'Fira Code', monospace;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        .result-box {
+            background: #f8fafc;
+            border: 1px dashed #cbd5e1;
+            border-radius: 8px;
+            padding: 12px;
+            margin-top: 12px;
+            font-family: 'Fira Code', monospace;
+            font-size: 13px;
+        }
+    </style>
+</head>
+
+<body class="bg-muted h-screen flex flex-col overflow-hidden text-deep-text">
+
+    <!-- Header / Progress Bar -->
+    <header class="h-14 bg-white border-b border-border flex items-center justify-between px-8 z-50">
+        <div class="flex items-center gap-3">
+            <div class="w-8 h-8 rounded-lg bg-primary flex items-center justify-center text-white font-bold">{}</div>
+            <span class="font-bold text-primary tracking-tight">Unidad 2: Programación en Python</span>
+        </div>
+        <div class="flex items-center gap-6">
+            <div class="h-2 w-48 bg-gray-100 rounded-full overflow-hidden border border-gray-200">
+                <div id="progress-bar" class="h-full bg-action transition-all duration-500" style="width: 16.66%"></div>
+            </div>
+            <span class="text-sm font-bold text-muted-text"><span id="slide-number">1</span> / 6</span>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-1 relative">
+
+        <!-- Slide 1: Portada -->
+        <section id="slide-1" class="slide active flex-col items-center justify-center p-12 text-center">
+            <div
+                class="max-w-4xl px-8 py-16 bg-white rounded-[2.5rem] shadow-2xl border border-border relative overflow-hidden">
+                <div class="absolute -top-24 -right-24 w-64 h-64 bg-muted rounded-full opacity-50"></div>
+                <div class="absolute -bottom-24 -left-24 w-64 h-64 bg-muted rounded-full opacity-50"></div>
+
+                <h2 class="text-accent font-black uppercase tracking-[0.3em] text-sm mb-4">Módulo 03</h2>
+                <h1 class="text-6xl font-black text-primary mb-6 tracking-tight leading-none">Diccionarios <span
+                        class="text-action">(dict)</span></h1>
+                <p class="text-2xl text-muted-text font-medium mb-12 max-w-2xl mx-auto italic">Estructuras clave-valor y
+                    modelado de información del mundo real.</p>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12 text-left">
+                    <div class="p-6 bg-muted rounded-2xl border border-border">
+                        <div class="text-2xl mb-3">🏷️</div>
+                        <h3 class="font-bold text-primary mb-1">Clave-Valor</h3>
+                        <p class="text-sm opacity-80">Organiza datos usando etiquetas con significado en lugar de
+                            índices.</p>
+                    </div>
+                    <div class="p-6 bg-muted rounded-2xl border border-border">
+                        <div class="text-2xl mb-3">🔄</div>
+                        <h3 class="font-bold text-primary mb-1">Mutabilidad</h3>
+                        <p class="text-sm opacity-80">Permite modificar, agregar o eliminar información dinámicamente.
+                        </p>
+                    </div>
+                    <div class="p-6 bg-muted rounded-2xl border border-border">
+                        <div class="text-2xl mb-3">🏗️</div>
+                        <h3 class="font-bold text-primary mb-1">Estructurado</h3>
+                        <p class="text-sm opacity-80">Ideal para representar objetos complejos como usuarios o cuentas.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="flex flex-col items-center">
+                    <button onclick="nextSlide()"
+                        class="bg-action hover:bg-action-hover text-white px-10 py-5 rounded-2xl font-black text-xl shadow-xl transition-all hover:scale-105 active:scale-95 flex items-center gap-3">
+                        Comenzar Módulo
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="9 18 15 12 9 6"></polyline>
+                        </svg>
+                    </button>
+                    <p class="mt-6 text-sm text-gray-400 font-medium">Experiencia Interactiva • Sin Ejercicios • 100%
+                        Explicativa</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 2: Concepto y Características -->
+        <section id="slide-2" class="slide flex-col p-12 overflow-y-auto custom-scrollbar">
+            <div class="max-w-6xl mx-auto w-full grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                <div class="space-y-8">
+                    <div>
+                        <h2 class="text-black font-black uppercase tracking-widest text-xs mb-2 opacity-40">Fundamentos
+                        </h2>
+                        <h1 class="text-4xl font-black text-primary leading-tight">¿Qué es realmente un Diccionario?
+                        </h1>
+                    </div>
+
+                    <div class="space-y-6">
+                        <p class="text-lg leading-relaxed">Piensa en un diccionario físico: buscas una
+                            <strong>palabra</strong> (clave) para obtener su <strong>definición</strong> (valor). En
+                            Python, es exactamente lo mismo.
+                        </p>
+
+                        <div class="space-y-4">
+                            <div class="flex gap-4 p-4 bg-white rounded-2xl border border-border shadow-sm">
+                                <div
+                                    class="w-12 h-12 bg-accent/10 rounded-xl flex items-center justify-center text-accent text-xl">
+                                    💡</div>
+                                <div>
+                                    <h3 class="font-bold text-primary text-lg">No usa posiciones</h3>
+                                    <p class="text-sm text-gray-500">A diferencia de las listas (0, 1, 2...), aquí
+                                        accedes por el <strong>nombre de la etiqueta</strong>.</p>
+                                </div>
+                            </div>
+                            <div class="flex gap-4 p-4 bg-white rounded-2xl border border-border shadow-sm">
+                                <div
+                                    class="w-12 h-12 bg-action/10 rounded-xl flex items-center justify-center text-action text-xl">
+                                    🔑</div>
+                                <div>
+                                    <h3 class="font-bold text-primary text-lg">Claves únicas</h3>
+                                    <p class="text-sm text-gray-500">No puedes tener dos claves iguales en el mismo
+                                        diccionario. Cada etiqueta debe ser única.</p>
+                                </div>
+                            </div>
+                            <div class="flex gap-4 p-4 bg-white rounded-2xl border border-border shadow-sm">
+                                <div
+                                    class="w-12 h-12 bg-green-100/50 rounded-xl flex items-center justify-center text-green-600 text-xl">
+                                    🔄</div>
+                                <div>
+                                    <h3 class="font-bold text-primary text-lg">Es Mutable</h3>
+                                    <p class="text-sm text-gray-500">Permite modificar, agregar o eliminar elementos
+                                        después de su creación, adaptándose a cambios en los datos.</p>
+                                </div>
+                            </div>
+                            <div class="flex gap-4 p-4 bg-white rounded-2xl border border-border shadow-sm">
+                                <div
+                                    class="w-12 h-12 bg-purple-100/50 rounded-xl flex items-center justify-center text-purple-600 text-xl">
+                                    🏗️</div>
+                                <div>
+                                    <h3 class="font-bold text-primary text-lg">Tipos Admitidos</h3>
+                                    <p class="text-sm text-gray-500">Las claves deben ser inmutables (cadenas,
+                                        números o tuplas), pero los valores pueden ser de cualquier tipo, incluidos
+                                        <strong>otros diccionarios</strong>.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="space-y-6">
+                    <div class="code-window">
+                        <div class="code-header">
+                            <div class="mac-dot mac-red"></div>
+                            <div class="mac-dot mac-yellow"></div>
+                            <div class="mac-dot mac-green"></div>
+                            <span
+                                class="text-xs font-bold text-gray-400 font-mono ml-4 uppercase tracking-tighter">definicion.py</span>
+                        </div>
+                        <div class="code-body">
+                            <div><span class="token-comment"># Definición con llaves { }</span></div>
+                            <div><span class="token-variable">auto</span> = {</div>
+                            <div class="pl-8"><span class="token-string">"marca"</span>: <span
+                                    class="token-string">"Toyota"</span>, <span class="token-comment"># Clave :
+                                    Valor</span></div>
+                            <div class="pl-8"><span class="token-string">"modelo"</span>: <span
+                                    class="token-string">"Corolla"</span>,</div>
+                            <div class="pl-8"><span class="token-string">"año"</span>: <span
+                                    class="token-number">2022</span></div>
+                            <div>}</div>
+                            <br>
+                            <div><span class="token-comment"># El acceso es semántico</span></div>
+                            <div><span class="token-function">print</span>(auto[<span
+                                    class="token-string">"marca"</span>]) <span class="token-comment"># "Toyota"</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="p-6 bg-white rounded-3xl border border-border shadow-xl">
+                        <h4 class="font-black text-primary uppercase text-[10px] tracking-widest mb-4">Visualización
+                            Conceptual</h4>
+                        <div class="flex flex-col gap-2">
+                            <div class="flex items-center gap-3">
+                                <div class="bg-primary text-white px-3 py-1 rounded-lg font-mono text-sm shadow-sm">
+                                    "marca"</div>
+                                <div
+                                    class="h-px flex-1 bg-border relative after:content-[''] after:absolute after:right-0 after:-top-1 after:w-2 after:h-2 after:border-t-2 after:border-r-2 after:border-border after:rotate-45">
+                                </div>
+                                <div class="bg-accent text-white px-3 py-1 rounded-lg font-mono text-sm shadow-sm">
+                                    "Toyota"</div>
+                            </div>
+                            <div class="flex items-center gap-3">
+                                <div class="bg-primary text-white px-3 py-1 rounded-lg font-mono text-sm shadow-sm">
+                                    "modelo"</div>
+                                <div
+                                    class="h-px flex-1 bg-border relative after:content-[''] after:absolute after:right-0 after:-top-1 after:w-2 after:h-2 after:border-t-2 after:border-r-2 after:border-border after:rotate-45">
+                                </div>
+                                <div class="bg-accent text-white px-3 py-1 rounded-lg font-mono text-sm shadow-sm">
+                                    "Corolla"</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 3: Desafío Interactivo -->
+        <section id="slide-3" class="slide flex-col p-8 overflow-y-auto custom-scrollbar">
+            <div class="max-w-7xl mx-auto w-full h-full flex flex-col">
+                <!-- Data & Context Header -->
+                <div class="mb-6 flex justify-between items-end border-b pb-4">
+                    <div>
+                        <h2 class="text-accent font-black uppercase tracking-widest text-xs mb-1">Aprende probando</h2>
+                        <h1 class="text-3xl font-black text-primary">Corrección de Inventario</h1>
+                        <p class="text-sm text-gray-500 max-w-2xl mt-1"><strong>Misión:</strong> El sistema ha
+                            registrado mal el stock. Tu objetivo es dejar el inventario <strong>exactamente</strong>
+                            así: <span class="font-mono bg-gray-100 px-1 rounded text-primary">laptop: 20</span>, <span
+                                class="font-mono bg-gray-100 px-1 rounded text-primary">mouse: 45</span>, <span
+                                class="font-mono bg-gray-100 px-1 rounded text-primary">teclado: 30</span> y <span
+                                class="font-mono bg-gray-100 px-1 rounded text-primary">impresora: 5</span>. ¡Elimina
+                            cualquier otro producto extraño!</p>
+                    </div>
+                    <!-- Progress -->
+                    <div class="flex flex-col items-end gap-1">
+                        <span class="text-xs font-bold uppercase tracking-widest text-gray-400">Progreso de
+                            Reparación</span>
+                        <div class="w-48 h-3 bg-gray-100 rounded-full overflow-hidden border border-gray-200">
+                            <div id="game-progress" class="h-full bg-action transition-all duration-500 w-0"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-12 gap-6 flex-1 min-h-0">
+
+                    <!-- Left: Requirements & Tools -->
+                    <div class="col-span-4 flex flex-col gap-4">
+
+                        <!-- Toolbox -->
+                        <div class="bg-primary/5 rounded-2xl border border-primary/10 p-5">
+                            <h3 class="font-black text-primary uppercase text-xs tracking-widest mb-3">Caja de
+                                Herramientas</h3>
+                            <div class="grid grid-cols-1 gap-2">
+                                <button onclick="selectTool('access')"
+                                    class="tool-btn group relative flex items-center justify-between p-3 bg-white border border-border rounded-xl hover:border-action hover:shadow-md transition-all text-left">
+                                    <div>
+                                        <div class="font-bold text-primary text-sm">Acceder a valor</div>
+                                        <div class="font-mono text-[10px] text-gray-400">diccionario["clave"]</div>
+                                    </div>
+                                    <div
+                                        class="opacity-0 group-hover:opacity-100 absolute right-full mr-2 bg-gray-800 text-white text-xs p-2 rounded w-48 z-50 pointer-events-none">
+                                        Consulta el valor de una clave sin modificarla.</div>
+                                </button>
+                                <button onclick="selectTool('modify')"
+                                    class="tool-btn group relative flex items-center justify-between p-3 bg-white border border-border rounded-xl hover:border-action hover:shadow-md transition-all text-left">
+                                    <div>
+                                        <div class="font-bold text-primary text-sm">Modificar valor</div>
+                                        <div class="font-mono text-[10px] text-gray-400">dicc["clave"] = valor</div>
+                                    </div>
+                                    <div
+                                        class="opacity-0 group-hover:opacity-100 absolute right-full mr-2 bg-gray-800 text-white text-xs p-2 rounded w-48 z-50 pointer-events-none">
+                                        Cambia el valor asociado a una clave existente.</div>
+                                </button>
+                                <button onclick="selectTool('add')"
+                                    class="tool-btn group relative flex items-center justify-between p-3 bg-white border border-border rounded-xl hover:border-action hover:shadow-md transition-all text-left">
+                                    <div>
+                                        <div class="font-bold text-primary text-sm">Agregar clave</div>
+                                        <div class="font-mono text-[10px] text-gray-400">dicc["nueva"] = valor</div>
+                                    </div>
+                                    <div
+                                        class="opacity-0 group-hover:opacity-100 absolute right-full mr-2 bg-gray-800 text-white text-xs p-2 rounded w-48 z-50 pointer-events-none">
+                                        Crea una nueva pareja clave-valor en el diccionario.</div>
+                                </button>
+                                <button onclick="selectTool('delete')"
+                                    class="tool-btn group relative flex items-center justify-between p-3 bg-white border border-border rounded-xl hover:border-action hover:shadow-md transition-all text-left">
+                                    <div>
+                                        <div class="font-bold text-primary text-sm">Eliminar clave</div>
+                                        <div class="font-mono text-[10px] text-gray-400">del dicc["clave"]</div>
+                                    </div>
+                                    <div
+                                        class="opacity-0 group-hover:opacity-100 absolute right-full mr-2 bg-gray-800 text-white text-xs p-2 rounded w-48 z-50 pointer-events-none">
+                                        Borra permanentemente una clave y su valor.</div>
+                                </button>
+                                <button onclick="selectTool('loop')"
+                                    class="tool-btn group relative flex items-center justify-between p-3 bg-white border border-border rounded-xl hover:border-action hover:shadow-md transition-all text-left">
+                                    <div>
+                                        <div class="font-bold text-primary text-sm">Recorrer / Loop</div>
+                                        <div class="font-mono text-[10px] text-gray-400">for k,v in dicc.items()</div>
+                                    </div>
+                                    <div
+                                        class="opacity-0 group-hover:opacity-100 absolute right-full mr-2 bg-gray-800 text-white text-xs p-2 rounded w-48 z-50 pointer-events-none">
+                                        Muestra todos los elementos del diccionario uno por uno.</div>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Center & Right: Workspace -->
+                    <div class="col-span-8 flex flex-col gap-6">
+
+                        <!-- IDE/Editor Area -->
+                        <div class="code-window shadow-lg flex-none">
+                            <div class="code-header bg-gray-100 justify-between">
+                                <div class="flex gap-2">
+                                    <div class="mac-dot mac-red"></div>
+                                    <div class="mac-dot mac-yellow"></div>
+                                    <div class="mac-dot mac-green"></div>
+                                    <span
+                                        class="text-xs font-bold text-gray-500 font-mono ml-3">sistema_inventario.py</span>
+                                </div>
+                                <span id="ide-status" class="text-[10px] uppercase font-bold text-gray-400">Esperando
+                                    entrada...</span>
+                            </div>
+
+                            <div class="p-6 bg-white min-h-[140px] flex flex-col justify-center items-center gap-4 transition-all"
+                                id="workspace-area">
+                                <!-- Dynamic Input Forms injected here -->
+                                <div class="text-center text-gray-400 animate-pulse">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 mx-auto mb-2 opacity-50"
+                                        fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M15 15l-2 5L9 9l11 4-5 2zm0 0l5 5M7.188 2.239l.777 2.897M5.136 7.965l-2.898-.777M13.95 4.05l-2.122 2.122m-5.657 5.656l-2.12 2.122" />
+                                    </svg>
+                                    <p class="text-sm font-medium">Selecciona una herramienta del panel izquierdo</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Visualization Area -->
+                        <div class="grid grid-cols-2 gap-6 flex-1">
+                            <!-- Current Inventory State -->
+                            <div
+                                class="bg-[#1e1e1e] rounded-2xl p-6 shadow-2xl overflow-hidden flex flex-col relative group border border-gray-700">
+                                <div
+                                    class="absolute top-4 right-4 text-[10px] font-bold text-gray-500 bg-gray-800 px-2 py-1 rounded">
+                                    MEMORIA RAM</div>
+                                <h4 class="font-mono text-gray-400 text-xs mb-4 border-b border-gray-700 pb-2">
+                                    inventario = {</h4>
+                                <div id="live-inventory"
+                                    class="font-mono text-sm space-y-1 flex-1 overflow-y-auto custom-scrollbar">
+                                    <!-- Dictionary Items -->
+                                </div>
+                                <h4 class="font-mono text-gray-400 text-xs mt-2">}</h4>
+                            </div>
+
+                            <!-- Console Output -->
+                            <div class="bg-white rounded-2xl border border-border p-6 shadow-sm flex flex-col">
+                                <h3
+                                    class="font-black text-primary uppercase text-xs tracking-widest mb-3 border-b pb-2">
+                                    Salida de Consola</h3>
+                                <div id="game-console"
+                                    class="flex-1 font-mono text-xs text-gray-600 overflow-y-auto custom-scrollbar space-y-2">
+                                    <div class="opacity-50 italic"># Los resultados aparecerán aquí...</div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <!-- Success Modal (Hidden by default) -->
+            <div id="success-modal"
+                class="absolute inset-0 bg-primary/90 backdrop-blur-sm z-50 hidden flex-col items-center justify-center text-center p-8 animate-in fade-in duration-500">
+                <div class="bg-white rounded-[2rem] p-12 max-w-lg shadow-2xl transform scale-100 transition-transform">
+                    <div
+                        class="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center text-4xl mb-6 mx-auto">
+                        🎉</div>
+                    <h2 class="text-3xl font-black text-primary mb-2">¡Inventario Corregido!</h2>
+                    <p class="text-gray-500 mb-8">Has dominado las operaciones de diccionario para solucionar el
+                        problema.</p>
+                    <div
+                        class="bg-muted p-4 rounded-xl font-mono text-xs text-left text-primary mb-8 border border-border">
+                        {<br>
+                        &nbsp;&nbsp;"laptop": 20,<br>
+                        &nbsp;&nbsp;"mouse": 45,<br>
+                        &nbsp;&nbsp;"teclado": 30,<br>
+                        &nbsp;&nbsp;"impresora": 5<br>
+                        }
+                    </div>
+                    <button onclick="nextSlide()"
+                        class="w-full bg-action hover:bg-action-hover text-white font-bold py-4 rounded-xl shadow-lg hover:scale-105 transition-all">Continuar
+                        Aprendiendo</button>
+                    <button onclick="resetGame()"
+                        class="mt-4 text-xs font-bold text-gray-400 hover:text-primary uppercase tracking-widest">Reiniciar
+                        Desafío</button>
+                </div>
+            </div>
+        </section>
+
+        <script>
+            // --- Slide 3 Game Logic ---
+            const initialInventory = { "laptop": 15, "mouse": 52, "teclado": 30, "monitor": 12, "tablet": 8 };
+            let gameInventory = { ...initialInventory };
+
+            // Define strict goals
+            const goals = [
+                { id: 'laptop', text: 'Laptop: 20', check: (inv) => inv["laptop"] === 20 },
+                { id: 'mouse', text: 'Mouse: 45', check: (inv) => inv["mouse"] === 45 },
+                { id: 'teclado', text: 'Teclado: 30', check: (inv) => inv["teclado"] === 30 },
+                { id: 'impresora', text: 'Impresora: 5', check: (inv) => inv["impresora"] === 5 },
+                { id: 'no_monitor', text: 'Sin Monitor', check: (inv) => inv["monitor"] === undefined },
+                { id: 'no_tablet', text: 'Sin Tablet', check: (inv) => inv["tablet"] === undefined },
+                {
+                    id: 'strict_keys', text: 'Solo items permitidos', check: (inv) => {
+                        const allowed = ['laptop', 'mouse', 'teclado', 'impresora'];
+                        const current = Object.keys(inv);
+                        return current.length === allowed.length && current.every(k => allowed.includes(k));
+                    }
+                }
+            ];
+
+            let activeTool = null;
+
+            function initGame() {
+                gameInventory = { ...initialInventory };
+                activeTool = null;
+                renderGame();
+                logConsole("Sistema iniciado. Detectando inconsistencias...", "info");
+                document.getElementById('success-modal').style.display = 'none';
+            }
+
+            function renderGame() {
+                // Render Inventory
+                const invContainer = document.getElementById('live-inventory');
+                invContainer.innerHTML = '';
+                Object.entries(gameInventory).forEach(([k, v]) => {
+                    const row = document.createElement('div');
+                    row.className = "pl-4 hover:bg-white/5 p-1 rounded transition-colors flex gap-2 animate-in slide-in-from-left-2 duration-300";
+                    row.innerHTML = `<span class="text-sky-text">"${k}"</span>: <span class="text-green-400">${v}</span>,`;
+                    invContainer.appendChild(row);
+                });
+
+                // Render Checklist & Progress
+                let completedCount = 0;
+
+                goals.forEach(g => {
+                    const isDone = g.check(gameInventory);
+                    if (isDone) completedCount++;
+                });
+
+                // Update Progress Bar
+                const percent = (completedCount / goals.length) * 100;
+                document.getElementById('game-progress').style.width = `${percent}%`;
+
+                // Check Win Condition
+                if (completedCount === goals.length) {
+                    setTimeout(() => {
+                        document.getElementById('success-modal').style.display = 'flex';
+                        confettiEffect();
+                    }, 500);
+                }
+            }
+
+            // Explicitly initialize on load to ensure visualization appears
+            // This is needed because updateSlide might not trigger it initially if we start on this slide during dev
+            setTimeout(initGame, 100);
+
+            function selectTool(tool) {
+                activeTool = tool;
+                const workspace = document.getElementById('workspace-area');
+                document.querySelectorAll('.tool-btn').forEach(b => b.classList.remove('ring-2', 'ring-action', 'bg-action/5'));
+                event.currentTarget.classList.add('ring-2', 'ring-action', 'bg-action/5');
+
+                let html = '';
+                if (tool === 'access') {
+                    html = `
+                        <div class="flex items-center gap-2 font-mono text-lg text-primary">
+                            <span>diccionario[</span>
+                            <input type="text" id="input-key" placeholder="clave" class="bg-gray-100 border-b-2 border-gray-300 focus:border-action outline-none w-32 px-2 py-1 text-center text-action font-bold">
+                            <span>]</span>
+                        </div>
+                        <button onclick="execAccess()" class="bg-primary text-white px-6 py-2 rounded-lg font-bold text-sm hover:bg-primary/90 mt-2">Consultar</button>
+                    `;
+                } else if (tool === 'modify' || tool === 'add') {
+                    html = `
+                        <div class="flex items-center gap-2 font-mono text-lg text-primary flex-wrap justify-center">
+                            <span>diccionario[</span>
+                            <input type="text" id="input-key" placeholder="clave" class="bg-gray-100 border-b-2 border-gray-300 focus:border-action outline-none w-32 px-2 py-1 text-center text-action font-bold">
+                            <span>] = </span>
+                            <input type="number" id="input-val" placeholder="valor" class="bg-gray-100 border-b-2 border-gray-300 focus:border-action outline-none w-24 px-2 py-1 text-center text-green-600 font-bold">
+                        </div>
+                        <button onclick="execSet('${tool}')" class="bg-primary text-white px-6 py-2 rounded-lg font-bold text-sm hover:bg-primary/90 mt-2">Ejecutar Asignación</button>
+                    `;
+                } else if (tool === 'delete') {
+                    html = `
+                        <div class="flex items-center gap-2 font-mono text-lg text-primary">
+                            <span class="text-purple-600 font-bold">del</span>
+                            <span>diccionario[</span>
+                            <input type="text" id="input-key" placeholder="clave" class="bg-gray-100 border-b-2 border-gray-300 focus:border-action outline-none w-32 px-2 py-1 text-center text-action font-bold">
+                            <span>]</span>
+                        </div>
+                        <button onclick="execDelete()" class="bg-red-500 text-white px-6 py-2 rounded-lg font-bold text-sm hover:bg-red-600 mt-2">Eliminar</button>
+                    `;
+                } else if (tool === 'loop') {
+                    html = `
+                        <div class="font-mono text-sm text-primary text-left bg-gray-50 p-4 rounded-lg border border-gray-200">
+                            <span class="text-purple-600 font-bold">for</span> clave, valor <span class="text-purple-600 font-bold">in</span> diccionario.items():<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;<span class="text-blue-600">print</span>(f"{clave}: {valor}")
+                        </div>
+                        <button onclick="execLoop()" class="bg-action text-white px-6 py-2 rounded-lg font-bold text-sm hover:bg-action-hover mt-2">Ejecutar Ciclo</button>
+                    `;
+                }
+
+                workspace.innerHTML = html;
+                document.getElementById('ide-status').textContent = `Modo: ${tool.toUpperCase()}`;
+
+                // Focus input if exists
+                if (document.getElementById('input-key')) document.getElementById('input-key').focus();
+            }
+
+            function logConsole(msg, type = 'neutral') {
+                const c = document.getElementById('game-console');
+                const line = document.createElement('div');
+                const colors = { error: 'text-red-500 font-bold', success: 'text-green-600 font-bold', info: 'text-blue-500', neutral: 'text-gray-600' };
+                const icons = { error: '✘', success: '✔', info: 'ℹ', neutral: '>' };
+
+                line.className = `font-mono text-[11px] ${colors[type] || colors.neutral} border-b border-dashed border-gray-100 pb-1 animate-in fade-in slide-in-from-left-1`;
+                line.innerHTML = `<span class="mr-2 opacity-50">${icons[type]}</span>${msg}`;
+                c.appendChild(line);
+                c.scrollTop = c.scrollHeight;
+            }
+
+            // Execution Functions
+            function execAccess() {
+                const key = document.getElementById('input-key').value.trim();
+                if (!key) return;
+
+                if (gameInventory.hasOwnProperty(key)) {
+                    logConsole(`${key} -> ${gameInventory[key]}`, 'info');
+                } else {
+                    logConsole(`KeyError: '${key}' no existe.`, 'error');
+                }
+            }
+
+            function execSet(mode) {
+                const key = document.getElementById('input-key').value.trim();
+                const val = parseInt(document.getElementById('input-val').value);
+
+                if (!key || isNaN(val)) {
+                    logConsole("Error: Ingresa una clave válida y un valor numérico.", 'error');
+                    return;
+                }
+
+                if (mode === 'modify') {
+                    if (gameInventory.hasOwnProperty(key)) {
+                        gameInventory[key] = val;
+                        logConsole(`Valor de '${key}' actualizado a ${val}.`, 'success');
+                        renderGame();
+                    } else {
+                        logConsole(`Error: '${key}' no existe. Usa 'Agregar' para nuevas claves.`, 'error');
+                    }
+                } else if (mode === 'add') {
+                    if (gameInventory.hasOwnProperty(key)) {
+                        logConsole(`Advertencia: '${key}' ya existe. Se sobrescribió su valor.`, 'info');
+                    } else {
+                        logConsole(`Nueva clave '${key}' agregada.`, 'success');
+                    }
+                    gameInventory[key] = val;
+                    renderGame();
+                }
+            }
+
+            function execDelete() {
+                const key = document.getElementById('input-key').value.trim();
+                if (!key) return;
+
+                if (gameInventory.hasOwnProperty(key)) {
+                    delete gameInventory[key];
+                    logConsole(`'${key}' eliminado exitosamente.`, 'success');
+                    renderGame();
+                } else {
+                    logConsole(`KeyError: '${key}' no se puede borrar porque no existe.`, 'error');
+                }
+            }
+
+            function execLoop() {
+                logConsole("--- Inicio del Ciclo ---", 'neutral');
+                Object.entries(gameInventory).forEach(([k, v]) => {
+                    logConsole(`${k}: ${v}`, 'neutral');
+                });
+                logConsole("--- Fin del Ciclo ---", 'neutral');
+            }
+
+            function resetGame() {
+                initGame();
+                renderBankVisualizers(); // Ensure other slides logic stays intact if needed
+            }
+
+            // Hook init into slide change
+            const originalUpdateSlide = updateSlide;
+            updateSlide = function () {
+                originalUpdateSlide();
+                if (currentSlide === 3) initGame();
+                // We keep slide 5 logic hook from previous code block
+                if (currentSlide === 5) renderBankVisualizers();
+            };
+
+            function confettiEffect() {
+                // Simple confetti simulated by creating elements overlay
+                // For a single file with no deps, we skip complex canvas confetti or use a simple CSS animation if desired.
+                // Or just the modal is enough.
+            }
+        </script>
+
+        <!-- Slide 4: Diccionarios Anidados -->
+        <section id="slide-4" class="slide flex-col p-12 overflow-y-auto custom-scrollbar">
+            <div class="max-w-6xl mx-auto w-full">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+                    <div class="space-y-8">
+                        <div>
+                            <h2 class="text-accent font-black uppercase tracking-widest text-xs mb-2">Estructuras
+                                Complejas</h2>
+                            <h1 class="text-4xl font-black text-primary leading-tight">Diccionarios <span
+                                    class="text-action">Anidados</span></h1>
+                            <p class="text-lg mt-4 text-gray-600">Un diccionario puede contener otro diccionario como un
+                                <strong>valor</strong>. Esto permite representar jerarquías de datos complejas.
+                            </p>
+                        </div>
+
+                        <div class="code-window">
+                            <div class="code-header">
+                                <div class="mac-dot mac-red"></div>
+                                <div class="mac-dot mac-yellow"></div>
+                                <div class="mac-dot mac-green"></div>
+                                <span
+                                    class="text-xs font-bold text-gray-400 font-mono ml-4 uppercase tracking-tighter">anidamiento.py</span>
+                            </div>
+                            <div class="code-body">
+                                <div><span class="token-variable">estudiante</span> = {</div>
+                                <div class="pl-8"><span class="token-string">"nombre"</span>: <span
+                                        class="token-string">"Luis"</span>,</div>
+                                <div class="pl-8"><span class="token-string">"notas"</span>: { <span
+                                        class="token-comment"># Otro dicc aquí</span></div>
+                                <div class="pl-16 font-bold text-action"><span class="token-string">"mate"</span>: <span
+                                        class="token-number">6.0</span>,</div>
+                                <div class="pl-16 font-bold text-action"><span class="token-string">"prog"</span>: <span
+                                        class="token-number">6.5</span></div>
+                                <div class="pl-8">}</div>
+                                <div>}</div>
+                                <br>
+                                <div><span class="token-comment"># Acceso en cadena</span></div>
+                                <div><span class="token-variable">mi_nota</span> = estudiante[<span
+                                        class="token-string">"notas"</span>][<span class="token-string">"prog"</span>]
+                                </div>
+                                <div><span class="token-function">print</span>(mi_nota) <span class="token-comment">#
+                                        6.5</span></div>
+                            </div>
+                        </div>
+
+                        <div class="p-6 bg-white border border-border rounded-3xl shadow-sm flex gap-4">
+                            <div class="text-3xl">🧩</div>
+                            <div>
+                                <h4 class="font-bold text-primary">Regla de Oro</h4>
+                                <p class="text-sm text-gray-500 italic">"Cada corchete adicional profundiza un nivel en
+                                    la estructura."</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-white rounded-[3rem] border border-border p-12 shadow-2xl relative">
+                        <h4 class="font-black text-primary uppercase text-[10px] tracking-widest mb-10 text-center">
+                            Jerarquía de Datos</h4>
+
+                        <div class="flex flex-col items-center gap-6">
+                            <!-- Root -->
+                            <div
+                                class="w-full p-4 bg-primary text-white rounded-2xl flex items-center justify-center font-bold relative z-10 shadow-lg group cursor-pointer hover:bg-primary/95 transition-all">
+                                Diccionario: 'estudiante'
+                                <div class="absolute -bottom-6 left-1/2 -translate-x-px w-0.5 h-6 bg-border"></div>
+                            </div>
+
+                            <!-- Levels -->
+                            <div class="grid grid-cols-2 gap-12 w-full pt-6 relative">
+                                <div class="absolute top-0 left-1/2 -translate-x-1/2 w-[60%] h-px bg-border"></div>
+
+                                <div class="flex flex-col items-center gap-4">
+                                    <div class="absolute -top-6 left-1/4 w-0.5 h-6 bg-border"></div>
+                                    <div
+                                        class="w-full p-3 border border-border bg-muted rounded-xl text-xs text-center font-medium">
+                                        Clave: "nombre"</div>
+                                    <div class="text-xl">👇</div>
+                                    <div
+                                        class="w-full p-3 bg-accent text-white rounded-xl text-sm text-center font-mono">
+                                        "Luis"</div>
+                                </div>
+
+                                <div class="flex flex-col items-center gap-4">
+                                    <div class="absolute -top-6 right-1/4 w-0.5 h-6 bg-border"></div>
+                                    <div
+                                        class="w-full p-3 border border-border bg-action/10 text-action rounded-xl text-xs text-center font-bold">
+                                        Clave: "notas"</div>
+                                    <div class="text-xl">👇</div>
+                                    <div
+                                        class="w-full p-6 border-2 border-action bg-white rounded-2xl space-y-3 shadow-md">
+                                        <div class="flex justify-between items-center text-[11px]">
+                                            <span class="font-mono text-gray-400">"mate"</span>
+                                            <span class="font-black text-action">6.0</span>
+                                        </div>
+                                        <div class="h-px bg-border"></div>
+                                        <div class="flex justify-between items-center text-[11px]">
+                                            <span class="font-mono text-gray-400">"prog"</span>
+                                            <span class="font-black text-action">6.5</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <button onclick="nextSlide()"
+                            class="w-full mt-12 bg-muted hover:bg-gray-200 py-4 rounded-2xl text-primary font-bold transition-all flex items-center justify-center gap-2">
+                            Ver Aplicación Real
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round">
+                                <path d="M5 12h14" />
+                                <path d="m12 5 7 7-7 7" />
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 5: Ejemplo Aplicado: Banco -->
+        <section id="slide-5" class="slide flex-col p-12 overflow-y-auto custom-scrollbar">
+            <div class="max-w-6xl mx-auto w-full">
+                <div class="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-4">
+                    <div>
+                        <h2 class="text-accent font-black uppercase tracking-widest text-xs mb-2">Simulación de Mundo
+                            Real</h2>
+                        <h1 class="text-4xl font-black text-primary leading-tight font-sans">Procesamiento de <span
+                                class="text-action tracking-tighter">Transacción Bancaria</span></h1>
+                    </div>
+                    <div class="flex gap-2">
+                        <div class="px-4 py-2 bg-white rounded-xl border border-border flex items-center gap-2">
+                            <div class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></div>
+                            <span class="text-xs font-bold text-gray-500">Servidor Activo</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-10">
+                    <!-- Dashboard -->
+                    <div class="lg:col-span-4 space-y-6">
+                        <div class="bg-white rounded-3xl border border-border p-6 shadow-xl space-y-8">
+                            <h3 class="font-black text-primary uppercase text-[10px] tracking-widest mb-4">Panel de
+                                Control</h3>
+
+                            <!-- Steps List -->
+                            <div class="space-y-4">
+                                <div id="bank-step-1" class="flex gap-4 items-start opacity-100 transition-opacity">
+                                    <div
+                                        class="w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center flex-shrink-0 font-bold text-xs ring-4 ring-primary/10">
+                                        1</div>
+                                    <div class="pt-1">
+                                        <h4 class="font-bold text-primary text-sm">Validar Saldo</h4>
+                                        <p class="text-xs text-gray-400">Verificar si la cuenta 'origen' tiene
+                                            suficiente dinero.</p>
+                                    </div>
+                                </div>
+                                <div id="bank-step-2" class="flex gap-4 items-start opacity-30 transition-opacity">
+                                    <div
+                                        class="w-8 h-8 rounded-full bg-gray-200 text-gray-500 flex items-center justify-center flex-shrink-0 font-bold text-xs">
+                                        2</div>
+                                    <div class="pt-1">
+                                        <h4 class="font-bold text-primary text-sm">Ejecutar Transferencia</h4>
+                                        <p class="text-xs text-gray-400">Actualizar valores en ambos diccionarios.</p>
+                                    </div>
+                                </div>
+                                <div id="bank-step-3" class="flex gap-4 items-start opacity-30 transition-opacity">
+                                    <div
+                                        class="w-8 h-8 rounded-full bg-gray-200 text-gray-500 flex items-center justify-center flex-shrink-0 font-bold text-xs">
+                                        3</div>
+                                    <div class="pt-1">
+                                        <h4 class="font-bold text-primary text-sm">Finalizar</h4>
+                                        <p class="text-xs text-gray-400">Confirmar los nuevos saldos en memoria.</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <button id="bank-action-btn" onclick="nextBankStep()"
+                                class="w-full bg-action py-4 rounded-2xl text-white font-black hover:bg-action-hover transition-all shadow-lg active:scale-95 flex items-center justify-center gap-2">
+                                <span id="bank-btn-text">Iniciar Validación</span>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"
+                                    stroke-linejoin="round">
+                                    <path d="M5 12h14" />
+                                    <path d="m12 5 7 7-7 7" />
+                                </svg>
+                            </button>
+
+                            <button onclick="resetBankSimulation()"
+                                class="w-full text-[11px] font-bold text-gray-400 hover:text-red-500 uppercase tracking-widest transition-colors">Reiniciar
+                                Simulación</button>
+                        </div>
+
+                        <!-- Mini Tip -->
+                        <div class="p-5 bg-accent/5 border border-accent/10 rounded-2xl">
+                            <p class="text-[11px] text-accent leading-relaxed"><strong>Dato Técnico:</strong> En
+                                sistemas reales, los diccionarios anidados son la forma estándar de manejar respuestas
+                                de APIs (JSON).</p>
+                        </div>
+                    </div>
+
+                    <!-- Visual System -->
+                    <div class="lg:col-span-8 grid grid-rows-2 gap-6">
+                        <!-- Top: Accounts Visualization -->
+                        <div class="grid grid-cols-2 gap-6">
+                            <!-- Account Origin -->
+                            <div
+                                class="bg-white rounded-3xl border border-border p-8 shadow-sm relative overflow-hidden group">
+                                <div
+                                    class="absolute top-0 right-0 w-24 h-24 bg-red-50 rounded-bl-full -mr-8 -mt-8 transition-all group-hover:scale-110">
+                                </div>
+                                <h4 class="font-black text-red-600 uppercase text-[10px] tracking-widest mb-4">CUENTA
+                                    ORIGEN (ID: 101)</h4>
+                                <div id="viz-origin" class="space-y-3 font-mono">
+                                    <!-- Dynamic -->
+                                </div>
+                            </div>
+                            <!-- Account Destination -->
+                            <div
+                                class="bg-white rounded-3xl border border-border p-8 shadow-sm relative overflow-hidden group">
+                                <div
+                                    class="absolute top-0 right-0 w-24 h-24 bg-green-50 rounded-bl-full -mr-8 -mt-8 transition-all group-hover:scale-110">
+                                </div>
+                                <h4 class="font-black text-green-600 uppercase text-[10px] tracking-widest mb-4">CUENTA
+                                    DESTINO (ID: 205)</h4>
+                                <div id="viz-dest" class="space-y-3 font-mono">
+                                    <!-- Dynamic -->
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Bottom: Log / Console -->
+                        <div class="code-window shadow-2xl">
+                            <div class="code-header justify-between">
+                                <div class="flex items-center gap-2">
+                                    <div class="mac-dot mac-red"></div>
+                                    <div class="mac-dot mac-yellow"></div>
+                                    <div class="mac-dot mac-green"></div>
+                                    <span
+                                        class="text-xs font-bold text-gray-400 font-mono ml-4 uppercase tracking-tighter">bank_service.py</span>
+                                </div>
+                                <span
+                                    class="text-[10px] font-bold text-green-600 bg-green-50 px-2 rounded tracking-widest capitalize"
+                                    id="bank-status-chip">Idle</span>
+                            </div>
+                            <div id="bank-log" class="code-body bg-white text-[13px] h-full overflow-y-auto">
+                                <div class="text-gray-400 italic"># Esperando ejecución del servicio...</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 6: Cierre -->
+        <section id="slide-6"
+            class="slide flex-col items-center justify-center p-12 text-center bg-white relative overflow-hidden">
+            <!-- Background Decoration -->
+            <div class="absolute -top-40 -left-40 w-96 h-96 bg-muted rounded-full blur-3xl opacity-50"></div>
+            <div class="absolute -bottom-40 -right-40 w-96 h-96 bg-muted rounded-full blur-3xl opacity-50"></div>
+
+            <div class="max-w-4xl z-10 w-full animate-in fade-in zoom-in duration-500">
+                <div class="inline-block p-4 bg-primary/5 rounded-3xl mb-8">
+                    <span class="text-6xl">✨</span>
+                </div>
+                <h1 class="text-5xl font-black text-primary mb-6 tracking-tight">¡Genial! Has dominado los <span
+                        class="text-action">Diccionarios</span></h1>
+                <p class="text-xl text-gray-600 mb-12 max-w-2xl mx-auto leading-relaxed font-medium">Ahora entiendes
+                    cómo organizar información con sentido semántico y construir estructuras poderosas.</p>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 text-left mb-16">
+                    <div class="bg-muted p-8 rounded-3xl border border-border hover:border-action transition-all group">
+                        <div class="flex items-center gap-3 mb-4">
+                            <div
+                                class="w-8 h-8 rounded-lg bg-action flex items-center justify-center text-white font-bold group-hover:scale-110 transition-transform shadow-lg">
+                                ✓</div>
+                            <h3 class="font-black text-primary uppercase text-xs tracking-widest">Lo que ahora sabes:
+                            </h3>
+                        </div>
+                        <ul class="space-y-3 text-sm font-medium">
+                            <li class="flex gap-2">🔹 Crear y manipular claves/valores.</li>
+                            <li class="flex gap-2">🔹 Acceder a datos sin depender del orden.</li>
+                            <li class="flex gap-2">🔹 Modelar jerarquías con anidamiento.</li>
+                        </ul>
+                    </div>
+                    <div class="bg-white p-8 rounded-3xl border border-border shadow-2xl relative overflow-hidden">
+                        <div class="absolute top-0 right-0 w-2 h-full bg-accent opacity-20"></div>
+                        <h3 class="font-black text-primary uppercase text-xs tracking-widest mb-6 border-b pb-4">¿Cuándo
+                            usar diccionarios?</h3>
+                        <div class="space-y-4">
+                            <div class="flex gap-4">
+                                <div class="text-xs font-black text-accent mt-0.5">SI:</div>
+                                <p class="text-xs text-gray-500 leading-relaxed font-medium">Cuando los datos tienen un
+                                    <strong>significado</strong> específico (ej. "temperatura", "precio", "nombre").
+                                </p>
+                            </div>
+                            <div class="flex gap-4 border-t pt-4">
+                                <div class="text-xs font-black text-red-400 mt-0.5">NO:</div>
+                                <p class="text-xs text-gray-500 leading-relaxed font-medium">Cuando solo necesites una
+                                    lista simple de elementos iguales y te importe el <strong>orden</strong> matemático.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex flex-col items-center gap-6">
+                    <button onclick="location.reload()"
+                        class="bg-primary hover:bg-primary/90 text-white px-10 py-5 rounded-2xl font-black shadow-2xl transition-all hover:scale-105 active:scale-95">
+                        Reiniciar Experiencia
+                    </button>
+                    <!-- Final Institutional Footer style -->
+                    <div class="mt-8 flex items-center justify-center gap-12 opacity-40 select-none grayscale">
+                        <div class="flex flex-col text-left">
+                            <span class="font-black text-[10px] uppercase tracking-widest">Universidad de
+                                Valparaíso</span>
+                            <span class="text-[9px]">Ingeniería Informática</span>
+                        </div>
+                        <div class="h-8 w-px bg-gray-400"></div>
+                        <div class="flex flex-col text-right">
+                            <span class="font-black text-[10px] uppercase tracking-widest">Programación 1</span>
+                            <span class="text-[9px]">Unidad 2: Colecciones</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Navigation Overlay -->
+    <div class="fixed bottom-8 left-0 right-0 pointer-events-none z-[100]">
+        <div class="max-w-6xl mx-auto px-12 flex justify-between items-center pointer-events-auto">
+            <button id="prev-btn" onclick="prevSlide()"
+                class="bg-white/80 backdrop-blur-sm border border-border p-4 rounded-2xl text-primary hover:bg-white hover:shadow-xl transition-all opacity-0 pointer-events-none group active:scale-95">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"
+                    class="group-hover:-translate-x-1 transition-transform">
+                    <polyline points="15 18 9 12 15 6"></polyline>
+                </svg>
+            </button>
+            <div id="slide-indicator"
+                class="flex gap-1.5 p-2 bg-white/50 backdrop-blur-sm rounded-full border border-white/50 shadow-lg">
+                <div class="nav-dot w-2 h-2 rounded-full bg-primary" data-slide="1"></div>
+                <div class="nav-dot w-2 h-2 rounded-full bg-gray-200" data-slide="2"></div>
+                <div class="nav-dot w-2 h-2 rounded-full bg-gray-200" data-slide="3"></div>
+                <div class="nav-dot w-2 h-2 rounded-full bg-gray-200" data-slide="4"></div>
+                <div class="nav-dot w-2 h-2 rounded-full bg-gray-200" data-slide="5"></div>
+                <div class="nav-dot w-2 h-2 rounded-full bg-gray-200" data-slide="6"></div>
+            </div>
+            <button id="next-btn" onclick="nextSlide()"
+                class="bg-primary/95 backdrop-blur-sm p-4 rounded-2xl text-white hover:bg-primary hover:shadow-2xl transition-all shadow-lg group active:scale-95">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"
+                    class="group-hover:translate-x-1 transition-transform">
+                    <polyline points="9 18 15 12 9 6"></polyline>
+                </svg>
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // --- Navigation Logic ---
+        let currentSlide = 1;
+        const totalSlides = 6;
+
+        function updateSlide() {
+            document.querySelectorAll('.slide').forEach(s => s.classList.remove('active'));
+            document.getElementById(`slide-${currentSlide}`).classList.add('active');
+
+            // UI Updates
+            document.getElementById('slide-number').textContent = currentSlide;
+            document.getElementById('progress-bar').style.width = `${(currentSlide / totalSlides) * 100}%`;
+
+            // Buttons visibility
+            const prevBtn = document.getElementById('prev-btn');
+            const nextBtn = document.getElementById('next-btn');
+            const indicator = document.getElementById('slide-indicator');
+
+            prevBtn.style.opacity = currentSlide === 1 ? '0' : '1';
+            prevBtn.style.pointerEvents = currentSlide === 1 ? 'none' : 'auto';
+            nextBtn.style.opacity = currentSlide === totalSlides ? '0' : '1';
+            nextBtn.style.pointerEvents = currentSlide === totalSlides ? 'none' : 'auto';
+
+            // Custom logic for indicator hidden on portada
+            indicator.style.opacity = (currentSlide === 1 || currentSlide === totalSlides) ? '0' : '1';
+
+            // Dots
+            document.querySelectorAll('.nav-dot').forEach((dot, idx) => {
+                dot.className = (idx + 1) === currentSlide ? 'nav-dot w-4 h-2 rounded-full bg-primary transition-all duration-300' : 'nav-dot w-2 h-2 rounded-full bg-gray-300 transition-all';
+            });
+
+            // Specific Slide logic triggers
+            if (currentSlide === 3) initSlide3();
+            if (currentSlide === 5) renderBankVisualizers();
+        }
+
+        function nextSlide() { if (currentSlide < totalSlides) { currentSlide++; updateSlide(); } }
+        function prevSlide() { if (currentSlide > 1) { currentSlide--; updateSlide(); } }
+
+        window.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight' || e.key === ' ') nextSlide();
+            if (e.key === 'ArrowLeft') prevSlide();
+        });
+
+        // --- Slide 3 Logic (Operations) ---
+        let dictState = { "nombre": "Ana", "edad": 20 };
+        const operations = [
+            {
+                id: 'create', title: 'Crear Diccionario', desc: 'Definir con llaves y pares clave: valor.',
+                code: () => `persona = { <br>&nbsp;&nbsp;<span class="token-string">"nombre"</span>: <span class="token-string">"Ana"</span>, <br>&nbsp;&nbsp;<span class="token-string">"edad"</span>: <span class="token-number">20</span><br>}`,
+                run: () => { dictState = { "nombre": "Ana", "edad": 20 }; return 'print(persona) -> ' + JSON.stringify(dictState); }
+            },
+            {
+                id: 'access', title: 'Acceder a Valor', desc: 'Usar la clave entre corchetes [ ].',
+                code: () => `nombre = persona[<span class="token-string">"nombre"</span>]<br><span class="token-function">print</span>(nombre)`,
+                run: () => { return 'Resultado: ' + dictState["nombre"]; }
+            },
+            {
+                id: 'mod', title: 'Modificar Valor', desc: 'Asignar nuevo valor a clave existente.',
+                code: () => `persona[<span class="token-string">"edad"</span>] = <span class="token-number">21</span>`,
+                run: () => { dictState["edad"] = 21; return 'Edad actualizada con éxito.'; }
+            },
+            {
+                id: 'add', title: 'Agregar Clave', desc: 'Asignar valor a clave inexistente.',
+                code: () => `persona[<span class="token-string">"ciudad"</span>] = <span class="token-string">"Valparaíso"</span>`,
+                run: () => { dictState["ciudad"] = "Valparaíso"; return 'Nueva clave "ciudad" agregada.'; }
+            },
+            {
+                id: 'del', title: 'Eliminar Clave', desc: 'Remover con la palabra clave <span class="token-keyword">del</span>.',
+                code: () => `<span class="token-keyword">del</span> persona[<span class="token-string">"edad"</span>]`,
+                run: () => { delete dictState["edad"]; return 'Clave "edad" eliminada.'; }
+            },
+            {
+                id: 'loop', title: 'Recorrer / Loop', desc: 'Iterar por items (clave y valor).',
+                code: () => `<span class="token-keyword">for</span> k, v <span class="token-keyword">in</span> persona.items():<br>&nbsp;&nbsp;<span class="token-function">print</span>(k, v)`,
+                run: () => { return Object.entries(dictState).map(([k, v]) => `${k}: ${v}`).join('\n'); }
+            }
+        ];
+
+        function initSlide3() {
+            const container = document.getElementById('op-cards-container');
+            container.innerHTML = '';
+            operations.forEach(op => {
+                const card = document.createElement('div');
+                card.className = "p-4 bg-white border border-border rounded-2xl cursor-pointer hover:shadow-md transition-all active:scale-[0.98] group relative overflow-hidden";
+                card.innerHTML = `
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <h4 class="font-bold text-primary text-sm">${op.title}</h4>
+                            <p class="text-[10px] text-gray-400 font-medium">${op.desc}</p>
+                        </div>
+                        <div class="bg-primary/5 p-2 rounded-lg group-hover:bg-action group-hover:text-white transition-colors">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="m11.596 8.697-6.363 3.692c-.54.313-1.233-.066-1.233-.697V4.308c0-.63.692-1.01 1.233-.696l6.363 3.692a.802.802 0 0 1 0 1.393z"/></svg>
+                        </div>
+                    </div>
+                `;
+                card.onclick = () => runOperation(op);
+                container.appendChild(card);
+            });
+            updateMemoryViz();
+        }
+
+        function runOperation(op) {
+            const codeBody = document.getElementById('op-code-body');
+            const term = document.getElementById('terminal-output');
+
+            codeBody.style.opacity = 0;
+            setTimeout(() => {
+                codeBody.innerHTML = op.code();
+                codeBody.style.opacity = 1;
+                const result = op.run();
+                term.innerHTML = `<div class="animate-in fade-in slide-in-from-left-2 text-action font-bold">>>> exec(${op.id})</div><div class="mt-1">${result.replace(/\n/g, '<br>')}</div>`;
+                updateMemoryViz();
+            }, 100);
+        }
+
+        function updateMemoryViz() {
+            const viz = document.getElementById('memory-viz');
+            viz.textContent = "persona = " + JSON.stringify(dictState, null, 2);
+        }
+
+        // --- Slide 5 Logic (Bank Simulation) ---
+        let bankState = {
+            step: 1,
+            transferAmount: 450,
+            accounts: {
+                "101": { "user": "Luis", "balance": 1200, "status": "active" },
+                "205": { "user": "Marketplace", "balance": 0, "status": "active" }
+            }
+        };
+
+        function renderBankVisualizers() {
+            const originDiv = document.getElementById('viz-origin');
+            const destDiv = document.getElementById('viz-dest');
+
+            const formatData = (acc) => Object.entries(acc).map(([k, v]) => `
+                <div class="flex justify-between items-center text-xs p-1.5 rounded bg-muted/40 border border-black/5">
+                    <span class="text-primary/40 font-bold tracking-tighter uppercase text-[9px]">${k}</span>
+                    <span class="${typeof v === 'number' ? 'text-action font-black' : 'text-primary font-medium'}">${v}</span>
+                </div>
+            `).join('');
+
+            originDiv.innerHTML = formatData(bankState.accounts["101"]);
+            destDiv.innerHTML = formatData(bankState.accounts["205"]);
+        }
+
+        function logBank(msg, type = 'info') {
+            const log = document.getElementById('bank-log');
+            const div = document.createElement('div');
+            div.className = `mb-1 ${type === 'error' ? 'text-red-600 font-bold' : type === 'success' ? 'text-green-600 font-bold' : 'text-primary animate-in fade-in duration-500'}`;
+            div.innerHTML = `<span class="opacity-30 text-[10px] mr-2">${new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' })}</span> ${msg}`;
+            log.appendChild(div);
+            log.scrollTop = log.scrollHeight;
+        }
+
+        function nextBankStep() {
+            const btn = document.getElementById('bank-btn-text');
+            const chip = document.getElementById('bank-status-chip');
+
+            if (bankState.step === 1) {
+                chip.textContent = "Validating";
+                chip.className = "text-[10px] font-bold text-yellow-600 bg-yellow-50 px-2 rounded tracking-widest capitalize";
+                logBank(`Iniciando chequeo de saldo...`);
+                setTimeout(() => {
+                    if (bankState.accounts["101"].balance >= bankState.transferAmount) {
+                        logBank(`Validación Exitosa: $${bankState.transferAmount} disponibles.`, 'success');
+                        bankState.step = 2;
+                        btn.textContent = "Procesar Transferencia";
+                        document.getElementById('bank-step-1').style.opacity = "0.3";
+                        document.getElementById('bank-step-2').style.opacity = "1";
+                        document.getElementById('bank-step-2').querySelector('div').className = "w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center flex-shrink-0 font-bold text-xs ring-4 ring-primary/10";
+                    }
+                }, 800);
+            }
+            else if (bankState.step === 2) {
+                chip.textContent = "Processing";
+                logBank(`Extrayendo $${bankState.transferAmount} de cuenta 101...`);
+
+                setTimeout(() => {
+                    bankState.accounts["101"].balance -= bankState.transferAmount;
+                    renderBankVisualizers();
+                    logBank(`Descontado. Depositando en cuenta 205...`);
+
+                    setTimeout(() => {
+                        bankState.accounts["205"].balance += bankState.transferAmount;
+                        renderBankVisualizers();
+                        logBank(`Depósito completado.`, 'success');
+                        bankState.step = 3;
+                        btn.textContent = "Finalizar Simulación";
+                        document.getElementById('bank-step-2').style.opacity = "0.3";
+                        document.getElementById('bank-step-3').style.opacity = "1";
+                        document.getElementById('bank-step-3').querySelector('div').className = "w-8 h-8 rounded-full bg-accent text-white flex items-center justify-center flex-shrink-0 font-bold text-xs ring-4 ring-accent/10";
+                    }, 800);
+                }, 800);
+            }
+            else if (bankState.step === 3) {
+                chip.textContent = "Completed";
+                chip.className = "text-[10px] font-bold text-green-600 bg-green-50 px-2 rounded tracking-widest capitalize";
+                logBank(`Transacción terminada con éxito. Diccionarios actualizados.`, 'success');
+                setTimeout(() => nextSlide(), 1500);
+            }
+        }
+
+        function resetBankSimulation() {
+            bankState = {
+                step: 1,
+                transferAmount: 450,
+                accounts: {
+                    "101": { "user": "Luis", "balance": 1200, "status": "active" },
+                    "205": { "user": "Marketplace", "balance": 0, "status": "active" }
+                }
+            };
+            document.getElementById('bank-btn-text').textContent = "Iniciar Validación";
+            document.getElementById('bank-status-chip').textContent = "Idle";
+            document.getElementById('bank-log').innerHTML = '<div class="text-gray-400 italic"># Simulación reiniciada.</div>';
+
+            ["1", "2", "3"].forEach(id => {
+                const el = document.getElementById(`bank-step-${id}`);
+                el.style.opacity = id === "1" ? "1" : "0.3";
+                const dot = el.querySelector('div');
+                dot.className = id === "1" ? "w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center flex-shrink-0 font-bold text-xs ring-4 ring-primary/10" : "w-8 h-8 rounded-full bg-gray-200 text-gray-500 flex items-center justify-center flex-shrink-0 font-bold text-xs";
+            });
+
+            renderBankVisualizers();
+        }
+
+        // Initialize first slide on load
+        document.addEventListener('DOMContentLoaded', () => {
+            updateSlide();
+            renderBankVisualizers();
+        });
+    </script>
+</body>
+
+</html>
