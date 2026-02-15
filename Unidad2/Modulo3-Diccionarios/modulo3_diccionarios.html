@@ -166,9 +166,9 @@
                     Constructor Visual</h3>
 
                 <div class="flex gap-4 mb-6">
-                    <input id="def-key" type="text" placeholder="Clave (ej: 'nombre')"
+                    <input id="def-key" type="text" placeholder="Clave (ej: 'Ciudad')"
                         class="border border-border rounded-lg p-3 w-1/2 focus:ring-2 focus:ring-action outline-none text-sm font-mono">
-                    <input id="def-val" type="text" placeholder="Valor (ej: 'Ana')"
+                    <input id="def-val" type="text" placeholder="Valor (ej: 'Valparaíso')"
                         class="border border-border rounded-lg p-3 w-1/2 focus:ring-2 focus:ring-action outline-none text-sm font-mono">
                 </div>
                 <button onclick="addToDefinition()"
@@ -484,25 +484,44 @@
                     </button>
                 </div>
 
-                <!-- Visualization -->
-                <div
-                    class="w-1/2 bg-gray-50 rounded-xl p-6 border border-dashed border-gray-300 flex flex-col items-center justify-center relative">
-                    <div class="absolute top-4 left-4 text-xs font-bold text-gray-400">MEMORIA</div>
+                <!-- Right Side: Visualization & Console -->
+                <div class="w-1/2 flex flex-col gap-4">
+                    <!-- Visualization -->
+                    <div
+                        class="flex-1 bg-gray-50 rounded-xl p-6 border border-dashed border-gray-300 flex flex-col items-center justify-center relative">
+                        <div class="absolute top-4 left-4 text-xs font-bold text-gray-400 uppercase tracking-widest">
+                            Memoria</div>
 
-                    <!-- Dictionary Name Display -->
-                    <div class="w-full max-w-xs mb-2 flex items-center gap-2">
-                        <span class="font-mono text-sm font-bold text-primary">libro =</span>
-                        <span class="font-mono text-sm text-gray-400">{ ... }</span>
+                        <!-- Dictionary Name Display -->
+                        <div class="w-full max-w-xs mb-2 flex items-center gap-2">
+                            <span class="font-mono text-sm font-bold text-primary">libro =</span>
+                            <span class="font-mono text-sm text-gray-400">{ ... }</span>
+                        </div>
+
+                        <!-- Table Headers -->
+                        <div class="w-full max-w-xs flex justify-between px-3 mb-1">
+                            <span class="text-[10px] font-bold text-gray-400 uppercase tracking-tighter">Clave</span>
+                            <span class="text-[10px] font-bold text-gray-400 uppercase tracking-tighter">Valor</span>
+                        </div>
+
+                        <div class="flex flex-col gap-2 w-full max-w-xs" id="loop-viz-container">
+                            <!-- Items initialized by JS -->
+                        </div>
                     </div>
 
-                    <!-- Table Headers -->
-                    <div class="w-full max-w-xs flex justify-between px-3 mb-1">
-                        <span class="text-[10px] font-bold text-gray-400 uppercase tracking-tighter">Clave</span>
-                        <span class="text-[10px] font-bold text-gray-400 uppercase tracking-tighter">Valor</span>
-                    </div>
-
-                    <div class="flex flex-col gap-2 w-full max-w-xs" id="loop-viz-container">
-                        <!-- Items initialized by JS -->
+                    <!-- Console -->
+                    <div
+                        class="h-48 bg-[#1e1e1e] rounded-xl p-4 font-mono text-sm text-gray-300 flex flex-col shadow-xl overflow-hidden">
+                        <div class="flex gap-2 mb-2 border-b border-gray-700 pb-2 shrink-0">
+                            <div class="w-2 h-2 rounded-full bg-red-500/50"></div>
+                            <div class="w-2 h-2 rounded-full bg-yellow-500/50"></div>
+                            <div class="w-2 h-2 rounded-full bg-green-500/50"></div>
+                            <span class="text-[10px] text-gray-500 uppercase ml-2 tracking-widest">Salida de
+                                Consola</span>
+                        </div>
+                        <div class="flex-1 overflow-y-auto scrollbar-hide" id="console-output-6">
+                            <div class="text-gray-500 italic text-xs"># Los resultados aparecerán aquí...</div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -514,31 +533,102 @@
         <h2 class="text-3xl font-bold text-primary mb-2">Diccionarios Anidados</h2>
         <p class="text-gray-500 mb-8">Modelando estructuras jerárquicas complejas.</p>
 
-        <div class="flex gap-12 max-w-6xl w-full h-[500px]">
-            <!-- Interactive Tree -->
-            <div class="w-1/2 bg-white rounded-3xl border border-border shadow-lg p-8 overflow-y-auto">
-                <div class="font-mono text-sm leading-relaxed cursor-pointer" id="json-tree">
-                    <!-- JS Injected Tree -->
+        <div class="flex gap-12 max-w-6xl w-full h-auto min-h-[600px]">
+            <!-- Mac-style Code Editor -->
+            <div class="w-1/2 flex flex-col">
+                <div class="bg-[#1e1e1e] rounded-t-xl p-3 flex items-center gap-2 border-b border-gray-700">
+                    <div class="w-3 h-3 rounded-full bg-[#ff5f56]"></div>
+                    <div class="w-3 h-3 rounded-full bg-[#ffbd2e]"></div>
+                    <div class="w-3 h-3 rounded-full bg-[#27c93f]"></div>
+                    <span class="text-xs text-gray-400 font-mono ml-2">estudiante.py</span>
+                </div>
+                <div
+                    class="bg-white border-l border-r border-b border-gray-300 rounded-b-xl p-6 overflow-y-auto flex-1 font-mono text-sm leading-relaxed shadow-lg">
+                    <span class="text-primary font-bold">estudiante</span> = {<br>
+                    &nbsp;&nbsp;<span class="text-primary">"nombre"</span>: <span
+                        class="text-green-600">"Pedro"</span>,<br>
+                    &nbsp;&nbsp;<span class="text-primary">"edad"</span>: <span class="text-action">18</span>,<br>
+                    &nbsp;&nbsp;<span class="text-primary">"carrera"</span>: <span class="text-green-600">"Ing.
+                        Informática"</span>,<br><br>
+                    &nbsp;&nbsp;<span class="text-primary">"notas"</span>: {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;<span class="text-primary">"matematicas"</span>: <span
+                        class="text-action">6.5</span>,<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;<span class="text-primary">"programacion"</span>: <span
+                        class="text-action">7.0</span>,<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;<span class="text-primary">"fisica"</span>: <span
+                        class="text-action">5.8</span><br>
+                    &nbsp;&nbsp;},<br><br>
+                    &nbsp;&nbsp;<span class="text-primary">"direccion"</span>: {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;<span class="text-primary">"calle"</span>: <span class="text-green-600">"Av.
+                        Libertador 123"</span>,<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;<span class="text-primary">"ciudad"</span>: <span
+                        class="text-green-600">"Santiago"</span>,<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;<span class="text-primary">"region"</span>: {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="text-primary">"nombre"</span>: <span
+                        class="text-green-600">"Metropolitana"</span>,<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="text-primary">"codigo"</span>: <span
+                        class="text-green-600">"RM"</span><br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+                    &nbsp;&nbsp;}<br>
+                    }
                 </div>
             </div>
 
-            <!-- Access Simulator -->
+            <!-- Access & Console -->
             <div class="w-1/2 flex flex-col justify-center gap-6">
                 <div class="bg-action/5 p-6 rounded-2xl border-l-4 border-action">
                     <h3 class="font-bold text-action mb-2">Acceso Profundo</h3>
                     <p class="text-sm text-gray-600 mb-4">Para llegar a un valor interno, encadenamos las claves.</p>
-                    <code
-                        class="bg-white px-3 py-2 rounded border border-border font-mono text-sm text-primary block text-center shadow-sm">
-                        datos["usuario"]["perfil"]["edad"]
-                    </code>
+                    <div
+                        class="relative pt-10 pb-10 px-2 bg-white rounded-xl border border-border shadow-sm text-center overflow-x-auto">
+                        <div class="font-mono text-lg text-primary whitespace-nowrap">
+                            <span class="text-gray-400">print(</span>
+                            <div class="inline-block relative">
+                                <span class="font-bold text-primary">estudiante</span>
+                                <div
+                                    class="absolute -bottom-10 left-1/2 -translate-x-1/2 text-[10px] font-bold text-primary uppercase tracking-wider whitespace-nowrap">
+                                    Diccionario
+                                    <div class="w-px h-3 bg-primary absolute -top-3 left-1/2 -translate-x-1/2"></div>
+                                </div>
+                            </div>
+                            <span class="text-gray-400">[</span>
+                            <div class="inline-block relative">
+                                <span class="text-action">"notas"</span>
+                                <div
+                                    class="absolute -bottom-10 left-1/2 -translate-x-1/2 text-[10px] font-bold text-action uppercase tracking-wider whitespace-nowrap">
+                                    Sub-Dicc
+                                    <div class="w-px h-3 bg-action absolute -top-3 left-1/2 -translate-x-1/2"></div>
+                                </div>
+                            </div>
+                            <span class="text-gray-400">][</span>
+                            <div class="inline-block relative">
+                                <span class="text-action">"matematicas"</span>
+                                <div
+                                    class="absolute -bottom-10 left-1/2 -translate-x-1/2 text-[10px] font-bold text-purple-600 uppercase tracking-wider whitespace-nowrap">
+                                    Clave
+                                    <div class="w-px h-3 bg-purple-600 absolute -top-3 left-1/2 -translate-x-1/2">
+                                    </div>
+                                </div>
+                            </div>
+                            <span class="text-gray-400">])</span>
+                        </div>
+                    </div>
                 </div>
 
-                <div class="text-center">
-                    <div
-                        class="inline-block p-4 bg-white rounded-full shadow-lg border border-border animate-bounce mb-2 text-2xl">
-                        👇</div>
-                    <p class="text-xs font-bold uppercase tracking-widest text-gray-400">Resultado</p>
-                    <div class="text-4xl font-black text-primary mt-2">25</div>
+                <!-- Console -->
+                <div
+                    class="h-48 bg-[#1e1e1e] rounded-xl p-4 font-mono text-sm text-gray-300 flex flex-col shadow-xl overflow-hidden">
+                    <div class="flex gap-2 mb-2 border-b border-gray-700 pb-2 shrink-0">
+                        <div class="w-2 h-2 rounded-full bg-red-500/50"></div>
+                        <div class="w-2 h-2 rounded-full bg-yellow-500/50"></div>
+                        <div class="w-2 h-2 rounded-full bg-green-500/50"></div>
+                        <span class="text-[10px] text-gray-500 uppercase ml-2 tracking-widest">Terminal</span>
+                    </div>
+                    <div class="flex-1 overflow-y-auto scrollbar-hide">
+                        <div class="text-green-400">>>> print(estudiante["notas"]["matematicas"])</div>
+                        <div class="text-white mt-1">6.5</div>
+                        <div class="text-green-400 mt-2">>>> <span class="animate-pulse">_</span></div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -578,8 +668,76 @@
             </div>
         </div>
 
-        <div class="mt-12 opacity-50">
-            <span class="text-sm font-bold tracking-widest uppercase">Fin del Módulo</span>
+    </section>
+
+    <!-- Slide 9: Resumen Final -->
+    <section id="slide-9" class="slide hidden w-full h-full flex flex-col items-center justify-center p-12 text-center">
+        <h2 class="text-4xl font-bold text-title mb-8">Módulo 3: Diccionarios Finalizado</h2>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 w-full max-w-5xl">
+            <!-- Column 1: Conceptos -->
+            <div class="bg-white p-6 rounded-xl border border-border shadow-sm flex flex-col items-center">
+                <div class="w-12 h-12 bg-accent/10 rounded-full flex items-center justify-center mb-4">
+                    <svg class="w-6 h-6 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253">
+                        </path>
+                    </svg>
+                </div>
+                <h3 class="font-bold text-title mb-2">Conceptos Clave</h3>
+                <ul class="text-sm text-body space-y-2 text-left w-full px-4">
+                    <li class="flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-accent"></span>Pares
+                        <strong>Clave-Valor</strong>
+                    </li>
+                    <li class="flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-accent"></span>Claves
+                        <strong>Únicas</strong>
+                    </li>
+                    <li class="flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-accent"></span>Acceso por
+                        <strong>Clave</strong>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Column 2: Logros -->
+            <div
+                class="bg-white p-6 rounded-xl border border-border shadow-sm flex flex-col items-center relative overflow-hidden">
+                <div class="absolute top-0 w-full h-1 bg-gradient-to-r from-action to-action-hover"></div>
+                <div class="w-12 h-12 bg-action/10 rounded-full flex items-center justify-center mb-4">
+                    <svg class="w-6 h-6 text-action" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                    </svg>
+                </div>
+                <h3 class="font-bold text-title mb-2">Ahora puedes...</h3>
+                <ul class="text-sm text-body space-y-2 text-left w-full px-4">
+                    <li class="flex items-center gap-2">✅ Modelar objetos reales</li>
+                    <li class="flex items-center gap-2">✅ Realizar búsquedas rápidas</li>
+                    <li class="flex items-center gap-2">✅ Crear estructuras anidadas (JSON)</li>
+                </ul>
+            </div>
+
+            <!-- Column 3: Cuándo Usar -->
+            <div class="bg-gray-50 p-6 rounded-xl border border-border dashed border-2 flex flex-col items-center">
+                <div class="w-12 h-12 bg-gray-200 rounded-full flex items-center justify-center mb-4">
+                    <svg class="w-6 h-6 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                </div>
+                <h3 class="font-bold text-gray-700 mb-2">¿Cuándo NO usarlo?</h3>
+                <p class="text-xs text-body mb-2 text-center">Si necesitas <strong>orden secuencial</strong> numérico
+                    (usa listas).</p>
+                <p class="text-xs text-body text-center">Si solo guardas valores <strong>sin etiquetas</strong> (usa
+                    listas/sets).
+                </p>
+            </div>
+        </div>
+
+        <div class="mt-12">
+            <p class="text-gray-400 text-sm mb-4">Has completado el Módulo 3 de la Unidad 2</p>
+            <button onclick="location.reload()"
+                class="bg-white text-action hover:bg-gray-100 border border-border px-6 py-2 rounded-full text-sm font-medium transition-colors shadow-sm">
+                Reiniciar Módulo
+            </button>
         </div>
     </section>
 
@@ -613,7 +771,7 @@
     <script>
         // --- State Management ---
         let currentSlide = 0;
-        const totalSlides = 8;
+        const totalSlides = 9; // Updated to 9
 
         // --- Slide 2 Logic ---
         const defState = { "nombre": "Ana", "edad": 21 }; // Pre-populated data
@@ -671,26 +829,29 @@
         const slide3Content = {
             default: `
                 <div class="bg-white p-8 rounded-xl border border-border shadow-sm h-full flex flex-col justify-center animate-[fadeIn_0.5s]">
-                    <h3 class="text-lg font-semibold text-action mb-8 w-full text-center">Analogía: Diccionario vs Lista</h3>
-                    <div class="flex gap-8 items-center justify-center">
-                        <!-- Dictionary -->
-                        <div class="flex flex-col items-center group">
-                            <div class="w-24 h-32 bg-primary/10 border-2 border-primary rounded relative flex items-center justify-center transform transition-transform group-hover:-rotate-3">
-                                <div class="text-4xl">📖</div>
-                                <div class="absolute bottom-2 text-[10px] text-primary font-bold uppercase tracking-wider">"A"</div>
+                    <h3 class="text-xl font-semibold text-center text-primary mb-6">Diccionario Python ≈ Agenda de contactos</h3>
+                    
+                    <div class="space-y-6">
+                        <!-- List Analogy -->
+                        <div class="flex gap-4 items-start p-4 bg-gray-50 rounded-xl border border-gray-100">
+                            <div class="text-3xl shrink-0">📜</div>
+                            <div>
+                                <strong class="text-gray-700 block mb-1">Lista</strong>
+                                <p class="text-sm text-gray-600 leading-relaxed">
+                                    Como una lista ordenada por orden de llegada. Para encontrar el teléfono de <b>"María"</b> tienes que bajar uno por uno hasta la M ➔ <span class="bg-red-100 text-red-600 px-1 rounded font-bold text-xs">LENTO</span> si hay muchos.
+                                </p>
                             </div>
-                            <span class="text-sm mt-3 font-bold text-accent">Diccionario</span>
-                            <p class="text-xs text-center text-gray-500 mt-1 max-w-[120px]">Buscas por palabra (Clave)</p>
                         </div>
-                        <div class="text-2xl text-gray-300 font-bold">vs</div>
-                        <!-- List -->
-                        <div class="flex flex-col items-center group">
-                            <div class="w-24 h-32 bg-white border-l-4 border-gray-300 shadow-sm relative flex items-center justify-center transform transition-transform group-hover:rotate-3">
-                                <div class="w-full h-full absolute inset-0 bg-[linear-gradient(transparent_95%,#e5e7eb_95%)] bg-[length:100%_1.5rem]"></div>
-                                <div class="text-4xl z-10">📝</div>
+
+                        <!-- Dictionary Analogy -->
+                        <div class="flex gap-4 items-start p-4 bg-action/5 rounded-xl border border-action/20">
+                            <div class="text-3xl shrink-0">📱</div>
+                            <div>
+                                <strong class="text-action block mb-1">Diccionario</strong>
+                                <p class="text-sm text-gray-600 leading-relaxed">
+                                    Buscas directamente <b>"María"</b> en la barra y aparece su número, foto, email, etc. ➔ <span class="bg-green-100 text-green-600 px-1 rounded font-bold text-xs">AL INSTANTE</span> sin importar si tienes 10 o 10.000 contactos.
+                                </p>
                             </div>
-                            <span class="text-sm mt-3 font-bold text-gray-600">Lista</span>
-                            <p class="text-xs text-center text-gray-500 mt-1 max-w-[120px]">Buscas por renglón (Índice)</p>
                         </div>
                     </div>
                 </div>
@@ -1292,6 +1453,10 @@
             const container = document.getElementById('loop-viz-container');
             const nodes = container.children;
             const highlight = document.getElementById('loop-code-highlight');
+            const consoleOutput = document.getElementById('console-output-6');
+
+            // Reset Console
+            consoleOutput.innerHTML = '';
 
             // Animation Sequence
             highlight.style.transform = 'translateY(24px)'; // Move to for line
@@ -1327,6 +1492,19 @@
                 }, 800);
 
                 highlight.style.transform = 'translateY(48px)'; // Print line
+
+                // Add to console
+                const capturedItem = vizItems6[i];
+                setTimeout(() => {
+                    let text = "";
+                    if (currentLoop === 'keys') text = capturedItem.k;
+                    else if (currentLoop === 'values') text = capturedItem.v;
+                    else text = `(${capturedItem.k}, ${capturedItem.v})`;
+
+                    consoleOutput.innerHTML += `<div class="text-white animate-[fadeIn_0.5s] border-l-2 border-action/30 pl-2 mb-1">${text}</div>`;
+                    consoleOutput.scrollTop = consoleOutput.scrollHeight;
+                }, 400);
+
                 setTimeout(() => highlight.style.transform = 'translateY(24px)', 400); // Back to loop
 
                 i++;
@@ -1335,13 +1513,22 @@
 
         // --- Slide 7 Logic (Tree) ---
         const treeData = {
-            "usuario": {
-                "perfil": {
-                    "nombre": "Ana",
-                    "edad": 25
+            "estudiante": {
+                "nombre": "Pedro",
+                "edad": 18,
+                "carrera": "Ingeniería Civil Informática",
+                "notas": {
+                    "matematicas": 6.5,
+                    "programacion": 7.0,
+                    "fisica": 5.8
                 },
-                "stats": {
-                    "login": "2023-01-01"
+                "direccion": {
+                    "calle": "Av. Libertador 123",
+                    "ciudad": "Santiago",
+                    "region": {
+                        "nombre": "Metropolitana",
+                        "codigo": "RM"
+                    }
                 }
             }
         };
@@ -1383,7 +1570,7 @@
             renderDefVisuals(); // Init Slide 2 visuals
             selectProp3('default'); // Init Slide 3 default
             updateViz5();
-            renderTree(treeData, document.getElementById('json-tree'));
+            updateViz5();
             initSlide6();
         }
 
