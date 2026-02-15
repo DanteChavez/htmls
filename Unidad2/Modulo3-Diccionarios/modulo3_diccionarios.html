@@ -287,24 +287,130 @@
     <!-- Slide 4: Agregar y Acceder -->
     <section id="slide-4" class="slide flex-col p-8 items-center justify-center">
         <div class="max-w-5xl w-full">
-            <h2 class="text-3xl font-bold text-primary mb-6">Crear, Agregar y Acceder</h2>
+            <div class="max-w-5xl w-full relative">
+                <div class="flex justify-between items-end mb-6">
+                    <h2 class="text-3xl font-bold text-primary">Crear, Agregar y Acceder</h2>
+                    <button onclick="resetTutorial()"
+                        class="text-sm text-action hover:underline flex items-center gap-1">
+                        <span>↺</span> Repetir Tutorial
+                    </button>
+                </div>
+
+                <!-- Theory Block -->
+                <div class="grid grid-cols-3 gap-4 mb-8">
+                    <div id="step-create"
+                        class="bg-blue-50 p-3 rounded-xl border border-blue-100 text-center transition-all duration-300 relative">
+                        <div class="text-xs font-bold text-blue-600 uppercase tracking-wider mb-2">1. Crear</div>
+                        <code
+                            class="bg-white px-2 py-1 rounded border border-blue-200 text-sm font-mono block">libro = {}</code>
+                    </div>
+                    <div id="step-add"
+                        class="bg-green-50 p-3 rounded-xl border border-green-100 text-center transition-all duration-300 relative">
+                        <div class="text-xs font-bold text-green-600 uppercase tracking-wider mb-2">2. Agregar</div>
+                        <code
+                            class="bg-white px-2 py-1 rounded border border-green-200 text-sm font-mono block">libro["clave"] = valor</code>
+                    </div>
+                    <div id="step-access"
+                        class="bg-purple-50 p-3 rounded-xl border border-purple-100 text-center transition-all duration-300 relative">
+                        <div class="text-xs font-bold text-purple-600 uppercase tracking-wider mb-2">3. Acceder</div>
+                        <code
+                            class="bg-white px-2 py-1 rounded border border-purple-200 text-sm font-mono block">print(libro["clave"])</code>
+                    </div>
+                </div>
+
+                <!-- Tutorial Contextual Panel (Hidden by default) -->
+                <div id="tutorial-panel"
+                    class="absolute z-50 bg-white p-4 rounded-xl shadow-2xl border-l-4 border-action max-w-[250px] transition-all duration-500 opacity-0 pointer-events-none transform translate-y-2">
+                    <div class="text-sm font-bold text-gray-800 mb-2" id="tut-title">Título</div>
+                    <p class="text-xs text-gray-600 mb-3" id="tut-desc">Descripción...</p>
+                    <div class="flex justify-end">
+                        <button id="tut-next-btn" onclick="nextTutorialStep()"
+                            class="bg-action text-white text-xs px-3 py-1 rounded hover:bg-blue-600 transition-colors">Siguiente</button>
+                    </div>
+                    <!-- Arrow -->
+                    <div
+                        class="absolute w-3 h-3 bg-white border-l border-t border-gray-200 transform rotate-45 -top-1.5 left-1/2 -translate-x-1/2">
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-2 gap-8 h-[500px]">
+                    <!-- Interactive Console -->
+                    <div class="bg-[#1e1e1e] rounded-xl p-4 font-mono text-sm text-gray-300 flex flex-col shadow-xl">
+                        <div class="flex gap-2 mb-4 border-b border-gray-700 pb-2">
+                            <div class="w-3 h-3 rounded-full bg-red-500"></div>
+                            <div class="w-3 h-3 rounded-full bg-yellow-500"></div>
+                            <div class="w-3 h-3 rounded-full bg-green-500"></div>
+                        </div>
+                        <div class="flex-1 overflow-y-auto mb-4 scrollbar-hide" id="console-output-4">
+                            <div class="text-gray-500 italic"># Consola interactiva de Python</div>
+                        </div>
+                        <div class="flex gap-2 items-center border-t border-gray-700 pt-3">
+                            <span class="text-blue-400 font-bold">>>></span>
+                            <input id="console-input-4" type="text"
+                                class="bg-transparent outline-none flex-1 text-white" placeholder="Comando..."
+                                onkeydown="handleConsole4(event)" autocomplete="off">
+                        </div>
+                    </div>
+
+                    <!-- Visual State -->
+                    <div
+                        class="bg-white border-2 border-dashed border-border rounded-xl p-8 flex items-center justify-center relative bg-[url('https://www.transparenttextures.com/patterns/graphy.png')]">
+                        <div id="dict-viz-4"
+                            class="bg-white p-6 rounded-xl shadow-lg border border-border min-w-[200px]">
+                            <span class="text-xs text-gray-400 font-bold uppercase tracking-widest mb-2 block">Estado
+                                Actual</span>
+                            <div class="font-mono text-primary text-lg">{ }</div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+    </section>
+
+    <!-- Slide 5: Modificar y Eliminar -->
+    <section id="slide-5" class="slide flex-col p-8 items-center justify-center">
+        <div class="max-w-5xl w-full relative">
+            <div class="flex justify-between items-end mb-6">
+                <h2 class="text-3xl font-bold text-primary">Modificar y Eliminar</h2>
+                <button onclick="resetTutorial5()" class="text-sm text-action hover:underline flex items-center gap-1">
+                    <span>↺</span> Repetir Tutorial
+                </button>
+            </div>
 
             <!-- Theory Block -->
             <div class="grid grid-cols-3 gap-4 mb-8">
-                <div class="bg-blue-50 p-3 rounded-xl border border-blue-100 text-center">
-                    <div class="text-xs font-bold text-blue-600 uppercase tracking-wider mb-2">1. Crear</div>
+                <div id="step-mod"
+                    class="bg-blue-50 p-3 rounded-xl border border-blue-100 text-center transition-all duration-300 relative">
+                    <div class="text-xs font-bold text-blue-600 uppercase tracking-wider mb-2">1. Modificar</div>
                     <code
-                        class="bg-white px-2 py-1 rounded border border-blue-200 text-sm font-mono block">persona = {}</code>
+                        class="bg-white px-2 py-1 rounded border border-blue-200 text-sm font-mono block">libro["k"] = "nuevo"</code>
                 </div>
-                <div class="bg-green-50 p-3 rounded-xl border border-green-100 text-center">
-                    <div class="text-xs font-bold text-green-600 uppercase tracking-wider mb-2">2. Agregar</div>
+                <div id="step-del"
+                    class="bg-red-50 p-3 rounded-xl border border-red-100 text-center transition-all duration-300 relative">
+                    <div class="text-xs font-bold text-red-600 uppercase tracking-wider mb-2">2. Eliminar (del)</div>
                     <code
-                        class="bg-white px-2 py-1 rounded border border-green-200 text-sm font-mono block">persona["edad"] = 20</code>
+                        class="bg-white px-2 py-1 rounded border border-red-200 text-sm font-mono block">del libro["k"]</code>
                 </div>
-                <div class="bg-purple-50 p-3 rounded-xl border border-purple-100 text-center">
-                    <div class="text-xs font-bold text-purple-600 uppercase tracking-wider mb-2">3. Acceder</div>
+                <div id="step-pop"
+                    class="bg-orange-50 p-3 rounded-xl border border-orange-100 text-center transition-all duration-300 relative">
+                    <div class="text-xs font-bold text-orange-600 uppercase tracking-wider mb-2">3. Método pop()</div>
                     <code
-                        class="bg-white px-2 py-1 rounded border border-purple-200 text-sm font-mono block">print(persona["edad"])</code>
+                        class="bg-white px-2 py-1 rounded border border-orange-200 text-sm font-mono block">libro.pop("k")</code>
+                </div>
+            </div>
+
+            <!-- Tutorial Contextual Panel -->
+            <div id="tutorial-panel-5"
+                class="absolute z-50 bg-white p-4 rounded-xl shadow-2xl border-l-4 border-action max-w-[250px] transition-all duration-500 opacity-0 pointer-events-none transform translate-y-2">
+                <div class="text-sm font-bold text-gray-800 mb-2" id="tut-title-5">Título</div>
+                <p class="text-xs text-gray-600 mb-3" id="tut-desc-5">Descripción...</p>
+                <div class="flex justify-end">
+                    <button id="tut-next-btn-5" onclick="nextTutorialStep5()"
+                        class="bg-action text-white text-xs px-3 py-1 rounded hover:bg-blue-600 transition-colors">Siguiente</button>
+                </div>
+                <!-- Arrow -->
+                <div
+                    class="absolute w-3 h-3 bg-white border-l border-t border-gray-200 transform rotate-45 -top-1.5 left-1/2 -translate-x-1/2">
                 </div>
             </div>
 
@@ -316,90 +422,22 @@
                         <div class="w-3 h-3 rounded-full bg-yellow-500"></div>
                         <div class="w-3 h-3 rounded-full bg-green-500"></div>
                     </div>
-                    <div class="flex-1 overflow-y-auto mb-4" id="console-output-4">
-                        <div class="text-green-400">>>> persona = {}</div>
+                    <div class="flex-1 overflow-y-auto mb-4 scrollbar-hide" id="console-output-5">
+                        <div class="text-gray-500 italic"># Consola interactiva de Python</div>
                     </div>
                     <div class="flex gap-2 items-center border-t border-gray-700 pt-3">
                         <span class="text-blue-400 font-bold">>>></span>
-                        <input id="console-input-4" type="text" class="bg-transparent outline-none flex-1 text-white"
-                            placeholder="persona['clave'] = 'valor'" onkeydown="handleConsole4(event)">
+                        <input id="console-input-5" type="text" class="bg-transparent outline-none flex-1 text-white"
+                            placeholder="Comando..." onkeydown="handleConsole5(event)" autocomplete="off">
                     </div>
                 </div>
 
                 <!-- Visual State -->
                 <div
                     class="bg-white border-2 border-dashed border-border rounded-xl p-8 flex items-center justify-center relative bg-[url('https://www.transparenttextures.com/patterns/graphy.png')]">
-                    <div id="dict-viz-4" class="bg-white p-6 rounded-xl shadow-lg border border-border min-w-[200px]">
-                        <span class="text-xs text-gray-400 font-bold uppercase tracking-widest mb-2 block">Estado
-                            Actual</span>
-                        <div class="font-mono text-primary text-lg">{ }</div>
+                    <div id="dict-viz-5" class="bg-white p-6 rounded-xl shadow-lg border border-border min-w-[200px]">
+                        <!-- JS generated -->
                     </div>
-                </div>
-            </div>
-
-        </div>
-    </section>
-
-    <!-- Slide 5: Modificar y Eliminar -->
-    <section id="slide-5" class="slide flex-col p-8 items-center justify-center">
-        <div
-            class="bg-white p-8 rounded-3xl border border-border shadow-xl max-w-5xl w-full flex gap-12 relative overflow-hidden">
-            <div class="absolute top-0 right-0 bg-yellow-400 text-white text-xs font-bold px-3 py-1 rounded-bl-xl z-20">
-                MISIÓN ACTIVA</div>
-
-            <!-- Instructions Left -->
-            <div class="w-1/3 flex flex-col justify-center">
-                <h2 class="text-2xl font-black text-primary mb-4">Misión de Limpieza</h2>
-                <ul class="space-y-4 text-sm text-gray-600 mb-8">
-                    <li class="flex items-center gap-3">
-                        <div class="w-6 h-6 rounded-full bg-gray-100 flex items-center justify-center text-xs font-bold"
-                            id="mission-step-1">1</div>
-                        <span>Corrige "nombre" a "Dante".</span>
-                    </li>
-                    <li class="flex items-center gap-3">
-                        <div class="w-6 h-6 rounded-full bg-gray-100 flex items-center justify-center text-xs font-bold"
-                            id="mission-step-2">2</div>
-                        <span>Elimina la clave "error".</span>
-                    </li>
-                    <li class="flex items-center gap-3">
-                        <div class="w-6 h-6 rounded-full bg-gray-100 flex items-center justify-center text-xs font-bold"
-                            id="mission-step-3">3</div>
-                        <span>Deja solo 1 par clave-valor.</span>
-                    </li>
-                </ul>
-                <div id="mission-success"
-                    class="hidden bg-green-100 text-green-700 p-4 rounded-xl text-center font-bold animate-bounce">
-                    ¡Misión Cumplida! 🎉
-                </div>
-            </div>
-
-            <!-- Workspace Right -->
-            <div class="w-2/3 bg-muted rounded-xl p-6 relative">
-                <!-- Visual Dict -->
-                <div class="mb-4 flex gap-2 justify-center" id="dict-viz-5">
-                    <!-- Cards generated by JS -->
-                </div>
-
-                <!-- Controls -->
-                <div class="grid grid-cols-2 gap-4">
-                    <button onclick="runMissionOp('mod')"
-                        class="bg-white p-4 rounded-xl border border-border hover:border-action hover:shadow-md transition-all text-left group">
-                        <div class="text-xs text-gray-400 font-bold mb-1">MODIFICAR</div>
-                        <code
-                            class="text-action font-bold group-hover:scale-105 block transition-transform">persona["nombre"] = "Dante"</code>
-                    </button>
-                    <button onclick="runMissionOp('del')"
-                        class="bg-white p-4 rounded-xl border border-border hover:border-red-400 hover:shadow-md transition-all text-left group">
-                        <div class="text-xs text-gray-400 font-bold mb-1">ELIMINAR</div>
-                        <code
-                            class="text-red-500 font-bold group-hover:scale-105 block transition-transform">del persona["error"]</code>
-                    </button>
-                    <button onclick="runMissionOp('clean')"
-                        class="bg-white p-4 rounded-xl border border-border hover:border-red-400 hover:shadow-md transition-all text-left group col-span-2">
-                        <div class="text-xs text-gray-400 font-bold mb-1">LIMPIEZA FINAL</div>
-                        <code
-                            class="text-red-500 font-bold group-hover:scale-105 block transition-transform">del persona["extra"]</code>
-                    </button>
                 </div>
             </div>
         </div>
@@ -436,7 +474,7 @@
                         </div>
                         <div class="pl-4">
                             <span class="token-keyword">for</span> <span id="loop-var">k</span> <span
-                                class="token-keyword">in</span> <span id="loop-source">datos.keys()</span>:<br>
+                                class="token-keyword">in</span> <span id="loop-source">libro.keys()</span>:<br>
                             &nbsp;&nbsp;<span class="token-function">print</span>(<span id="loop-print">k</span>)
                         </div>
                     </div>
@@ -450,23 +488,21 @@
                 <div
                     class="w-1/2 bg-gray-50 rounded-xl p-6 border border-dashed border-gray-300 flex flex-col items-center justify-center relative">
                     <div class="absolute top-4 left-4 text-xs font-bold text-gray-400">MEMORIA</div>
+
+                    <!-- Dictionary Name Display -->
+                    <div class="w-full max-w-xs mb-2 flex items-center gap-2">
+                        <span class="font-mono text-sm font-bold text-primary">libro =</span>
+                        <span class="font-mono text-sm text-gray-400">{ ... }</span>
+                    </div>
+
+                    <!-- Table Headers -->
+                    <div class="w-full max-w-xs flex justify-between px-3 mb-1">
+                        <span class="text-[10px] font-bold text-gray-400 uppercase tracking-tighter">Clave</span>
+                        <span class="text-[10px] font-bold text-gray-400 uppercase tracking-tighter">Valor</span>
+                    </div>
+
                     <div class="flex flex-col gap-2 w-full max-w-xs" id="loop-viz-container">
-                        <!-- Items -->
-                        <div
-                            class="loop-item p-3 bg-white border border-border rounded-lg flex justify-between opacity-50 transition-all">
-                            <span class="font-bold text-primary">"id"</span>
-                            <span class="text-gray-400">101</span>
-                        </div>
-                        <div
-                            class="loop-item p-3 bg-white border border-border rounded-lg flex justify-between opacity-50 transition-all">
-                            <span class="font-bold text-primary">"rol"</span>
-                            <span class="text-gray-400">"admin"</span>
-                        </div>
-                        <div
-                            class="loop-item p-3 bg-white border border-border rounded-lg flex justify-between opacity-50 transition-all">
-                            <span class="font-bold text-primary">"active"</span>
-                            <span class="text-gray-400">True</span>
-                        </div>
+                        <!-- Items initialized by JS -->
                     </div>
                 </div>
             </div>
@@ -738,48 +774,293 @@
             });
         }
 
-        // --- Slide 4 Logic ---
-        let persona4 = {};
-        function handleConsole4(e) {
-            if (e.key === 'Enter') {
-                const input = e.target.value.trim();
-                const output = document.getElementById('console-output-4');
-                const cleanInput = input.replace(/\s/g, '');
+        // --- Slide 4 Logic (Revised Tutorial) ---
+        let libro = {};
+        let slide4Visited = false;
+        let tutorialActive = false;
+        let tutStep = 0;
+        let tutUserKey = ""; // Stores key from step 2
 
-                // Add to history
-                output.innerHTML += `<div class="text-gray-300">>>> ${input}</div>`;
+        function runSlide4Tutorial() {
+            if (slide4Visited) return;
+            resetTutorial();
+        }
 
-                // Quick parser
-                try {
-                    if (cleanInput.startsWith("persona[") && cleanInput.includes("]=")) {
-                        // Assignment
-                        const parts = cleanInput.split("]=");
-                        const key = parts[0].match(/["'](.+)["']/)[1];
-                        const valRaw = parts[1];
-                        const val = valRaw.startsWith('"') || valRaw.startsWith("'") ? valRaw.slice(1, -1) : Number(valRaw);
+        function resetTutorial() {
+            slide4Visited = true;
+            tutorialActive = true;
+            tutStep = 1;
+            libro = {};
+            document.getElementById('console-output-4').innerHTML = '<div class="text-gray-500 italic"># Consola interactiva de Python</div>';
+            document.getElementById('console-input-4').value = "";
+            document.getElementById('console-input-4').disabled = true;
+            updateViz4();
 
-                        persona4[key] = val;
-                        updateViz4();
-                    } else if (cleanInput.startsWith("persona[") && !cleanInput.includes("=")) {
-                        // Access
-                        const key = cleanInput.match(/["'](.+)["']/)[1];
-                        const res = persona4[key];
-                        output.innerHTML += `<div class="text-action font-bold">${res !== undefined ? JSON.stringify(res) : 'Error: KeyError'}</div>`;
-                    }
-                } catch (err) {
-                    output.innerHTML += `<div class="text-red-400">Error: Comando no reconocido</div>`;
-                }
+            // Start Step 1
+            showTutorialStep(1);
+        }
 
-                e.target.value = '';
-                output.scrollTop = output.scrollHeight;
+        function showTutorialStep(step) {
+            tutStep = step;
+            const panel = document.getElementById('tutorial-panel');
+            const output = document.getElementById('console-output-4');
+            const input = document.getElementById('console-input-4');
+
+            // Cleanup Styles
+            ['step-create', 'step-add', 'step-access'].forEach(id => {
+                document.getElementById(id).classList.remove('ring-4', 'ring-action', 'bg-white', 'shadow-lg', 'scale-105', 'z-10');
+            });
+
+            if (step === 1) { // Create
+                const target = document.getElementById('step-create');
+                positionPanel(panel, target);
+                highlightCard(target);
+
+                updatePanelText("Creando...", "Vamos a empezar creando un diccionario vacío.");
+                disableNextBtn(true);
+
+                // Auto-type creation
+                typeWriter("libro = {}", output, () => {
+                    libro = {};
+                    updateViz4();
+                    disableNextBtn(false);
+                });
+            }
+            else if (step === 2) { // Add
+                const target = document.getElementById('step-add');
+                positionPanel(panel, target);
+                highlightCard(target);
+
+                updatePanelText("¡Te toca!", 'Escribe en la consola: libro["titulo"] = "El Quijote"');
+                hideNextBtn(); // Must perform action
+
+                input.disabled = false;
+                input.focus();
+                input.placeholder = 'ej: libro["autor"] = "Cervantes"';
+            }
+            else if (step === 3) { // Access
+                const target = document.getElementById('step-access');
+                positionPanel(panel, target);
+                highlightCard(target);
+
+                updatePanelText("Verificando", `Ahora vamos a leer lo que guardaste en "${tutUserKey}".`);
+                disableNextBtn(true);
+                input.disabled = true;
+
+                // Auto-type access
+                typeWriter(`print(libro["${tutUserKey}"])`, output, () => {
+                    const val = libro[tutUserKey];
+                    output.innerHTML += `<div class="text-white mt-1 mb-2">${JSON.stringify(val)}</div>`;
+                    output.scrollTop = output.scrollHeight;
+
+                    // Highlight visualization
+                    const vizItem = document.getElementById(`viz-item-${tutUserKey}`);
+                    if (vizItem) vizItem.classList.add('bg-yellow-200', 'scale-110', 'transition-transform');
+
+                    document.getElementById('tut-next-btn').textContent = "Finalizar";
+                    document.getElementById('tut-next-btn').onclick = finishTutorial;
+                    document.getElementById('tut-next-btn').classList.remove('hidden');
+                    disableNextBtn(false);
+                });
             }
         }
 
+        function nextTutorialStep() {
+            if (tutStep === 1) showTutorialStep(2);
+            else if (tutStep === 2) return; // Automatic transition on success logic
+            else if (tutStep === 3) finishTutorial();
+        }
+
+        function finishTutorial() {
+            const panel = document.getElementById('tutorial-panel');
+            panel.classList.add('opacity-0', 'pointer-events-none');
+            document.getElementById('console-input-4').disabled = false;
+            document.getElementById('console-input-4').focus();
+            tutorialActive = false;
+
+            // Reset styles
+            ['step-create', 'step-add', 'step-access'].forEach(id => {
+                document.getElementById(id).classList.remove('ring-4', 'ring-action', 'bg-white', 'shadow-lg', 'scale-105', 'z-10');
+            });
+        }
+
+        // --- Helpers ---
+        function highlightCard(el) {
+            el.classList.add('ring-4', 'ring-action', 'bg-white', 'shadow-lg', 'scale-105', 'z-10');
+        }
+
+        function positionPanel(panel, target) {
+            const rect = target.getBoundingClientRect();
+            // Panel is inside .max-w-5xl.relative so we calculate based on that container
+            const container = panel.parentElement;
+            const containerRect = container.getBoundingClientRect();
+
+            // Calculate relative position
+            // Top: below the card + margin
+            const top = rect.bottom - containerRect.top + 15;
+
+            // Left: center relative to card vs container
+            // (card center in container space) - (half panel width)
+            const cardCenterX = rect.left - containerRect.left + (rect.width / 2);
+            const panelWidth = 250; // Approximated fixed width from max-w-[250px]
+
+            const left = cardCenterX - (panelWidth / 2);
+
+            panel.style.top = `${top}px`;
+            panel.style.left = `${left}px`;
+            panel.classList.remove('opacity-0', 'pointer-events-none', 'translate-y-2');
+        }
+
+        function updatePanelText(title, desc) {
+            document.getElementById('tut-title').textContent = title;
+            document.getElementById('tut-desc').textContent = desc;
+        }
+
+        function disableNextBtn(disable) {
+            const btn = document.getElementById('tut-next-btn');
+            if (disable) {
+                btn.classList.add('opacity-50', 'cursor-not-allowed');
+                btn.disabled = true;
+            } else {
+                btn.classList.remove('opacity-50', 'cursor-not-allowed');
+                btn.disabled = false;
+            }
+        }
+
+        function hideNextBtn() {
+            document.getElementById('tut-next-btn').classList.add('hidden');
+        }
+
+        function typeWriter(text, container, callback) {
+            container.innerHTML += `<div class="text-green-400 flex items-center gap-1">>>> <span id="typing-cursor"></span></div>`;
+            const cursor = document.getElementById('typing-cursor');
+            let i = 0;
+            const speed = 30; // ms
+
+            function type() {
+                if (i < text.length) {
+                    cursor.textContent += text.charAt(i);
+                    i++;
+                    setTimeout(type, speed);
+                } else {
+                    cursor.removeAttribute('id'); // Remove cursor hook
+                    container.scrollTop = container.scrollHeight;
+                    if (callback) callback();
+                }
+            }
+            type();
+        }
+
         function updateViz4() {
-            document.getElementById('dict-viz-4').innerHTML = `
-                <span class="text-xs text-gray-400 font-bold uppercase tracking-widest mb-2 block">Estado Actual</span>
-                <div class="font-mono text-primary text-lg whitespace-pre">${JSON.stringify(persona4, null, 2)}</div>
-            `;
+            const container = document.getElementById('dict-viz-4');
+            if (Object.keys(libro).length === 0) {
+                container.innerHTML = `
+                    <span class="text-xs text-gray-400 font-bold uppercase tracking-widest mb-2 block">Memoria</span>
+                    <div class="font-mono text-primary text-lg">{ }</div>`;
+                return;
+            }
+
+            let html = `<span class="text-xs text-gray-400 font-bold uppercase tracking-widest mb-2 block">Memoria</span>
+                        <div class="font-mono text-sm flex flex-col gap-1">`;
+            for (let [k, v] of Object.entries(libro)) {
+                html += `<div id="viz-item-${k}" class="bg-blue-50 px-2 py-1 rounded transition-all border border-blue-100 animate-[fadeIn_0.3s]">
+                            <span class="text-primary font-bold">"${k}"</span>: <span class="text-accent">${JSON.stringify(v)}</span>
+                         </div>`;
+            }
+            html += `</div>`;
+            container.innerHTML = html;
+        }
+
+        function handleConsole4(e) {
+            if (e.key === 'Enter') {
+                const input = e.target;
+                const cmd = input.value.trim();
+                const output = document.getElementById('console-output-4');
+
+                if (!cmd) return;
+
+                output.innerHTML += `<div class="text-green-400">>>> ${cmd}</div>`;
+                input.value = '';
+
+                // --- Tutorial Validation Logic ---
+                if (tutorialActive && tutStep === 2) {
+                    // Check pattern: libro["clave"] = valor
+                    const regex = /^libro\[["'](.+)["']\]\s*=\s*(.+)$/;
+                    const match = cmd.match(regex);
+
+                    if (!match) {
+                        output.innerHTML += `<div class="text-red-400 mb-2">⚠ Error: Usa el formato exacto: libro["clave"] = valor</div>`;
+                        output.scrollTop = output.scrollHeight;
+                        return;
+                    }
+
+                    const key = match[1];
+                    let valStr = match[2];
+
+                    // Parse Value
+                    let val;
+                    if ((valStr.startsWith('"') && valStr.endsWith('"')) || (valStr.startsWith("'") && valStr.endsWith("'"))) {
+                        val = valStr.slice(1, -1);
+                    } else if (!isNaN(Number(valStr))) {
+                        val = Number(valStr);
+                    } else {
+                        output.innerHTML += `<div class="text-red-400 mb-2">⚠ Error: El valor debe ser texto entre comillas o un número.</div>`;
+                        output.scrollTop = output.scrollHeight;
+                        return;
+                    }
+
+                    // Success Step 2
+                    libro[key] = val;
+                    tutUserKey = key;
+                    updateViz4();
+
+                    output.innerHTML += `<div class="text-gray-500 italic mb-2"># ¡Correcto! Guardado.</div>`;
+                    output.scrollTop = output.scrollHeight;
+
+                    showTutorialStep(3); // Auto advance to step 3
+                    return;
+                }
+
+                // --- Normal Console Logic (Post-Tutorial) ---
+                if (!tutorialActive) {
+                    try {
+                        if (cmd.startsWith('libro[') && cmd.includes('=')) {
+                            // Assignment logic reuse... simpler regex for normal usage
+                            const parts = cmd.split('=');
+                            const left = parts[0].trim();
+                            const right = parts.slice(1).join('=').trim();
+
+                            const keyMatch = left.match(/\[["'](.+)["']\]/);
+                            if (keyMatch) {
+                                const key = keyMatch[1];
+                                let val = right;
+                                if ((val.startsWith('"') && val.endsWith('"')) || (val.startsWith("'") && val.endsWith("'"))) {
+                                    val = val.slice(1, -1);
+                                } else if (!isNaN(Number(val))) {
+                                    val = Number(val);
+                                }
+                                libro[key] = val;
+                                updateViz4();
+                            }
+                        } else if (cmd.startsWith('print(')) {
+                            // Print logic
+                            // print(libro["key"])
+                            const match = cmd.match(/print\(libro\[["'](.+)["']\]\)/);
+                            if (match) {
+                                const key = match[1];
+                                const val = libro[key];
+                                output.innerHTML += `<div class="text-white mt-1 mb-2">${val !== undefined ? JSON.stringify(val) : 'None'}</div>`;
+                            } else if (cmd === 'print(libro)') {
+                                output.innerHTML += `<div class="text-white mt-1 mb-2">${JSON.stringify(libro)}</div>`;
+                            }
+                        }
+                    } catch (err) {
+                        output.innerHTML += `<div class="text-red-400">Error de sintaxis</div>`;
+                    }
+                }
+
+                output.scrollTop = output.scrollHeight;
+            }
         }
 
         // --- Slide 5 Logic ---
@@ -797,39 +1078,195 @@
             checkMission();
         }
 
-        function runMissionOp(op) {
-            if (op === 'mod') {
-                persona5["nombre"] = "Dante";
-                document.getElementById('mission-step-1').classList.add('bg-green-500', 'text-white');
-            } else if (op === 'del') {
-                delete persona5["error"];
-                const card = document.getElementById(`card-5-error`);
-                if (card) { card.style.transform = 'scale(0)'; setTimeout(() => card.remove(), 500); }
-                document.getElementById('mission-step-2').classList.add('bg-green-500', 'text-white');
-            } else if (op === 'clean') {
-                delete persona5["extra"];
-                const card = document.getElementById(`card-5-extra`);
-                if (card) { card.style.transform = 'scale(0)'; setTimeout(() => card.remove(), 500); }
-            }
-            initSlide5Visuals();
+        // --- Slide 5 Logic (Unified with Slide 4 Tutorial style) ---
+        let libro5 = { "titulo": "El Quijote", "autor": "Cervantes", "paginas": 800, "valor": "3 completos", "error_data": "ELIMINAR" };
+        let slide5Visited = false;
+        let tutorialActive5 = false;
+        let tutStep5 = 0;
+
+        function runSlide5Tutorial() {
+            if (slide5Visited) return;
+            resetTutorial5();
         }
 
-        function checkMission() {
-            const keys = Object.keys(persona5);
-            if (persona5["nombre"] === "Dante" && !keys.includes("error") && keys.length === 2 && !keys.includes("extra")) {
-                document.getElementById('mission-step-3').classList.add('bg-green-500', 'text-white');
-                document.getElementById('mission-success').classList.remove('hidden');
+        function resetTutorial5() {
+            slide5Visited = true;
+            tutorialActive5 = true;
+            tutStep5 = 1;
+            libro5 = { "titulo": "El Quijote", "autor": "Cervantes", "paginas": 800, "valor": "3 completos", "error_data": "ELIMINAR" };
+            document.getElementById('console-output-5').innerHTML = '<div class="text-gray-500 italic"># Consola interactiva de Python</div>';
+            document.getElementById('console-input-5').value = "";
+            document.getElementById('console-input-5').disabled = true;
+            updateViz5();
+            showTutorialStep5(1);
+        }
+
+        function showTutorialStep5(step) {
+            tutStep5 = step;
+            const panel = document.getElementById('tutorial-panel-5');
+            const output = document.getElementById('console-output-5');
+            const input = document.getElementById('console-input-5');
+
+            // Cleanup Styles
+            ['step-mod', 'step-del', 'step-pop'].forEach(id => {
+                document.getElementById(id).classList.remove('ring-4', 'ring-action', 'bg-white', 'shadow-lg', 'scale-105', 'z-10');
+            });
+
+            if (step === 1) { // Modificar
+                const target = document.getElementById('step-mod');
+                positionPanel(panel, target);
+                highlightCard(target);
+                updatePanelText5("Modificar", "Si usas una clave que ya existe, su valor se actualizará.");
+                disableNextBtn5(true);
+
+                typeWriter(`libro["paginas"] = 850`, output, () => {
+                    libro5["paginas"] = 850;
+                    updateViz5();
+                    disableNextBtn5(false);
+                });
+            }
+            else if (step === 2) { // Eliminar (del)
+                const target = document.getElementById('step-del');
+                positionPanel(panel, target);
+                highlightCard(target);
+                updatePanelText5("Tu turno", 'Usa "del" para borrar la clave incorrecta "error_data". Escribe: del libro["error_data"]');
+                hideNextBtn5();
+                input.disabled = false;
+                input.focus();
+            }
+            else if (step === 3) { // Pop
+                const target = document.getElementById('step-pop');
+                positionPanel(panel, target);
+                highlightCard(target);
+                updatePanelText5("Método pop()", 'Borra la clave "titulo" y devuelve su valor.');
+                disableNextBtn5(true);
+
+                typeWriter(`t = libro.pop("titulo")`, output, () => {
+                    const val = libro5["titulo"];
+                    delete libro5["titulo"];
+                    updateViz5();
+                    output.innerHTML += `<div class="text-white mt-1 mb-2">"El Quijote"</div>`;
+                    document.getElementById('tut-next-btn-5').textContent = "Finalizar";
+                    document.getElementById('tut-next-btn-5').onclick = finishTutorial5;
+                    document.getElementById('tut-next-btn-5').classList.remove('hidden');
+                    disableNextBtn5(false);
+                });
             }
         }
+
+        function nextTutorialStep5() {
+            if (tutStep5 === 1) showTutorialStep5(2);
+        }
+
+        function finishTutorial5() {
+            const panel = document.getElementById('tutorial-panel-5');
+            panel.classList.add('opacity-0', 'pointer-events-none');
+            document.getElementById('console-input-5').disabled = false;
+            tutorialActive5 = false;
+            ['step-mod', 'step-del', 'step-pop'].forEach(id => {
+                document.getElementById(id).classList.remove('ring-4', 'ring-action', 'bg-white', 'shadow-lg', 'scale-105', 'z-10');
+            });
+        }
+
+        function handleConsole5(e) {
+            if (e.key === 'Enter') {
+                const input = e.target;
+                const cmd = input.value.trim();
+                const output = document.getElementById('console-output-5');
+                if (!cmd) return;
+
+                output.innerHTML += `<div class="text-green-400">>>> ${cmd}</div>`;
+                input.value = '';
+
+                if (tutorialActive5 && tutStep5 === 2) {
+                    if (cmd === 'del libro["error_data"]' || cmd === "del libro['error_data']") {
+                        delete libro5["error_data"];
+                        updateViz5();
+                        output.innerHTML += `<div class="text-gray-500 italic mb-2"># ¡Correcto! Eliminado.</div>`;
+                        showTutorialStep5(3);
+                    } else {
+                        output.innerHTML += `<div class="text-red-400 mb-2">⚠ Error: Escribe exactamente del libro["error_data"]</div>`;
+                    }
+                    output.scrollTop = output.scrollHeight;
+                    return;
+                }
+
+                // Normal logic for Slide 5
+                if (!tutorialActive5) {
+                    try {
+                        if (cmd.startsWith('del libro[')) {
+                            const match = cmd.match(/del libro\[["'](.+)["']\]/);
+                            if (match) { delete libro5[match[1]]; updateViz5(); }
+                        } else if (cmd.includes('.pop(')) {
+                            const match = cmd.match(/libro\.pop\(["'](.+)["']\)/);
+                            if (match) {
+                                const val = libro5[match[1]];
+                                delete libro5[match[1]];
+                                updateViz5();
+                                output.innerHTML += `<div class="text-white">${val !== undefined ? JSON.stringify(val) : 'None'}</div>`;
+                            }
+                        } else if (cmd.startsWith('libro[')) {
+                            const parts = cmd.split('=');
+                            const kMatch = parts[0].match(/\[["'](.+)["']\]/);
+                            if (kMatch) {
+                                const key = kMatch[1];
+                                let val = parts[1].trim();
+                                if (val.startsWith('"') || val.startsWith("'")) val = val.slice(1, -1);
+                                else if (!isNaN(Number(val))) val = Number(val);
+                                libro5[key] = val;
+                                updateViz5();
+                            }
+                        }
+                    } catch (e) { output.innerHTML += `<div class="text-red-400">Error</div>`; }
+                }
+                output.scrollTop = output.scrollHeight;
+            }
+        }
+
+        function updateViz5() {
+            const container = document.getElementById('dict-viz-5');
+            let html = `<span class="text-xs text-gray-400 font-bold uppercase tracking-widest mb-2 block">Memoria</span>
+                        <div class="font-mono text-sm flex flex-col gap-1 w-full min-w-[150px]">`;
+            for (let [k, v] of Object.entries(libro5)) {
+                html += `<div class="bg-blue-50 px-2 py-1 rounded border border-blue-100 flex justify-between animate-[fadeIn_0.3s]">
+                            <span class="text-primary font-bold">"${k}"</span> <span class="text-accent">${JSON.stringify(v)}</span>
+                         </div>`;
+            }
+            if (Object.keys(libro5).length === 0) html += `<div class="text-primary">{ }</div>`;
+            html += `</div>`;
+            container.innerHTML = html;
+        }
+
+        function updatePanelText5(title, desc) {
+            document.getElementById('tut-title-5').textContent = title;
+            document.getElementById('tut-desc-5').textContent = desc;
+        }
+        function disableNextBtn5(disable) {
+            const btn = document.getElementById('tut-next-btn-5');
+            btn.disabled = disable;
+            btn.classList.toggle('opacity-50', disable);
+        }
+        function hideNextBtn5() { document.getElementById('tut-next-btn-5').classList.add('hidden'); }
 
         // --- Slide 6 Logic ---
-        const data6 = { "id": 101, "rol": "admin", "active": true }; /* Simulate Python True in JS for viz? No, string for easy usage */
-        const vizItems = [
+        const libro6Data = { "id": 101, "rol": "admin", "active": true };
+        const vizItems6 = [
             { k: '"id"', v: '101' },
             { k: '"rol"', v: '"admin"' },
             { k: '"active"', v: 'True' }
         ];
         let currentLoop = 'keys';
+
+        function initSlide6() {
+            const container = document.getElementById('loop-viz-container');
+            container.innerHTML = vizItems6.map(item => `
+                <div class="loop-item p-3 bg-white border border-border rounded-lg flex justify-between opacity-50 transition-all">
+                    <span class="font-bold text-primary">${item.k}</span>
+                    <span class="text-gray-400">${item.v}</span>
+                </div>
+            `).join('');
+            setLoopMode('keys');
+        }
 
         function setLoopMode(mode) {
             currentLoop = mode;
@@ -839,9 +1276,9 @@
 
             // Content
             const texts = {
-                keys: { title: "Recorrer Claves (.keys)", desc: "Itera solo por las etiquetas. Es lo que ocurre por defecto en un for x in dict.", code: "datos.keys()", var: "k" },
-                values: { title: "Recorrer Valores (.values)", desc: "Itera solo por el contenido, ignorando las etiquetas.", code: "datos.values()", var: "v" },
-                items: { title: "Recorrer Items (.items)", desc: "Entrega tuplas (clave, valor). Es el más completo.", code: "datos.items()", var: "k, v" }
+                keys: { title: "Recorrer Claves (.keys)", desc: "Itera solo por las etiquetas. Es lo que ocurre por defecto en un for x in dict.", code: "libro.keys()", var: "k" },
+                values: { title: "Recorrer Valores (.values)", desc: "Itera solo por el contenido, ignorando las etiquetas.", code: "libro.values()", var: "v" },
+                items: { title: "Recorrer Items (.items)", desc: "Entrega tuplas (clave, valor). Es el más completo.", code: "libro.items()", var: "k, v" }
             };
 
             document.getElementById('loop-title').textContent = texts[mode].title;
@@ -945,8 +1382,9 @@
             updateSlideView();
             renderDefVisuals(); // Init Slide 2 visuals
             selectProp3('default'); // Init Slide 3 default
-            initSlide5Visuals();
+            updateViz5();
             renderTree(treeData, document.getElementById('json-tree'));
+            initSlide6();
         }
 
         function changeSlide(dir) {
@@ -954,6 +1392,14 @@
             if (currentSlide < 0) currentSlide = 0;
             if (currentSlide >= totalSlides) currentSlide = totalSlides - 1;
             updateSlideView();
+
+            // Trigger Side Effects
+            if (currentSlide === 3) { // Slide 4 (0-indexed) is 3
+                setTimeout(runSlide4Tutorial, 500);
+            }
+            if (currentSlide === 4) { // Slide 5
+                setTimeout(runSlide5Tutorial, 500);
+            }
         }
 
         function updateSlideView() {
