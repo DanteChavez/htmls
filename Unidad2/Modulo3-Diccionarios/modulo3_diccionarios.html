@@ -1094,7 +1094,7 @@
             container.innerHTML += `<div class="text-green-400 flex items-center gap-1">>>> <span id="typing-cursor"></span></div>`;
             const cursor = document.getElementById('typing-cursor');
             let i = 0;
-            const speed = 30; // ms
+            const speed = 80; // ms (más lento como fue pedido)
 
             function type() {
                 if (i < text.length) {
@@ -1238,7 +1238,7 @@
         }
 
         // --- Slide 5 Logic (Unified with Slide 4 Tutorial style) ---
-        let libro5 = { "titulo": "El Quijote", "autor": "Cervantes", "paginas": 800, "valor": "3 completos", "error_data": "ELIMINAR" };
+        let libro5 = { "titulo": "El Quijote", "autor": "Cervantes", "paginas": 800, "valor": "3 completos", "####": "3L1M!N4R" };
         let slide5Visited = false;
         let tutorialActive5 = false;
         let tutStep5 = 0;
@@ -1252,7 +1252,7 @@
             slide5Visited = true;
             tutorialActive5 = true;
             tutStep5 = 1;
-            libro5 = { "titulo": "El Quijote", "autor": "Cervantes", "paginas": 800, "valor": "3 completos", "error_data": "ELIMINAR" };
+            libro5 = { "titulo": "El Quijote", "autor": "Cervantes", "paginas": 800, "valor": "3 completos", "####": "3L1M!N4R" };
             document.getElementById('console-output-5').innerHTML = '<div class="text-gray-500 italic"># Consola interactiva de Python</div>';
             document.getElementById('console-input-5').value = "";
             document.getElementById('console-input-5').disabled = true;
@@ -1387,8 +1387,8 @@
             let html = `<span class="text-xs text-gray-400 font-bold uppercase tracking-widest mb-2 block">Memoria</span>
                         <div class="font-mono text-sm flex flex-col gap-1 w-full min-w-[150px]">`;
             for (let [k, v] of Object.entries(libro5)) {
-                html += `<div class="bg-blue-50 px-2 py-1 rounded border border-blue-100 flex justify-between animate-[fadeIn_0.3s]">
-                            <span class="text-primary font-bold">"${k}"</span> <span class="text-accent">${JSON.stringify(v)}</span>
+                html += `<div class="bg-blue-50 px-2 py-1 rounded border border-blue-100 flex justify-between gap-8 animate-[fadeIn_0.3s]">
+                            <span class="text-primary font-bold min-w-[60px]">"${k}"</span> <span class="text-accent text-right flex-1">${JSON.stringify(v)}</span>
                          </div>`;
             }
             if (Object.keys(libro5).length === 0) html += `<div class="text-primary">{ }</div>`;
