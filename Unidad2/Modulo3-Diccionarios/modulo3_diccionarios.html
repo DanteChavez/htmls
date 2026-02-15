@@ -828,30 +828,28 @@
         // --- Slide 3 Logic (Interactive) ---
         const slide3Content = {
             default: `
-                <div class="bg-white p-8 rounded-xl border border-border shadow-sm h-full flex flex-col justify-center animate-[fadeIn_0.5s]">
-                    <h3 class="text-xl font-semibold text-center text-primary mb-6">Diccionario Python ≈ Agenda de contactos</h3>
+                <div class="bg-white p-6 rounded-xl border border-border shadow-sm h-full flex flex-col justify-center animate-[fadeIn:0.5s]">
+                    <h3 class="text-xl font-bold text-center text-primary mb-8 underline decoration-action decoration-4 underline-offset-8">Analogía: Agenda de contactos del celular</h3>
                     
-                    <div class="space-y-6">
+                    <div class="flex gap-4 items-center">
                         <!-- List Analogy -->
-                        <div class="flex gap-4 items-start p-4 bg-gray-50 rounded-xl border border-gray-100">
-                            <div class="text-3xl shrink-0">📜</div>
-                            <div>
-                                <strong class="text-gray-700 block mb-1">Lista</strong>
-                                <p class="text-sm text-gray-600 leading-relaxed">
-                                    Como una lista ordenada por orden de llegada. Para encontrar el teléfono de <b>"María"</b> tienes que bajar uno por uno hasta la M ➔ <span class="bg-red-100 text-red-600 px-1 rounded font-bold text-xs">LENTO</span> si hay muchos.
-                                </p>
-                            </div>
+                        <div class="flex-1 p-5 bg-gray-50 rounded-2xl border border-gray-200 flex flex-col items-center text-center h-full">
+                            <div class="text-4xl mb-3">📜</div>
+                            <strong class="text-gray-700 block mb-2 font-black">Lista</strong>
+                            <p class="text-[11px] text-gray-600 leading-relaxed">
+                                Es como una lista de contactos ordenada por orden de agregado (o alfabéticamente). Para encontrar el teléfono de <b>"María"</b> tienes que bajar hasta la M ➔ <span class="text-red-500 font-bold">Lento si hay muchos</span>.
+                            </p>
                         </div>
 
+                        <div class="text-xl font-black text-gray-300 italic">VS</div>
+
                         <!-- Dictionary Analogy -->
-                        <div class="flex gap-4 items-start p-4 bg-action/5 rounded-xl border border-action/20">
-                            <div class="text-3xl shrink-0">📱</div>
-                            <div>
-                                <strong class="text-action block mb-1">Diccionario</strong>
-                                <p class="text-sm text-gray-600 leading-relaxed">
-                                    Buscas directamente <b>"María"</b> en la barra y aparece su número, foto, email, etc. ➔ <span class="bg-green-100 text-green-600 px-1 rounded font-bold text-xs">AL INSTANTE</span> sin importar si tienes 10 o 10.000 contactos.
-                                </p>
-                            </div>
+                        <div class="flex-1 p-5 bg-action/5 rounded-2xl border border-action/20 flex flex-col items-center text-center h-full">
+                            <div class="text-4xl mb-3">📱</div>
+                            <strong class="text-action block mb-2 font-black">Diccionario</strong>
+                            <p class="text-[11px] text-gray-600 leading-relaxed">
+                                Buscas directamente <b>"María"</b> en el buscador y aparece su número (o foto, email, etc.) al instante ➔ <span class="text-green-600 font-bold">Sin importar si tienes 10 o 10.000</span>.
+                            </p>
                         </div>
                     </div>
                 </div>
@@ -992,12 +990,12 @@
                 positionPanel(panel, target);
                 highlightCard(target);
 
-                updatePanelText("¡Te toca!", 'Escribe en la consola: libro["titulo"] = "El Quijote"');
+                updatePanelText("¡Te toca!", 'Agrega un elemento al diccionario. Por ejemplo: \nlibro["titulo"] = "El Quijote"');
                 hideNextBtn(); // Must perform action
 
                 input.disabled = false;
                 input.focus();
-                input.placeholder = 'ej: libro["autor"] = "Cervantes"';
+                input.placeholder = 'ej: libro["titulo"] = "El Quijote"';
             }
             else if (step === 3) { // Access
                 const target = document.getElementById('step-access');
@@ -1074,7 +1072,7 @@
 
         function updatePanelText(title, desc) {
             document.getElementById('tut-title').textContent = title;
-            document.getElementById('tut-desc').textContent = desc;
+            document.getElementById('tut-desc').innerHTML = desc.replace(/\n/g, '<br>');
         }
 
         function disableNextBtn(disable) {
@@ -1400,7 +1398,7 @@
 
         function updatePanelText5(title, desc) {
             document.getElementById('tut-title-5').textContent = title;
-            document.getElementById('tut-desc-5').textContent = desc;
+            document.getElementById('tut-desc-5').innerHTML = desc.replace(/\n/g, '<br>');
         }
         function disableNextBtn5(disable) {
             const btn = document.getElementById('tut-next-btn-5');
