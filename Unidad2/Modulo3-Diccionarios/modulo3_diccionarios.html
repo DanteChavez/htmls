@@ -129,6 +129,57 @@
             margin-left: 10px;
             padding-left: 20px;
         }
+
+        /* Slide 5 Memory Animations */
+        @keyframes highlight-mod {
+            0% {
+                background-color: #bfdbfe;
+                transform: scale(1.03);
+            }
+
+            100% {
+                background-color: #eff6ff;
+                transform: scale(1);
+            }
+        }
+
+        @keyframes highlight-del {
+            0% {
+                background-color: #fecaca;
+                transform: translateX(0);
+            }
+
+            100% {
+                background-color: #ef4444;
+                transform: translateX(10px);
+                opacity: 0;
+            }
+        }
+
+        @keyframes highlight-pop {
+            0% {
+                background-color: #fef08a;
+                transform: scale(1.05);
+            }
+
+            100% {
+                background-color: #eab308;
+                transform: scale(0.95);
+                opacity: 0;
+            }
+        }
+
+        .animate-highlights-mod {
+            animation: highlight-mod 0.8s ease-out !important;
+        }
+
+        .animate-highlights-del {
+            animation: highlight-del 0.5s ease-in forwards !important;
+        }
+
+        .animate-highlights-pop {
+            animation: highlight-pop 0.5s ease-in forwards !important;
+        }
     </style>
 </head>
 
@@ -975,7 +1026,7 @@
                 positionPanel(panel, target);
                 highlightCard(target);
 
-                updatePanelText("Creando...", "Vamos a empezar creando un diccionario vacío.");
+                updatePanelText("Creando...", 'Vamos a empezar creando un diccionario vacío.');
                 disableNextBtn(true);
 
                 // Auto-type creation
@@ -990,7 +1041,7 @@
                 positionPanel(panel, target);
                 highlightCard(target);
 
-                updatePanelText("¡Te toca!", 'Agrega un elemento al diccionario. Por ejemplo: \nlibro["titulo"] = "El Quijote"');
+                updatePanelText("¡Te toca!", 'Agrega un elemento al diccionario.\nEj: <code class="bg-muted px-1 border border-gray-200 rounded">libro["titulo"] = "El Quijote"</code>');
                 hideNextBtn(); // Must perform action
 
                 input.disabled = false;
@@ -1002,7 +1053,7 @@
                 positionPanel(panel, target);
                 highlightCard(target);
 
-                updatePanelText("Verificando", `Ahora vamos a leer lo que guardaste en "${tutUserKey}".`);
+                updatePanelText("Acceso", `Ahora vamos a leer el valor de la clave "${tutUserKey}".`);
                 disableNextBtn(true);
                 input.disabled = true;
 
@@ -1281,6 +1332,10 @@
                 typeWriter(`libro["paginas"] = 850`, output, () => {
                     libro5["paginas"] = 850;
                     updateViz5();
+                    setTimeout(() => {
+                        const row = document.querySelector(`[data-key="${CSS.escape('paginas')}"]`);
+                        if (row) row.classList.add('animate-highlights-mod');
+                    }, 50);
                     disableNextBtn5(false);
                 });
             }
@@ -1288,33 +1343,33 @@
                 const target = document.getElementById('step-del');
                 positionPanel(panel, target);
                 highlightCard(target);
-                updatePanelText5("Tu turno", 'Usa "del" para borrar la clave incorrecta "error_data". Escribe: del libro["error_data"]');
-                hideNextBtn5();
+                updatePanelText5("Borrar con 'del'", 'Para borrar una clave usamos "del".\nEj: <code class="bg-muted px-1 border border-gray-200 rounded">del libro["####"]</code>');
+                disableNextBtn5(false);
+                document.getElementById('tut-next-btn-5').classList.remove('hidden');
                 input.disabled = false;
-                input.focus();
             }
             else if (step === 3) { // Pop
                 const target = document.getElementById('step-pop');
                 positionPanel(panel, target);
                 highlightCard(target);
-                updatePanelText5("Método pop()", 'Borra la clave "titulo" y devuelve su valor.');
-                disableNextBtn5(true);
-
-                typeWriter(`t = libro.pop("titulo")`, output, () => {
-                    const val = libro5["titulo"];
-                    delete libro5["titulo"];
-                    updateViz5();
-                    output.innerHTML += `<div class="text-white mt-1 mb-2">"El Quijote"</div>`;
-                    document.getElementById('tut-next-btn-5').textContent = "Finalizar";
-                    document.getElementById('tut-next-btn-5').onclick = finishTutorial5;
-                    document.getElementById('tut-next-btn-5').classList.remove('hidden');
-                    disableNextBtn5(false);
-                });
+                updatePanelText5("Método pop()", 'Borra la clave y "devuelve" su valor.\nEj: <code class="bg-muted px-1 border border-gray-200 rounded">val = libro.pop("titulo")</code>');
+                disableNextBtn5(false);
+                document.getElementById('tut-next-btn-5').classList.remove('hidden');
+            }
+            else if (step === 4) { // Ahora hazlo tu
+                const target = document.getElementById('dict-viz-5');
+                positionPanel(panel, target);
+                updatePanelText5("¡Tu turno!", 'Ahora hazlo tú. Prueba modificar el valor del libro y borrar el par clave-valor corrupto, observa cómo cambia la memoria.');
+                document.getElementById('tut-next-btn-5').textContent = "Finalizar";
+                document.getElementById('tut-next-btn-5').onclick = finishTutorial5;
+                disableNextBtn5(false);
             }
         }
 
         function nextTutorialStep5() {
             if (tutStep5 === 1) showTutorialStep5(2);
+            else if (tutStep5 === 2) showTutorialStep5(3);
+            else if (tutStep5 === 3) showTutorialStep5(4);
         }
 
         function finishTutorial5() {
@@ -1337,32 +1392,42 @@
                 output.innerHTML += `<div class="text-green-400">>>> ${cmd}</div>`;
                 input.value = '';
 
-                if (tutorialActive5 && tutStep5 === 2) {
-                    if (cmd === 'del libro["error_data"]' || cmd === "del libro['error_data']") {
-                        delete libro5["error_data"];
-                        updateViz5();
-                        output.innerHTML += `<div class="text-gray-500 italic mb-2"># ¡Correcto! Eliminado.</div>`;
-                        showTutorialStep5(3);
-                    } else {
-                        output.innerHTML += `<div class="text-red-400 mb-2">⚠ Error: Escribe exactamente del libro["error_data"]</div>`;
-                    }
-                    output.scrollTop = output.scrollHeight;
-                    return;
-                }
-
                 // Normal logic for Slide 5
-                if (!tutorialActive5) {
+                if (!tutorialActive5 || tutStep5 === 4) {
                     try {
                         if (cmd.startsWith('del libro[')) {
                             const match = cmd.match(/del libro\[["'](.+)["']\]/);
-                            if (match) { delete libro5[match[1]]; updateViz5(); }
+                            if (match) {
+                                const key = match[1];
+                                const row = document.querySelector(`[data-key="${CSS.escape(key)}"]`);
+                                if (row) {
+                                    row.classList.add('animate-highlights-del');
+                                    setTimeout(() => { delete libro5[key]; updateViz5(); }, 500);
+                                } else { delete libro5[key]; updateViz5(); }
+                            }
                         } else if (cmd.includes('.pop(')) {
                             const match = cmd.match(/libro\.pop\(["'](.+)["']\)/);
                             if (match) {
-                                const val = libro5[match[1]];
-                                delete libro5[match[1]];
-                                updateViz5();
-                                output.innerHTML += `<div class="text-white">${val !== undefined ? JSON.stringify(val) : 'None'}</div>`;
+                                const key = match[1];
+                                if (libro5.hasOwnProperty(key)) {
+                                    const row = document.querySelector(`[data-key="${CSS.escape(key)}"]`);
+                                    const val = libro5[key];
+                                    if (row) {
+                                        row.classList.add('animate-highlights-pop');
+                                        setTimeout(() => {
+                                            delete libro5[key];
+                                            updateViz5();
+                                            output.innerHTML += `<div class="text-white">${val !== undefined ? JSON.stringify(val) : 'None'}</div>`;
+                                            output.scrollTop = output.scrollHeight;
+                                        }, 500);
+                                    } else {
+                                        delete libro5[key];
+                                        updateViz5();
+                                        output.innerHTML += `<div class="text-white">${val !== undefined ? JSON.stringify(val) : 'None'}</div>`;
+                                    }
+                                } else {
+                                    output.innerHTML += `<div class="text-red-400 italic mb-2">KeyError: '${key}'</div>`;
+                                }
                             }
                         } else if (cmd.startsWith('libro[')) {
                             const parts = cmd.split('=');
@@ -1372,8 +1437,16 @@
                                 let val = parts[1].trim();
                                 if (val.startsWith('"') || val.startsWith("'")) val = val.slice(1, -1);
                                 else if (!isNaN(Number(val))) val = Number(val);
+
+                                const isUpdate = libro5.hasOwnProperty(key);
                                 libro5[key] = val;
                                 updateViz5();
+                                if (isUpdate) {
+                                    setTimeout(() => {
+                                        const row = document.querySelector(`[data-key="${CSS.escape(key)}"]`);
+                                        if (row) row.classList.add('animate-highlights-mod');
+                                    }, 50);
+                                }
                             }
                         }
                     } catch (e) { output.innerHTML += `<div class="text-red-400">Error</div>`; }
@@ -1387,7 +1460,7 @@
             let html = `<span class="text-xs text-gray-400 font-bold uppercase tracking-widest mb-2 block">Memoria</span>
                         <div class="font-mono text-sm flex flex-col gap-1 w-full min-w-[150px]">`;
             for (let [k, v] of Object.entries(libro5)) {
-                html += `<div class="bg-blue-50 px-2 py-1 rounded border border-blue-100 flex justify-between gap-8 animate-[fadeIn_0.3s]">
+                html += `<div data-key="${k}" class="bg-blue-50 px-2 py-1 rounded border border-blue-100 flex justify-between gap-8 animate-[fadeIn_0.3s]">
                             <span class="text-primary font-bold min-w-[60px]">"${k}"</span> <span class="text-accent text-right flex-1">${JSON.stringify(v)}</span>
                          </div>`;
             }
