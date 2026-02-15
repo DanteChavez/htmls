@@ -213,43 +213,73 @@
     <section id="slide-3" class="slide flex-col p-12 items-center">
         <h2 class="text-4xl font-black text-primary mb-12">Propiedades Fundamentales</h2>
 
-        <div class="grid grid-cols-2 gap-12 w-full max-w-6xl flex-1">
-            <!-- Cards List -->
-            <div class="flex flex-col gap-4 h-full justify-center">
-                <div onclick="showProp(1)"
-                    class="prop-card bg-white p-4 rounded-xl border border-border hover:shadow-lg hover:border-action cursor-pointer transition-all group flex items-center gap-4">
-                    <div class="text-2xl group-hover:scale-110 transition-transform bg-primary/5 p-2 rounded-lg">📍
+        <div class="max-w-6xl w-full grid grid-cols-1 md:grid-cols-2 gap-12 items-center flex-1">
+            <!-- Properties List (Selectable) -->
+            <div class="space-y-4">
+                <div onclick="selectProp3(1)" id="prop-btn-1"
+                    class="p-4 rounded-xl border border-transparent hover:bg-white hover:shadow-md transition-all cursor-pointer flex items-start gap-4 group">
+                    <span
+                        class="bg-accent text-white rounded-full p-1 mt-1 shrink-0 group-hover:scale-110 transition-transform">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7">
+                            </path>
+                        </svg>
+                    </span>
+                    <div>
+                        <strong class="text-primary block text-lg">No Posicional</strong>
+                        <span class="text-gray-500 text-sm">No importa el orden, importa la etiqueta.</span>
                     </div>
-                    <h3 class="font-bold text-primary text-base">No Posicional</h3>
                 </div>
-                <div onclick="showProp(2)"
-                    class="prop-card bg-white p-4 rounded-xl border border-border hover:shadow-lg hover:border-action cursor-pointer transition-all group flex items-center gap-4">
-                    <div class="text-2xl group-hover:scale-110 transition-transform bg-primary/5 p-2 rounded-lg">🔑
+
+                <div onclick="selectProp3(2)" id="prop-btn-2"
+                    class="p-4 rounded-xl border border-transparent hover:bg-white hover:shadow-md transition-all cursor-pointer flex items-start gap-4 group">
+                    <span
+                        class="bg-accent text-white rounded-full p-1 mt-1 shrink-0 group-hover:scale-110 transition-transform">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7">
+                            </path>
+                        </svg>
+                    </span>
+                    <div>
+                        <strong class="text-primary block text-lg">Claves Únicas</strong>
+                        <span class="text-gray-500 text-sm">No pueden repetirse (se sobrescriben).</span>
                     </div>
-                    <h3 class="font-bold text-primary text-base">Claves Únicas</h3>
                 </div>
-                <div onclick="showProp(3)"
-                    class="prop-card bg-white p-4 rounded-xl border border-border hover:shadow-lg hover:border-action cursor-pointer transition-all group flex items-center gap-4">
-                    <div class="text-2xl group-hover:scale-110 transition-transform bg-primary/5 p-2 rounded-lg">🔄
+
+                <div onclick="selectProp3(3)" id="prop-btn-3"
+                    class="p-4 rounded-xl border border-transparent hover:bg-white hover:shadow-md transition-all cursor-pointer flex items-start gap-4 group">
+                    <span
+                        class="bg-accent text-white rounded-full p-1 mt-1 shrink-0 group-hover:scale-110 transition-transform">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7">
+                            </path>
+                        </svg>
+                    </span>
+                    <div>
+                        <strong class="text-primary block text-lg">Mutable</strong>
+                        <span class="text-gray-500 text-sm">Puedes cambiar sus datos libremente.</span>
                     </div>
-                    <h3 class="font-bold text-primary text-base">Mutable</h3>
                 </div>
-                <div onclick="showProp(4)"
-                    class="prop-card bg-white p-4 rounded-xl border border-border hover:shadow-lg hover:border-action cursor-pointer transition-all group flex items-center gap-4">
-                    <div class="text-2xl group-hover:scale-110 transition-transform bg-primary/5 p-2 rounded-lg">📦
+
+                <div onclick="selectProp3(4)" id="prop-btn-4"
+                    class="p-4 rounded-xl border border-transparent hover:bg-white hover:shadow-md transition-all cursor-pointer flex items-start gap-4 group">
+                    <span
+                        class="bg-accent text-white rounded-full p-1 mt-1 shrink-0 group-hover:scale-110 transition-transform">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7">
+                            </path>
+                        </svg>
+                    </span>
+                    <div>
+                        <strong class="text-primary block text-lg">Tipos Mixtos</strong>
+                        <span class="text-gray-500 text-sm">Acepta cualquier tipo de valor.</span>
                     </div>
-                    <h3 class="font-bold text-primary text-base">Tipos Admitidos</h3>
                 </div>
             </div>
 
-            <!-- Detail View -->
-            <div
-                class="bg-white rounded-3xl border border-border shadow-2xl p-8 flex flex-col justify-center relative overflow-hidden">
-                <div id="prop-detail-content" class="text-center animate-[fadeIn_0.3s_ease-out]">
-                    <span class="text-6xl mb-6 block">👈</span>
-                    <h3 class="text-2xl font-bold text-gray-400">Selecciona una propiedad</h3>
-                    <p class="text-gray-400 mt-2">Haz clic en las tarjetas de la izquierda para ver los detalles.</p>
-                </div>
+            <!-- Dynamic Right Panel -->
+            <div id="slide3-right-panel" class="flex flex-col gap-8 h-full">
+                <!-- Content injected by JS -->
             </div>
         </div>
     </section>
@@ -591,23 +621,111 @@
             return `<span class="font-mono text-sm text-primary font-bold">"${k}"</span> <span class="text-gray-400">→</span> <span class="font-mono text-sm text-accent bg-accent/5 px-2 rounded">${JSON.stringify(v)}</span>`;
         }
 
-        // --- Slide 3 Logic ---
-        function showProp(id) {
-            const content = document.getElementById('prop-detail-content');
-            const data = {
-                1: { title: "No Posicional", desc: "No usa índices [0]. Accedes por nombre.", viz: `lista[0] <span class="text-red-500">✖</span><br>dicc["clave"] <span class="text-green-500">✔</span>` },
-                2: { title: "Claves Únicas", desc: "Si repites una clave, el valor se sobrescribe. No puede haber duplicados.", viz: `{"id": 1, "id": 2} <br>➔ {"id": 2}` },
-                3: { title: "Mutable", desc: "Puedes cambiar, agregar o borrar datos después de crearlo.", viz: `precio = 10<br>precio = 20` },
-                4: { title: "Tipos", desc: "Claves: Inmutables (str, int, tupla). Valores: Cualquier cosa.", viz: `{ (1,1): "ok", "list": [1,2] }` }
-            };
-
-            content.innerHTML = `
-                <div class="animate-[fadeIn_0.3s_ease-out]">
-                    <h3 class="text-3xl font-black text-primary mb-4">${data[id].title}</h3>
-                    <div class="bg-muted p-6 rounded-2xl mb-6 font-mono text-xl border border-border">${data[id].viz}</div>
-                    <p class="text-lg text-gray-600 leading-relaxed">${data[id].desc}</p>
+        // --- Slide 3 Logic (Interactive) ---
+        const slide3Content = {
+            default: `
+                <div class="bg-white p-8 rounded-xl border border-border shadow-sm h-full flex flex-col justify-center animate-[fadeIn_0.5s]">
+                    <h3 class="text-lg font-semibold text-action mb-8 w-full text-center">Analogía: Diccionario vs Lista</h3>
+                    <div class="flex gap-8 items-center justify-center">
+                        <!-- Dictionary -->
+                        <div class="flex flex-col items-center group">
+                            <div class="w-24 h-32 bg-primary/10 border-2 border-primary rounded relative flex items-center justify-center transform transition-transform group-hover:-rotate-3">
+                                <div class="text-4xl">📖</div>
+                                <div class="absolute bottom-2 text-[10px] text-primary font-bold uppercase tracking-wider">"A"</div>
+                            </div>
+                            <span class="text-sm mt-3 font-bold text-accent">Diccionario</span>
+                            <p class="text-xs text-center text-gray-500 mt-1 max-w-[120px]">Buscas por palabra (Clave)</p>
+                        </div>
+                        <div class="text-2xl text-gray-300 font-bold">vs</div>
+                        <!-- List -->
+                        <div class="flex flex-col items-center group">
+                            <div class="w-24 h-32 bg-white border-l-4 border-gray-300 shadow-sm relative flex items-center justify-center transform transition-transform group-hover:rotate-3">
+                                <div class="w-full h-full absolute inset-0 bg-[linear-gradient(transparent_95%,#e5e7eb_95%)] bg-[length:100%_1.5rem]"></div>
+                                <div class="text-4xl z-10">📝</div>
+                            </div>
+                            <span class="text-sm mt-3 font-bold text-gray-600">Lista</span>
+                            <p class="text-xs text-center text-gray-500 mt-1 max-w-[120px]">Buscas por renglón (Índice)</p>
+                        </div>
+                    </div>
                 </div>
-            `;
+            `,
+            1: `
+                <div class="bg-white p-8 rounded-xl border border-border shadow-sm h-full flex flex-col justify-center animate-[fadeIn_0.3s]">
+                    <h3 class="text-xl font-bold text-primary mb-4 flex items-center gap-2">📍 No Posicional</h3>
+                    <div class="bg-muted p-4 rounded-lg font-mono text-sm mb-4 border border-border">
+                        <div class="text-gray-400"># En una lista (orden importa)</div>
+                        <div>lista = ["A", "B", "C"]</div>
+                        <div class="text-red-500">lista[0] ➔ "A"</div>
+                        <br>
+                        <div class="text-gray-400"># En un diccionario (clave importa)</div>
+                        <div>datos = {"x": 10, "y": 20}</div>
+                        <div class="text-green-500">datos["y"] ➔ 20</div>
+                    </div>
+                    <p class="text-gray-600">No importa dónde esté guardado el dato, lo encuentras por su nombre.</p>
+                </div>
+            `,
+            2: `
+                <div class="bg-white p-8 rounded-xl border border-border shadow-sm h-full flex flex-col justify-center animate-[fadeIn_0.3s]">
+                    <h3 class="text-xl font-bold text-primary mb-4 flex items-center gap-2">🔑 Claves Únicas</h3>
+                    <div class="bg-muted p-4 rounded-lg font-mono text-sm mb-4 border border-border">
+                        <div>persona = {</div>
+                        <div class="pl-4">"id": 101,</div>
+                        <div class="pl-4 text-red-500">"id": 999 <span class="text-gray-400"># Sobrescribe!</span></div>
+                        <div>}</div>
+                        <br>
+                        <div class="text-blue-600">print(persona)</div>
+                        <div class="text-green-600">➔ {"id": 999}</div>
+                    </div>
+                    <p class="text-gray-600">Es como una identificación: no puede haber dos personas con el mismo DNI.</p>
+                </div>
+            `,
+            3: `
+                <div class="bg-white p-8 rounded-xl border border-border shadow-sm h-full flex flex-col justify-center animate-[fadeIn_0.3s]">
+                    <h3 class="text-xl font-bold text-primary mb-4 flex items-center gap-2">🔄 Mutable</h3>
+                    <div class="bg-muted p-4 rounded-lg font-mono text-sm mb-4 border border-border">
+                        <div>user = {"name": "Ana"}</div>
+                        <br>
+                        <div class="text-gray-400"># Modificar</div>
+                        <div>user["name"] = "Maria"</div>
+                        <br>
+                        <div class="text-gray-400"># Agregar</div>
+                        <div>user["age"] = 30</div>
+                        <br>
+                        <div class="text-green-600">➔ {"name": "Maria", "age": 30}</div>
+                    </div>
+                    <p class="text-gray-600">A diferencia de las tuplas, aquí puedes editar todo el tiempo.</p>
+                </div>
+            `,
+            4: `
+                <div class="bg-white p-8 rounded-xl border border-border shadow-sm h-full flex flex-col justify-center animate-[fadeIn_0.3s]">
+                    <h3 class="text-xl font-bold text-primary mb-4 flex items-center gap-2">📦 Tipos Mixtos</h3>
+                    <div class="bg-muted p-4 rounded-lg font-mono text-sm mb-4 border border-border">
+                        <div>mochila = {</div>
+                        <div class="pl-4"><span class="text-blue-500">"color"</span>: "rojo",</div>
+                        <div class="pl-4"><span class="text-blue-500">"items"</span>: ["mapa", "agua"],</div>
+                        <div class="pl-4"><span class="text-blue-500">"slots"</span>: 5</div>
+                        <div>}</div>
+                    </div>
+                    <p class="text-gray-600">Combina textos, listas, números e incluso otros diccionarios dentro.</p>
+                </div>
+            `
+        };
+
+        function selectProp3(id) {
+            // Update Visual
+            document.getElementById('slide3-right-panel').innerHTML = slide3Content[id];
+
+            // Handle Styles
+            [1, 2, 3, 4].forEach(i => {
+                const btn = document.getElementById(`prop-btn-${i}`);
+                if (i === id) {
+                    btn.classList.add('bg-white', 'shadow-md', 'border-gray-100');
+                    btn.classList.remove('border-transparent');
+                } else {
+                    btn.classList.remove('bg-white', 'shadow-md', 'border-gray-100');
+                    btn.classList.add('border-transparent');
+                }
+            });
         }
 
         // --- Slide 4 Logic ---
@@ -816,6 +934,7 @@
             }
             updateSlideView();
             renderDefVisuals(); // Init Slide 2 visuals
+            selectProp3('default'); // Init Slide 3 default
             initSlide5Visuals();
             renderTree(treeData, document.getElementById('json-tree'));
         }
