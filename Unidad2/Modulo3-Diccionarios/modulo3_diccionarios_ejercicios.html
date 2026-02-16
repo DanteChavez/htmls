@@ -151,7 +151,7 @@
                     Config</button>
                 <button onclick="loadMission(3)" id="btn-m3"
                     class="mission-btn px-4 py-1.5 rounded-full text-sm font-semibold transition-all bg-white text-gray-500 hover:bg-gray-100">4.
-                    Anidados</button>
+                    Agenda</button>
             </div>
         </header>
 
@@ -241,7 +241,8 @@
                                     <span>🔄</span> Recorrer / Loop
                                 </div>
                                 <div class="text-[9px] font-mono text-gray-400 ml-5 leading-tight">for k,v in
-                                    dicc.items()</div>
+                                    dicc.items()
+                                </div>
                             </button>
                             <button onclick="executePrint()"
                                 class="tool-btn text-left px-2 py-1.5 rounded-lg hover:bg-white hover:text-brand-primary hover:shadow-sm transition-all flex flex-col gap-0 text-gray-600">
@@ -272,7 +273,8 @@
                                         <!-- Inline Form -->
                                         <div class="flex items-center gap-2 font-mono text-sm w-full justify-center">
                                             <div id="field-key" class="flex items-center gap-1">
-                                                <span class="text-gray-500 font-bold">dicc[</span>
+                                                <span class="text-gray-500 font-bold"><span
+                                                        class="var-name">dicc</span>[</span>
                                                 <input type="text" id="input-key"
                                                     class="w-32 bg-white border border-gray-300 px-3 py-2 rounded-lg outline-none focus:ring-2 focus:ring-action text-action font-semibold text-center shadow-sm"
                                                     placeholder='"clave"'>
@@ -309,7 +311,9 @@
                             <span class="ml-2 text-xs font-bold text-gray-500 uppercase">Terminal</span>
                         </div>
                         <button onclick="clearConsole()"
-                            class="text-xs text-gray-400 hover:text-red-500 transition-colors">Limpiar</button>
+                            class="text-[10px] items-center gap-1.5 px-3 py-1 rounded-lg bg-red-50 text-red-500 border border-red-100 font-bold uppercase tracking-wider hover:bg-red-500 hover:text-white transition-all shadow-sm">
+                            <span>🗑️</span> Limpiar
+                        </button>
                     </div>
                     <div id="console-output" class="flex-1 p-4 overflow-y-auto font-mono text-sm bg-white">
                         <div id="terminal-static-header">
@@ -339,12 +343,13 @@
         const missions = [
             {
                 title: "Corrección de Inventario",
+                varName: "inventario",
                 desc: "El sistema ha registrado mal el stock. Tu objetivo es corregir el inventario para que coincida exactamente con el reporte físico.\n\nElimina productos que no existen y ajusta las cantidades erróneas.",
                 initial: { "laptop": 15, "mouse": 52, "teclado": 30, "monitor": 12, "tablet": 8 },
                 conditions: [
                     { type: 'val', key: "laptop", val: 20, msg: "laptop debe ser 20" },
                     { type: 'val', key: "mouse", val: 45, msg: "mouse debe ser 45" },
-                    { type: 'eq', key: "teclado", val: 30, msg: "teclado está correcto" },
+                    { type: 'eq', key: "teclado", val: 30, msg: "teclado debe ser 30" },
                     { type: 'val', key: "impresora", val: 5, msg: "impresora debe ser 5" },
                     { type: 'missing', key: "monitor", msg: "no debe existir monitor" },
                     { type: 'missing', key: "tablet", msg: "no debe existir tablet" }
@@ -352,6 +357,7 @@
             },
             {
                 title: "Sincronización Logística",
+                varName: "pedidos",
                 desc: "El sistema logístico tuvo un error al sincronizar pedidos.\nAlgunos pedidos están en estados incorrectos, uno fue cancelado pero sigue activo, y falta registrar un pedido nuevo.\nTu misión es dejar el sistema exactamente como lo exige el departamento de operaciones.",
                 initial: { "P1001": "en_preparacion", "P1002": "enviado", "P1003": "cancelado", "P1004": "enviado", "P_temp": "en_preparacion" },
                 conditions: [
@@ -365,6 +371,7 @@
             },
             {
                 title: "Configuración del Servidor",
+                varName: "config",
                 desc: "El servidor principal fue configurado manualmente y presenta inconsistencias.\nAlgunos parámetros están mal definidos, otros sobran y falta una configuración obligatoria.\nTu tarea es dejar el diccionario exactamente como lo exige el entorno de producción.",
                 initial: { "host": "localhost", "port": 3000, "debug": true, "timeout": 120, "test_mode": true },
                 conditions: [
@@ -377,13 +384,22 @@
                 ]
             },
             {
-                title: "Diccionario Anidado",
-                desc: "Configura el servidor remoto. Debes acceder al diccionario anidado 'server' para actualizar sus puertos y estado.",
-                initial: { "server": { "ip": "192.168.1.1", "port": 80, "status": "offline" } },
+                title: "Centro Médico - Gestión de Agenda",
+                varName: "agenda",
+                desc: "Un centro médico actualizó su agenda diaria.\nUn turno fue cancelado, otro cambió de horario y se agregó una nueva cita urgente.",
+                initial: {
+                    "T100": { "paciente": "Marcela Ruiz", "hora": "09:00", "confirmado": true },
+                    "T101": { "paciente": "Diego Castro", "hora": "10:00", "confirmado": false },
+                    "T102": { "paciente": "Valentina Cruz", "hora": "11:00", "confirmado": true }
+                },
                 conditions: [
-                    { type: 'nested', key: "server", subkey: "port", val: 443, msg: "server['port'] debe ser 443" },
-                    { type: 'nested', key: "server", subkey: "status", val: "active", msg: "server['status'] debe ser 'active'" },
-                    { type: 'nested', key: "server", subkey: "ip", val: "192.168.1.1", msg: "ip sin cambios" }
+                    { type: 'nested', key: "T101", subkey: "hora", val: "10:30", msg: "T101: hora debe ser '10:30'" },
+                    { type: 'nested', key: "T101", subkey: "confirmado", val: true, msg: "T101: confirmado debe ser True" },
+                    { type: 'missing', key: "T102", msg: "T102 no debe existir" },
+                    { type: 'exists', key: "T103", msg: "Debe existir T103" },
+                    { type: 'nested', key: "T103", subkey: "paciente", val: "Sofia Martinez", msg: "T103: paciente 'Sofia Martinez'" },
+                    { type: 'nested', key: "T103", subkey: "hora", val: "12:00", msg: "T103: hora debe ser '12:00'" },
+                    { type: 'nested', key: "T103", subkey: "confirmado", val: true, msg: "T103: confirmado debe ser True" }
                 ]
             }
         ];
@@ -402,6 +418,10 @@
             document.getElementById('mission-title').textContent = missions[id].title;
             document.getElementById('mission-desc').innerText = missions[id].desc; // innerText preserves \n
 
+            // Dynamic variable names update
+            const varName = missions[id].varName;
+            document.querySelectorAll('.var-name').forEach(el => el.textContent = varName);
+
             // Buttons State
             document.querySelectorAll('.mission-btn').forEach((btn, idx) => {
                 if (idx === id) {
@@ -413,8 +433,10 @@
                 }
             });
 
-            // Reset Console & Tools
+            // Reset Console
             document.getElementById('terminal-static-header').classList.remove('hidden');
+            document.getElementById('terminal-history').innerHTML = `<div class="text-green-600">Python 3.10.2 System Ready (${varName} loaded)</div>`;
+
             resetEditor();
             checkConditions(); // Draw initial cards
         }
@@ -485,6 +507,8 @@
             val = val.trim();
             if (val === 'true' || val === 'True') return true;
             if (val === 'false' || val === 'False') return false;
+            if (val === '{}') return {};
+            if (val === '[]') return [];
             // Number check
             if (!isNaN(val) && val !== '') return Number(val);
             // String check (remove quotes if present)
@@ -536,16 +560,21 @@
 
                     if (currentTool === 'modify') {
                         targetObj[parentKey][childKey] = val;
-                        outputMsg = `>>> dicc["${parentKey}"]["${childKey}"] = ${JSON.stringify(val)}`;
+                        outputMsg = `>>> ${missions[currentMissionId].varName}["${parentKey}"]["${childKey}"] = ${JSON.stringify(val)}`;
+                    } else if (currentTool === 'add') {
+                        targetObj[parentKey][childKey] = val;
+                        outputMsg = `>>> ${missions[currentMissionId].varName}["${parentKey}"]["${childKey}"] = ${JSON.stringify(val)}`;
                     } else if (currentTool === 'access') {
                         const res = targetObj[parentKey][childKey];
-                        outputMsg = `>>> dicc["${parentKey}"]["${childKey}"]\n${JSON.stringify(res)}`;
+                        outputMsg = `>>> ${missions[currentMissionId].varName}["${parentKey}"]["${childKey}"]\n${JSON.stringify(res)}`;
+                    } else if (currentTool === 'delete') {
+                        delete targetObj[parentKey][childKey];
+                        outputMsg = `>>> del ${missions[currentMissionId].varName}["${parentKey}"]["${childKey}"]`;
                     }
-                    // Add/Delete for nested could go here if needed
                 } else {
                     // Standard Logic
                     if (currentTool === 'access') {
-                        outputMsg = `>>> dicc["${key}"]`;
+                        outputMsg = `>>> ${missions[currentMissionId].varName}["${key}"]`;
                         if (currentDict.hasOwnProperty(key)) {
                             outputMsg += `\n${JSON.stringify(currentDict[key], null, 2)}`;
                         } else {
@@ -553,21 +582,18 @@
                         }
                     } else if (currentTool === 'modify') {
                         if (!currentDict.hasOwnProperty(key) && currentMissionId !== 0) {
-                            // Usually modify implies existence, but Python allows creating via assignment. 
-                            // However, tool distinction 'Add' vs 'Modify' suggests we might strictly check existence for pedagogy?
-                            // Python: dicc[k]=v works for both. Let's allow it to act like Python.
                         }
                         currentDict[key] = val;
-                        outputMsg = `>>> dicc["${key}"] = ${JSON.stringify(val)}`;
+                        outputMsg = `>>> ${missions[currentMissionId].varName}["${key}"] = ${JSON.stringify(val)}`;
                     } else if (currentTool === 'add') {
                         if (currentDict.hasOwnProperty(key)) {
                             outputMsg = `>>> # Key '${key}' already exists, updating value...`;
                         } else {
-                            outputMsg = `>>> dicc["${key}"] = ${JSON.stringify(val)}`;
+                            outputMsg = `>>> ${missions[currentMissionId].varName}["${key}"] = ${JSON.stringify(val)}`;
                         }
                         currentDict[key] = val;
                     } else if (currentTool === 'delete') {
-                        outputMsg = `>>> del dicc["${key}"]`;
+                        outputMsg = `>>> del ${missions[currentMissionId].varName}["${key}"]`;
                         if (currentDict.hasOwnProperty(key)) {
                             delete currentDict[key];
                         } else {
@@ -578,7 +604,8 @@
 
             } catch (e) {
                 isError = true;
-                outputMsg = `>>> ${currentTool === 'delete' ? 'del ' : ''}dicc["${key}"]${currentTool === 'modify' ? ' = ...' : ''}\n<span class="text-red-500">${e.message}</span>`;
+                const vName = missions[currentMissionId].varName;
+                outputMsg = `>>> ${currentTool === 'delete' ? 'del ' : ''}${vName}["${key}"]${currentTool === 'modify' ? ' = ...' : ''}\n<span class="text-red-500">${e.message}</span>`;
             }
 
             const historyDiv = document.getElementById('terminal-history');
@@ -591,18 +618,20 @@
         function executePrint() {
             const consoleDiv = document.getElementById('console-output');
             const historyDiv = document.getElementById('terminal-history');
-            historyDiv.innerHTML += `<div class="text-text-deep whitespace-pre-wrap">>>> print(dicc)\n${JSON.stringify(currentDict, null, 2)}</div>`;
+            const vName = missions[currentMissionId].varName;
+            historyDiv.innerHTML += `<div class="text-text-deep whitespace-pre-wrap">>>> print(${vName})\n${JSON.stringify(currentDict, null, 2)}</div>`;
             consoleDiv.scrollTop = consoleDiv.scrollHeight;
         }
 
         async function executeLoop() {
             const consoleDiv = document.getElementById('console-output');
             const historyDiv = document.getElementById('terminal-history');
+            const vName = missions[currentMissionId].varName;
 
             // Header
             const header = document.createElement('div');
             header.className = "text-text-deep mb-1 whitespace-pre-wrap";
-            header.innerHTML = `>>> for k, v in dicc.items(): print(k, v)\n`;
+            header.innerHTML = `>>> for k, v in ${vName}.items(): print(k, v)\n`;
             historyDiv.appendChild(header);
 
             const entries = Object.entries(currentDict);
@@ -644,8 +673,10 @@
                     passed = currentDict[req.key] === req.val;
                 } else if (req.type === 'missing') {
                     passed = !currentDict.hasOwnProperty(req.key);
+                } else if (req.type === 'exists') {
+                    passed = currentDict.hasOwnProperty(req.key);
                 } else if (req.type === 'nested') {
-                    // Mission 4: Check nested value
+                    // Check nested value
                     try {
                         passed = currentDict[req.key][req.subkey] === req.val;
                     } catch (e) { passed = false; }
