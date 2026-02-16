@@ -87,6 +87,22 @@
                 transform: translateY(0);
             }
         }
+
+        @keyframes blink {
+
+            0%,
+            100% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0;
+            }
+        }
+
+        .cursor-blink {
+            animation: blink 1s step-end infinite;
+        }
     </style>
 </head>
 
@@ -245,43 +261,37 @@
                             </div>
 
                             <!-- Single Operation Form -->
-                            <div id="action-form" class="hidden max-w-lg mx-auto w-full">
+                            <div id="action-form" class="hidden w-full">
                                 <h3 id="tool-title"
                                     class="text-lg font-bold text-gray-700 mb-6 flex items-center gap-2">
                                     <span id="tool-icon"></span> <span id="tool-name">...</span>
                                 </h3>
 
-                                <div class="space-y-4">
-                                    <div id="field-key">
-                                        <label class="block text-xs font-bold text-gray-500 uppercase mb-1">Clave
-                                            (Key)</label>
-                                        <div class="flex items-center">
-                                            <span
-                                                class="bg-gray-100 text-gray-500 px-3 py-2 rounded-l-lg border border-r-0 border-gray-300 font-mono text-sm">dicc[</span>
-                                            <input type="text" id="input-key"
-                                                class="flex-1 border border-gray-300 p-2 outline-none focus:ring-2 focus:ring-action font-mono text-sm"
-                                                placeholder='"clave"'>
-                                            <span
-                                                class="bg-gray-100 text-gray-500 px-3 py-2 rounded-r-lg border border-l-0 border-gray-300 font-mono text-sm ml-0.4">]</span>
-                                        </div>
-                                    </div>
+                                <div class="bg-gray-50/50 p-6 rounded-2xl border border-gray-100">
+                                    <div class="flex flex-col items-center gap-6">
+                                        <!-- Inline Form -->
+                                        <div class="flex items-center gap-2 font-mono text-sm w-full justify-center">
+                                            <div id="field-key" class="flex items-center gap-1">
+                                                <span class="text-gray-500 font-bold">dicc[</span>
+                                                <input type="text" id="input-key"
+                                                    class="w-32 bg-white border border-gray-300 px-3 py-2 rounded-lg outline-none focus:ring-2 focus:ring-action text-action font-semibold text-center shadow-sm"
+                                                    placeholder='"clave"'>
+                                                <span class="text-gray-500 font-bold">]</span>
+                                            </div>
 
-                                    <div id="field-val" class="hidden">
-                                        <label class="block text-xs font-bold text-gray-500 uppercase mb-1">Valor
-                                            (Value)</label>
-                                        <div class="flex items-center">
-                                            <span
-                                                class="bg-gray-100 text-gray-500 px-3 py-2 rounded-l-lg border border-r-0 border-gray-300 font-mono text-sm">=</span>
-                                            <input type="text" id="input-val"
-                                                class="flex-1 border border-gray-300 p-2 rounded-r-lg outline-none focus:ring-2 focus:ring-action font-mono text-sm"
-                                                placeholder='valor'>
+                                            <div id="field-val" class="flex items-center gap-2 hidden min-w-0">
+                                                <span class="text-gray-400 font-bold">=</span>
+                                                <input type="text" id="input-val"
+                                                    class="w-48 bg-white border border-gray-300 px-3 py-2 rounded-lg outline-none focus:ring-2 focus:ring-action text-brand-primary font-semibold shadow-sm text-center"
+                                                    placeholder='valor'>
+                                            </div>
                                         </div>
-                                    </div>
 
-                                    <button onclick="runAction()"
-                                        class="w-full bg-action text-white font-bold py-3 rounded-xl hover:bg-action-hover transition-colors shadow-md mt-4 flex items-center justify-center gap-2">
-                                        <span>▶️</span> Ejecutar
-                                    </button>
+                                        <button onclick="runAction()"
+                                            class="bg-action text-white font-bold h-11 px-12 rounded-xl hover:bg-action-hover transition-all shadow-md hover:shadow-lg flex items-center justify-center shrink-0 min-w-[200px]">
+                                            Ejecutar
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -301,13 +311,17 @@
                         <button onclick="clearConsole()"
                             class="text-xs text-gray-400 hover:text-red-500 transition-colors">Limpiar</button>
                     </div>
-                    <div id="console-output"
-                        class="flex-1 p-4 overflow-y-auto font-mono text-sm space-y-1 bg-white whitespace-pre-wrap">
-                        <div class="text-green-600">Python 3.10.2 Interactive Shell</div>
-                        <div class="text-gray-400">Type "help", "copyright", "credits" or "license" for more
-                            information.</div>
-                        <div class="text-gray-400">Type "print(dicc)" to see current state.</div>
-                        <div class="h-px bg-gray-100 my-2"></div>
+                    <div id="console-output" class="flex-1 p-4 overflow-y-auto font-mono text-sm bg-white">
+                        <div id="terminal-static-header">
+                            <div class="text-green-600">Python 3.10.2 Interactive Shell</div>
+                            <div class="text-gray-400 text-xs">Type "help", "copyright", "credits" or "license" for more
+                                information.</div>
+                        </div>
+                        <div id="terminal-history" class="space-y-0.5"></div>
+                        <div id="terminal-prompt" class="flex items-center gap-1 text-text-deep mt-1">
+                            <span>>>></span>
+                            <span class="w-1.5 h-4 bg-gray-800 cursor-blink ml-0.5"></span>
+                        </div>
                     </div>
                 </div>
 
@@ -396,7 +410,7 @@
             });
 
             // Reset Console & Tools
-            document.getElementById('console-output').innerHTML = '<div class="text-green-600">Python 3.10.2 System Ready...</div>';
+            document.getElementById('terminal-static-header').classList.remove('hidden');
             resetEditor();
             checkConditions(); // Draw initial cards
         }
@@ -443,25 +457,24 @@
             if (tool === 'access') {
                 icon.textContent = '🔍'; name.textContent = 'Acceder Valor';
                 keyField.classList.remove('hidden'); valField.classList.add('hidden');
-                btn.innerHTML = '<span>▶️</span> Obtener Valor';
+                btn.textContent = 'Obtener Valor';
             } else if (tool === 'modify') {
                 icon.textContent = '✏️'; name.textContent = 'Modificar Valor';
                 keyField.classList.remove('hidden'); valField.classList.remove('hidden');
-                btn.innerHTML = '<span>▶️</span> Actualizar';
+                btn.textContent = 'Actualizar';
             } else if (tool === 'add') {
                 icon.textContent = '➕'; name.textContent = 'Agregar Clave';
                 keyField.classList.remove('hidden'); valField.classList.remove('hidden');
-                btn.innerHTML = '<span>▶️</span> Insertar';
+                btn.textContent = 'Insertar';
             } else if (tool === 'delete') {
                 icon.textContent = '🗑️'; name.textContent = 'Eliminar Clave';
                 keyField.classList.remove('hidden'); valField.classList.add('hidden');
-                btn.innerHTML = '<span>▶️</span> Borrar';
-                btn.className = "w-full bg-red-500 text-white font-bold py-3 rounded-xl hover:bg-red-600 transition-colors shadow-md mt-4 flex items-center justify-center gap-2";
-                return; // Exit early to avoid overwriting btn class
+                btn.textContent = 'Eliminar';
+                btn.className = "bg-red-500 text-white font-bold h-11 px-12 rounded-xl hover:bg-red-600 transition-all shadow-md flex items-center justify-center min-w-[200px]";
+                return;
             }
 
-            // Restore default btn class if not delete
-            btn.className = "w-full bg-action text-white font-bold py-3 rounded-xl hover:bg-action-hover transition-colors shadow-md mt-4 flex items-center justify-center gap-2";
+            btn.className = "bg-action text-white font-bold h-11 px-12 rounded-xl hover:bg-action-hover transition-all shadow-md flex items-center justify-center min-w-[200px]";
         }
 
         function parseInput(val) {
@@ -564,7 +577,8 @@
                 outputMsg = `>>> ${currentTool === 'delete' ? 'del ' : ''}dicc["${key}"]${currentTool === 'modify' ? ' = ...' : ''}\n<span class="text-red-500">${e.message}</span>`;
             }
 
-            consoleDiv.innerHTML += `<div class="mb-1 ${isError ? '' : 'text-text-deep'}">${outputMsg}</div>`;
+            const historyDiv = document.getElementById('terminal-history');
+            historyDiv.innerHTML += `<div class="whitespace-pre-wrap ${isError ? '' : 'text-text-deep'}">${outputMsg}</div>`;
             consoleDiv.scrollTop = consoleDiv.scrollHeight;
 
             checkConditions();
@@ -572,36 +586,39 @@
 
         function executePrint() {
             const consoleDiv = document.getElementById('console-output');
-            consoleDiv.innerHTML += `<div class="mb-1 text-text-deep">>>> print(dicc)\n\n${JSON.stringify(currentDict, null, 2)}</div>`;
+            const historyDiv = document.getElementById('terminal-history');
+            historyDiv.innerHTML += `<div class="text-text-deep whitespace-pre-wrap">>>> print(dicc)\n\n${JSON.stringify(currentDict, null, 2)}</div>`;
             consoleDiv.scrollTop = consoleDiv.scrollHeight;
         }
 
         async function executeLoop() {
             const consoleDiv = document.getElementById('console-output');
+            const historyDiv = document.getElementById('terminal-history');
 
             // Header
             const header = document.createElement('div');
-            header.className = "text-text-deep mb-2";
+            header.className = "text-text-deep mb-1 whitespace-pre-wrap";
             header.innerHTML = `>>> for k, v in dicc.items(): print(k, v)\n`;
-            consoleDiv.appendChild(header);
+            historyDiv.appendChild(header);
 
             const entries = Object.entries(currentDict);
             for (const [k, v] of entries) {
                 const line = document.createElement('div');
-                line.className = "text-text-deep animate-[fadeIn_0.3s_ease-out]";
+                line.className = "text-text-deep animate-[fadeIn_0.3s_ease-out] whitespace-pre-wrap";
                 line.textContent = `${k} ${JSON.stringify(v)}`;
-                consoleDiv.appendChild(line);
+                historyDiv.appendChild(line);
                 consoleDiv.scrollTop = consoleDiv.scrollHeight;
                 await new Promise(r => setTimeout(r, 400));
             }
 
             // Add spacer after
-            consoleDiv.innerHTML += '<div class="mb-2"></div>';
+            historyDiv.innerHTML += '<div class="mb-1"></div>';
             consoleDiv.scrollTop = consoleDiv.scrollHeight;
         }
 
         function clearConsole() {
-            document.getElementById('console-output').innerHTML = '';
+            document.getElementById('terminal-history').innerHTML = '';
+            document.getElementById('terminal-static-header').classList.add('hidden');
         }
 
         // --- Validation Logic ---
