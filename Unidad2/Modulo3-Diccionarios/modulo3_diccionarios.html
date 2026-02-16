@@ -212,7 +212,7 @@
 
         <div class="grid grid-cols-2 gap-12 max-w-6xl w-full h-[500px]">
             <!-- Visual Interaction -->
-            <div class="bg-white rounded-3xl p-8 border border-border shadow-lg flex flex-col">
+            <div class="bg-white rounded-3xl p-8 border border-border shadow-lg flex flex-col h-full overflow-hidden">
                 <h3 class="font-bold text-primary mb-6 flex items-center gap-2"><span class="text-2xl">🏷️</span>
                     Constructor Visual</h3>
 
@@ -237,7 +237,7 @@
             </div>
 
             <!-- Code Preview -->
-            <div class="flex flex-col">
+            <div class="flex flex-col h-full overflow-hidden">
                 <div class="bg-white rounded-t-3xl border border-border border-b-0 p-4 flex gap-2 items-center">
                     <div class="mac-btn mac-red"></div>
                     <div class="mac-btn mac-yellow"></div>
@@ -544,9 +544,8 @@
                             Memoria</div>
 
                         <!-- Dictionary Name Display -->
-                        <div class="w-full max-w-xs mb-2 flex items-center gap-2">
-                            <span class="font-mono text-sm font-bold text-primary">libro =</span>
-                            <span class="font-mono text-sm text-gray-400">{ ... }</span>
+                        <div class="w-full max-w-xs mb-2 flex items-center gap-2 justify-center">
+                            <span class="font-mono text-sm font-bold text-primary">Curso</span>
                         </div>
 
                         <!-- Table Headers -->
@@ -762,7 +761,7 @@
                 <ul class="text-sm text-body space-y-2 text-left w-full px-4">
                     <li class="flex items-center gap-2">✅ Modelar objetos reales</li>
                     <li class="flex items-center gap-2">✅ Realizar búsquedas rápidas</li>
-                    <li class="flex items-center gap-2">✅ Crear estructuras anidadas (JSON)</li>
+                    <li class="flex items-center gap-2">✅ Crear estructuras anidadas</li>
                 </ul>
             </div>
 
@@ -1289,7 +1288,7 @@
         }
 
         // --- Slide 5 Logic (Unified with Slide 4 Tutorial style) ---
-        let libro5 = { "titulo": "El Quijote", "autor": "Cervantes", "paginas": 800, "valor": "3 completos", "####": "3L1M!N4R" };
+        let libro5 = { "titulo": "El Quijote", "autor": "Cervantes", "paginas": 850, "valor": "3 completos", "####": "3L1M!N4R" };
         let slide5Visited = false;
         let tutorialActive5 = false;
         let tutStep5 = 0;
@@ -1303,7 +1302,7 @@
             slide5Visited = true;
             tutorialActive5 = true;
             tutStep5 = 1;
-            libro5 = { "titulo": "El Quijote", "autor": "Cervantes", "paginas": 800, "valor": "3 completos", "####": "3L1M!N4R" };
+            libro5 = { "titulo": "El Quijote", "autor": "Cervantes", "paginas": 850, "valor": "3 completos", "####": "3L1M!N4R" };
             document.getElementById('console-output-5').innerHTML = '<div class="text-gray-500 italic"># Consola interactiva de Python</div>';
             document.getElementById('console-input-5').value = "";
             document.getElementById('console-input-5').disabled = true;
@@ -1326,18 +1325,9 @@
                 const target = document.getElementById('step-mod');
                 positionPanel(panel, target);
                 highlightCard(target);
-                updatePanelText5("Modificar", "Si usas una clave que ya existe, su valor se actualizará.");
-                disableNextBtn5(true);
-
-                typeWriter(`libro["paginas"] = 850`, output, () => {
-                    libro5["paginas"] = 850;
-                    updateViz5();
-                    setTimeout(() => {
-                        const row = document.querySelector(`[data-key="${CSS.escape('paginas')}"]`);
-                        if (row) row.classList.add('animate-highlights-mod');
-                    }, 50);
-                    disableNextBtn5(false);
-                });
+                updatePanelText5("Modificar", 'Si usas una clave que ya existe, su valor se actualizará.\nEj: <code class="bg-muted px-1 border border-gray-200 rounded">libro["paginas"] = 900</code>');
+                disableNextBtn5(false);
+                input.disabled = false;
             }
             else if (step === 2) { // Eliminar (del)
                 const target = document.getElementById('step-del');
@@ -1399,11 +1389,15 @@
                             const match = cmd.match(/del libro\[["'](.+)["']\]/);
                             if (match) {
                                 const key = match[1];
-                                const row = document.querySelector(`[data-key="${CSS.escape(key)}"]`);
-                                if (row) {
-                                    row.classList.add('animate-highlights-del');
-                                    setTimeout(() => { delete libro5[key]; updateViz5(); }, 500);
-                                } else { delete libro5[key]; updateViz5(); }
+                                if (libro5.hasOwnProperty(key)) {
+                                    const row = document.querySelector(`[data-key="${CSS.escape(key)}"]`);
+                                    if (row) {
+                                        row.classList.add('animate-highlights-del');
+                                        setTimeout(() => { delete libro5[key]; updateViz5(); }, 500);
+                                    } else { delete libro5[key]; updateViz5(); }
+                                } else {
+                                    output.innerHTML += `<div class="text-red-400 italic mb-2">KeyError: '${key}'</div>`;
+                                }
                             }
                         } else if (cmd.includes('.pop(')) {
                             const match = cmd.match(/libro\.pop\(["'](.+)["']\)/);
@@ -1481,11 +1475,11 @@
         function hideNextBtn5() { document.getElementById('tut-next-btn-5').classList.add('hidden'); }
 
         // --- Slide 6 Logic ---
-        const libro6Data = { "id": 101, "rol": "admin", "active": true };
+        const libro6Data = { "codigo": 101, "nombre": "Programación", "creditos": '5' };
         const vizItems6 = [
-            { k: '"id"', v: '101' },
-            { k: '"rol"', v: '"admin"' },
-            { k: '"active"', v: 'True' }
+            { k: 'código', v: 'PRO 121' },
+            { k: 'nombre', v: 'Programación' },
+            { k: 'creditos', v: '5' }
         ];
         let currentLoop = 'keys';
 
@@ -1508,9 +1502,9 @@
 
             // Content
             const texts = {
-                keys: { title: "Recorrer Claves (.keys)", desc: "Itera solo por las etiquetas. Es lo que ocurre por defecto en un for x in dict.", code: "libro.keys()", var: "k" },
-                values: { title: "Recorrer Valores (.values)", desc: "Itera solo por el contenido, ignorando las etiquetas.", code: "libro.values()", var: "v" },
-                items: { title: "Recorrer Items (.items)", desc: "Entrega tuplas (clave, valor). Es el más completo.", code: "libro.items()", var: "k, v" }
+                keys: { title: "Recorrer Claves (.keys)", desc: "Itera solo por las claves. Es lo que ocurre por defecto en un for x in dict.", code: "Curso.keys()", var: "k" },
+                values: { title: "Recorrer Valores (.values)", desc: "Itera solo por el contenido, ignorando las claves.", code: "Curso.values()", var: "v" },
+                items: { title: "Recorrer Items (.items)", desc: "Entrega tuplas (clave, valor). Es el más completo.", code: "Curso.items()", var: "k, v" }
             };
 
             document.getElementById('loop-title').textContent = texts[mode].title;
@@ -1570,7 +1564,7 @@
                     let text = "";
                     if (currentLoop === 'keys') text = capturedItem.k;
                     else if (currentLoop === 'values') text = capturedItem.v;
-                    else text = `(${capturedItem.k}, ${capturedItem.v})`;
+                    else text = `${capturedItem.k} ${capturedItem.v}`;
 
                     consoleOutput.innerHTML += `<div class="text-white animate-[fadeIn_0.5s] border-l-2 border-action/30 pl-2 mb-1">${text}</div>`;
                     consoleOutput.scrollTop = consoleOutput.scrollHeight;

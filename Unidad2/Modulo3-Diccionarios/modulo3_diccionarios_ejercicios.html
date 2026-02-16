@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Módulo 03: Ejercicios Interactivos (Diccionarios)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        surface: { main: '#ffffff', muted: '#f1f5f9', dark: '#0f6cbf' },
+                        brand: { primary: '#003c58', accent: '#06717e' },
+                        action: { DEFAULT: '#0055ad', hover: '#399be2' },
+                        text: { deep: '#1e293b', muted: '#6da8e9', sky: '#6ea2ee' },
+                        console: { bg: '#ffffff', text: '#1e293b' }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=JetBrains+Mono:wght@400;700&display=swap');
+
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+
+        .font-mono {
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        /* Mac Window Buttons */
+        .mac-btn {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+
+        .mac-red {
+            background: #ff5f56;
+            border: 1px solid #e0443e;
+        }
+
+        .mac-yellow {
+            background: #ffbd2e;
+            border: 1px solid #dea123;
+        }
+
+        .mac-green {
+            background: #27c93f;
+            border: 1px solid #1aab29;
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #f1f5f9;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+
+        .slide-in {
+            animation: slideIn 0.3s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+
+<body class="bg-surface-muted h-screen flex flex-col overflow-hidden text-text-deep">
+
+    <!-- Start Screen -->
+    <section id="start-screen" class="absolute inset-0 z-50 bg-surface-muted flex items-center justify-center p-12">
+        <div class="text-center max-w-4xl animate-[fadeIn_1s_ease-out]">
+            <h2 class="text-brand-accent font-bold tracking-[0.2em] uppercase mb-4 text-sm">Unidad 2 - Módulo 03</h2>
+            <h1 class="text-6xl font-black text-brand-primary mb-6 leading-tight">Ejercicios Prácticos</h1>
+            <p class="text-2xl text-gray-500 font-light mb-12">Domina los diccionarios con <span
+                    class="font-bold text-action">retos reales</span></p>
+            <div class="h-1 w-24 bg-action mx-auto rounded-full mb-8"></div>
+            <p class="text-gray-500 max-w-xl mx-auto mb-12">Pon a prueba tus habilidades resolviendo problemas de
+                inventario, usuarios y configuración en un entorno simulado.</p>
+
+            <button onclick="startApp()"
+                class="bg-brand-primary text-white text-xl font-bold py-4 px-12 rounded-full hover:bg-brand-accent transition-all shadow-xl hover:scale-105 transform flex items-center gap-3 mx-auto">
+                Comenzar Misión 🚀
+            </button>
+        </div>
+    </section>
+
+    <!-- App Container -->
+    <div id="app-container" class="hidden h-screen flex flex-col">
+
+        <!-- Header -->
+        <header
+            class="bg-surface-main border-b border-gray-200 h-16 flex items-center justify-between px-6 shadow-sm z-10">
+            <div class="flex items-center gap-3">
+                <div class="w-8 h-8 bg-brand-primary rounded-lg flex items-center justify-center text-white font-bold">
+                    Py
+                </div>
+                <h1 class="text-lg font-bold text-brand-primary tracking-tight">Módulo 03: <span
+                        class="font-normal text-brand-accent">Ejercicios Prácticos</span></h1>
+            </div>
+            <div class="flex gap-2">
+                <button onclick="loadMission(0)" id="btn-m0"
+                    class="mission-btn px-4 py-1.5 rounded-full text-sm font-semibold transition-all bg-brand-primary text-white shadow-md">1.
+                    Inventario</button>
+                <button onclick="loadMission(1)" id="btn-m1"
+                    class="mission-btn px-4 py-1.5 rounded-full text-sm font-semibold transition-all bg-white text-gray-500 hover:bg-gray-100">2.
+                    Usuarios</button>
+                <button onclick="loadMission(2)" id="btn-m2"
+                    class="mission-btn px-4 py-1.5 rounded-full text-sm font-semibold transition-all bg-white text-gray-500 hover:bg-gray-100">3.
+                    Config</button>
+                <button onclick="loadMission(3)" id="btn-m3"
+                    class="mission-btn px-4 py-1.5 rounded-full text-sm font-semibold transition-all bg-white text-gray-500 hover:bg-gray-100">4.
+                    Anidados</button>
+            </div>
+        </header>
+
+        <!-- Main Workspace -->
+        <main class="flex-1 flex gap-6 p-6 overflow-hidden">
+
+            <!-- Left Panel: Context & Requirements -->
+            <section class="w-1/3 flex flex-col gap-6 slide-in">
+                <!-- Context Card -->
+                <div class="bg-surface-main rounded-2xl shadow-lg border border-gray-200 p-6 flex-1 flex flex-col">
+                    <div class="flex items-center gap-2 mb-4">
+                        <span class="text-2xl">📋</span>
+                        <h2 class="text-xl font-bold text-brand-primary" id="mission-title">Cargando...</h2>
+                    </div>
+                    <p class="text-gray-600 mb-6 leading-relaxed" id="mission-desc">...</p>
+
+                    <h3 class="font-bold text-sm uppercase tracking-wider text-gray-400 mb-4">Requisitos del Sistema
+                    </h3>
+                    <div id="requirements-list" class="space-y-3 flex-1 overflow-y-auto pr-2">
+                        <!-- Dynamic Cards Here -->
+                    </div>
+
+                    <div id="success-message"
+                        class="hidden mt-6 bg-green-50 border border-green-200 rounded-xl p-4 flex items-center gap-3 animate-bounce">
+                        <span class="text-2xl">🎉</span>
+                        <div>
+                            <p class="font-bold text-green-800">¡Misión Completada!</p>
+                            <p class="text-sm text-green-600">Has corregido el diccionario perfectamente.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Right Panel: Work Area -->
+            <section class="w-2/3 flex flex-col gap-6 slide-in" style="animation-delay: 0.1s;">
+
+                <!-- Toolbox & Editor -->
+                <div
+                    class="flex-1 bg-surface-main rounded-2xl shadow-lg border border-gray-200 flex flex-col overflow-hidden">
+                    <!-- Mac Header -->
+                    <div class="h-10 bg-gray-50 border-b border-gray-200 flex items-center px-4 gap-2">
+                        <div class="mac-btn mac-red"></div>
+                        <div class="mac-btn mac-yellow"></div>
+                        <div class="mac-btn mac-green"></div>
+                        <span class="ml-4 text-xs text-gray-400 font-mono">editor_diccionarios.py</span>
+                    </div>
+
+                    <div class="flex flex-1 overflow-hidden">
+                        <!-- Tools Sidebar -->
+                        <div class="w-48 bg-gray-50 border-r border-gray-200 p-4 flex flex-col gap-2">
+                            <div class="text-xs font-bold text-gray-400 uppercase mb-2">Herramientas</div>
+                            <button onclick="setTool('access')"
+                                class="tool-btn text-left px-3 py-2 rounded-lg text-sm font-medium text-gray-600 hover:bg-white hover:text-action hover:shadow-sm transition-all flex items-center gap-2">
+                                <span>🔍</span> Acceder
+                            </button>
+                            <button onclick="setTool('modify')"
+                                class="tool-btn text-left px-3 py-2 rounded-lg text-sm font-medium text-gray-600 hover:bg-white hover:text-action hover:shadow-sm transition-all flex items-center gap-2">
+                                <span>✏️</span> Modificar
+                            </button>
+                            <button onclick="setTool('add')"
+                                class="tool-btn text-left px-3 py-2 rounded-lg text-sm font-medium text-gray-600 hover:bg-white hover:text-action hover:shadow-sm transition-all flex items-center gap-2">
+                                <span>➕</span> Agregar
+                            </button>
+                            <button onclick="setTool('delete')"
+                                class="tool-btn text-left px-3 py-2 rounded-lg text-sm font-medium text-gray-600 hover:bg-red-50 hover:text-red-500 hover:shadow-sm transition-all flex items-center gap-2">
+                                <span>🗑️</span> Eliminar
+                            </button>
+                            <div class="h-px bg-gray-200 my-1"></div>
+                            <button onclick="executeLoop()"
+                                class="tool-btn text-left px-3 py-2 rounded-lg text-sm font-medium text-gray-600 hover:bg-white hover:text-brand-primary hover:shadow-sm transition-all flex items-center gap-2">
+                                <span>🔄</span> Recorrer (for)
+                            </button>
+                            <button onclick="executePrint()"
+                                class="tool-btn text-left px-3 py-2 rounded-lg text-sm font-medium text-gray-600 hover:bg-white hover:text-brand-primary hover:shadow-sm transition-all flex items-center gap-2">
+                                <span>🖨️</span> Print Completo
+                            </button>
+                        </div>
+
+                        <!-- Action Console -->
+                        <div class="flex-1 p-8 flex flex-col justify-center bg-white relative">
+                            <!-- Placeholder State -->
+                            <div id="action-placeholder" class="text-center text-gray-400">
+                                <div class="text-4xl mb-4">🛠️</div>
+                                <p>Selecciona una herramienta para comenzar</p>
+                            </div>
+
+                            <!-- Single Operation Form -->
+                            <div id="action-form" class="hidden max-w-lg mx-auto w-full">
+                                <h3 id="tool-title"
+                                    class="text-lg font-bold text-gray-700 mb-6 flex items-center gap-2">
+                                    <span id="tool-icon"></span> <span id="tool-name">...</span>
+                                </h3>
+
+                                <div class="space-y-4">
+                                    <div id="field-key">
+                                        <label class="block text-xs font-bold text-gray-500 uppercase mb-1">Clave
+                                            (Key)</label>
+                                        <div class="flex items-center">
+                                            <span
+                                                class="bg-gray-100 text-gray-500 px-3 py-2 rounded-l-lg border border-r-0 border-gray-300 font-mono text-sm">dicc[</span>
+                                            <input type="text" id="input-key"
+                                                class="flex-1 border border-gray-300 p-2 outline-none focus:ring-2 focus:ring-action font-mono text-sm"
+                                                placeholder='"clave"'>
+                                            <span
+                                                class="bg-gray-100 text-gray-500 px-3 py-2 rounded-r-lg border border-l-0 border-gray-300 font-mono text-sm">]</span>
+                                        </div>
+                                    </div>
+
+                                    <div id="field-val" class="hidden">
+                                        <label class="block text-xs font-bold text-gray-500 uppercase mb-1">Valor
+                                            (Value)</label>
+                                        <div class="flex items-center">
+                                            <span
+                                                class="bg-gray-100 text-gray-500 px-3 py-2 rounded-l-lg border border-r-0 border-gray-300 font-mono text-sm">=</span>
+                                            <input type="text" id="input-val"
+                                                class="flex-1 border border-gray-300 p-2 rounded-r-lg outline-none focus:ring-2 focus:ring-action font-mono text-sm"
+                                                placeholder='valor'>
+                                        </div>
+                                    </div>
+
+                                    <button onclick="runAction()"
+                                        class="w-full bg-action text-white font-bold py-3 rounded-xl hover:bg-action-hover transition-colors shadow-md mt-4 flex items-center justify-center gap-2">
+                                        <span>▶️</span> Ejecutar
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Output Console -->
+                <div class="h-48 bg-white rounded-2xl shadow-lg border border-gray-200 flex flex-col overflow-hidden">
+                    <div class="bg-gray-50 p-2 border-b border-gray-200 flex justify-between items-center px-4">
+                        <span class="text-xs font-bold text-gray-500 uppercase">Terminal</span>
+                        <button onclick="clearConsole()"
+                            class="text-xs text-gray-400 hover:text-red-500 transition-colors">Limpiar</button>
+                    </div>
+                    <div id="console-output" class="flex-1 p-4 overflow-y-auto font-mono text-sm space-y-1 bg-white">
+                        <div class="text-green-600">Python 3.10.2 Interactive Shell</div>
+                        <div class="text-gray-400">Type "print(dicc)" to see current state.</div>
+                        <div class="h-px bg-gray-100 my-2"></div>
+                    </div>
+                </div>
+
+            </section>
+        </main>
+    </div> <!-- End App Container -->
+
+    <script>
+        function startApp() {
+            document.getElementById('start-screen').classList.add('hidden');
+            document.getElementById('app-container').classList.remove('hidden');
+        }
+
+        // --- State Management ---
+        const missions = [
+            {
+                title: "Corrección de Inventario",
+                desc: "El sistema ha registrado mal el stock. Tu objetivo es corregir el inventario para que coincida exactamente con el reporte físico.\n\nElimina productos que no existen y ajusta las cantidades erróneas.",
+                initial: { "laptop": 15, "mouse": 52, "teclado": 30, "monitor": 12, "tablet": 8 },
+                conditions: [
+                    { type: 'val', key: "laptop", val: 20, msg: "laptop debe ser 20" },
+                    { type: 'val', key: "mouse", val: 45, msg: "mouse debe ser 45" },
+                    { type: 'eq', key: "teclado", val: 30, msg: "teclado está correcto" },
+                    { type: 'val', key: "impresora", val: 5, msg: "impresora debe ser 5" },
+                    { type: 'missing', key: "monitor", msg: "no debe existir monitor" },
+                    { type: 'missing', key: "tablet", msg: "no debe existir tablet" }
+                ]
+            },
+            {
+                title: "Gestión de Roles de Usuario",
+                desc: "Un usuario ha sido baneado y otro promovido. También ha llegado un nuevo empleado. Actualiza la base de datos de roles.",
+                initial: { "u1": "admin", "u2": "guest", "u3": "banned" },
+                conditions: [
+                    { type: 'val', key: "u1", val: "superadmin", msg: "u1 debe ser 'superadmin'" },
+                    { type: 'eq', key: "u2", val: "guest", msg: "u2 sigue siendo 'guest'" },
+                    { type: 'missing', key: "u3", msg: "eliminar usuario baneado (u3)" },
+                    { type: 'val', key: "u4", val: "newuser", msg: "agregar u4 como 'newuser'" }
+                ]
+            },
+            {
+                title: "Configuración del Sistema",
+                desc: "Actualiza los flags de configuración para el lanzamiento de la versión 2.0. Activa el modo oscuro y añade las nuevas opciones.",
+                initial: { "dark_mode": false, "notifications": true, "version": 1.0 },
+                conditions: [
+                    { type: 'val', key: "dark_mode", val: true, msg: "dark_mode debe ser True" },
+                    { type: 'eq', key: "notifications", val: true, msg: "notifications activas" },
+                    { type: 'val', key: "beta_features", val: true, msg: "activar beta_features" },
+                    { type: 'missing', key: "version", msg: "eliminar version obsoleta" }
+                ]
+            },
+            {
+                title: "Diccionario Anidado",
+                desc: "Configura el servidor remoto. Debes acceder al diccionario anidado 'server' para actualizar sus puertos y estado.",
+                initial: { "server": { "ip": "192.168.1.1", "port": 80, "status": "offline" } },
+                conditions: [
+                    { type: 'nested', key: "server", subkey: "port", val: 443, msg: "server['port'] debe ser 443" },
+                    { type: 'nested', key: "server", subkey: "status", val: "active", msg: "server['status'] debe ser 'active'" },
+                    { type: 'nested', key: "server", subkey: "ip", val: "192.168.1.1", msg: "ip sin cambios" }
+                ]
+            }
+        ];
+
+        let currentMissionId = 0;
+        let currentDict = {};
+        let currentTool = null;
+
+        // --- Init ---
+        function loadMission(id) {
+            currentMissionId = id;
+            // Deep copy initials
+            currentDict = JSON.parse(JSON.stringify(missions[id].initial));
+
+            // UI Updates
+            document.getElementById('mission-title').textContent = missions[id].title;
+            document.getElementById('mission-desc').innerText = missions[id].desc; // innerText preserves \n
+
+            // Buttons State
+            document.querySelectorAll('.mission-btn').forEach((btn, idx) => {
+                if (idx === id) {
+                    btn.classList.remove('bg-white', 'text-gray-500', 'hover:bg-gray-100');
+                    btn.classList.add('bg-brand-primary', 'text-white', 'shadow-md');
+                } else {
+                    btn.classList.add('bg-white', 'text-gray-500', 'hover:bg-gray-100');
+                    btn.classList.remove('bg-brand-primary', 'text-white', 'shadow-md');
+                }
+            });
+
+            // Reset Console & Tools
+            document.getElementById('console-output').innerHTML = '<div class="text-green-600">Python 3.10.2 System Ready...</div>';
+            resetEditor();
+            checkConditions(); // Draw initial cards
+        }
+
+        function resetEditor() {
+            currentTool = null;
+            document.getElementById('action-placeholder').classList.remove('hidden');
+            document.getElementById('action-form').classList.add('hidden');
+        }
+
+        // --- Tool Logic ---
+        function setTool(tool) {
+            currentTool = tool;
+            document.getElementById('action-placeholder').classList.add('hidden');
+            document.getElementById('action-form').classList.remove('hidden');
+
+            const title = document.getElementById('tool-title');
+            const icon = document.getElementById('tool-icon');
+            const name = document.getElementById('tool-name');
+            const keyField = document.getElementById('field-key');
+            const valField = document.getElementById('field-val');
+            const btn = document.querySelector('#action-form button');
+
+            // Reset fields
+            document.getElementById('input-key').value = '';
+            document.getElementById('input-val').value = '';
+
+            // Nested Hint
+            if (currentMissionId === 3 && (tool === 'modify' || tool === 'access')) {
+                document.getElementById('input-key').placeholder = '"clave" o padre["hijo"]';
+            } else {
+                document.getElementById('input-key').placeholder = '"clave"';
+            }
+
+            // Highlighting active tool in sidebar
+            document.querySelectorAll('.tool-btn').forEach(b => {
+                b.classList.remove('bg-white', 'text-action', 'shadow-sm', 'border-l-4', 'border-action');
+                // Check if this button corresponds to the selected tool
+                if (b.getAttribute('onclick')?.includes(`'${tool}'`)) {
+                    b.classList.add('bg-white', 'text-action', 'shadow-sm', 'border-l-4', 'border-action');
+                }
+            });
+
+            if (tool === 'access') {
+                icon.textContent = '🔍'; name.textContent = 'Acceder Valor';
+                keyField.classList.remove('hidden'); valField.classList.add('hidden');
+                btn.innerHTML = '<span>▶️</span> Obtener Valor';
+            } else if (tool === 'modify') {
+                icon.textContent = '✏️'; name.textContent = 'Modificar Valor';
+                keyField.classList.remove('hidden'); valField.classList.remove('hidden');
+                btn.innerHTML = '<span>▶️</span> Actualizar';
+            } else if (tool === 'add') {
+                icon.textContent = '➕'; name.textContent = 'Agregar Clave';
+                keyField.classList.remove('hidden'); valField.classList.remove('hidden');
+                btn.innerHTML = '<span>▶️</span> Insertar';
+            } else if (tool === 'delete') {
+                icon.textContent = '🗑️'; name.textContent = 'Eliminar Clave';
+                keyField.classList.remove('hidden'); valField.classList.add('hidden');
+                btn.innerHTML = '<span>▶️</span> Borrar';
+                btn.className = "w-full bg-red-500 text-white font-bold py-3 rounded-xl hover:bg-red-600 transition-colors shadow-md mt-4 flex items-center justify-center gap-2";
+                return; // Exit early to avoid overwriting btn class
+            }
+
+            // Restore default btn class if not delete
+            btn.className = "w-full bg-action text-white font-bold py-3 rounded-xl hover:bg-action-hover transition-colors shadow-md mt-4 flex items-center justify-center gap-2";
+        }
+
+        function parseInput(val) {
+            val = val.trim();
+            if (val === 'true' || val === 'True') return true;
+            if (val === 'false' || val === 'False') return false;
+            // Number check
+            if (!isNaN(val) && val !== '') return Number(val);
+            // String check (remove quotes if present)
+            if ((val.startsWith('"') && val.endsWith('"')) || (val.startsWith("'") && val.endsWith("'"))) {
+                return val.slice(1, -1);
+            }
+            return val; // Treat as string if clean
+        }
+
+        function runAction() {
+            if (!currentTool) return;
+
+            const consoleDiv = document.getElementById('console-output');
+            const keyRaw = document.getElementById('input-key').value.trim();
+            const valRaw = document.getElementById('input-val').value.trim();
+
+            // Clean key (remove quotes if user typed them)
+            let key = keyRaw;
+            if ((key.startsWith('"') && key.endsWith('"')) || (key.startsWith("'") && key.endsWith("'"))) {
+                key = key.slice(1, -1);
+            }
+
+            const val = parseInput(valRaw);
+            let outputMsg = "";
+            let isError = false;
+
+            try {
+                // Handling Nested Logic (Simple Dot/Bracket Parsing could be added here, 
+                // but for now relying on top-level or specific manual nesting support for Mission 4)
+
+                // Mission 4 Special Handling: Simple Key override or detecting "]["
+                // If user types 'server' and mission is nested, it selects the obj.
+                // But Prompt says "Modificar valor dentro de subdiccionario".
+
+                // Simple Parser for Nested Keys: e.g. server["port"]
+                let targetObj = currentDict;
+                let finalKey = key;
+
+                // Extremely basic parser for: parent["child"]
+                // regex look for: word["word"] or word['word']
+                const nestedMatch = keyRaw.match(/([a-zA-Z0-9_]+)\[["']([a-zA-Z0-9_]+)["']\]/);
+
+                if (nestedMatch) {
+                    const parentKey = nestedMatch[1];
+                    const childKey = nestedMatch[2];
+
+                    if (targetObj[parentKey] === undefined) throw new Error(`KeyError: '${parentKey}'`);
+                    if (typeof targetObj[parentKey] !== 'object') throw new Error(`TypeError: '${parentKey}' is not subscriptable`);
+
+                    if (currentTool === 'modify') {
+                        targetObj[parentKey][childKey] = val;
+                        outputMsg = `>>> dicc["${parentKey}"]["${childKey}"] = ${JSON.stringify(val)}`;
+                    } else if (currentTool === 'access') {
+                        const res = targetObj[parentKey][childKey];
+                        outputMsg = `>>> dicc["${parentKey}"]["${childKey}"]\n${JSON.stringify(res)}`;
+                    }
+                    // Add/Delete for nested could go here if needed
+                } else {
+                    // Standard Logic
+                    if (currentTool === 'access') {
+                        outputMsg = `>>> dicc["${key}"]`;
+                        if (currentDict.hasOwnProperty(key)) {
+                            outputMsg += `\n${JSON.stringify(currentDict[key], null, 2)}`;
+                        } else {
+                            throw new Error(`KeyError: '${key}'`);
+                        }
+                    } else if (currentTool === 'modify') {
+                        if (!currentDict.hasOwnProperty(key) && currentMissionId !== 0) {
+                            // Usually modify implies existence, but Python allows creating via assignment. 
+                            // However, tool distinction 'Add' vs 'Modify' suggests we might strictly check existence for pedagogy?
+                            // Python: dicc[k]=v works for both. Let's allow it to act like Python.
+                        }
+                        currentDict[key] = val;
+                        outputMsg = `>>> dicc["${key}"] = ${JSON.stringify(val)}`;
+                    } else if (currentTool === 'add') {
+                        if (currentDict.hasOwnProperty(key)) {
+                            outputMsg = `>>> # Key '${key}' already exists, updating value...`;
+                        } else {
+                            outputMsg = `>>> dicc["${key}"] = ${JSON.stringify(val)}`;
+                        }
+                        currentDict[key] = val;
+                    } else if (currentTool === 'delete') {
+                        outputMsg = `>>> del dicc["${key}"]`;
+                        if (currentDict.hasOwnProperty(key)) {
+                            delete currentDict[key];
+                        } else {
+                            throw new Error(`KeyError: '${key}'`);
+                        }
+                    }
+                }
+
+            } catch (e) {
+                isError = true;
+                outputMsg = `>>> ${currentTool === 'delete' ? 'del ' : ''}dicc["${key}"]${currentTool === 'modify' ? ' = ...' : ''}\n<span class="text-red-500">${e.message}</span>`;
+            }
+
+            consoleDiv.innerHTML += `<div class="mb-1 ${isError ? '' : 'text-text-deep'}">${outputMsg}</div>`;
+            consoleDiv.scrollTop = consoleDiv.scrollHeight;
+
+            checkConditions();
+        }
+
+        function executePrint() {
+            const consoleDiv = document.getElementById('console-output');
+            consoleDiv.innerHTML += `<div class="mb-1 text-text-deep">>>> print(dicc)\n${JSON.stringify(currentDict, null, 2)}</div>`;
+            consoleDiv.scrollTop = consoleDiv.scrollHeight;
+        }
+
+        function executeLoop() {
+            const consoleDiv = document.getElementById('console-output');
+            let output = `>>> for k, v in dicc.items():\n...     print(k, v)\n`;
+            for (const [k, v] of Object.entries(currentDict)) {
+                output += `${k} ${JSON.stringify(v)}\n`; // Python-ish output
+            }
+            consoleDiv.innerHTML += `<div class="mb-1 text-text-deep">${output}</div>`;
+            consoleDiv.scrollTop = consoleDiv.scrollHeight;
+        }
+
+        function clearConsole() {
+            document.getElementById('console-output').innerHTML = '';
+        }
+
+        // --- Validation Logic ---
+        function checkConditions() {
+            const mission = missions[currentMissionId];
+            const list = document.getElementById('requirements-list');
+            list.innerHTML = '';
+
+            let allPassed = true;
+
+            mission.conditions.forEach(req => {
+                let passed = false;
+
+                if (req.type === 'val') {
+                    // Check strict value equality
+                    passed = currentDict[req.key] === req.val;
+                } else if (req.type === 'eq') {
+                    // Same as val, just semantic difference in definitions
+                    passed = currentDict[req.key] === req.val;
+                } else if (req.type === 'missing') {
+                    passed = !currentDict.hasOwnProperty(req.key);
+                } else if (req.type === 'nested') {
+                    // Mission 4: Check nested value
+                    try {
+                        passed = currentDict[req.key][req.subkey] === req.val;
+                    } catch (e) { passed = false; }
+                }
+
+                if (!passed) allPassed = false;
+
+                const card = document.createElement('div');
+                card.className = `p-3 rounded-lg border flex items-center gap-3 transition-all ${passed ? 'bg-green-50 border-green-200' : 'bg-red-50 border-red-200'}`;
+                card.innerHTML = `
+                    <div class="w-2 h-2 rounded-full ${passed ? 'bg-green-500' : 'bg-red-500'}"></div>
+                    <span class="text-sm font-medium ${passed ? 'text-green-700' : 'text-red-700'}">${req.msg}</span>
+                `;
+                list.appendChild(card);
+            });
+
+            if (allPassed) {
+                document.getElementById('success-message').classList.remove('hidden');
+            } else {
+                document.getElementById('success-message').classList.add('hidden');
+            }
+        }
+
+        // Start
+        loadMission(0);
+
+    </script>
+</body>
+
+</html>
