@@ -145,7 +145,7 @@
                     Inventario</button>
                 <button onclick="loadMission(1)" id="btn-m1"
                     class="mission-btn px-4 py-1.5 rounded-full text-sm font-semibold transition-all bg-white text-gray-500 hover:bg-gray-100">2.
-                    Usuarios</button>
+                    Pedidos</button>
                 <button onclick="loadMission(2)" id="btn-m2"
                     class="mission-btn px-4 py-1.5 rounded-full text-sm font-semibold transition-all bg-white text-gray-500 hover:bg-gray-100">3.
                     Config</button>
@@ -253,7 +253,7 @@
                         </div>
 
                         <!-- Action Console -->
-                        <div class="flex-1 p-8 flex flex-col justify-center bg-white relative">
+                        <div class="flex-1 p-4 flex flex-col justify-center bg-white relative">
                             <!-- Placeholder State -->
                             <div id="action-placeholder" class="text-center text-gray-400">
                                 <div class="text-4xl mb-4">🛠️</div>
@@ -267,7 +267,7 @@
                                     <span id="tool-icon"></span> <span id="tool-name">...</span>
                                 </h3>
 
-                                <div class="bg-gray-50/50 p-6 rounded-2xl border border-gray-100">
+                                <div class="bg-gray-50/50 p-4 rounded-2xl border border-gray-100">
                                     <div class="flex flex-col items-center gap-6">
                                         <!-- Inline Form -->
                                         <div class="flex items-center gap-2 font-mono text-sm w-full justify-center">
@@ -300,7 +300,7 @@
 
                 <!-- Output Console (Terminal) -->
                 <div
-                    class="h-56 bg-white rounded-2xl shadow-lg border border-gray-200 flex flex-col overflow-hidden shrink-0">
+                    class="h-[280px] bg-white rounded-2xl shadow-lg border border-gray-200 flex flex-col overflow-hidden shrink-0">
                     <div class="bg-gray-50 p-2 border-b border-gray-200 flex justify-between items-center px-4">
                         <div class="flex items-center gap-2">
                             <div class="mac-btn mac-red"></div>
@@ -351,25 +351,29 @@
                 ]
             },
             {
-                title: "Gestión de Roles de Usuario",
-                desc: "Un usuario ha sido baneado y otro promovido. También ha llegado un nuevo empleado. Actualiza la base de datos de roles.",
-                initial: { "u1": "admin", "u2": "guest", "u3": "banned" },
+                title: "Sincronización Logística",
+                desc: "El sistema logístico tuvo un error al sincronizar pedidos.\nAlgunos pedidos están en estados incorrectos, uno fue cancelado pero sigue activo, y falta registrar un pedido nuevo.\nTu misión es dejar el sistema exactamente como lo exige el departamento de operaciones.",
+                initial: { "P1001": "en_preparacion", "P1002": "enviado", "P1003": "cancelado", "P1004": "enviado", "P_temp": "en_preparacion" },
                 conditions: [
-                    { type: 'val', key: "u1", val: "superadmin", msg: "u1 debe ser 'superadmin'" },
-                    { type: 'eq', key: "u2", val: "guest", msg: "u2 sigue siendo 'guest'" },
-                    { type: 'missing', key: "u3", msg: "eliminar usuario baneado (u3)" },
-                    { type: 'val', key: "u4", val: "newuser", msg: "agregar u4 como 'newuser'" }
+                    { type: 'val', key: "P1001", val: "enviado", msg: "P1001 debe ser 'enviado'" },
+                    { type: 'eq', key: "P1002", val: "enviado", msg: "P1002 debe ser 'enviado'" },
+                    { type: 'val', key: "P1004", val: "entregado", msg: "P1004 debe ser 'entregado'" },
+                    { type: 'val', key: "P1005", val: "enviado", msg: "P1005 debe ser 'enviado'" },
+                    { type: 'missing', key: "P1003", msg: "eliminar P1003 (cancelado)" },
+                    { type: 'missing', key: "P_temp", msg: "eliminar P_temp (temporal)" }
                 ]
             },
             {
-                title: "Configuración del Sistema",
-                desc: "Actualiza los flags de configuración para el lanzamiento de la versión 2.0. Activa el modo oscuro y añade las nuevas opciones.",
-                initial: { "dark_mode": false, "notifications": true, "version": 1.0 },
+                title: "Configuración del Servidor",
+                desc: "El servidor principal fue configurado manualmente y presenta inconsistencias.\nAlgunos parámetros están mal definidos, otros sobran y falta una configuración obligatoria.\nTu tarea es dejar el diccionario exactamente como lo exige el entorno de producción.",
+                initial: { "host": "localhost", "port": 3000, "debug": true, "timeout": 120, "test_mode": true },
                 conditions: [
-                    { type: 'val', key: "dark_mode", val: true, msg: "dark_mode debe ser True" },
-                    { type: 'eq', key: "notifications", val: true, msg: "notifications activas" },
-                    { type: 'val', key: "beta_features", val: true, msg: "activar beta_features" },
-                    { type: 'missing', key: "version", msg: "eliminar version obsoleta" }
+                    { type: 'val', key: "host", val: "0.0.0.0", msg: "host debe ser '0.0.0.0'" },
+                    { type: 'val', key: "port", val: 8080, msg: "port debe ser 8080" },
+                    { type: 'val', key: "debug", val: false, msg: "debug debe ser False" },
+                    { type: 'val', key: "timeout", val: 60, msg: "timeout debe ser 60" },
+                    { type: 'val', key: "ssl", val: true, msg: "ssl debe ser True" },
+                    { type: 'missing', key: "test_mode", msg: "no debe existir test_mode" }
                 ]
             },
             {
@@ -587,7 +591,7 @@
         function executePrint() {
             const consoleDiv = document.getElementById('console-output');
             const historyDiv = document.getElementById('terminal-history');
-            historyDiv.innerHTML += `<div class="text-text-deep whitespace-pre-wrap">>>> print(dicc)\n\n${JSON.stringify(currentDict, null, 2)}</div>`;
+            historyDiv.innerHTML += `<div class="text-text-deep whitespace-pre-wrap">>>> print(dicc)\n${JSON.stringify(currentDict, null, 2)}</div>`;
             consoleDiv.scrollTop = consoleDiv.scrollHeight;
         }
 
