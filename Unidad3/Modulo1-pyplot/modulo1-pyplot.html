@@ -351,14 +351,19 @@
                     <div class="md:w-2/5 space-y-4 flex flex-col">
                         <h2 class="text-2xl font-bold text-brand-primary">Personalización con .plot()</h2>
                         
-                        <div class="space-y-3 text-sm text-text-deep leading-relaxed">
-                            <p>La función <code class="bg-gray-100 px-1 rounded">plt.plot()</code> permite ajustar cada detalle visual del trazado:</p>
-                            <ul class="space-y-1 text-xs">
-                                <li><strong class="text-brand-accent">x, y:</strong> Parámetros <strong>obligatorios</strong>.</li>
-                                <li><strong class="text-brand-accent">marker:</strong> Símbolo del punto (ej. <code class="font-mono">'o'</code>, <code class="font-mono">'s'</code>).</li>
-                                <li><strong class="text-brand-accent">linestyle:</strong> Estilo de línea (ej. <code class="font-mono">'-'</code>, <code class="font-mono">'--'</code>).</li>
-                                <li><strong class="text-brand-accent">color:</strong> Color de la serie.</li>
-                                <li><strong class="text-brand-accent">lw / ms:</strong> Grosor de línea y tamaño de puntos.</li>
+                        <div class="space-y-4 text-sm text-text-deep leading-relaxed">
+                            <p>
+                                <strong class="text-brand-primary">Definición:</strong> Un <strong>gráfico de línea</strong> es una representación visual que conecta una serie de puntos de datos con una línea continua sobre un plano cartesiano de dos ejes.
+                            </p>
+                            <p>
+                                La función <code class="bg-gray-100 px-1 rounded font-bold">plt.plot(x, y, ...)</code> es la encargada de dibujar estos puntos y líneas. Aunque permite una gran personalización, recuerde que <strong>solo las listas X e Y son obligatorias</strong>.
+                            </p>
+                            <ul class="space-y-1 text-xs bg-blue-50 p-3 rounded-lg border border-blue-100">
+                                <li class="font-bold text-brand-primary mb-1">Parámetros Opcionales Comunes:</li>
+                                <li><strong>marker:</strong> Forma del punto <span class="text-text-muted">(ej. 'o', 's')</span>.</li>
+                                <li><strong>linestyle:</strong> Tipo de línea <span class="text-text-muted">(ej. '-', '--')</span>.</li>
+                                <li><strong>color:</strong> Color del trazo.</li>
+                                <li><strong>linewidth / markersize:</strong> Tamaño de línea y puntos.</li>
                             </ul>
                         </div>
 
