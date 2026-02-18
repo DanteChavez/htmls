@@ -61,6 +61,54 @@
             background: #e2e8f0;
             border-radius: 2px;
         }
+
+        @keyframes bounce-soft {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        @keyframes bounce-lateral {
+
+            0%,
+            100% {
+                transform: translateX(0);
+            }
+
+            50% {
+                transform: translateX(-10px);
+            }
+        }
+
+        @keyframes bounce-right {
+
+            0%,
+            100% {
+                transform: translateX(0);
+            }
+
+            50% {
+                transform: translateX(10px);
+            }
+        }
+
+        .animate-bounce-soft {
+            animation: bounce-soft 1s infinite ease-in-out;
+        }
+
+        .animate-bounce-lateral {
+            animation: bounce-lateral 1s infinite ease-in-out;
+        }
+
+        .animate-bounce-right {
+            animation: bounce-right 1s infinite ease-in-out;
+        }
     </style>
 </head>
 
@@ -501,13 +549,18 @@
 
                         <h2 class="text-2xl font-bold text-brand-primary shrink-0">Personalización con .plot()</h2>
                         
-                        <div class="space-y-4 text-sm text-text-deep leading-relaxed shrink-0">
+                        <div class="space-y-3 text-[13px] text-text-deep leading-relaxed shrink-0">
                             <p>
-                                <strong class="text-brand-primary">Definición:</strong> Un <strong>gráfico de línea</strong> conecta puntos de datos con una línea continua sobre un plano cartesiano.
+                                <strong class="text-brand-primary">Definición:</strong> Un gráfico de línea conecta puntos de datos con una línea continua sobre un plano cartesiano. Usamos <code class="bg-gray-100 px-1 rounded font-bold text-xs">plt.plot(x, y, ...)</code>.
                             </p>
-                            <p>
-                                Usamos <code class="bg-gray-100 px-1 rounded font-bold">plt.plot(x, y, ...)</code>. Solo las listas <strong>X e Y son obligatorias</strong>; el resto permite estilizar el gráfico.
-                            </p>
+                            <p>Solo las listas <strong>x</strong> e <strong>y</strong> son obligatorias; los demás parámetros permiten estilizar el gráfico:</p>
+                            <ul class="list-none space-y-1 ml-1 text-[12px]">
+                                <li><span class="text-brand-accent font-bold">• color:</span> define el color de la línea y los marcadores.</li>
+                                <li><span class="text-brand-accent font-bold">• marker:</span> coloca un símbolo (como un círculo 'o') en cada punto.</li>
+                                <li><span class="text-brand-accent font-bold">• linestyle:</span> define el estilo de la línea (sólida, punteada, etc).</li>
+                                <li><span class="text-brand-accent font-bold">• linewidth:</span> controla el grosor de la línea.</li>
+                                <li><span class="text-brand-accent font-bold">• markersize:</span> ajusta el tamaño del marcador.</li>
+                            </ul>
                         </div>
 
                         <div class="bg-surface-muted p-4 rounded-lg border border-border-light space-y-3 shrink-0">
@@ -656,6 +709,17 @@
                     
                     <!-- Right Column: Visualization -->
                     <div class="md:w-3/5 bg-surface-muted rounded-xl p-4 flex flex-col justify-center min-h-[300px] h-[350px] md:h-auto relative">
+                        <!-- Visual Indicators -->
+                        <div id="ind-ti" class="hidden absolute -top-2 left-1/2 -translate-x-1/2 z-10 text-brand-accent animate-bounce-soft">
+                            <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 10.293a1 1 0 010 1.414l-6 6a1 1 0 01-1.414 0l-6-6a1 1 0 111.414-1.414L9 14.586V3a1 1 0 012 0v11.586l4.293-4.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
+                        </div>
+                        <div id="ind-x" class="hidden absolute bottom-10 left-1/2 -translate-x-1/2 z-10 text-brand-accent animate-bounce-soft">
+                            <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 10.293a1 1 0 010 1.414l-6 6a1 1 0 01-1.414 0l-6-6a1 1 0 111.414-1.414L9 14.586V3a1 1 0 012 0v11.586l4.293-4.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
+                        </div>
+                        <div id="ind-y" class="hidden absolute left-14 top-1/2 -translate-y-1/2 z-10 text-brand-accent animate-bounce-lateral">
+                            <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 20 20"><path d="M9.707 16.707a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l4.293 4.293a1 1 0 010 1.414z"></path></svg>
+                        </div>
+
                         <div class="w-full h-full relative">
                             <canvas id="chart-labels"></canvas>
                         </div>
@@ -705,9 +769,25 @@
                             });
                         }
                     };
+
+                    const setupIndicators = () => {
+                        const pairs = [
+                            { id: 'l-ti', ind: 'ind-ti' },
+                            { id: 'l-x', ind: 'ind-x' },
+                            { id: 'l-y', ind: 'ind-y' }
+                        ];
+                        pairs.forEach(p => {
+                            const input = document.getElementById(p.id);
+                            const indicator = document.getElementById(p.ind);
+                            input.addEventListener('focus', () => indicator.classList.remove('hidden'));
+                            input.addEventListener('blur', () => indicator.classList.add('hidden'));
+                        });
+                    };
+
                     ['l-ti', 'l-x', 'l-y'].forEach(id => {
                         document.getElementById(id).addEventListener('input', update);
                     });
+                    setupIndicators();
                     update();
                 }
             },
@@ -730,7 +810,7 @@
                                     gastos = [150, 200, 220, 300, 280, 350]<br><br>
                                     plt.<span class="text-blue-600 font-bold">plot</span>(meses, ventas, color='green', marker='o', label='<span id="c-lg1" class="text-green-600 font-bold">Ventas</span>')<br>
                                     plt.<span class="text-blue-600 font-bold">plot</span>(meses, gastos, color='red', marker='o', label='<span id="c-lg2" class="text-red-600 font-bold">Gastos</span>')<br><br>
-                                    plt.<span class="text-blue-600 font-bold">title</span>('Ventas vs Gastos')<br>
+                                    plt.<span class="text-blue-600 font-bold">title</span>('Análisis Mensual: Ventas vs Gastos')<br>
                                     plt.<span class="text-blue-600 font-bold">legend</span>(show=<span id="c-show-l" class="text-purple-600 font-bold">True</span>)<br>
                                     plt.<span class="text-blue-600 font-bold">grid</span>(<span id="c-gd" class="text-purple-600 font-bold">True</span>, linestyle='--', alpha=0.5)<br>
                                     plt.<span class="text-blue-600 font-bold">show</span>()
@@ -841,7 +921,7 @@
                                     responsive: true,
                                     maintainAspectRatio: false,
                                     plugins: {
-                                        legend: { display: l, position: 'top' },
+                                        legend: { display: l, position: 'top', onClick: null },
                                         title: { display: true, text: 'Análisis Mensual: Ventas vs Gastos', font: { size: 14 } }
                                     },
                                     scales: {
@@ -936,31 +1016,41 @@
                         <!-- Code Overlay -->
                         <div id="code-overlay-bar" class="hidden absolute inset-0 bg-white z-20 flex flex-col p-4">
                             <div class="flex justify-between items-center mb-4 shrink-0">
-                                <h3 class="font-bold text-brand-primary">Código: Gráfico de Barras</h3>
+                                <h3 class="font-bold text-brand-primary">Código: Gráfico de Barras Avanzado</h3>
                                 <button id="hide-code-bar" class="text-xs px-3 py-1 bg-slate-100 hover:bg-slate-200 rounded-md font-semibold text-slate-600 transition-colors">Volver &larr;</button>
                             </div>
                             <div class="rounded-lg overflow-x-auto border shadow-inner bg-slate-50 font-mono text-[11px] p-4 flex-grow custom-scroll">
                                 <div class="leading-relaxed text-slate-700 whitespace-nowrap">
                                     <span class="text-pink-600 font-bold">import</span> matplotlib.pyplot <span class="text-pink-600 font-bold">as</span> plt<br><br>
-                                    categorias = ['A', 'B', 'C']<br>
-                                    valores = [10, 25, 15]<br><br>
-                                    <span class="text-slate-400"># Usamos .bar() en lugar de .plot()</span><br>
-                                    plt.<span class="text-blue-600 font-bold">bar</span>(categorias, valores, color='<span class="text-green-600 font-bold">#0055ad</span>')<br><br>
-                                    plt.<span class="text-blue-600 font-bold">title</span>('Comparativa de Categorías')<br>
+                                    frutas = [<span id="c-b-c" class="text-green-600 font-bold">'Manzanas', 'Bananas', 'Cerezas'</span>]<br>
+                                    cantidad = [<span id="c-b-v" class="text-green-600 font-bold">15, 30, 22</span>]<br><br>
+                                    colores = [<span id="c-b-colors" class="text-green-600 font-bold">'#FF6B6B', '#FFD93D', '#C0392B'</span>]<br><br>
+                                    plt.<span class="text-blue-600 font-bold">bar</span>(frutas, cantidad, <br>
+                                    &nbsp;&nbsp;color=colores, <br>
+                                    &nbsp;&nbsp;edgecolor='<span class="text-pink-600 font-bold">black</span>', <br>
+                                    &nbsp;&nbsp;linewidth=<span class="text-purple-600 font-bold">1.5</span>, <br>
+                                    &nbsp;&nbsp;width=<span class="text-purple-600 font-bold">0.6</span>)<br><br>
+                                    plt.<span class="text-blue-600 font-bold">title</span>('Cantidad de Frutas')<br>
+                                    plt.<span class="text-blue-600 font-bold">xlabel</span>('Frutas')<br>
+                                    plt.<span class="text-blue-600 font-bold">ylabel</span>('Cantidad')<br>
                                     plt.<span class="text-blue-600 font-bold">show</span>()
                                 </div>
                             </div>
                         </div>
 
-                        <h2 class="text-2xl font-bold text-brand-primary shrink-0">Gráficos de Barras (.bar)</h2>
+                        <h2 class="text-2xl font-bold text-brand-primary shrink-0">Personalización con .bar()</h2>
                         
-                        <div class="space-y-4 text-sm text-text-deep leading-relaxed shrink-0">
+                        <div class="space-y-4 text-[13px] text-text-deep leading-relaxed shrink-0">
                             <p>
-                                <strong class="text-brand-primary">¿Qué cambia?</strong> A diferencia de <code class="bg-gray-100 px-1 rounded">plt.plot()</code>, que es ideal para datos continuos (como el tiempo), <code class="bg-gray-100 px-1 rounded">plt.bar()</code> se utiliza para comparar cantidades entre <strong>categorías discretas</strong>.
+                                <strong class="text-brand-primary">Definición:</strong> Un gráfico de barras representa datos categóricos mediante rectángulos verticales sobre un plano cartesiano. Usamos <code class="bg-gray-100 px-1 rounded font-bold text-xs">plt.bar(x, height, ...)</code>.
                             </p>
-                            <p>
-                                El eje X suele contener etiquetas textuales, y la altura de cada barra representa la magnitud del valor asociado. Es la herramienta estándar para comparativas directas.
-                            </p>
+                            <p>Solo las listas <strong>x</strong> e <strong>height</strong> son obligatorias; los demás parámetros permiten estilizar el gráfico:</p>
+                            <ul class="list-none space-y-1 ml-1 text-xs">
+                                <li><span class="text-brand-accent font-bold">• color:</span> define el color de relleno. Acepta un solo color o una lista para cada barra.</li>
+                                <li><span class="text-brand-accent font-bold">• edgecolor:</span> define el color del borde exterior de cada barra.</li>
+                                <li><span class="text-brand-accent font-bold">• linewidth:</span> controla el grosor del borde de cada barra.</li>
+                                <li><span class="text-brand-accent font-bold">• width:</span> ajusta el ancho de las barras (0 a 1).</li>
+                            </ul>
                         </div>
 
                         <div class="bg-surface-muted p-4 rounded-lg border border-border-light space-y-3 shrink-0">
@@ -971,6 +1061,10 @@
                             <div>
                                 <label class="text-[10px] font-bold text-slate-500 uppercase tracking-wider">Valores (separados por coma)</label>
                                 <input type="text" id="b-v" value="15, 30, 22" class="w-full border rounded text-xs p-2 focus:ring-2 focus:ring-brand-primary/20 outline-none">
+                            </div>
+                            <div>
+                                <label class="text-[10px] font-bold text-slate-500 uppercase tracking-wider">Colores Normales o Hex (separados por coma)</label>
+                                <input type="text" id="b-colors" value="#FF6B6B, #FFD93D, #C0392B" class="w-full border rounded text-xs p-2 focus:ring-2 focus:ring-brand-primary/20 outline-none">
                             </div>
                         </div>
 
@@ -995,10 +1089,17 @@
                     const update = () => {
                         const labels = document.getElementById('b-c').value.split(',').map(s => s.trim());
                         const values = document.getElementById('b-v').value.split(',').map(Number);
+                        const colors = document.getElementById('b-colors').value.split(',').map(s => s.trim());
+
+                        // Update Code Overlay
+                        document.getElementById('c-b-c').textContent = labels.map(l => `'${l}'`).join(', ');
+                        document.getElementById('c-b-v').textContent = values.join(', ');
+                        document.getElementById('c-b-colors').textContent = colors.map(c => `'${c}'`).join(', ');
 
                         if (chartInstance) {
                             chartInstance.data.labels = labels;
                             chartInstance.data.datasets[0].data = values;
+                            chartInstance.data.datasets[0].backgroundColor = colors;
                             chartInstance.update();
                         } else {
                             initChart('chart-bar', {
@@ -1007,23 +1108,37 @@
                                     labels: labels,
                                     datasets: [{
                                         data: values,
-                                        backgroundColor: '#0055ad',
-                                        borderRadius: 6
+                                        backgroundColor: colors,
+                                        borderColor: 'black',
+                                        borderWidth: 1.5,
+                                        borderRadius: 0, // Matplotlib typical look
+                                        barPercentage: 0.6,
+                                        categoryPercentage: 1.0
                                     }]
                                 },
                                 options: {
                                     responsive: true,
                                     maintainAspectRatio: false,
-                                    plugins: { legend: { display: false } },
+                                    plugins: {
+                                        legend: { display: false },
+                                        title: { display: true, text: 'Cantidad de Frutas' }
+                                    },
                                     scales: {
-                                        y: { beginAtZero: true, grid: { color: '#e2e8f0' } },
-                                        x: { grid: { display: false } }
+                                        y: {
+                                            beginAtZero: true,
+                                            grid: { color: '#e2e8f0' },
+                                            title: { display: true, text: 'Cantidad' }
+                                        },
+                                        x: {
+                                            grid: { display: false },
+                                            title: { display: true, text: 'Frutas' }
+                                        }
                                     }
                                 }
                             });
                         }
                     };
-                    ['b-c', 'b-v'].forEach(id => document.getElementById(id).addEventListener('input', update));
+                    ['b-c', 'b-v', 'b-colors'].forEach(id => document.getElementById(id).addEventListener('input', update));
                     update();
                 }
             },
@@ -1041,11 +1156,11 @@
                             <div class="rounded-lg overflow-x-auto border shadow-inner bg-slate-50 font-mono text-[11px] p-4 flex-grow custom-scroll">
                                 <div class="leading-relaxed text-slate-700 whitespace-nowrap">
                                     <span class="text-pink-600 font-bold">import</span> matplotlib.pyplot <span class="text-pink-600 font-bold">as</span> plt<br><br>
-                                    categorias = ['A', 'B', 'C', 'D']<br>
-                                    valores = [15, 30, 45, 10]<br><br>
+                                    proyectos = [<span id="c-bh-c" class="text-green-600 font-bold">'Proyecto A', 'Proyecto B', 'Proyecto C', 'Proyecto D'</span>]<br>
+                                    avance = [<span id="c-bh-v" class="text-green-600 font-bold">45, 72, 38, 55</span>]<br><br>
                                     <span class="text-slate-400"># Usamos .barh() para orientación horizontal</span><br>
-                                    plt.<span class="text-blue-600 font-bold">barh</span>(categorias, valores, color='<span class="text-brand-accent font-bold">#06717e</span>')<br><br>
-                                    plt.<span class="text-blue-600 font-bold">title</span>('Inversión de Ejes')<br>
+                                    plt.<span class="text-blue-600 font-bold">barh</span>(proyectos, avance, color='<span class="text-brand-accent font-bold">#06717e</span>')<br><br>
+                                    plt.<span class="text-blue-600 font-bold">title</span>('Avance Proyectos')<br>
                                     plt.<span class="text-blue-600 font-bold">show</span>()
                                 </div>
                             </div>
@@ -1058,7 +1173,7 @@
                                 <strong class="text-brand-primary">Legibilidad de Categorías:</strong> El método <code class="bg-gray-100 px-1 rounded font-bold">plt.barh()</code> funciona igual que <code class="bg-gray-100 px-1 rounded">bar()</code>, pero intercambia los ejes.
                             </p>
                             <p>
-                                Es especialmente útil cuando los nombres de las categorías son <strong>muy largos</strong>. Al invertir los ejes, las etiquetas se muestran verticalmente, mejorando la legibilidad y evitando solapamientos.
+                                Es especialmente útil cuando los nombres de las categorías son <strong>muy largos</strong>. Al invertir los ejes, las etiquetas se muestran verticalmente, mejorando la legibilidad.
                             </p>
                         </div>
 
@@ -1094,6 +1209,10 @@
                     const update = () => {
                         const labels = document.getElementById('bh-c').value.split(',').map(s => s.trim());
                         const values = document.getElementById('bh-v').value.split(',').map(Number);
+
+                        // Update Code Overlay
+                        document.getElementById('c-bh-c').textContent = labels.map(l => `'${l}'`).join(', ');
+                        document.getElementById('c-bh-v').textContent = values.join(', ');
 
                         if (chartInstance) {
                             chartInstance.data.labels = labels;
@@ -1213,47 +1332,71 @@
                         <!-- Code Overlay -->
                         <div id="code-overlay-scatter" class="hidden absolute inset-0 bg-white z-20 flex flex-col p-4">
                             <div class="flex justify-between items-center mb-4 shrink-0">
-                                <h3 class="font-bold text-brand-primary">Código: Gráfico de Dispersión</h3>
+                                <h3 class="font-bold text-brand-primary">Código: Dispersión Avanzada</h3>
                                 <button id="hide-code-scatter" class="text-xs px-3 py-1 bg-slate-100 hover:bg-slate-200 rounded-md font-semibold text-slate-600 transition-colors">Volver &larr;</button>
                             </div>
                             <div class="rounded-lg overflow-x-auto border shadow-inner bg-slate-50 font-mono text-[11px] p-4 flex-grow custom-scroll">
                                 <div class="leading-relaxed text-slate-700 whitespace-nowrap">
                                     <span class="text-pink-600 font-bold">import</span> matplotlib.pyplot <span class="text-pink-600 font-bold">as</span> plt<br><br>
-                                    x = [1, 2, 3, 4, 5]<br>
-                                    y = [5, 4, 6, 2, 7]<br>
-                                    tamanos = [<span id="c-s-val" class="text-purple-600 font-bold">50</span>] * 5<br><br>
-                                    plt.<span class="text-blue-600 font-bold">scatter</span>(x, y, s=tamanos, color='<span class="text-orange-600 font-bold">#ff5722</span>')<br><br>
-                                    plt.<span class="text-blue-600 font-bold">title</span>('Análisis de Correlación')<br>
+                                    x = [<span id="c-s-x" class="text-green-600 font-bold">1, 2, 3, 4, 5</span>]<br>
+                                    y = [<span id="c-s-y" class="text-green-600 font-bold">10, 25, 15, 30, 20</span>]<br>
+                                    tamaños = [<span id="c-s-s" class="text-green-600 font-bold">50, 200, 100, 400, 150</span>]<br>
+                                    colores = [<span id="c-s-c" class="text-green-600 font-bold">'#FF6B6B', '#FFD93D', '#6BCB77', '#4D96FF', '#C77DFF'</span>]<br><br>
+                                    plt.<span class="text-blue-600 font-bold">scatter</span>(x, y, <br>
+                                    &nbsp;&nbsp;s=tamaños, <br>
+                                    &nbsp;&nbsp;c=colores, <br>
+                                    &nbsp;&nbsp;alpha=<span id="c-s-a" class="text-purple-600 font-bold">0.8</span>, <br>
+                                    &nbsp;&nbsp;edgecolors='<span id="c-s-ec" class="text-pink-600 font-bold">black</span>')<br><br>
+                                    plt.<span class="text-blue-600 font-bold">title</span>('Gráfico de Dispersión')<br>
+                                    plt.<span class="text-blue-600 font-bold">xlabel</span>('X')<br>
+                                    plt.<span class="text-blue-600 font-bold">ylabel</span>('Y')<br>
                                     plt.<span class="text-blue-600 font-bold">show</span>()
                                 </div>
                             </div>
                         </div>
 
-                        <h2 class="text-2xl font-bold text-brand-primary shrink-0">Gráficos de Dispersión (.scatter)</h2>
+                        <h2 class="text-2xl font-bold text-brand-primary shrink-0">Personalización de .scatter()</h2>
                         
-                        <div class="space-y-4 text-sm text-text-deep leading-relaxed shrink-0">
+                        <div class="space-y-4 text-[13px] text-text-deep leading-relaxed shrink-0">
                             <p>
-                                <strong class="text-brand-primary">Análisis de Distribución:</strong> El gráfico de dispersión (scatter plot) se utiliza para observar la relación entre dos variables numéricas. A diferencia de las líneas, aquí cada punto es independiente.
+                                <code class="bg-gray-100 px-1 rounded font-bold text-xs">.scatter()</code> está diseñado para mostrar puntos individuales, por eso tiene parámetros que <code class="bg-gray-100 px-1 rounded text-xs">.plot()</code> no tiene:
                             </p>
-                            <p>
-                                Es ideal para identificar <strong>correlaciones</strong>, tendencias o agrupaciones (clusters) en conjuntos de datos complejos. El parámetro <code class="bg-gray-100 px-1 rounded">s</code> permite variar el tamaño de los puntos según una tercera dimensión.
-                            </p>
+                            <ul class="list-none space-y-1 ml-1 text-xs">
+                                <li><span class="text-brand-accent font-bold">• s:</span> tamaño de cada punto. Acepta un valor o una lista.</li>
+                                <li><span class="text-brand-accent font-bold">• c:</span> color de cada punto. Acepta una lista de colores.</li>
+                                <li><span class="text-brand-accent font-bold">• alpha:</span> transparencia (0 a 1). Útil si hay superposición.</li>
+                                <li><span class="text-brand-accent font-bold">• cmap:</span> mapa de colores para valores numéricos en <code class="bg-gray-100 px-0.5 rounded text-[10px]">c</code>.</li>
+                                <li><span class="text-brand-accent font-bold">• edgecolors:</span> color del borde de cada punto.</li>
+                            </ul>
                         </div>
 
-                        <div class="bg-surface-muted p-4 rounded-lg border border-border-light space-y-4 shrink-0">
-                            <div class="space-y-1">
-                                <label class="text-[10px] font-bold text-slate-500 uppercase tracking-wider">Tamaño de los puntos (parámetro s)</label>
-                                <input type="range" id="s-s" min="10" max="1000" value="200" class="w-full">
-                                <div class="text-[10px] text-right text-slate-400 font-mono">valor: <span id="v-s-val">200</span></div>
-                            </div>
-                            <div class="grid grid-cols-1 gap-3">
-                                <div class="space-y-1">
-                                    <label class="text-[10px] font-bold text-slate-500 uppercase tracking-wider">Puntos X (Eje Horizontal)</label>
-                                    <input type="text" id="s-x" value="1, 2.5, 3, 4.2, 5.5, 6.1" class="w-full border rounded text-xs p-2 focus:ring-2 focus:ring-brand-primary/20 outline-none">
+                        <div class="bg-surface-muted p-4 rounded-lg border border-border-light space-y-3 shrink-0">
+                            <div class="grid grid-cols-2 gap-2">
+                                <div>
+                                    <label class="text-[9px] font-bold text-slate-500 uppercase">Puntos X</label>
+                                    <input type="text" id="s-x" value="1, 2, 3, 4, 5" class="w-full border rounded text-[11px] p-1.5 outline-none">
                                 </div>
-                                <div class="space-y-1">
-                                    <label class="text-[10px] font-bold text-slate-500 uppercase tracking-wider">Puntos Y (Eje Vertical)</label>
-                                    <input type="text" id="s-y" value="2, 4.5, 3.8, 6.1, 5.2, 7.8" class="w-full border rounded text-xs p-2 focus:ring-2 focus:ring-brand-primary/20 outline-none">
+                                <div>
+                                    <label class="text-[9px] font-bold text-slate-500 uppercase">Puntos Y</label>
+                                    <input type="text" id="s-y" value="10, 25, 15, 30, 20" class="w-full border rounded text-[11px] p-1.5 outline-none">
+                                </div>
+                            </div>
+                            <div>
+                                <label class="text-[9px] font-bold text-slate-500 uppercase tracking-wider">Tamaños (parámetro s)</label>
+                                <input type="text" id="s-s" value="50, 200, 100, 400, 150" class="w-full border rounded text-[11px] p-1.5 outline-none">
+                            </div>
+                            <div>
+                                <label class="text-[9px] font-bold text-slate-500 uppercase tracking-wider">Colores (parámetro c)</label>
+                                <input type="text" id="s-c" value="#FF6B6B, #FFD93D, #6BCB77, #4D96FF, #C77DFF" class="w-full border rounded text-[11px] p-1.5 outline-none">
+                            </div>
+                            <div class="grid grid-cols-2 gap-2">
+                                <div>
+                                    <label class="text-[9px] font-bold text-slate-500 uppercase">Alpha</label>
+                                    <input type="range" id="s-a" min="0" max="1" step="0.1" value="0.8" class="w-full h-2">
+                                </div>
+                                <div>
+                                    <label class="text-[9px] font-bold text-slate-500 uppercase">Color Borde</label>
+                                    <input type="text" id="s-ec" value="black" class="w-full border rounded text-[11px] p-1.5 outline-none">
                                 </div>
                             </div>
                         </div>
@@ -1277,17 +1420,39 @@
                     document.getElementById('hide-code-scatter').addEventListener('click', () => overlay.classList.add('hidden'));
 
                     const update = () => {
-                        const xs = document.getElementById('s-x').value.split(',').map(Number);
-                        const ys = document.getElementById('s-y').value.split(',').map(Number);
-                        const s = document.getElementById('s-s').value;
-                        const data = xs.map((v, i) => ({ x: v, y: ys[i] || 0 }));
+                        const labelsX = document.getElementById('s-x').value.split(',').map(s => s.trim());
+                        const valuesY = document.getElementById('s-y').value.split(',').map(Number);
+                        const sizes = document.getElementById('s-s').value.split(',').map(Number);
+                        const colors = document.getElementById('s-c').value.split(',').map(s => s.trim());
+                        const alpha = document.getElementById('s-a').value;
+                        const ec = document.getElementById('s-ec').value;
 
-                        document.getElementById('v-s-val').textContent = s;
-                        document.getElementById('c-s-val') && (document.getElementById('c-s-val').textContent = s);
+                        const data = labelsX.map((x, i) => ({ x: Number(x), y: valuesY[i] || 0 }));
+
+                        // Helper to hex to rgba
+                        const hexToRgba = (hex, a) => {
+                            if (!hex.startsWith('#')) return hex;
+                            const r = parseInt(hex.slice(1, 3), 16);
+                            const g = parseInt(hex.slice(3, 5), 16);
+                            const b = parseInt(hex.slice(5, 7), 16);
+                            return `rgba(${r}, ${g}, ${b}, ${a})`;
+                        };
+
+                        const backgroundColors = colors.map(c => hexToRgba(c, alpha));
+
+                        // Update Code Overlay
+                        document.getElementById('c-s-x').textContent = labelsX.join(', ');
+                        document.getElementById('c-s-y').textContent = valuesY.join(', ');
+                        document.getElementById('c-s-s').textContent = sizes.join(', ');
+                        document.getElementById('c-s-c').textContent = colors.map(c => `'${c}'`).join(', ');
+                        document.getElementById('c-s-a').textContent = alpha;
+                        document.getElementById('c-s-ec').textContent = ec;
 
                         if (chartInstance) {
                             chartInstance.data.datasets[0].data = data;
-                            chartInstance.data.datasets[0].pointRadius = Math.sqrt(s);
+                            chartInstance.data.datasets[0].pointRadius = sizes.map(s => Math.sqrt(s));
+                            chartInstance.data.datasets[0].backgroundColor = backgroundColors;
+                            chartInstance.data.datasets[0].borderColor = ec;
                             chartInstance.update();
                         } else {
                             initChart('chart-sc', {
@@ -1295,24 +1460,29 @@
                                 data: {
                                     datasets: [{
                                         data: data,
-                                        backgroundColor: '#ff5722',
-                                        pointRadius: Math.sqrt(s),
-                                        pointHoverRadius: Math.sqrt(s) + 2
+                                        backgroundColor: backgroundColors,
+                                        borderColor: ec,
+                                        borderWidth: 1.5,
+                                        pointRadius: sizes.map(s => Math.sqrt(s)),
+                                        pointHoverRadius: sizes.map(s => Math.sqrt(s) + 2)
                                     }]
                                 },
                                 options: {
                                     responsive: true,
                                     maintainAspectRatio: false,
-                                    plugins: { legend: { display: false } },
+                                    plugins: {
+                                        legend: { display: false },
+                                        title: { display: true, text: 'Gráfico de Dispersión Personalizado' }
+                                    },
                                     scales: {
-                                        x: { type: 'linear', position: 'bottom', grid: { color: '#f1f5f9' } },
-                                        y: { grid: { color: '#f1f5f9' } }
+                                        x: { type: 'linear', position: 'bottom', grid: { color: '#f1f5f9' }, title: { display: true, text: 'Eje X' } },
+                                        y: { grid: { color: '#f1f5f9' }, title: { display: true, text: 'Eje Y' } }
                                     }
                                 }
                             });
                         }
                     };
-                    ['s-x', 's-y', 's-s'].forEach(id => document.getElementById(id).addEventListener('input', update));
+                    ['s-x', 's-y', 's-s', 's-c', 's-a', 's-ec'].forEach(id => document.getElementById(id).addEventListener('input', update));
                     update();
                 }
             },
@@ -1403,42 +1573,79 @@
                         <!-- Code Overlay -->
                         <div id="code-overlay-area" class="hidden absolute inset-0 bg-white z-20 flex flex-col p-4">
                             <div class="flex justify-between items-center mb-4 shrink-0">
-                                <h3 class="font-bold text-brand-primary">Código: Gráficos de Área</h3>
+                                <h3 class="font-bold text-brand-primary">Código: Área entre Curvas</h3>
                                 <button id="hide-code-area" class="text-xs px-3 py-1 bg-slate-100 hover:bg-slate-200 rounded-md font-semibold text-slate-600 transition-colors">Volver &larr;</button>
                             </div>
                             <div class="rounded-lg overflow-x-auto border shadow-inner bg-slate-50 font-mono text-[11px] p-4 flex-grow custom-scroll">
                                 <div class="leading-relaxed text-slate-700 whitespace-nowrap">
                                     <span class="text-pink-600 font-bold">import</span> matplotlib.pyplot <span class="text-pink-600 font-bold">as</span> plt<br><br>
-                                    x = [0, 1, 2, 3, 4]<br>
-                                    y = [1, 3, 2, 5, 4]<br><br>
-                                    plt.<span class="text-blue-600 font-bold">plot</span>(x, y, color='<span id="c-ac-line" class="text-blue-600 font-bold">#0f6cbf</span>')<br>
-                                    plt.<span class="text-blue-600 font-bold">fill_between</span>(x, y, color='<span id="c-ac" class="text-blue-600 font-bold">#0f6cbf</span>', alpha=<span id="c-ac-alpha" class="text-purple-600 font-bold">0.3</span>)<br><br>
-                                    plt.<span class="text-blue-600 font-bold">title</span>('Visualización de Área')<br>
+                                    x = [<span id="c-ar-x" class="text-green-600 font-bold">1, 2, 3, 4</span>]<br>
+                                    y_min = [<span id="c-ar-ymin" class="text-green-600 font-bold">10, 20, 15, 25</span>]<br>
+                                    y_max = [<span id="c-ar-ymax" class="text-green-600 font-bold">30, 40, 35, 45</span>]<br><br>
+                                    plt.<span class="text-blue-600 font-bold">fill_between</span>(x, y_min, y_max, <br>
+                                    &nbsp;&nbsp;alpha=<span id="c-ar-a" class="text-purple-600 font-bold">0.3</span>, <br>
+                                    &nbsp;&nbsp;color='<span id="c-ar-c" class="text-green-600 font-bold">#4D96FF</span>', <br>
+                                    &nbsp;&nbsp;edgecolor='<span id="c-ar-ec" class="text-pink-600 font-bold">black</span>', <br>
+                                    &nbsp;&nbsp;linewidth=<span id="c-ar-lw" class="text-purple-600 font-bold">1.5</span>, <br>
+                                    &nbsp;&nbsp;label='<span id="c-ar-l" class="text-orange-600 font-bold">Rango</span>')<br><br>
+                                    plt.<span class="text-blue-600 font-bold">title</span>('Rango entre dos curvas')<br>
+                                    plt.<span class="text-blue-600 font-bold">legend</span>()<br>
                                     plt.<span class="text-blue-600 font-bold">show</span>()
                                 </div>
                             </div>
                         </div>
 
-                        <h2 class="text-2xl font-bold text-brand-primary shrink-0">Área y Relleno (.fill_between)</h2>
+                        <h2 class="text-2xl font-bold text-brand-primary shrink-0">Personalización de .fill_between()</h2>
                         
-                        <div class="space-y-4 text-sm text-text-deep leading-relaxed shrink-0">
+                        <div class="space-y-4 text-xs text-text-deep leading-relaxed shrink-0">
                             <p>
-                                <strong class="text-brand-primary">Énfasis en Volumen:</strong> El gráfico de área utiliza el método <code class="bg-gray-100 px-1 rounded">plt.fill_between()</code> para rellenar el espacio entre una línea y el eje (u otra línea).
+                                <code class="bg-gray-100 px-1 rounded font-bold">.fill_between()</code> rellena el área entre dos curvas o entre una curva y el eje X:
                             </p>
-                            <p>
-                                Esta técnica es útil para resaltar la <strong>magnitud acumulada</strong> o para representar rangos de incertidumbre (desviación estándar) alrededor de una tendencia central. El parámetro <code class="bg-gray-100 px-1 rounded">alpha</code> es clave para controlar la transparencia.
-                            </p>
+                            <ul class="list-none space-y-1 ml-1">
+                                <li><span class="text-brand-accent font-bold">• x:</span> valores horizontales (obligatorio).</li>
+                                <li><span class="text-brand-accent font-bold">• y1:</span> curva o límite superior (obligatorio).</li>
+                                <li><span class="text-brand-accent font-bold">• y2:</span> curva o límite inferior (defecto: 0).</li>
+                                <li><span class="text-brand-accent font-bold">• alpha:</span> transparencia (0 a 1).</li>
+                                <li><span class="text-brand-accent font-bold">• color:</span> color del área rellena.</li>
+                                <li><span class="text-brand-accent font-bold">• edgecolor:</span> color del borde.</li>
+                                <li><span class="text-brand-accent font-bold">• linewidth:</span> grosor del borde.</li>
+                                <li><span class="text-brand-accent font-bold">• label:</span> identificación para la leyenda.</li>
+                            </ul>
                         </div>
 
-                        <div class="bg-surface-muted p-4 rounded-lg border border-border-light space-y-4 shrink-0">
-                            <div class="space-y-1">
-                                <label class="text-[10px] font-bold text-slate-500 uppercase tracking-wider">Transparencia (alpha)</label>
-                                <input type="range" id="a-al" min="0.1" max="1" step="0.1" value="0.3" class="w-full">
-                                <div class="text-[10px] text-right text-slate-400 font-mono">valor: <span id="v-a">0.3</span></div>
+                        <div class="bg-surface-muted p-3 rounded-lg border border-border-light space-y-2 shrink-0">
+                            <div class="grid grid-cols-1 gap-2">
+                                <div>
+                                    <label class="text-[9px] font-bold text-slate-500 uppercase">Valores X / Y_MIN (Eje Inferior)</label>
+                                    <div class="flex gap-2">
+                                        <input type="text" id="ar-x" value="1, 2, 3, 4" class="w-1/2 border rounded text-[10px] p-1 outline-none">
+                                        <input type="text" id="ar-ymin" value="10, 20, 15, 25" class="w-1/2 border rounded text-[10px] p-1 outline-none">
+                                    </div>
+                                </div>
+                                <div>
+                                    <label class="text-[9px] font-bold text-slate-500 uppercase">Valores Y_MAX (Eje Superior)</label>
+                                    <input type="text" id="ar-ymax" value="30, 40, 35, 45" class="w-full border rounded text-[10px] p-1 outline-none">
+                                </div>
                             </div>
-                            <div class="space-y-1">
-                                <label class="text-[10px] font-bold text-slate-500 uppercase tracking-wider">Color de Relleno</label>
-                                <input type="color" id="a-c" value="#0f6cbf" class="w-full h-10 cursor-pointer rounded-lg border-2 border-white shadow-sm">
+                            <div class="grid grid-cols-2 gap-2">
+                                <div>
+                                    <label class="text-[9px] font-bold text-slate-500 uppercase">Color / Borde</label>
+                                    <div class="flex gap-1">
+                                        <input type="color" id="ar-c" value="#4D96FF" class="w-1/2 h-7 rounded p-0 border-none cursor-pointer">
+                                        <input type="text" id="ar-ec" value="black" class="w-1/2 border rounded text-[10px] p-1 outline-none" placeholder="Borde">
+                                    </div>
+                                </div>
+                                <div>
+                                    <label class="text-[9px] font-bold text-slate-500 uppercase">Alpha / Grosor</label>
+                                    <div class="flex gap-1">
+                                        <input type="number" id="ar-a" value="0.3" step="0.1" min="0" max="1" class="w-1/2 border rounded text-[10px] p-1 outline-none">
+                                        <input type="number" id="ar-lw" value="1.5" step="0.5" min="0" class="w-1/2 border rounded text-[10px] p-1 outline-none">
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
+                                <label class="text-[9px] font-bold text-slate-500 uppercase">Etiqueta (label)</label>
+                                <input type="text" id="ar-l" value="Rango" class="w-full border rounded text-[10px] p-1 outline-none">
                             </div>
                         </div>
 
@@ -1461,48 +1668,87 @@
                     document.getElementById('hide-code-area').addEventListener('click', () => overlay.classList.add('hidden'));
 
                     const update = () => {
-                        const a = document.getElementById('a-al').value;
-                        const c = document.getElementById('a-c').value;
+                        const x = document.getElementById('ar-x').value.split(',').map(s => s.trim());
+                        const ymin = document.getElementById('ar-ymin').value.split(',').map(Number);
+                        const ymax = document.getElementById('ar-ymax').value.split(',').map(Number);
+                        const a = document.getElementById('ar-a').value;
+                        const c = document.getElementById('ar-c').value;
+                        const ec = document.getElementById('ar-ec').value;
+                        const lw = document.getElementById('ar-lw').value;
+                        const l = document.getElementById('ar-l').value;
 
-                        document.getElementById('v-a').textContent = a;
-                        document.getElementById('c-ac') && (document.getElementById('c-ac').textContent = c);
-                        document.getElementById('c-ac-line') && (document.getElementById('c-ac-line').textContent = c);
-                        document.getElementById('c-ac-alpha') && (document.getElementById('c-ac-alpha').textContent = a);
+                        // Helper to hex to rgba
+                        const hexToRgba = (hex, alpha) => {
+                            if (!hex.startsWith('#')) return hex;
+                            const r = parseInt(hex.slice(1, 3), 16);
+                            const g = parseInt(hex.slice(3, 5), 16);
+                            const b = parseInt(hex.slice(5, 7), 16);
+                            return `rgba(${r}, ${g}, ${b}, ${alpha})`;
+                        };
 
-                        const rgba = `rgba(${parseInt(c.slice(1, 3), 16)}, ${parseInt(c.slice(3, 5), 16)}, ${parseInt(c.slice(5, 7), 16)}, ${a})`;
+                        const rgba = hexToRgba(c, a);
+
+                        // Update Code Overlay
+                        document.getElementById('c-ar-x').textContent = x.join(', ');
+                        document.getElementById('c-ar-ymin').textContent = ymin.join(', ');
+                        document.getElementById('c-ar-ymax').textContent = ymax.join(', ');
+                        document.getElementById('c-ar-a').textContent = a;
+                        document.getElementById('c-ar-c').textContent = c;
+                        document.getElementById('c-ar-ec').textContent = ec;
+                        document.getElementById('c-ar-lw').textContent = lw;
+                        document.getElementById('c-ar-l').textContent = l;
 
                         if (chartInstance) {
-                            chartInstance.data.datasets[0].backgroundColor = rgba;
-                            chartInstance.data.datasets[0].borderColor = c;
+                            chartInstance.data.labels = x;
+                            chartInstance.data.datasets[0].data = ymin;
+                            chartInstance.data.datasets[1].data = ymax;
+                            chartInstance.data.datasets[1].backgroundColor = rgba;
+                            chartInstance.data.datasets[1].borderColor = ec;
+                            chartInstance.data.datasets[1].borderWidth = lw;
+                            chartInstance.data.datasets[1].label = l;
                             chartInstance.update();
                         } else {
                             initChart('chart-ar', {
                                 type: 'line',
                                 data: {
-                                    labels: ['0', '1', '2', '3', '4', '5'],
-                                    datasets: [{
-                                        data: [1, 3, 2, 5, 4, 6],
-                                        borderColor: c,
-                                        backgroundColor: rgba,
-                                        fill: true,
-                                        tension: 0.4,
-                                        pointRadius: 4,
-                                        pointBackgroundColor: c
-                                    }]
+                                    labels: x,
+                                    datasets: [
+                                        {
+                                            label: 'Base',
+                                            data: ymin,
+                                            borderColor: 'transparent',
+                                            pointRadius: 0,
+                                            fill: false
+                                        },
+                                        {
+                                            label: l,
+                                            data: ymax,
+                                            borderColor: ec,
+                                            borderWidth: lw,
+                                            backgroundColor: rgba,
+                                            fill: 0, // Fill to dataset index 0
+                                            tension: 0,
+                                            pointRadius: 4,
+                                            pointBackgroundColor: ec
+                                        }
+                                    ]
                                 },
                                 options: {
                                     responsive: true,
                                     maintainAspectRatio: false,
-                                    plugins: { legend: { display: false } },
+                                    plugins: {
+                                        legend: { display: true, position: 'top' },
+                                        title: { display: true, text: 'Rango entre Curvas (.fill_between)' }
+                                    },
                                     scales: {
-                                        x: { grid: { color: '#f1f5f9' } },
-                                        y: { beginAtZero: true, grid: { color: '#f1f5f9' } }
+                                        x: { grid: { color: '#f1f5f9' }, title: { display: true, text: 'X' } },
+                                        y: { beginAtZero: false, grid: { color: '#f1f5f9' }, title: { display: true, text: 'Y' } }
                                     }
                                 }
                             });
                         }
                     };
-                    ['a-al', 'a-c'].forEach(id => document.getElementById(id).addEventListener('input', update));
+                    ['ar-x', 'ar-ymin', 'ar-ymax', 'ar-a', 'ar-c', 'ar-ec', 'ar-lw', 'ar-l'].forEach(id => document.getElementById(id).addEventListener('input', update));
                     update();
                 }
             },
