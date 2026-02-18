@@ -86,14 +86,17 @@
         const slides = [
             {
                 id: 'intro', render: () => `
-                <div class="flex flex-col items-center justify-center h-full text-center space-y-6">
-                    <div class="w-24 h-24 bg-brand-primary/10 rounded-full flex items-center justify-center mb-4">
-                        <svg class="w-12 h-12 text-brand-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 12l3-3 3 3 4-4M8 21l4-4 4 4M3 4h18M4 4h16v12a1 1 0 01-1 1H5a1 1 0 01-1-1V4z"></path></svg>
+                <div class="flex flex-col items-center justify-center h-full text-center space-y-4">
+                    <div class="w-20 h-20 bg-brand-primary/10 rounded-full flex items-center justify-center mb-2">
+                        <svg class="w-10 h-10 text-brand-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 12l3-3 3 3 4-4M8 21l4-4 4 4M3 4h18M4 4h16v12a1 1 0 01-1 1H5a1 1 0 01-1-1V4z"></path></svg>
                     </div>
-                    <h1 class="text-4xl md:text-5xl font-bold text-brand-primary">Módulo 01: Gráficos Matemáticos con pyplot</h1>
-                    <h2 class="text-xl md:text-2xl text-brand-accent max-w-2xl">Introducción práctica a matplotlib.pyplot</h2>
+                    <div class="space-y-1">
+                        <h3 class="text-base font-bold text-brand-accent uppercase tracking-widest">Unidad 3</h3>
+                        <h1 class="text-4xl md:text-5xl font-extrabold text-brand-primary">Módulo 01: pyplot</h1>
+                    </div>
+                    <h2 class="text-xl md:text-2xl text-text-deep font-semibold max-w-2xl">Introducción práctica a matplotlib.pyplot</h2>
                     <p class="text-text-deep/80 max-w-lg text-lg">Aprende a crear gráficos de líneas, barras, dispersión y más de forma interactiva.</p>
-                    <button onclick="nextSlide()" class="mt-8 px-8 py-3 bg-action-default text-white rounded-lg hover:bg-action-hover shadow-lg font-semibold text-lg">Comenzar</button>
+                    <button onclick="nextSlide()" class="mt-6 px-10 py-4 bg-action-default text-white rounded-xl hover:bg-action-hover shadow-xl font-bold text-lg transition-transform hover:scale-105 active:scale-95">Comenzar</button>
                 </div>`
             },
             {
@@ -225,6 +228,56 @@
                 </div>`
             },
             {
+                id: 'chart-types', render: () => `
+                <div class="flex flex-col h-full space-y-6">
+                    <div class="text-center space-y-2">
+                        <h2 class="text-3xl font-bold text-brand-primary">Variedad de Gráficos</h2>
+                        <p class="text-lg text-text-deep/80 text-balance max-w-2xl mx-auto">
+                            Pyplot permite cambiar radicalmente la visualización simplemente llamando a un método distinto bajo la sintaxis <code class="font-mono text-brand-accent font-bold">plt.metodo()</code>.
+                        </p>
+                    </div>
+
+                    <div class="grid grid-cols-2 md:grid-cols-3 gap-4 flex-grow overflow-y-auto custom-scroll p-1 content-center">
+                        <!-- plot -->
+                        <div class="bg-white border border-border-light p-4 rounded-xl shadow-sm hover:shadow-md transition-shadow border-t-4 border-t-blue-500">
+                            <div class="text-brand-primary font-bold text-lg mb-1 italic">.plot()</div>
+                            <div class="text-[10px] font-bold text-slate-400 mb-2 uppercase tracking-tight">Gráfico de Líneas</div>
+                            <p class="text-[11px] text-slate-600 leading-relaxed">El más común. Ideal para mostrar tendencias y cambios a lo largo del tiempo o de una secuencia numérica.</p>
+                        </div>
+                        <!-- bar -->
+                        <div class="bg-white border border-border-light p-4 rounded-xl shadow-sm hover:shadow-md transition-shadow border-t-4 border-t-teal-500">
+                            <div class="text-brand-primary font-bold text-lg mb-1 italic">.bar()</div>
+                            <div class="text-[10px] font-bold text-slate-400 mb-2 uppercase tracking-tight">Gráfico de Barras</div>
+                            <p class="text-[11px] text-slate-600 leading-relaxed">Perfecto para comparar cantidades o magnitudes entre diferentes categorías discretas.</p>
+                        </div>
+                        <!-- barh -->
+                        <div class="bg-white border border-border-light p-4 rounded-xl shadow-sm hover:shadow-md transition-shadow border-t-4 border-t-indigo-500">
+                            <div class="text-brand-primary font-bold text-lg mb-1 italic">.barh()</div>
+                            <div class="text-[10px] font-bold text-slate-400 mb-2 uppercase tracking-tight">Barras Horizontales</div>
+                            <p class="text-[11px] text-slate-600 leading-relaxed">Útil cuando los nombres de las categorías son largos o para mostrar rankings de mayor a menor.</p>
+                        </div>
+                        <!-- scatter -->
+                        <div class="bg-white border border-border-light p-4 rounded-xl shadow-sm hover:shadow-md transition-shadow border-t-4 border-t-orange-500">
+                            <div class="text-brand-primary font-bold text-lg mb-1 italic">.scatter()</div>
+                            <div class="text-[10px] font-bold text-slate-400 mb-2 uppercase tracking-tight">Gráfico de Dispersión</div>
+                            <p class="text-[11px] text-slate-600 leading-relaxed">Muestra la relación o correlación entre dos variables numéricas mediante puntos aislados.</p>
+                        </div>
+                        <!-- fill_between -->
+                        <div class="bg-white border border-border-light p-4 rounded-xl shadow-sm hover:shadow-md transition-shadow border-t-4 border-t-cyan-500">
+                            <div class="text-brand-primary font-bold text-lg mb-1 italic">.fill_between()</div>
+                            <div class="text-[10px] font-bold text-slate-400 mb-2 uppercase tracking-tight">Gráfico de Área</div>
+                            <p class="text-[11px] text-slate-600 leading-relaxed">Rellena el espacio bajo una línea. Ideal para resaltar volúmenes acumulados o áreas de interés.</p>
+                        </div>
+                        <!-- step -->
+                        <div class="bg-white border border-border-light p-4 rounded-xl shadow-sm hover:shadow-md transition-shadow border-t-4 border-t-purple-500">
+                            <div class="text-brand-primary font-bold text-lg mb-1 italic">.step()</div>
+                            <div class="text-[10px] font-bold text-slate-400 mb-2 uppercase tracking-tight">Gráfico de Escalones</div>
+                            <p class="text-[11px] text-slate-600 leading-relaxed">Muestra cambios que ocurren en puntos específicos del tiempo, como señales o stock.</p>
+                        </div>
+                    </div>
+                </div>`
+            },
+            {
                 id: 'data-input', render: () => `
                 <div class="flex flex-col md:flex-row gap-6 min-h-0">
                     <div class="md:w-2/5 space-y-6 flex flex-col">
@@ -255,18 +308,14 @@
                             </div>
                         </div>
 
-                        <div class="rounded-lg overflow-hidden border border-border-light shadow-sm bg-white font-mono text-sm mt-auto">
-                            <div class="bg-gray-100 px-4 py-2 flex gap-2 border-b border-gray-200">
-                                <div class="w-3 h-3 rounded-full bg-red-400"></div>
-                                <div class="w-3 h-3 rounded-full bg-yellow-400"></div>
-                                <div class="w-3 h-3 rounded-full bg-green-400"></div>
-                            </div>
-                            <div class="p-4 overflow-x-auto code-scroll">
-                                <div>x = [<span id="code-x" class="text-purple-600 bg-yellow-50 px-1 rounded">1, 2, 3, 4, 5</span>]</div>
-                                <div>y = [<span id="code-y" class="text-purple-600 bg-yellow-50 px-1 rounded">2, 3, 5, 7, 11</span>]</div>
-                                <br>
-                                <div>plt.<span class="text-blue-600">plot</span>(x, y)</div>
-                                <div>plt.<span class="text-blue-600">show</span>()</div>
+                        <!-- Inline Code Block (Slide 6 Style) -->
+                        <div class="rounded-lg overflow-x-auto border shadow-inner bg-slate-50 font-mono text-[11px] p-4 shrink-0 custom-scroll">
+                            <div class="leading-relaxed text-slate-700 whitespace-nowrap">
+                                <span class="text-pink-600 font-bold">import</span> matplotlib.pyplot <span class="text-pink-600 font-bold">as</span> plt<br><br>
+                                x = [<span id="code-x" class="text-green-600 font-bold">1, 2, 3, 4, 5</span>]<br>
+                                y = [<span id="code-y" class="text-green-600 font-bold">2, 3, 5, 7, 11</span>]<br><br>
+                                plt.<span class="text-blue-600 font-bold">plot</span>(x, y)<br>
+                                plt.<span class="text-blue-600 font-bold">show</span>()
                             </div>
                         </div>
                     </div>
@@ -345,6 +394,83 @@
                     document.getElementById('input-y').addEventListener('input', updateData);
                     updateData();
                 }
+            },
+            {
+                id: 'line-concept', render: () => `
+                <div class="flex flex-col md:flex-row h-full gap-8 overflow-hidden">
+                    <!-- Left Column: Detailed Text (Scrollable) -->
+                    <div class="md:w-1/2 space-y-6 flex flex-col pr-2 overflow-y-auto custom-scroll text-text-deep">
+                        <h2 class="text-3xl font-bold text-brand-primary">Gráfico de Líneas — plt.plot()</h2>
+                        
+                        <div class="space-y-4 text-sm leading-relaxed">
+                            <p class="text-base">
+                                Un gráfico de líneas representa datos conectando puntos mediante segmentos rectos.
+                                Se utiliza para mostrar cómo cambian los valores en un orden específico.
+                            </p>
+
+                            <div class="space-y-3">
+                                <h3 class="text-xl font-bold text-brand-primary border-b border-border-light pb-1">Uso principal</h3>
+                                <p>Visualizar evolución o tendencia, especialmente a lo largo del tiempo o en secuencias lógicas.</p>
+                            </div>
+
+                            <div class="space-y-4">
+                                <h3 class="text-xl font-bold text-brand-primary border-b border-border-light pb-1">Relación X–Y</h3>
+                                <div class="space-y-2">
+                                    <p>Cada punto del gráfico representa un par de valores:</p>
+                                    <ul class="list-none space-y-2">
+                                        <li class="bg-white p-3 rounded-lg border border-border-light shadow-sm">
+                                            <span class="text-brand-accent font-bold">Eje X:</span> representa el orden (tiempo, etapas o secuencia).
+                                        </li>
+                                        <li class="bg-white p-3 rounded-lg border border-border-light shadow-sm">
+                                            <span class="text-brand-accent font-bold">Eje Y:</span> contiene los valores numéricos asociados.
+                                        </li>
+                                    </ul>
+                                    <p class="text-xs italic text-slate-500 text-center">Cada punto corresponde a un par (X, Y).</p>
+                                </div>
+                            </div>
+
+                            <div class="space-y-4">
+                                <h3 class="text-xl font-bold text-brand-primary border-b border-border-light pb-1">Continuidad</h3>
+                                <p>Al conectar los puntos se asume que existe una relación continua entre ellos, permitiendo observar tendencias generales.</p>
+                                <div class="p-3 bg-red-50 border-l-4 border-red-400 text-red-800 text-xs italic">
+                                    Nota: Si los datos no representan algo continuo, quizá otro tipo de gráfico sea más adecuado.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Right Column: Visualization -->
+                    <div class="md:w-1/2 bg-surface-muted rounded-xl p-8 flex flex-col items-center justify-center relative min-h-[400px]">
+                        <div class="w-full h-full relative">
+                            <canvas id="chart-line-intro"></canvas>
+                        </div>
+                    </div>
+                </div>`,
+                script: () => initChart('chart-line-intro', {
+                    type: 'line',
+                    data: {
+                        labels: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun'],
+                        datasets: [{
+                            data: [12, 19, 15, 25, 22, 30],
+                            borderColor: '#0055ad',
+                            borderWidth: 4,
+                            pointRadius: 6,
+                            pointBackgroundColor: '#fff',
+                            pointBorderWidth: 3,
+                            tension: 0.3,
+                            fill: false
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: { legend: { display: false } },
+                        scales: {
+                            y: { grid: { color: '#e2e8f0' }, ticks: { font: { weight: 'bold' } } },
+                            x: { grid: { color: '#e2e8f0' }, ticks: { font: { weight: 'bold' } } }
+                        }
+                    }
+                })
             },
             {
                 id: 'plot-params', render: () => `
@@ -731,6 +857,78 @@
                 }
             },
             {
+                id: 'bar-concept', render: () => `
+                <div class="flex flex-col md:flex-row h-full gap-8 overflow-hidden">
+                    <!-- Left Column: Detailed Text (Scrollable) -->
+                    <div class="md:w-1/2 space-y-6 flex flex-col pr-2 overflow-y-auto custom-scroll text-text-deep">
+                        <h2 class="text-3xl font-bold text-brand-primary">Gráfico de Barras — plt.bar()</h2>
+                        
+                        <div class="space-y-4 text-sm leading-relaxed">
+                            <p class="text-base">
+                                Un gráfico de barras representa datos mediante barras rectangulares cuya altura indica el valor. Se crea utilizando la función <code class="bg-gray-100 px-1 rounded font-bold">plt.bar()</code>.
+                            </p>
+
+                            <div class="space-y-3">
+                                <h3 class="text-xl font-bold text-brand-primary border-b border-border-light pb-1">Uso principal</h3>
+                                <p>Comparar cantidades entre distintas categorías o grupos de forma clara y directa.</p>
+                            </div>
+
+                            <div class="space-y-4">
+                                <h3 class="text-xl font-bold text-brand-primary border-b border-border-light pb-1">Relación X–Y</h3>
+                                <div class="space-y-2">
+                                    <p>Cada punto o barra del gráfico representa un par de valores:</p>
+                                    <ul class="list-none space-y-2">
+                                        <li class="bg-white p-3 rounded-lg border border-border-light shadow-sm">
+                                            <span class="text-brand-accent font-bold">Eje X:</span> representa categorías o grupos (etiquetas discretas).
+                                        </li>
+                                        <li class="bg-white p-3 rounded-lg border border-border-light shadow-sm">
+                                            <span class="text-brand-accent font-bold">Eje Y:</span> contiene los valores numéricos asociados a cada categoría.
+                                        </li>
+                                    </ul>
+                                    <p class="text-xs italic text-slate-500 text-center">Cada barra corresponde a un par (categoría, valor).</p>
+                                </div>
+                            </div>
+
+                            <div class="space-y-4">
+                                <h3 class="text-xl font-bold text-brand-primary border-b border-border-light pb-1">Comparación</h3>
+                                <p>Las barras no están conectadas, ya que representan valores independientes entre sí. Esto facilita la distinción entre grupos.</p>
+                                <div class="p-3 bg-red-50 border-l-4 border-red-400 text-red-800 text-xs italic">
+                                    Nota: Si los datos no representan categorías discretas, sino pares de valores numéricos relacionados entre sí, quizá otro tipo de gráfico sea más adecuado.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Right Column: Visualization -->
+                    <div class="md:w-1/2 bg-surface-muted rounded-xl p-8 flex flex-col items-center justify-center relative min-h-[400px]">
+                        <div class="w-full h-full relative">
+                            <canvas id="chart-bar-intro"></canvas>
+                        </div>
+                    </div>
+                </div>`,
+                script: () => initChart('chart-bar-intro', {
+                    type: 'bar',
+                    data: {
+                        labels: ['Prod A', 'Prod B', 'Prod C', 'Prod D'],
+                        datasets: [{
+                            data: [45, 75, 55, 90],
+                            backgroundColor: '#0055ad',
+                            borderRadius: 6,
+                            barThickness: 40
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: { legend: { display: false } },
+                        scales: {
+                            y: { beginAtZero: true, grid: { color: '#e2e8f0' }, ticks: { font: { weight: 'bold' } } },
+                            x: { grid: { display: false }, ticks: { font: { weight: 'bold' } } }
+                        }
+                    }
+                })
+            },
+            {
                 id: 'bar', render: () => `
                 <div class="flex flex-col md:flex-row gap-6 h-full min-h-0 bg-white rounded-2xl p-2 md:px-6 md:pb-6 md:pt-4 overflow-hidden">
                     <!-- Left Column: Explanation and Controls -->
@@ -860,7 +1058,7 @@
                                 <strong class="text-brand-primary">Legibilidad de Categorías:</strong> El método <code class="bg-gray-100 px-1 rounded font-bold">plt.barh()</code> funciona igual que <code class="bg-gray-100 px-1 rounded">bar()</code>, pero intercambia los ejes.
                             </p>
                             <p>
-                                Es especialmente útil cuando los nombres de las categorías son <strong>muy largos</strong>, ya que en el eje horizontal (barras verticales) tenderían a encimarse. Al estar en el eje vertical, el texto se lee de forma natural.
+                                Es especialmente útil cuando los nombres de las categorías son <strong>muy largos</strong>. Al invertir los ejes, las etiquetas se muestran verticalmente, mejorando la legibilidad y evitando solapamientos.
                             </p>
                         </div>
 
@@ -928,6 +1126,84 @@
                     ['bh-c', 'bh-v'].forEach(id => document.getElementById(id).addEventListener('input', update));
                     update();
                 }
+            },
+            {
+                id: 'scatter-concept', render: () => `
+                <div class="flex flex-col md:flex-row h-full gap-8 overflow-hidden">
+                    <!-- Left Column: Detailed Text (Scrollable) -->
+                    <div class="md:w-1/2 space-y-6 flex flex-col pr-2 overflow-y-auto custom-scroll text-text-deep">
+                        <h2 class="text-3xl font-bold text-brand-primary">Gráfico de Dispersión con plt.scatter()</h2>
+                        
+                        <div class="space-y-4 text-sm leading-relaxed">
+                            <p class="text-base">
+                                Un gráfico de dispersión se crea en Matplotlib utilizando la función <code class="bg-gray-100 px-1 rounded font-bold">plt.scatter()</code>. Representa datos como puntos individuales en el plano cartesiano, sin unirlos.
+                            </p>
+
+                            <div class="space-y-3">
+                                <h3 class="text-xl font-bold text-brand-primary border-b border-border-light pb-1">Uso principal</h3>
+                                <p>Mostrar cómo se relacionan dos variables numéricas y detectar patrones entre ellas.</p>
+                                <p class="text-xs font-semibold text-slate-500 uppercase tracking-wider">Por ejemplo:</p>
+                                <ul class="list-disc list-inside space-y-1 text-slate-700 ml-2">
+                                    <li>Horas de estudio y nota obtenida.</li>
+                                    <li>Edad y salario.</li>
+                                </ul>
+                            </div>
+
+                            <div class="space-y-4">
+                                <h3 class="text-xl font-bold text-brand-primary border-b border-border-light pb-1">Relación X–Y</h3>
+                                <div class="space-y-2">
+                                    <ul class="list-none space-y-2">
+                                        <li class="bg-white p-3 rounded-lg border border-border-light shadow-sm">
+                                            <span class="text-brand-accent font-bold">Eje X:</span> contiene una variable numérica.
+                                        </li>
+                                        <li class="bg-white p-3 rounded-lg border border-border-light shadow-sm">
+                                            <span class="text-brand-accent font-bold">Eje Y:</span> contiene otra variable numérica asociada.
+                                        </li>
+                                    </ul>
+                                    <p class="text-xs italic text-slate-500 text-center">Cada punto representa una observación completa (un caso con ambos valores).</p>
+                                </div>
+                            </div>
+
+                            <div class="space-y-4">
+                                <h3 class="text-xl font-bold text-brand-primary border-b border-border-light pb-1">Interpretación</h3>
+                                <p>La distribución de los puntos permite observar si existe relación: si tienden a subir juntos, bajar o no mostrar un patrón claro.</p>
+                                <div class="p-3 bg-red-50 border-l-4 border-red-400 text-red-800 text-xs italic">
+                                    Nota: Si los datos representan una evolución continua o una comparación de categorías, quizá otro tipo de gráfico sea más adecuado.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Right Column: Visualization -->
+                    <div class="md:w-1/2 bg-surface-muted rounded-xl p-8 flex flex-col items-center justify-center relative min-h-[400px]">
+                        <div class="w-full h-full relative">
+                            <canvas id="chart-scatter-intro"></canvas>
+                        </div>
+                    </div>
+                </div>`,
+                script: () => initChart('chart-scatter-intro', {
+                    type: 'scatter',
+                    data: {
+                        datasets: [{
+                            data: Array.from({ length: 40 }, () => ({
+                                x: Math.random() * 10,
+                                y: Math.random() * 10
+                            })),
+                            backgroundColor: '#0055ad',
+                            pointRadius: 6,
+                            pointHoverRadius: 8
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: { legend: { display: false } },
+                        scales: {
+                            y: { beginAtZero: true, grid: { color: '#e2e8f0' } },
+                            x: { beginAtZero: true, grid: { color: '#e2e8f0' } }
+                        }
+                    }
+                })
             },
             {
                 id: 'scatter', render: () => `
@@ -1041,6 +1317,85 @@
                 }
             },
             {
+                id: 'area-concept', render: () => `
+                <div class="flex flex-col md:flex-row h-full gap-8 overflow-hidden">
+                    <!-- Left Column: Detailed Text (Scrollable) -->
+                    <div class="md:w-1/2 space-y-6 flex flex-col pr-2 overflow-y-auto custom-scroll text-text-deep">
+                        <h2 class="text-3xl font-bold text-brand-primary">Gráfico de Área con plt.fill_between()</h2>
+                        
+                        <div class="space-y-4 text-sm leading-relaxed">
+                            <p class="text-base">
+                                Un gráfico de área se crea en Matplotlib utilizando la función <code class="bg-gray-100 px-1 rounded font-bold">plt.fill_between()</code>. Representa datos rellenando el espacio entre una línea y el eje X (u otra línea).
+                            </p>
+
+                            <div class="space-y-3">
+                                <h3 class="text-xl font-bold text-brand-primary border-b border-border-light pb-1">Uso principal</h3>
+                                <p>Destacar visualmente la magnitud o acumulación de valores a lo largo de una secuencia.</p>
+                                <p class="text-xs font-semibold text-slate-500 uppercase tracking-wider">Por ejemplo:</p>
+                                <ul class="list-disc list-inside space-y-1 text-slate-700 ml-2">
+                                    <li>Consumo eléctrico diario.</li>
+                                    <li>Ventas acumuladas en el mes.</li>
+                                    <li>Cantidad de usuarios activos en el tiempo.</li>
+                                </ul>
+                            </div>
+
+                            <div class="space-y-4">
+                                <h3 class="text-xl font-bold text-brand-primary border-b border-border-light pb-1">Relación X–Y</h3>
+                                <div class="space-y-2">
+                                    <ul class="list-none space-y-2">
+                                        <li class="bg-white p-3 rounded-lg border border-border-light shadow-sm">
+                                            <span class="text-brand-accent font-bold">Eje X:</span> define el orden o referencia (tiempo o secuencia).
+                                        </li>
+                                        <li class="bg-white p-3 rounded-lg border border-border-light shadow-sm">
+                                            <span class="text-brand-accent font-bold">Eje Y:</span> contiene los valores numéricos asociados.
+                                        </li>
+                                    </ul>
+                                    <p class="text-xs italic text-slate-500 text-center">El área sombreada representa visualmente la cantidad comprendida entre los valores.</p>
+                                </div>
+                            </div>
+
+                            <div class="space-y-4">
+                                <h3 class="text-xl font-bold text-brand-primary border-b border-border-light pb-1">Interpretación</h3>
+                                <p>El relleno enfatiza cuánto representan los valores en conjunto, no solo los puntos individuales.</p>
+                                <div class="p-3 bg-red-50 border-l-4 border-red-400 text-red-800 text-xs italic">
+                                    Nota: Si solo se necesita observar puntos específicos o comparar categorías sin resaltar volumen o acumulación, quizá otro tipo de gráfico sea más adecuado.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Right Column: Visualization -->
+                    <div class="md:w-1/2 bg-surface-muted rounded-xl p-8 flex flex-col items-center justify-center relative min-h-[400px]">
+                        <div class="w-full h-full relative">
+                            <canvas id="chart-area-intro"></canvas>
+                        </div>
+                    </div>
+                </div>`,
+                script: () => initChart('chart-area-intro', {
+                    type: 'line',
+                    data: {
+                        labels: ['Lun', 'Mar', 'Mie', 'Jue', 'Vie', 'Sab', 'Dom'],
+                        datasets: [{
+                            data: [30, 45, 35, 60, 55, 80, 70],
+                            borderColor: '#0055ad',
+                            backgroundColor: 'rgba(0, 85, 173, 0.25)',
+                            fill: true,
+                            tension: 0.4,
+                            pointRadius: 4
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: { legend: { display: false } },
+                        scales: {
+                            y: { beginAtZero: true, grid: { color: '#e2e8f0' } },
+                            x: { grid: { color: '#e2e8f0' } }
+                        }
+                    }
+                })
+            },
+            {
                 id: 'area', render: () => `
                 <div class="flex flex-col md:flex-row gap-6 h-full min-h-0 bg-white rounded-2xl p-2 md:px-6 md:pb-6 md:pt-4 overflow-hidden">
                     <!-- Left Column: Explanation and Controls -->
@@ -1150,6 +1505,85 @@
                     ['a-al', 'a-c'].forEach(id => document.getElementById(id).addEventListener('input', update));
                     update();
                 }
+            },
+            {
+                id: 'step-concept', render: () => `
+                <div class="flex flex-col md:flex-row h-full gap-8 overflow-hidden">
+                    <!-- Left Column: Detailed Text (Scrollable) -->
+                    <div class="md:w-1/2 space-y-6 flex flex-col pr-2 overflow-y-auto custom-scroll text-text-deep">
+                        <h2 class="text-3xl font-bold text-brand-primary">Gráfico Escalonado con plt.step()</h2>
+                        
+                        <div class="space-y-4 text-sm leading-relaxed">
+                            <p class="text-base">
+                                Un gráfico escalonado se crea en Matplotlib utilizando la función <code class="bg-gray-100 px-1 rounded font-bold">plt.step()</code>. Representa datos mediante líneas horizontales y verticales que forman “escalones”.
+                            </p>
+
+                            <div class="space-y-3">
+                                <h3 class="text-xl font-bold text-brand-primary border-b border-border-light pb-1">Uso principal</h3>
+                                <p>Mostrar cambios que ocurren por intervalos o en momentos específicos, donde el valor se mantiene constante hasta el siguiente cambio.</p>
+                                <p class="text-xs font-semibold text-slate-500 uppercase tracking-wider">Por ejemplo:</p>
+                                <ul class="list-disc list-inside space-y-1 text-slate-700 ml-2">
+                                    <li>Tarifas que cambian por tramo de consumo.</li>
+                                    <li>Estados de un sistema (activo/inactivo).</li>
+                                </ul>
+                            </div>
+
+                            <div class="space-y-4">
+                                <h3 class="text-xl font-bold text-brand-primary border-b border-border-light pb-1">Relación X–Y</h3>
+                                <div class="space-y-2">
+                                    <ul class="list-none space-y-2">
+                                        <li class="bg-white p-3 rounded-lg border border-border-light shadow-sm">
+                                            <span class="text-brand-accent font-bold">Eje X:</span> define el orden o momento del cambio.
+                                        </li>
+                                        <li class="bg-white p-3 rounded-lg border border-border-light shadow-sm">
+                                            <span class="text-brand-accent font-bold">Eje Y:</span> contiene el valor que se mantiene hasta el siguiente punto.
+                                        </li>
+                                    </ul>
+                                    <p class="text-xs italic text-slate-500 text-center">Cada escalón representa un valor constante durante un intervalo.</p>
+                                </div>
+                            </div>
+
+                            <div class="space-y-4">
+                                <h3 class="text-xl font-bold text-brand-primary border-b border-border-light pb-1">Interpretación</h3>
+                                <p>El gráfico no muestra transición gradual, sino cambios abruptos entre niveles.</p>
+                                <div class="p-3 bg-red-50 border-l-4 border-red-400 text-red-800 text-xs italic">
+                                    Nota: Si los datos cambian de manera continua y progresiva, quizá otro tipo de gráfico sea más adecuado.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Right Column: Visualization -->
+                    <div class="md:w-1/2 bg-surface-muted rounded-xl p-8 flex flex-col items-center justify-center relative min-h-[400px]">
+                        <div class="w-full h-full relative">
+                            <canvas id="chart-step-intro"></canvas>
+                        </div>
+                    </div>
+                </div>`,
+                script: () => initChart('chart-step-intro', {
+                    type: 'line',
+                    data: {
+                        labels: ['0', '1', '2', '3', '4', '5', '6'],
+                        datasets: [{
+                            data: [10, 15, 10, 20, 20, 25, 25],
+                            borderColor: '#0055ad',
+                            backgroundColor: 'transparent',
+                            stepped: true,
+                            borderWidth: 3,
+                            pointRadius: 4,
+                            pointBackgroundColor: '#0055ad'
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: { legend: { display: false } },
+                        scales: {
+                            y: { beginAtZero: true, grid: { color: '#e2e8f0' } },
+                            x: { grid: { color: '#e2e8f0' } }
+                        }
+                    }
+                })
             },
             {
                 id: 'step', render: () => `
