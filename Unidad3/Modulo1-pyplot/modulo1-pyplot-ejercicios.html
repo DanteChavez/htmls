@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejercicios: Elige el gráfico adecuado con pyplot</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.15.6/Sortable.min.js"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'surface-main': '#ffffff',
+                        'surface-muted': '#f1f5f9',
+                        'brand-primary': '#003c58',
+                        'brand-accent': '#06717e',
+                        'action-default': '#0055ad',
+                        'action-hover': '#399be2',
+                        'surface-dark': '#0f6cbf',
+                        'text-sky': '#6ea2ee',
+                        'text-muted': '#6da8e9',
+                        'text-deep': '#1e293b',
+                        'border-light': '#e2e8f0',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #ffffff;
+            color: #1e293b;
+            font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            overflow: hidden;
+        }
+
+        .slide {
+            display: none;
+        }
+
+        .slide.active {
+            display: flex;
+        }
+
+        .sortable-ghost {
+            opacity: 0.4;
+            background-color: #e2e8f0 !important;
+        }
+
+        .sortable-drag {
+            cursor: grabbing !important;
+        }
+
+        .tarjeta {
+            cursor: grab;
+        }
+
+        .tarjeta:active {
+            cursor: grabbing;
+        }
+
+        .macos-btn {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            display: inline-block;
+            margin-right: 6px;
+        }
+
+        .macos-close {
+            background-color: #ff5f56;
+        }
+
+        .macos-min {
+            background-color: #ffbd2e;
+        }
+
+        .macos-max {
+            background-color: #27c93f;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: transparent;
+            border-radius: 4px;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 4px;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+
+        .dropzone {
+            min-height: 120px;
+            transition: background-color 0.2s;
+        }
+    </style>
+</head>
+
+<body class="bg-surface-main text-text-deep h-screen w-screen relative">
+
+    <main id="app" class="flex flex-col h-full w-full relative">
+
+        <!-- Slides Content -->
+        <div id="slides-wrapper" class="flex-grow relative overflow-hidden">
+
+            <!-- Slide 1: Portada -->
+            <section id="slide-1"
+                class="slide active absolute inset-0 flex-col items-center justify-center p-8 text-center bg-surface-main overflow-y-auto custom-scrollbar">
+                <h1
+                    class="text-4xl md:text-5xl font-extrabold text-brand-primary mb-6 drop-shadow-sm leading-tight max-w-5xl">
+                    Ejercicios: Elige el gráfico adecuado con pyplot</h1>
+                <p class="text-xl md:text-2xl text-text-deep mb-4 max-w-4xl leading-relaxed">Practica distinguiendo qué
+                    tipo de gráfico usar según el problema y los datos (plot, bar, scatter, step).</p>
+                <div
+                    class="bg-surface-muted border border-border-light rounded-2xl p-6 md:p-8 max-w-2xl mt-8 mb-12 shadow-sm">
+                    <p class="text-lg text-text-deep mb-3 font-medium">Instrucciones de la actividad:</p>
+                    <ol class="text-left py-2 px-4 list-decimal list-inside space-y-3 text-text-deep text-lg">
+                        <li><strong>Arrastra</strong> cada tarjeta al contenedor que le corresponda.</li>
+                        <li>Haz <strong>click sobre una tarjeta</strong> en cualquier momento para expandir su
+                            descripción y ver un ejemplo simplificado de las variables <code>x</code> e <code>y</code>
+                            asociadas.</li>
+                        <li>Haz click en <strong>Verificar Tarjetas</strong> cuando quieras corroborar tus respuestas.
+                        </li>
+                    </ol>
+                </div>
+                <button onclick="nextSlide()"
+                    class="px-10 py-5 bg-action-default hover:bg-action-hover text-white text-xl rounded-xl shadow-md font-bold transition-all transform hover:scale-105"
+                    aria-label="Comenzar">Comenzar Ejercicios</button>
+            </section>
+
+            <!-- Slides 2, 3, 4 se insertarán aquí dinámicamente -->
+
+            <!-- Slide 5: Cierre -->
+            <section id="slide-5"
+                class="slide absolute inset-0 flex-col items-center justify-center p-8 text-center bg-surface-main overflow-y-auto custom-scrollbar">
+                <div
+                    class="w-24 h-24 bg-green-100 rounded-full flex items-center justify-center mb-6 text-green-600 shadow-inner">
+                    <svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="3">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"></path>
+                    </svg>
+                </div>
+                <h1 class="text-4xl md:text-5xl font-extrabold text-brand-primary mb-6">¡Felicidades!</h1>
+                <p class="text-xl md:text-2xl text-text-deep mb-10 max-w-3xl leading-relaxed">Has practicado con éxito
+                    la selección del gráfico adecuado según la estructura subyacente de los datos y el objetivo del
+                    problema.</p>
+                <button onclick="volverAlModulo()"
+                    class="px-10 py-5 bg-text-deep hover:bg-black text-white text-xl rounded-xl shadow font-bold transition-transform transform hover:scale-105">Volver
+                    al módulo teórico</button>
+            </section>
+
+        </div>
+
+    </main>
+
+    <script>
+        // Data and State
+        let currentSlide = 1;
+        const totalSlides = 5;
+
+        const ejercicios = {
+            lvl1: [
+                { id: '1-1', title: 'Tendencia de temperatura diaria', desc: 'Monitoreo de temperatura en una ciudad durante 31 días consecutivos. Se busca observar la evolución temporal continua.', x: 'días (1 a 31)', y: 'grados Celsius', correct: 'plot', failMsg: 'No se comparan categorías independientes (bar) y la temperatura es una función continua del tiempo, ideal para plot.' },
+                { id: '1-2', title: 'Ventas por producto', desc: 'Comparativa de ventas totales acumuladas de 6 productos diferentes en un trimestre.', x: 'nombres de los productos', y: 'unidades vendidas', correct: 'bar', failMsg: 'Los productos son categorías diferentes no relacionadas secuencialmente. "bar" permite compararlos como magnitudes independientes.' },
+                { id: '1-3', title: 'Evolución del precio del dólar', desc: 'Valor oficial del dólar día a día durante el año. Se busca ver las fluctuaciones.', x: 'días (fechas)', y: 'precio en pesos', correct: 'plot', failMsg: 'Es la clásica serie de tiempo. Unir los puntos con una línea (plot) facilita apreciar la tendencia global.' },
+                { id: '1-4', title: 'Puntaje promedio por sección', desc: 'Rendimiento en una prueba estandarizada de 4 secciones independientes (A, B, C y D) de un mismo nivel.', x: 'sección del curso', y: 'puntaje promedio', correct: 'bar', failMsg: 'Cada sección es un grupo discreto (categoría). La cantidad se visualiza con barras.' },
+                { id: '1-5', title: 'Crecimiento de una planta', desc: 'Altura de un brote medida cada fin de semana durante 2 meses para registrar su desarrollo.', x: 'semanas transcurridas', y: 'altura (cm)', correct: 'plot', failMsg: 'Es un progreso continuo en el tiempo, una serie temporal. Debe usarse "plot".' }
+            ],
+            lvl2: [
+                { id: '2-1', title: 'Horas de estudio vs Notas', desc: 'Analizar la posible correlación entre cuánto estudia cada alumno y la nota final que obtuvo, sin agrupar.', x: 'horas invertidas', y: 'nota final', correct: 'scatter', failMsg: 'Se buscan correlaciones entre dos métricas en múltiples sujetos independientes. "scatter" forma nubes de puntos.' },
+                { id: '2-2', title: 'Cantidad de matriculados por carrera', desc: 'Total inscritos en las diferentes carreras de una facultad.', x: 'nombre de la carrera', y: 'cantidad de alumnos', correct: 'bar', failMsg: 'Cantidades separadas por categoría. Se usa "bar".' },
+                { id: '2-3', title: 'Nivel de stock en bodega', desc: 'Inventario de una pieza que se mantiene constante hasta que se realiza un consumo, cayendo abruptamente.', x: 'días corrientes', y: 'unidades en stock', correct: 'step', failMsg: 'La pendiente no cambia suavemente entre días (plot). El valor se mantiene y da "saltos". Se prefiere "step".' },
+                { id: '2-4', title: 'Rendimiento de 5 modelos de IA', desc: 'Tasa de éxito (Accuracy) comparativa entre los algoritmos A, B, C, D y E en un mismo problema.', x: 'nombre de algoritmo', y: 'accuracy %', correct: 'bar', failMsg: 'Los algoritmos son opciones. Las barras permiten comparar estos volúmenes directamente.' },
+                { id: '2-5', title: 'Ganancias mensuales esperadas vs reales', desc: 'Comparativa de evolución de dinero a lo largo del año calendario actual.', x: 'mes', y: 'pesos chilenos', correct: 'plot', failMsg: 'Los meses componen una secuencia temporal. Para ver la curva a lo largo del tiempo, "plot".' },
+                { id: '2-6', title: 'Edad vs Frecuencia Cardíaca', desc: 'Mediciones tomadas a 100 personas de distintas edades para ver si se agrupan en algún patrón biológico.', x: 'edad en años', y: 'pulsaciones ppm', correct: 'scatter', failMsg: 'Buscamos patrones o concentraciones en dos variables numéricas, sin orden temporal. "scatter".' }
+            ],
+            lvl3: [
+                { id: '3-1', title: 'Peso vs Altura en deportistas', desc: 'Cruce de dos mediciones físicas en 200 atletas olímpicos.', x: 'peso (kg)', y: 'altura (cm)', correct: 'scatter', failMsg: 'Un plot formaría una maraña sin sentido, bar no sirve para pares bi-numéricos. "scatter" permite observar la distribución espacial y correlacional.' },
+                { id: '3-2', title: 'Tarifa de estacionamiento por hora', desc: 'Tarifa que cobra valores enteros dependientes de rangos de minutos (ej. $1000 de 0 a 60 min, $2000 de 61 a 120, etc).', x: 'tiempo (minutos)', y: 'costo acumulado', correct: 'step', failMsg: 'El cobro avanza en escalones exactos manteniendo planos intermedios. No es línea proporcional (plot). Debe ser modelado con "step".' },
+                { id: '3-3', title: 'Espectro de ondas sonoras', desc: 'Alta densidad de puntos a lo largo del tiempo de un sonido analógico convertido a digital.', x: 'tiempo (ms)', y: 'amplitud oscilante', correct: 'plot', failMsg: 'Representación física que forma ondas sinusoidales en un eje temporal continuo. "plot" dibuja perfectamente esa línea.' },
+                { id: '3-4', title: 'Bugs fatales en Módulos de Software', desc: 'Total de caídas detectadas en 5 diferentes microservicios (Backend, Auth, DB, Frontend, Queue) el mes pasado.', x: 'nombre de servicio', y: 'caídas registradas', correct: 'bar', failMsg: 'Los microservicios son elementos discretos inconexos. "bar" es la forma predeterminada para conteo por categorías.' },
+                { id: '3-5', title: 'Registro de valor de Ethereum', desc: 'El precio segundo a segundo de una criptomoneda altamente volátil en un día muy agitado.', x: 'tiempo (hora)', y: 'precio US$', correct: 'plot', failMsg: 'Puramente una serie de tiempo. Unir la varianza con "plot" ayuda a ver el recorrido histórico.' },
+                { id: '3-6', title: 'Mapa sísmico: Latitud y Longitud', desc: 'Ubicación de coordenadas geográficas de sismos de magnitud >6 registrados globalmente.', x: 'longitud', y: 'latitud', correct: 'scatter', failMsg: 'Se necesita posicionar cada suceso como un punto independiente sobre los ejes espaciales. "scatter".' },
+                { id: '3-7', title: 'Estados lógicos de un procesador', desc: 'Señal digital que salta inmediatamente entre 0 y 5 Voltios y se mantiene plana allí durante ciclos.', x: 'tiempo (ns)', y: 'voltaje (V)', correct: 'step', failMsg: 'Las señales digitales son el ejemplo base de funciones escalón (cambios instantáneos y estados constantes). Requiere "step".' }
+            ]
+        };
+
+        const slidesData = [
+            { nivel: 1, id: 'lvl1', titulo: 'Ejercicios: Nivel Fácil' },
+            { nivel: 2, id: 'lvl2', titulo: 'Ejercicios: Nivel Medio' },
+            { nivel: 3, id: 'lvl3', titulo: 'Ejercicios: Nivel Difícil' }
+        ];
+
+        // Generator functions
+        function generarHTMLNiveles() {
+            const slide5 = document.getElementById('slide-5');
+
+            slidesData.forEach((sd, index) => {
+                const slideIndex = index + 2;
+                const html = `
+                <section id="slide-${slideIndex}" class="slide absolute inset-0 flex-col pt-6 px-4 md:px-8 bg-surface-main pb-[110px] overflow-hidden">
+                    <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-4 flex-shrink-0">
+                        <h2 class="text-3xl lg:text-4xl font-extrabold text-brand-primary drop-shadow-sm">${sd.titulo}</h2>
+                        <button onclick="verificarNivel('${sd.nivel}', '${sd.id}')" class="px-8 py-3 bg-text-deep text-white rounded-xl hover:bg-black font-semibold shadow-md transition-transform transform hover:-translate-y-0.5 focus:ring-4 focus:ring-gray-300">Verificar Resultados</button>
+                    </div>
+                    
+                    <div class="flex flex-col lg:flex-row gap-6 flex-grow min-h-0 overflow-hidden">
+                        
+                        <!-- Panel Izquierdo: Pool -->
+                        <div class="lg:w-1/3 flex flex-col bg-surface-muted border border-border-light rounded-xl shadow-sm overflow-hidden min-h-[220px] lg:min-h-0 flex-shrink-0 lg:flex-shrink">
+                            <div class="p-3 bg-white border-b border-border-light shadow-sm z-10 font-bold text-text-deep text-lg flex items-center justify-between gap-2">
+                                <div class="flex items-center gap-2">
+                                    <svg class="w-5 h-5 text-action-default" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 002-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path></svg>
+                                    Arrastra las tarjetas:
+                                </div>
+                                <span class="bg-gray-200 text-gray-700 text-xs px-2 py-1 rounded-full px-2" id="badge-${sd.id}">${ejercicios[sd.id].length}</span>
+                            </div>
+                            <div id="pool-${sd.id}" class="flex-grow p-3 sm:p-4 overflow-y-auto overflow-x-hidden space-y-3 sortable-list custom-scrollbar bg-[#f8fafc]"></div>
+                        </div>
+                        
+                        <!-- Panel Derecho: Dropzones -->
+                        <div class="lg:w-2/3 flex flex-col gap-4 overflow-y-auto overflow-x-hidden custom-scrollbar pr-1 lg:pr-3 lg:h-full pb-4">
+                            
+                            <div id="feedback-${sd.id}" class="hidden flex-shrink-0 rounded-lg p-4 shadow-sm border border-l-4 text-sm transition-all duration-300 transform scale-95 origin-top" role="alert" aria-live="polite"></div>
+                            
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 flex-grow min-h-0">
+                                <!-- Plot -->
+                                <div class="flex flex-col bg-surface-muted border-2 border-brand-primary rounded-xl overflow-hidden shadow-sm lg:h-full">
+                                    <div class="bg-brand-primary text-white font-bold py-2.5 px-4 text-center tracking-wider flex justify-center items-center gap-2 text-[15px] z-10 shadow-sm">
+                                        <svg class="w-5 h-5 opacity-90" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 12l3-3 3 3 4-4M8 21l4-4 4 4M3 4h18M4 4h16v12a1 1 0 01-1 1H5a1 1 0 01-1-1V4z"></path></svg>
+                                        plot <span class="font-normal opacity-80">(líneas)</span>
+                                    </div>
+                                    <div id="${sd.id}-plot" class="flex-grow p-3 space-y-3 sortable-list dropzone bg-white/60 custom-scrollbar" data-tipo="plot"></div>
+                                </div>
+                                
+                                <!-- Bar -->
+                                <div class="flex flex-col bg-surface-muted border-2 border-brand-accent rounded-xl overflow-hidden shadow-sm lg:h-full">
+                                    <div class="bg-brand-accent text-white font-bold py-2.5 px-4 text-center tracking-wider flex justify-center items-center gap-2 text-[15px] z-10 shadow-sm">
+                                        <svg class="w-5 h-5 opacity-90" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path></svg>
+                                        bar <span class="font-normal opacity-80">(barras)</span>
+                                    </div>
+                                    <div id="${sd.id}-bar" class="flex-grow p-3 space-y-3 sortable-list dropzone bg-white/60 custom-scrollbar" data-tipo="bar"></div>
+                                </div>
+                                
+                                <!-- Scatter -->
+                                <div class="flex flex-col bg-surface-muted border-2 border-action-default rounded-xl overflow-hidden shadow-sm lg:h-full">
+                                    <div class="bg-action-default text-white font-bold py-2.5 px-4 text-center tracking-wider flex justify-center items-center gap-2 text-[15px] z-10 shadow-sm">
+                                        <svg class="w-5 h-5 opacity-90" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z"></path></svg>
+                                        scatter <span class="font-normal opacity-80" style="letter-spacing: -0.01em;">(dispersión)</span>
+                                    </div>
+                                    <div id="${sd.id}-scatter" class="flex-grow p-3 space-y-3 sortable-list dropzone bg-white/60 custom-scrollbar" data-tipo="scatter"></div>
+                                </div>
+                                
+                                <!-- Step -->
+                                <div class="flex flex-col bg-surface-muted border-2 border-action-hover rounded-xl overflow-hidden shadow-sm lg:h-full">
+                                    <div class="bg-action-hover text-white font-bold py-2.5 px-4 text-center tracking-wider flex justify-center items-center gap-2 text-[15px] z-10 shadow-sm">
+                                        <svg class="w-5 h-5 opacity-90" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path></svg>
+                                        step <span class="font-normal opacity-80">(escalera)</span>
+                                    </div>
+                                    <div id="${sd.id}-step" class="flex-grow p-3 space-y-3 sortable-list dropzone bg-white/60 custom-scrollbar" data-tipo="step"></div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                    </div>
+                </section>
+                `;
+                slide5.insertAdjacentHTML('beforebegin', html);
+            });
+        }
+
+        function createCard(item, dataKey) {
+            return `
+                <div class="tarjeta relative bg-white border border-border-light rounded-lg shadow-sm cursor-move select-none transition-all hover:border-brand-accent focus:outline-none focus:ring-2 focus:ring-brand-accent group" data-id="${item.id}" data-correct="${item.correct}" tabindex="0" role="button" aria-expanded="false" title="Arrastra esta tarjeta o haz click para ver detalles">
+                    <div class="p-3.5 font-bold text-text-deep pointer-events-none pr-10 text-[15px] leading-tight">
+                        ${item.title}
+                    </div>
+                    <!-- Toggle icon -->
+                    <div class="absolute right-3.5 top-3.5 text-text-muted transition-transform duration-300 pointer-events-none toggle-icon group-hover:text-action-default group-hover:scale-110">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"></path></svg>
+                    </div>
+                    
+                    <div class="hidden overflow-hidden transition-all duration-300 card-details border-t border-border-light bg-[#f8fafc]">
+                        <div class="p-3.5">
+                            <p class="mb-3 text-[14px] text-text-deep leading-snug">${item.desc}</p>
+                            
+                            <!-- VScode Light+ / Mac Console estilo minimamente integrado -->
+                            <div class="bg-[#ffffff] border border-[#e2e8f0] rounded-lg overflow-hidden shadow-sm shadow-inner transition-colors">
+                                <div class="bg-[#f1f5f9] border-b border-[#e2e8f0] px-3 py-1.5 flex items-center h-7 gap-2">
+                                    <div class="flex gap-1.5 opacity-80">
+                                        <span class="macos-btn macos-close m-0"></span>
+                                        <span class="macos-btn macos-min m-0"></span>
+                                        <span class="macos-btn macos-max m-0"></span>
+                                    </div>
+                                    <span class="ml-1 text-[11px] text-gray-500 font-sans tracking-tight font-medium opacity-90">datos.py</span>
+                                </div>
+                                <div class="p-2.5 font-mono text-sm tracking-tight space-y-1">
+                                    <div><span class="text-[#0000ff]">x</span> <span class="text-gray-500">=</span> <span class="text-[#a31515]">'${item.x}'</span></div>
+                                    <div><span class="text-[#0000ff]">y</span> <span class="text-gray-500">=</span> <span class="text-[#a31515]">'${item.y}'</span></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function poblarTarjetas() {
+            slidesData.forEach(sd => {
+                const pool = document.getElementById(`pool-${sd.id}`);
+                ejercicios[sd.id].forEach(item => {
+                    pool.insertAdjacentHTML('beforeend', createCard(item, sd.id));
+                });
+            });
+        }
+
+        // Behavior Handlers
+        function setupHandlers() {
+            // Expand card details on click
+            document.addEventListener('click', (e) => {
+                const tarjeta = e.target.closest('.tarjeta');
+                if (tarjeta) {
+                    const details = tarjeta.querySelector('.card-details');
+                    const icon = tarjeta.querySelector('.toggle-icon');
+                    if (details) {
+                        const isHidden = details.classList.contains('hidden');
+                        if (isHidden) {
+                            details.classList.remove('hidden');
+                            icon.classList.add('rotate-180');
+                            tarjeta.setAttribute('aria-expanded', 'true');
+                        } else {
+                            details.classList.add('hidden');
+                            icon.classList.remove('rotate-180');
+                            tarjeta.setAttribute('aria-expanded', 'false');
+                        }
+                    }
+                }
+            });
+
+            // Init Sortables
+            slidesData.forEach(sd => {
+                const containers = [
+                    document.getElementById(`pool-${sd.id}`),
+                    document.getElementById(`${sd.id}-plot`),
+                    document.getElementById(`${sd.id}-bar`),
+                    document.getElementById(`${sd.id}-scatter`),
+                    document.getElementById(`${sd.id}-step`)
+                ];
+
+                containers.forEach(container => {
+                    if (container) {
+                        new Sortable(container, {
+                            group: `ejercicios-${sd.id}`,
+                            animation: 150,
+                            ghostClass: 'sortable-ghost',
+                            easing: "cubic-bezier(1, 0, 0, 1)",
+                            delay: window.innerWidth < 1024 ? 120 : 0,
+                            delayOnTouchOnly: true,
+                            onStart: function (evt) {
+                                // Close card if dragged
+                                const details = evt.item.querySelector('.card-details');
+                                const icon = evt.item.querySelector('.toggle-icon');
+                                if (details && !details.classList.contains('hidden')) {
+                                    details.classList.add('hidden');
+                                    icon.classList.remove('rotate-180');
+                                    evt.item.setAttribute('aria-expanded', 'false');
+                                }
+                                document.body.style.cursor = 'grabbing';
+                            },
+                            onEnd: function () {
+                                document.body.style.cursor = 'default';
+                                updateCountBadge(sd.id);
+                            }
+                        });
+                    }
+                });
+            });
+        }
+
+        function updateCountBadge(levelId) {
+            const badge = document.getElementById(`badge-${levelId}`);
+            if (badge) {
+                const poolCount = document.getElementById(`pool-${levelId}`).children.length;
+                badge.innerText = poolCount;
+                if (poolCount === 0) {
+                    badge.classList.remove('bg-gray-200', 'text-gray-700');
+                    badge.classList.add('bg-green-100', 'text-green-700');
+                } else {
+                    badge.classList.add('bg-gray-200', 'text-gray-700');
+                    badge.classList.remove('bg-green-100', 'text-green-700');
+                }
+            }
+        }
+
+        function findItem(dataKey, id) {
+            return ejercicios[dataKey].find(item => item.id === id);
+        }
+
+        // Logic
+        function verificarNivel(nivelNum, levelId) {
+            const pool = document.getElementById(`pool-${levelId}`);
+            let errores = 0;
+            const retroalimentacion = [];
+            const types = ['plot', 'bar', 'scatter', 'step'];
+
+            // Loop through containers and validate
+            types.forEach(type => {
+                const container = document.getElementById(`${levelId}-${type}`);
+                const cards = Array.from(container.children);
+
+                cards.forEach(card => {
+                    if (card.dataset.correct !== type) {
+                        pool.appendChild(card); // Move visual card to pool
+                        errores++;
+                        const item = findItem(levelId, card.dataset.id);
+                        retroalimentacion.push(`<li class="mb-2"><strong>${item.title}:</strong> Debería ser <span class="uppercase font-bold text-gray-900">${item.correct}</span>. ${item.failMsg}</li>`);
+                    }
+                });
+            });
+
+            // Trigger reflow for animations
+            updateCountBadge(levelId);
+
+            // Compose Feedback Message
+            const feedbackDiv = document.getElementById(`feedback-${levelId}`);
+            feedbackDiv.classList.remove('hidden', 'scale-95');
+
+            // Reset colors
+            feedbackDiv.className = feedbackDiv.className.replace(/\bbg-\w+-\d+\b/g, '')
+                .replace(/\bborder-\w+-\d+\b/g, '')
+                .replace(/\btext-\w+-\d+\b/g, '');
+
+            feedbackDiv.classList.add('flex-shrink-0', 'rounded-lg', 'p-4', 'shadow-sm', 'border', 'border-l-4', 'text-sm', 'transition-all', 'duration-300', 'transform', 'scale-100', 'origin-top', 'mb-4');
+
+            if (errores === 0 && pool.children.length === 0) {
+                const btnText = levelId === 'lvl3' ? 'Ir al cierre' : 'Siguiente dificultad';
+                feedbackDiv.classList.add('bg-green-50', 'border-green-500', 'text-green-900');
+                feedbackDiv.innerHTML = `
+                    <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 w-full">
+                        <div class="flex items-start gap-3">
+                            <svg class="w-6 h-6 text-green-600 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                            <div>
+                                <p class="font-extrabold text-base mb-0.5">¡Perfecto!</p>
+                                <p class="opacity-90">Has clasificado todas las tarjetas correctamente en este nivel. Ya puedes avanzar.</p>
+                            </div>
+                        </div>
+                        <button onclick="nextSlide()" class="self-end sm:self-auto px-6 py-2.5 bg-green-600 hover:bg-green-700 text-white font-bold rounded-xl shadow-md transition-transform transform hover:scale-105 whitespace-nowrap">${btnText}</button>
+                    </div>
+                `;
+            } else if (errores === 0 && pool.children.length > 0) {
+                feedbackDiv.classList.add('bg-yellow-50', 'border-yellow-400', 'text-yellow-900');
+                feedbackDiv.innerHTML = `
+                    <div class="flex items-start gap-3">
+                        <svg class="w-6 h-6 text-yellow-600 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+                        <div>
+                            <p class="font-extrabold text-base mb-0.5">Vas por buen camino</p>
+                            <p class="opacity-90 text-[13.5px]">La clasificación actual es correcta, pero aún te faltan <span class="font-bold">${pool.children.length}</span> tarjetas por colocar.</p>
+                        </div>
+                    </div>
+                `;
+            } else {
+                feedbackDiv.classList.add('bg-red-50', 'border-red-500', 'text-red-900');
+                feedbackDiv.innerHTML = `
+                    <div class="flex items-start gap-3">
+                        <svg class="w-6 h-6 text-red-600 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                        <div class="w-full">
+                            <p class="font-bold text-base mb-2">Tienes ${errores} tarjeta(s) en la categoría equivocada:</p>
+                            <ul class="list-disc pl-5 opacity-90 text-[13.5px]">${retroalimentacion.join('')}</ul>
+                            <p class="mt-3 font-medium text-red-800 text-[13.5px]">Las tarjetas incorrectas han vuelto al panel de disponibles.</p>
+                        </div>
+                    </div>
+                `;
+            }
+
+            // Scroll to top of right panel so user can see feedback on mobile
+            const rightPanel = document.getElementById(`feedback-${levelId}`).parentElement;
+            rightPanel.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Navigation Controller
+        function switchSlide(targetIdx) {
+            document.querySelectorAll('.slide').forEach((slide, index) => {
+                if (index + 1 === targetIdx) {
+                    slide.classList.add('active');
+                    slide.classList.remove('hidden');
+                } else {
+                    slide.classList.remove('active');
+                    slide.classList.add('hidden');
+                }
+            });
+        }
+
+        function nextSlide() {
+            if (currentSlide < totalSlides) {
+                currentSlide++;
+                switchSlide(currentSlide);
+            }
+        }
+
+        function volverAlModulo() {
+            alert("Redirigiendo al módulo teórico Módulo 01... (Funcionalidad final dependiendo del entorno LMS)");
+        }
+
+        // Initialize execution chain
+        document.addEventListener('DOMContentLoaded', () => {
+            generarHTMLNiveles();
+            poblarTarjetas();
+            setupHandlers();
+        });
+    </script>
+</body>
+
+</html>
