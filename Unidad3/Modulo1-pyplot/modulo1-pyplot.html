@@ -1582,6 +1582,7 @@
                                     x = [<span id="c-ar-x" class="text-green-600 font-bold">1, 2, 3, 4</span>]<br>
                                     y_min = [<span id="c-ar-ymin" class="text-green-600 font-bold">10, 20, 15, 25</span>]<br>
                                     y_max = [<span id="c-ar-ymax" class="text-green-600 font-bold">30, 40, 35, 45</span>]<br><br>
+                                    <span class="text-slate-400"># Relleno entre curvas</span><br>
                                     plt.<span class="text-blue-600 font-bold">fill_between</span>(x, y_min, y_max, <br>
                                     &nbsp;&nbsp;alpha=<span id="c-ar-a" class="text-purple-600 font-bold">0.3</span>, <br>
                                     &nbsp;&nbsp;color='<span id="c-ar-c" class="text-green-600 font-bold">#4D96FF</span>', <br>
@@ -1656,7 +1657,7 @@
                     </div>
                     
                     <!-- Right Column: Visualization -->
-                    <div class="md:w-3/5 bg-surface-muted rounded-xl p-4 flex flex-col justify-center min-h-[300px] h-[350px] md:h-auto relative">
+                    <div class="md:w-3/5 bg-surface-muted rounded-xl p-4 flex flex-col justify-center min-h-[300px] h-[350px] md:h-auto relative border border-slate-100">
                         <div class="w-full h-full relative">
                             <canvas id="chart-ar"></canvas>
                         </div>
@@ -1668,13 +1669,13 @@
                     document.getElementById('hide-code-area').addEventListener('click', () => overlay.classList.add('hidden'));
 
                     const update = () => {
-                        const x = document.getElementById('ar-x').value.split(',').map(s => s.trim());
+                        const xLabels = document.getElementById('ar-x').value.split(',').map(s => s.trim());
                         const ymin = document.getElementById('ar-ymin').value.split(',').map(Number);
                         const ymax = document.getElementById('ar-ymax').value.split(',').map(Number);
-                        const a = document.getElementById('ar-a').value;
+                        const a = parseFloat(document.getElementById('ar-a').value) || 0;
                         const c = document.getElementById('ar-c').value;
                         const ec = document.getElementById('ar-ec').value;
-                        const lw = document.getElementById('ar-lw').value;
+                        const lw = parseFloat(document.getElementById('ar-lw').value) || 0;
                         const l = document.getElementById('ar-l').value;
 
                         // Helper to hex to rgba
@@ -1689,7 +1690,7 @@
                         const rgba = hexToRgba(c, a);
 
                         // Update Code Overlay
-                        document.getElementById('c-ar-x').textContent = x.join(', ');
+                        document.getElementById('c-ar-x').textContent = xLabels.join(', ');
                         document.getElementById('c-ar-ymin').textContent = ymin.join(', ');
                         document.getElementById('c-ar-ymax').textContent = ymax.join(', ');
                         document.getElementById('c-ar-a').textContent = a;
@@ -1699,11 +1700,11 @@
                         document.getElementById('c-ar-l').textContent = l;
 
                         if (chartInstance) {
-                            chartInstance.data.labels = x;
+                            chartInstance.data.labels = xLabels;
                             chartInstance.data.datasets[0].data = ymin;
                             chartInstance.data.datasets[1].data = ymax;
                             chartInstance.data.datasets[1].backgroundColor = rgba;
-                            chartInstance.data.datasets[1].borderColor = ec;
+                            chartInstance.data.datasets[1].borderColor = ec === 'none' ? 'transparent' : ec;
                             chartInstance.data.datasets[1].borderWidth = lw;
                             chartInstance.data.datasets[1].label = l;
                             chartInstance.update();
@@ -1711,7 +1712,7 @@
                             initChart('chart-ar', {
                                 type: 'line',
                                 data: {
-                                    labels: x,
+                                    labels: xLabels,
                                     datasets: [
                                         {
                                             label: 'Base',
@@ -1723,13 +1724,12 @@
                                         {
                                             label: l,
                                             data: ymax,
-                                            borderColor: ec,
+                                            borderColor: ec === 'none' ? 'transparent' : ec,
                                             borderWidth: lw,
                                             backgroundColor: rgba,
-                                            fill: 0, // Fill to dataset index 0
+                                            fill: 0,
                                             tension: 0,
-                                            pointRadius: 4,
-                                            pointBackgroundColor: ec
+                                            pointRadius: 0 // No dots as requested ("no se vea la recta")
                                         }
                                     ]
                                 },
@@ -1737,7 +1737,11 @@
                                     responsive: true,
                                     maintainAspectRatio: false,
                                     plugins: {
-                                        legend: { display: true, position: 'top' },
+                                        legend: {
+                                            display: true,
+                                            position: 'top',
+                                            onClick: null // Legend items are non-clickable
+                                        },
                                         title: { display: true, text: 'Rango entre Curvas (.fill_between)' }
                                     },
                                     scales: {
@@ -1845,35 +1849,77 @@
                             <div class="rounded-lg overflow-x-auto border shadow-inner bg-slate-50 font-mono text-[11px] p-4 flex-grow custom-scroll">
                                 <div class="leading-relaxed text-slate-700 whitespace-nowrap">
                                     <span class="text-pink-600 font-bold">import</span> matplotlib.pyplot <span class="text-pink-600 font-bold">as</span> plt<br><br>
-                                    x = [1, 2, 3, 4, 5]<br>
-                                    y = [10, 15, 10, 20, 25]<br><br>
-                                    <span class="text-slate-400"># Gráfico escalonado</span><br>
-                                    plt.<span class="text-blue-600 font-bold">step</span>(x, y, where='<span id="c-w" class="text-green-600 font-bold">mid</span>')<br><br>
-                                    plt.<span class="text-blue-600 font-bold">title</span>('Cambios Discretos')<br>
+                                    dias = [<span id="c-st-x" class="text-green-600 font-bold">1, 2, 3, 4, 5, 6, 7</span>]<br>
+                                    precio = [<span id="c-st-y" class="text-green-600 font-bold">100, 100, 120, 120, 95, 95, 110</span>]<br><br>
+                                    plt.<span class="text-blue-600 font-bold">step</span>(dias, precio, <br>
+                                    &nbsp;&nbsp;where='<span id="c-st-w" class="text-green-600 font-bold">post</span>', <br>
+                                    &nbsp;&nbsp;color='<span id="c-st-c" class="text-green-600 font-bold">#4D96FF</span>', <br>
+                                    &nbsp;&nbsp;linewidth=<span id="c-st-lw" class="text-purple-600 font-bold">2.5</span>, <br>
+                                    &nbsp;&nbsp;linestyle='<span id="c-st-ls" class="text-pink-600 font-bold">-</span>', <br>
+                                    &nbsp;&nbsp;label='<span id="c-st-l" class="text-orange-600 font-bold">Precio del producto</span>')<br><br>
+                                    plt.<span class="text-blue-600 font-bold">title</span>('Variación de Precio del Producto')<br>
+                                    plt.<span class="text-blue-600 font-bold">xlabel</span>('Días')<br>
+                                    plt.<span class="text-blue-600 font-bold">ylabel</span>('Precio ($)')<br>
+                                    plt.<span class="text-blue-600 font-bold">legend</span>()<br>
                                     plt.<span class="text-blue-600 font-bold">show</span>()
                                 </div>
                             </div>
                         </div>
 
-                        <h2 class="text-2xl font-bold text-brand-primary shrink-0">Gráficos de Escalera (.step)</h2>
+                        <h2 class="text-2xl font-bold text-brand-primary shrink-0">Personalización de .step()</h2>
                         
-                        <div class="space-y-4 text-sm text-text-deep leading-relaxed shrink-0">
+                        <div class="space-y-4 text-xs text-text-deep leading-relaxed shrink-0">
                             <p>
-                                <strong class="text-brand-primary">Datos Discretos:</strong> Mientras que <code class="bg-gray-100 px-1 rounded">plt.plot()</code> interpola valores suavemente entre puntos, <code class="bg-gray-100 px-1 rounded">plt.step()</code> mantiene el valor constante hasta el siguiente punto.
+                                <code class="bg-gray-100 px-1 rounded font-bold">.step()</code> muestra datos que cambian abruptamente, manteniendo el valor constante hasta el siguiente punto:
                             </p>
-                            <p>
-                                Es fundamental para visualizar procesos que cambian en momentos específicos (como stocks de inventario o estados de una máquina) en lugar de cambios graduales. El parámetro <code class="bg-gray-100 px-1 rounded">where</code> define dónde ocurre el salto.
-                            </p>
+                            <ul class="list-none space-y-1 ml-1">
+                                <li><span class="text-brand-accent font-bold">• x / y:</span> listas de valores (obligatorios).</li>
+                                <li><span class="text-brand-accent font-bold">• where:</span> dónde ocurre el escalón ('pre', 'post', 'mid').</li>
+                                <li><span class="text-brand-accent font-bold">• color:</span> color de la línea.</li>
+                                <li><span class="text-brand-accent font-bold">• linewidth:</span> grosor de la línea.</li>
+                                <li><span class="text-brand-accent font-bold">• linestyle:</span> estilo (sólida, punteada, etc).</li>
+                                <li><span class="text-brand-accent font-bold">• label:</span> identificación para la leyenda.</li>
+                            </ul>
                         </div>
 
-                        <div class="bg-surface-muted p-4 rounded-lg border border-border-light space-y-4 shrink-0">
-                            <div class="space-y-1">
-                                <label class="text-[10px] font-bold text-slate-500 uppercase tracking-wider">Punto de transición (where)</label>
-                                <select id="st-w" class="w-full border rounded text-xs p-2 focus:ring-2 focus:ring-brand-primary/20 outline-none bg-white">
-                                    <option value="mid">En medio (mid)</option>
-                                    <option value="before">Antes del punto (pre)</option>
-                                    <option value="after">Después del punto (post)</option>
-                                </select>
+                        <div class="bg-surface-muted p-3 rounded-lg border border-border-light space-y-2 shrink-0">
+                            <div class="grid grid-cols-1 gap-2">
+                                <div>
+                                    <label class="text-[9px] font-bold text-slate-500 uppercase">Días (X) / Precio (Y)</label>
+                                    <div class="flex gap-2">
+                                        <input type="text" id="st-x" value="1, 2, 3, 4, 5, 6, 7" class="w-1/2 border rounded text-[10px] p-1 outline-none">
+                                        <input type="text" id="st-y" value="100, 100, 120, 120, 95, 95, 110" class="w-1/2 border rounded text-[10px] p-1 outline-none">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="grid grid-cols-2 gap-2">
+                                <div>
+                                    <label class="text-[9px] font-bold text-slate-500 uppercase">Transición (where) / Color</label>
+                                    <div class="flex gap-1">
+                                        <select id="st-w" class="w-1/2 border rounded text-[10px] p-1 outline-none bg-white">
+                                            <option value="pre">pre</option>
+                                            <option value="post" selected>post</option>
+                                            <option value="mid">mid</option>
+                                        </select>
+                                        <input type="color" id="st-c" value="#4D96FF" class="w-1/2 h-7 rounded p-0 border-none cursor-pointer">
+                                    </div>
+                                </div>
+                                <div>
+                                    <label class="text-[9px] font-bold text-slate-500 uppercase">Grosor / Estilo</label>
+                                    <div class="flex gap-1">
+                                        <input type="number" id="st-lw" value="2.5" step="0.5" min="0" class="w-1/2 border rounded text-[10px] p-1 outline-none">
+                                        <select id="st-ls" class="w-1/2 border rounded text-[10px] p-1 outline-none bg-white">
+                                            <option value="-">- (Solid)</option>
+                                            <option value="--">-- (Dashed)</option>
+                                            <option value="-.">-. (Dashdot)</option>
+                                            <option value=":">: (Dotted)</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
+                                <label class="text-[9px] font-bold text-slate-500 uppercase">Etiqueta (label)</label>
+                                <input type="text" id="st-l" value="Precio del producto" class="w-full border rounded text-[10px] p-1 outline-none">
                             </div>
                         </div>
 
@@ -1896,109 +1942,358 @@
                     document.getElementById('hide-code-step').addEventListener('click', () => overlay.classList.add('hidden'));
 
                     const update = () => {
+                        const x = document.getElementById('st-x').value.split(',').map(s => s.trim());
+                        const y = document.getElementById('st-y').value.split(',').map(Number);
                         const w = document.getElementById('st-w').value;
-                        const cjsW = w === 'before' ? 'before' : (w === 'after' ? 'after' : 'middle');
-                        document.getElementById('c-w') && (document.getElementById('c-w').textContent = w);
+                        const c = document.getElementById('st-c').value;
+                        const lw = parseFloat(document.getElementById('st-lw').value) || 0;
+                        const ls = document.getElementById('st-ls').value;
+                        const l = document.getElementById('st-l').value;
+
+                        // Map where to Chart.js
+                        const cjsW = w === 'pre' ? 'before' : (w === 'post' ? 'after' : 'middle');
+
+                        // Map linestyle to borderDash
+                        const dashMap = { '-': [], '--': [10, 5], '-.': [10, 5, 2, 5], ':': [3, 3] };
+                        const dash = dashMap[ls] || [];
+
+                        // Update Code Overlay
+                        document.getElementById('c-st-x').textContent = x.join(', ');
+                        document.getElementById('c-st-y').textContent = y.join(', ');
+                        document.getElementById('c-st-w').textContent = w;
+                        document.getElementById('c-st-c').textContent = c;
+                        document.getElementById('c-st-lw').textContent = lw;
+                        document.getElementById('c-st-ls').textContent = ls;
+                        document.getElementById('c-st-l').textContent = l;
 
                         if (chartInstance) {
+                            chartInstance.data.labels = x;
+                            chartInstance.data.datasets[0].data = y;
                             chartInstance.data.datasets[0].stepped = cjsW;
+                            chartInstance.data.datasets[0].borderColor = c;
+                            chartInstance.data.datasets[0].borderWidth = lw;
+                            chartInstance.data.datasets[0].borderDash = dash;
+                            chartInstance.data.datasets[0].label = l;
                             chartInstance.update();
                         } else {
                             initChart('chart-st', {
                                 type: 'line',
                                 data: {
-                                    labels: ['T1', 'T2', 'T3', 'T4', 'T5'],
+                                    labels: x,
                                     datasets: [{
-                                        data: [10, 15, 12, 22, 20],
-                                        borderColor: '#6ea2ee',
-                                        backgroundColor: 'rgba(110, 162, 238, 0.1)',
+                                        label: l,
+                                        data: y,
+                                        borderColor: c,
+                                        borderWidth: lw,
+                                        borderDash: dash,
                                         stepped: cjsW,
-                                        pointRadius: 6,
-                                        pointBackgroundColor: '#003c58',
-                                        fill: false
+                                        pointRadius: 0, // Hidden points
+                                        fill: false,
+                                        tension: 0
                                     }]
                                 },
                                 options: {
                                     responsive: true,
                                     maintainAspectRatio: false,
-                                    plugins: { legend: { display: false } },
+                                    plugins: {
+                                        legend: {
+                                            display: true,
+                                            position: 'top',
+                                            onClick: null // Non-clickable
+                                        },
+                                        title: { display: true, text: 'Variación de Precio del Producto' }
+                                    },
                                     scales: {
-                                        y: { beginAtZero: true, grid: { color: '#f1f5f9' } },
-                                        x: { grid: { display: false } }
+                                        y: { beginAtZero: false, grid: { color: '#f1f5f9' }, title: { display: true, text: 'Precio ($)' } },
+                                        x: { grid: { color: '#f1f5f9' }, title: { display: true, text: 'Días' } }
                                     }
                                 }
                             });
                         }
                     };
-                    document.getElementById('st-w').addEventListener('change', update);
+                    ['st-x', 'st-y', 'st-w', 'st-c', 'st-lw', 'st-ls', 'st-l'].forEach(id => {
+                        const el = document.getElementById(id);
+                        el.addEventListener(el.tagName === 'SELECT' ? 'change' : 'input', update);
+                    });
                     update();
+                }
+            },
+            {
+                id: 'figsize-concept', render: () => `
+                <div class="flex flex-col md:flex-row h-full gap-8 overflow-hidden">
+                    <!-- Left Column: Detailed Text -->
+                    <div class="md:w-1/2 space-y-5 flex flex-col pr-2 overflow-y-auto custom-scroll text-text-deep">
+                        <h2 class="text-3xl font-bold text-brand-primary">Entendiendo figsize</h2>
+                        
+                        <div class="space-y-4 text-xs md:text-sm leading-relaxed">
+                            <p>
+                                El parámetro <code class="bg-gray-100 px-1 rounded font-bold">figsize=(ancho, alto)</code> define el tamaño total del "lienzo" (figure) en pulgadas. 
+                                Todos los gráficos creados dentro de la figura comparten ese mismo espacio.
+                            </p>
+                            <p class="text-slate-600 italic">
+                                <strong>figsize</strong> no cambia los datos ni el tipo de gráfico. Solo controla cuánto espacio físico hay disponible para mostrarlos.
+                            </p>
+
+                            <div class="space-y-2">
+                                <h3 class="text-base font-bold text-brand-primary border-b border-border-light pb-1">¿Qué controla?</h3>
+                                <ul class="list-none space-y-2">
+                                    <li class="bg-white p-2 rounded border border-border-light shadow-sm">
+                                        <span class="text-brand-accent font-bold block">Ancho (Width) → Espacio horizontal total.</span>
+                                        <span class="text-slate-500 text-xs">Afecta cuánto se “estiran” los gráficos hacia los lados.</span>
+                                    </li>
+                                    <li class="bg-white p-2 rounded border border-border-light shadow-sm">
+                                        <span class="text-brand-accent font-bold block">Alto (Height) → Espacio vertical total.</span>
+                                        <span class="text-slate-500 text-xs">Afecta cuánto espacio tienen títulos y ejes en altura.</span>
+                                    </li>
+                                </ul>
+                            </div>
+
+                             <div class="space-y-2">
+                                <h3 class="text-base font-bold text-brand-primary border-b border-border-light pb-1">¿Por qué es importante?</h3>
+                                <p>Cuando trabajas con múltiples gráficos (ej: 2x2), cada subplot recibe solo una parte del lienzo.</p>
+                                <div class="grid grid-cols-2 gap-2 text-xs">
+                                    <div class="bg-red-50 p-2 rounded text-red-800 border border-red-100">
+                                        <strong>Si es pequeño:</strong><br>
+                                        • Gráficos comprimidos.<br>
+                                        • Etiquetas superpuestas.<br>
+                                        • Lectura difícil.
+                                    </div>
+                                    <div class="bg-green-50 p-2 rounded text-green-800 border border-green-100">
+                                        <strong>Si es adecuado:</strong><br>
+                                        • Cada gráfico respira.<br>
+                                        • Información clara.<br>
+                                        • Legible.
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="p-3 bg-amber-50 border-l-4 border-amber-400 text-amber-900 text-xs italic">
+                                <strong>Advertencia:</strong> Si agregas muchos gráficos sin aumentar <code>figsize</code>, el problema no es el código, sino la falta de espacio. 
+                            </div>
+
+                            <div class="bg-surface-muted p-3 rounded-lg border border-border-light space-y-3">
+                                <div>
+                                    <label class="text-[10px] font-bold text-slate-500 uppercase flex justify-between">Ancho (Pulgadas) <span id="val-w">8</span></label>
+                                    <input type="range" id="size-w" min="4" max="14" value="8" step="0.5" class="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer">
+                                </div>
+                                <div>
+                                    <label class="text-[10px] font-bold text-slate-500 uppercase flex justify-between">Alto (Pulgadas) <span id="val-h">5</span></label>
+                                    <input type="range" id="size-h" min="3" max="10" value="5" step="0.5" class="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Right Column: Visualization -->
+                    <div class="md:w-1/2 bg-slate-100 rounded-xl p-4 flex items-center justify-center relative overflow-hidden border border-slate-200">
+                        <div id="fig-container" class="bg-white shadow-lg border border-slate-300 transition-all duration-300 grid grid-cols-2 grid-rows-2 gap-1 p-1" style="width: 480px; height: 300px;">
+                            <!-- Placeholder Charts representing a 2x2 grid -->
+                            <div class="bg-blue-50 border border-blue-100 flex items-center justify-center text-[8px] text-blue-300">Plot 1</div>
+                            <div class="bg-blue-50 border border-blue-100 flex items-center justify-center text-[8px] text-blue-300">Plot 2</div>
+                            <div class="bg-blue-50 border border-blue-100 flex items-center justify-center text-[8px] text-blue-300">Plot 3</div>
+                            <div class="bg-blue-50 border border-blue-100 flex items-center justify-center text-[8px] text-blue-300">Plot 4</div>
+                        </div>
+                        <div class="absolute bottom-2 right-2 text-[10px] text-slate-400 font-mono">Simulación Visual</div>
+                    </div>
+                </div>`,
+                script: () => {
+                    const wInput = document.getElementById('size-w');
+                    const hInput = document.getElementById('size-h');
+                    const container = document.getElementById('fig-container');
+                    const valW = document.getElementById('val-w');
+                    const valH = document.getElementById('val-h');
+
+                    const update = () => {
+                        const w = parseFloat(wInput.value);
+                        const h = parseFloat(hInput.value);
+
+                        valW.textContent = w;
+                        valH.textContent = h;
+
+                        // Increased Scale for visualization (60px per inch for fit)
+                        container.style.width = `${w * 60}px`;
+                        container.style.height = `${h * 60}px`;
+                    };
+
+                    wInput.addEventListener('input', update);
+                    hInput.addEventListener('input', update);
+                    update();
+                }
+            },
+            {
+                id: 'subplots-structure', render: () => `
+                <div class="flex flex-col md:flex-row h-full gap-8 overflow-hidden">
+                    <!-- Left Column: Detailed Text -->
+                    <div class="md:w-1/2 space-y-5 flex flex-col pr-2 overflow-y-auto custom-scroll text-text-deep">
+                        <h2 class="text-3xl font-bold text-brand-primary">Entendiendo plt.subplots()</h2>
+                        
+                        <div class="space-y-4 text-xs md:text-sm leading-relaxed">
+                            <p>
+                                <code class="bg-gray-100 px-1 rounded font-bold">fig, axes = plt.subplots()</code> es la forma moderna y recomendada para crear múltiples gráficos organizados dentro de un mismo lienzo.
+                            </p>
+                            <p class="text-slate-600">
+                                En lugar de crear figuras separadas, permite dividir el espacio en una estructura clara y controlada.
+                            </p>
+
+                            <div class="space-y-2">
+                                <h3 class="text-base font-bold text-brand-primary border-b border-border-light pb-1">¿Qué representa cada elemento?</h3>
+                                <ul class="list-none space-y-2">
+                                    <li class="bg-white p-2 rounded border border-border-light shadow-sm">
+                                        <span class="text-brand-accent font-bold">fig</span> → El lienzo completo donde viven todos los gráficos.
+                                    </li>
+                                    <li class="bg-white p-2 rounded border border-border-light shadow-sm">
+                                        <span class="text-brand-accent font-bold">axes</span> → Las áreas individuales donde se dibuja cada gráfico.
+                                        <span class="block text-xs text-slate-500 mt-1">Cuando hay más de un gráfico, <code>axes</code> se organiza como una estructura indexable (por ejemplo, una matriz).</span>
+                                    </li>
+                                </ul>
+                            </div>
+
+                            <div class="space-y-2">
+                                <h3 class="text-base font-bold text-brand-primary border-b border-border-light pb-1">¿Cómo se accede?</h3>
+                                <p>Debes usar indexación con corchetes:</p>
+                                <div class="flex gap-4">
+                                    <code class="bg-gray-100 px-2 py-1 rounded font-bold text-blue-600">axes[0]</code>
+                                    <code class="bg-gray-100 px-2 py-1 rounded font-bold text-blue-600">axes[0, 1]</code>
+                                </div>
+                                <p class="text-xs text-slate-500">Cada índice corresponde a una posición dentro de la grilla.</p>
+                            </div>
+
+                            <div class="p-3 bg-red-50 border-l-4 border-red-400 text-red-900 text-xs italic space-y-1">
+                                <strong>Advertencias importantes:</strong>
+                                <ul class="list-disc list-inside">
+                                    <li>Si el índice no existe, se producirá un error.</li>
+                                    <li>Crear múltiples <code>plt.figure()</code> genera gráficos separados y desorganizados.</li>
+                                    <li><code>plt.subplots()</code> mantiene todo estructurado dentro de un mismo objeto.</li>
+                                </ul>
+                            </div>
+
+                            <div class="bg-surface-muted p-4 rounded-lg border border-border-light">
+                                <label class="text-[10px] font-bold text-slate-500 uppercase block mb-2">Estructura de Ejemplo</label>
+                                <div class="flex gap-2">
+                                    <button class="px-3 py-1 bg-white border border-slate-300 rounded text-xs hover:bg-slate-50 focus:ring-2 focus:ring-brand-primary/50" onclick="updateStruct(1, 2)">1x2 (Fila)</button>
+                                    <button class="px-3 py-1 bg-white border border-slate-300 rounded text-xs hover:bg-slate-50 focus:ring-2 focus:ring-brand-primary/50" onclick="updateStruct(2, 1)">2x1 (Columna)</button>
+                                    <button class="px-3 py-1 bg-white border border-slate-300 rounded text-xs hover:bg-slate-50 focus:ring-2 focus:ring-brand-primary/50" onclick="updateStruct(2, 2)">2x2 (Grilla)</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Right Column: Visualization -->
+                    <div class="md:w-1/2 bg-slate-100 rounded-xl p-8 flex items-center justify-center relative overflow-hidden border border-slate-200">
+                        <div id="struct-container" class="bg-white shadow-lg border-2 border-slate-800 w-full max-w-[300px] aspect-square p-2 gap-2 grid">
+                            <!-- Dynamic Content -->
+                        </div>
+                        <div class="absolute top-2 left-2 text-[10px] font-mono font-bold text-slate-800">fig (Canvas)</div>
+                    </div>
+                </div>`,
+                script: () => {
+                    window.updateStruct = (rows, cols) => {
+                        const container = document.getElementById('struct-container');
+                        container.style.gridTemplateRows = `repeat(${rows}, 1fr)`;
+                        container.style.gridTemplateColumns = `repeat(${cols}, 1fr)`;
+                        container.innerHTML = '';
+
+                        for (let r = 0; r < rows; r++) {
+                            for (let c = 0; c < cols; c++) {
+                                const div = document.createElement('div');
+                                div.className = "bg-blue-50 border-2 border-dashed border-blue-300 rounded flex items-center justify-center text-blue-600 font-mono text-sm font-bold relative group hover:bg-blue-100 transition-colors cursor-default";
+
+                                let label = "";
+                                if (rows === 1 && cols === 1) label = "axes";
+                                else if (rows === 1 || cols === 1) label = `axes[${Math.max(r, c)}]`;
+                                else label = `axes[${r}, ${c}]`;
+
+                                div.innerHTML = `<span class="group-hover:scale-110 transition-transform">${label}</span>`;
+                                container.appendChild(div);
+                            }
+                        }
+                    };
+                    window.updateStruct(1, 2); // Default
                 }
             },
             {
                 id: 'subplots', render: () => `
                 <div class="flex flex-col md:flex-row gap-6 h-full min-h-0 bg-white rounded-2xl p-2 md:px-6 md:pb-6 md:pt-4 overflow-hidden">
                     <!-- Left Column: Explanation and Controls -->
-                    <div class="flex-1 md:w-2/5 space-y-4 overflow-y-auto pr-2 custom-scroll flex flex-col min-h-0 relative">
+                    <div class="flex-1 md:w-2/5 space-y-3 overflow-y-auto pr-2 custom-scroll flex flex-col min-h-0 relative">
                         <!-- Code Overlay -->
                         <div id="code-overlay-subplots" class="hidden absolute inset-0 bg-white z-20 flex flex-col p-4">
                             <div class="flex justify-between items-center mb-4 shrink-0">
                                 <h3 class="font-bold text-brand-primary">Código: Subplots Dinámicos</h3>
                                 <button id="hide-code-subplots" class="text-xs px-3 py-1 bg-slate-100 hover:bg-slate-200 rounded-md font-semibold text-slate-600 transition-colors">Volver &larr;</button>
                             </div>
-                            <div class="rounded-lg border shadow-inner bg-slate-50 font-mono text-[10px] p-4 flex-grow overflow-y-auto custom-scroll">
+                            <div class="rounded-lg border shadow-inner bg-slate-50 font-mono text-xs p-4 flex-grow overflow-y-auto custom-scroll">
                                 <div id="dynamic-code-subplots" class="leading-relaxed text-slate-700 whitespace-nowrap">
                                     <!-- Dynamic Code Generated Here -->
                                 </div>
                             </div>
                         </div>
 
-                        <h2 class="text-2xl font-bold text-brand-primary shrink-0">Laboratorio de Subplots</h2>
-                        
-                        <div class="space-y-4 text-sm text-text-deep leading-relaxed shrink-0">
-                            <p>
-                                <strong class="text-brand-primary">Control Total:</strong> La función <code class="bg-gray-100 px-1 rounded">plt.subplots(rows, cols)</code> permite crear grillas complejas. El parámetro <code class="bg-gray-100 px-1 rounded font-bold">figsize=(ancho, alto)</code> define el tamaño total del lienzo en pulgadas.
-                            </p>
-                        </div>
+                        <h2 class="text-xl font-bold text-brand-primary shrink-0">Laboratorio de Subplots</h2>
+                        <p class="text-[11px] text-text-deep leading-relaxed shrink-0 mb-1">
+                            Configura la grilla del lienzo, ajusta el tamaño visual (figsize) y observa cómo se organizan los gráficos según el espacio disponible.
+                        </p>
+                        <div class="bg-surface-muted p-3 rounded-lg border border-border-light space-y-3 shrink-0">
+                             <div class="flex justify-between items-center">
+                                <label class="text-[10px] font-bold text-slate-500 uppercase tracking-wider">Configuración Grilla</label>
+                                <div class="flex bg-slate-200 p-0.5 rounded-lg text-[9px] font-bold">
+                                    <button id="mode-auto" class="px-2 py-1 rounded-md bg-white shadow-sm transition-all">AUTO</button>
+                                    <button id="mode-manual" class="px-2 py-1 rounded-md text-slate-500 hover:text-slate-700 transition-all">MANUAL</button>
+                                </div>
+                             </div>
 
-                        <div class="bg-surface-muted p-4 rounded-lg border border-border-light space-y-4 shrink-0">
-                             <div class="grid grid-cols-2 gap-4">
+                             <div class="grid grid-cols-2 gap-3">
                                 <div>
-                                    <label class="text-[10px] font-bold text-slate-500 uppercase tracking-wider block mb-1">Filas (rows)</label>
-                                    <select id="sp-rows" class="w-full border rounded text-xs p-2 focus:ring-2 focus:ring-brand-primary/20 outline-none bg-white">
-                                        <option value="1">1 Fila</option>
+                                    <label class="text-[9px] font-bold text-slate-400 uppercase block mb-1">Filas</label>
+                                    <select id="sp-rows" class="w-full border rounded text-xs p-1.5 focus:ring-2 focus:ring-brand-primary/20 outline-none bg-white">
+                                        <option value="1" selected>1 Fila</option>
                                         <option value="2">2 Filas</option>
                                     </select>
                                 </div>
                                 <div>
-                                    <label class="text-[10px] font-bold text-slate-500 uppercase tracking-wider block mb-1">Columnas (cols)</label>
-                                    <select id="sp-cols" class="w-full border rounded text-xs p-2 focus:ring-2 focus:ring-brand-primary/20 outline-none bg-white">
-                                        <option value="1">1 Columna</option>
-                                        <option value="2" selected>2 Columnas</option>
-                                        <option value="3">3 Columnas</option>
+                                    <label class="text-[9px] font-bold text-slate-400 uppercase block mb-1">Columnas</label>
+                                    <select id="sp-cols" class="w-full border rounded text-xs p-1.5 focus:ring-2 focus:ring-brand-primary/20 outline-none bg-white">
+                                        <option value="1">1 Col</option>
+                                        <option value="2" selected>2 Cols</option>
+                                        <option value="3">3 Cols</option>
                                     </select>
                                 </div>
                              </div>
-                             
-                             <div id="axes-controls" class="space-y-2 pt-2 border-t border-slate-200">
+
+                             <!-- Manual Figsize Sliders (Hidden by default) -->
+                             <div id="figsize-controls" class="hidden pt-2 border-t border-slate-200 space-y-2">
+                                <div>
+                                    <label class="text-[10px] font-bold text-slate-500 uppercase flex justify-between">Ancho (Pulgadas) <span id="sp-val-w">10</span></label>
+                                    <input type="range" id="sp-size-w" min="4" max="15" value="10" step="0.5" class="w-full h-1.5 bg-slate-200 rounded-lg appearance-none cursor-pointer">
+                                </div>
+                                <div>
+                                    <label class="text-[10px] font-bold text-slate-500 uppercase flex justify-between">Alto (Pulgadas) <span id="sp-val-h">6</span></label>
+                                    <input type="range" id="sp-size-h" min="2" max="10" value="6" step="0.5" class="w-full h-1.5 bg-slate-200 rounded-lg appearance-none cursor-pointer">
+                                </div>
+                             </div>
+                        </div>
+
+                        <div class="bg-surface-muted p-3 rounded-lg border border-border-light shrink-0">
+                             <label class="text-[10px] font-bold text-slate-500 uppercase tracking-wider block mb-2 shrink-0">Contenido por Eje</label>
+                             <div id="axes-controls" class="space-y-1.5 max-h-[180px] overflow-y-auto custom-scroll pr-1">
                                 <!-- Per-axis type selectors here -->
                              </div>
                         </div>
 
-                        <div class="bg-blue-50 p-3 rounded-lg border border-blue-100 text-[11px] text-blue-800 shrink-0">
-                            <strong>Dato:</strong> Si tienes una sola fila, usas <code class="bg-white/50 px-1 rounded">axes[i]</code>. Si tienes varias, usas <code class="bg-white/50 px-1 rounded">axes[fila, col]</code>.
-                        </div>
-
-                        <button id="show-code-subplots" class="mt-auto shrink-0 w-full py-3 bg-brand-primary text-white rounded-lg font-bold hover:bg-brand-primary/90 shadow-sm flex items-center justify-center gap-2">
+                        <button id="show-code-subplots" class="shrink-0 w-full py-2.5 bg-brand-primary text-white rounded-lg font-bold hover:bg-brand-primary/90 shadow-sm flex items-center justify-center gap-2 text-sm">
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path></svg>
                             Ver Código Python
                         </button>
                     </div>
                     
                     <!-- Right Column: Visualization -->
-                    <div class="md:w-3/5 bg-surface-muted rounded-xl p-4 flex flex-col justify-center min-h-[300px] h-[450px] md:h-auto overflow-hidden">
-                        <div id="subplots-container" class="grid gap-4 w-full h-full relative p-2">
-                            <!-- Dynamic Canvas Grid Here -->
+                    <div class="md:w-3/5 bg-slate-100 rounded-xl p-4 flex items-center justify-center relative overflow-hidden border border-slate-200">
+                        <div id="subplots-container-outer" class="bg-white shadow-lg border border-slate-300 transition-all duration-300 overflow-hidden relative">
+                            <div id="subplots-container" class="grid w-full h-full relative p-2" style="background: white;">
+                                <!-- Dynamic Canvas Grid Here -->
+                            </div>
                         </div>
+                        <div class="absolute bottom-2 right-2 text-[10px] text-slate-300 font-mono italic">Previsualización de Figura</div>
                     </div>
                 </div>`,
                 script: () => {
@@ -2008,52 +2303,55 @@
 
                     const rowsSel = document.getElementById('sp-rows');
                     const colsSel = document.getElementById('sp-cols');
+                    const outerContainer = document.getElementById('subplots-container-outer');
                     const container = document.getElementById('subplots-container');
                     const controls = document.getElementById('axes-controls');
                     const codeDisplay = document.getElementById('dynamic-code-subplots');
+
+                    const btnAuto = document.getElementById('mode-auto');
+                    const btnManual = document.getElementById('mode-manual');
+                    const figsizeControls = document.getElementById('figsize-controls');
+                    const wInput = document.getElementById('sp-size-w');
+                    const hInput = document.getElementById('sp-size-h');
+                    const valW = document.getElementById('sp-val-w');
+                    const valH = document.getElementById('sp-val-h');
+
+                    let figsizeMode = 'auto'; // 'auto' or 'manual'
+
+                    const toggleMode = (mode) => {
+                        figsizeMode = mode;
+                        if (mode === 'auto') {
+                            btnAuto.className = "px-2 py-1 rounded-md bg-white shadow-sm transition-all";
+                            btnManual.className = "px-2 py-1 rounded-md text-slate-500 hover:text-slate-700 transition-all";
+                            figsizeControls.classList.add('hidden');
+                        } else {
+                            btnManual.className = "px-2 py-1 rounded-md bg-white shadow-sm transition-all";
+                            btnAuto.className = "px-2 py-1 rounded-md text-slate-500 hover:text-slate-700 transition-all";
+                            figsizeControls.classList.remove('hidden');
+                        }
+                        update();
+                    };
+
+                    btnAuto.addEventListener('click', () => toggleMode('auto'));
+                    btnManual.addEventListener('click', () => toggleMode('manual'));
 
                     const colors = ['#0055ad', '#06717e', '#ff5722', '#6b21a8', '#059669', '#dc2626'];
                     const getChartData = (type, idx) => {
                         const variety = idx % 4;
                         const color = colors[idx % colors.length];
-                        const alphaColor = color + '22'; // 13% opacity hex
+                        const alphaColor = color + '22';
 
                         if (type === 'line') {
-                            const dataVarieties = [
-                                [10, 25, 15, 30, 20],
-                                [30, 10, 25, 5, 15],
-                                [5, 15, 5, 20, 10],
-                                [20, 25, 30, 25, 20]
-                            ];
-                            return {
-                                type: 'line',
-                                data: { labels: ['T1', 'T2', 'T3', 'T4', 'T5'], datasets: [{ data: dataVarieties[variety], borderColor: color, backgroundColor: alphaColor, tension: 0.3, fill: false, pointRadius: 4 }] }
-                            };
+                            const dataVarieties = [[10, 25, 15, 30, 20], [30, 10, 25, 5, 15], [5, 15, 5, 20, 10], [20, 25, 30, 25, 20]];
+                            return { type: 'line', data: { labels: ['T1', 'T2', 'T3', 'T4', 'T5'], datasets: [{ data: dataVarieties[variety], borderColor: color, backgroundColor: alphaColor, tension: 0.3, fill: false, pointRadius: 4 }] } };
                         }
                         if (type === 'bar') {
-                            const dataVarieties = [
-                                [15, 30, 20, 25],
-                                [35, 15, 25, 10],
-                                [10, 10, 40, 30],
-                                [25, 35, 15, 20]
-                            ];
-                            return {
-                                type: 'bar',
-                                data: { labels: ['A', 'B', 'C', 'D'], datasets: [{ data: dataVarieties[variety], backgroundColor: color, borderRadius: 4 }] }
-                            };
+                            const dataVarieties = [[15, 30, 20, 25], [35, 15, 25, 10], [10, 10, 40, 30], [25, 35, 15, 20]];
+                            return { type: 'bar', data: { labels: ['A', 'B', 'C', 'D'], datasets: [{ data: dataVarieties[variety], backgroundColor: color, borderRadius: 4 }] } };
                         }
                         if (type === 'scatter') {
-                            const dataVarieties = [
-                                [{ x: 1, y: 10 }, { x: 2, y: 22 }, { x: 3, y: 15 }, { x: 4, y: 28 }],
-                                [{ x: 1, y: 30 }, { x: 2, y: 12 }, { x: 3, y: 25 }, { x: 4, y: 8 }],
-                                [{ x: 1, y: 5 }, { x: 2, y: 8 }, { x: 3, y: 6 }, { x: 4, y: 12 }],
-                                [{ x: 1, y: 15 }, { x: 2, y: 15 }, { x: 3, y: 15 }, { x: 4, y: 15 }]
-                            ];
-                            return {
-                                type: 'scatter',
-                                data: { datasets: [{ data: dataVarieties[variety], backgroundColor: color, pointRadius: 6 }] },
-                                options: { scales: { x: { type: 'linear', position: 'bottom' } } }
-                            };
+                            const dataVarieties = [[{ x: 1, y: 10 }, { x: 2, y: 22 }, { x: 3, y: 15 }, { x: 4, y: 28 }], [{ x: 1, y: 30 }, { x: 2, y: 12 }, { x: 3, y: 25 }, { x: 4, y: 8 }], [{ x: 1, y: 5 }, { x: 2, y: 8 }, { x: 3, y: 6 }, { x: 4, y: 12 }], [{ x: 1, y: 15 }, { x: 2, y: 15 }, { x: 3, y: 15 }, { x: 4, y: 15 }]];
+                            return { type: 'scatter', data: { datasets: [{ data: dataVarieties[variety], backgroundColor: color, pointRadius: 6 }] }, options: { scales: { x: { type: 'linear', position: 'bottom' } } } };
                         }
                     };
 
@@ -2062,14 +2360,30 @@
                         const C = parseInt(colsSel.value);
                         const total = R * C;
 
-                        // Save current types
+                        const figW = figsizeMode === 'manual' ? parseFloat(wInput.value) : C * 5;
+                        const figH = figsizeMode === 'manual' ? parseFloat(hInput.value) : R * 4;
+
+                        valW.textContent = figW;
+                        valH.textContent = figH;
+
+                        // Scaling for visualization (45px per inch)
+                        const scale = 60;
+                        const visW = figW * scale;
+                        const visH = figH * scale;
+
+                        outerContainer.style.width = `${visW}px`;
+                        outerContainer.style.height = `${visH}px`;
+
+                        // Overlap Logic: Use negative gap/margin when size is small
+                        const isSmallW = figW / C < 3.5;
+                        const isSmallH = figH / R < 3;
+                        const gap = (isSmallW || isSmallH) ? -12 : 10;
+
+                        container.style.gridTemplateRows = `repeat(${R}, 1fr)`;
+                        container.style.gridTemplateColumns = `repeat(${C}, 1fr)`;
+                        container.style.gap = `${gap}px`;
+
                         const currentTypes = Array.from(controls.querySelectorAll('select')).map(s => s.value);
-
-                        // Rebuild Visualization Grid
-                        container.className = `grid gap-3 w-full h-full relative p-2`;
-                        container.style.gridTemplateRows = `repeat(${R}, minmax(0, 1fr))`;
-                        container.style.gridTemplateColumns = `repeat(${C}, minmax(0, 1fr))`;
-
                         container.innerHTML = '';
                         controls.innerHTML = '';
                         subChartInstances.forEach(c => c.destroy());
@@ -2077,78 +2391,103 @@
 
                         let pythonCode = `<span class="text-pink-600 font-bold">import</span> matplotlib.pyplot <span class="text-pink-600 font-bold">as</span> plt<br><br>`;
                         pythonCode += `<span class="text-slate-400"># Definimos la estructura ${R}x${C} y tamaño de figura</span><br>`;
-                        pythonCode += `fig, axes = plt.<span class="text-blue-600 font-bold">subplots</span>(${R}, ${C}, figsize=(${C * 5}, ${R * 4}))<br><br>`;
+                        pythonCode += `fig, axes = plt.<span class="text-blue-600 font-bold">subplots</span>(${R}, ${C}, figsize=(${figW}, ${figH}))<br><br>`;
 
                         for (let i = 0; i < total; i++) {
                             const type = currentTypes[i] || (i % 3 === 0 ? 'line' : (i % 3 === 1 ? 'bar' : 'scatter'));
 
-                            // Add Controls
-                            const div = document.createElement('div');
-                            div.className = "flex items-center gap-2";
-                            div.innerHTML = `<label class="text-[9px] font-bold text-slate-400 w-12 shrink-0 italic">AX[${i}]</label>
-                                             <select class="axis-type flex-grow border rounded text-[10px] p-1 bg-white outline-none">
-                                                <option value="line" ${type === 'line' ? 'selected' : ''}>Línea (.plot)</option>
-                                                <option value="bar" ${type === 'bar' ? 'selected' : ''}>Barras (.bar)</option>
-                                                <option value="scatter" ${type === 'scatter' ? 'selected' : ''}>Dispersión (.scatter)</option>
-                                             </select>`;
-                            controls.appendChild(div);
+                            const ctrlDiv = document.createElement('div');
+                            ctrlDiv.className = "flex items-center gap-1.5";
+                            ctrlDiv.innerHTML = `<label class="text-[8px] font-bold text-slate-400 w-10 shrink-0 italic">AX[${i}]</label>
+                                                 <select class="axis-type flex-grow border rounded text-[10px] p-1 bg-white outline-none">
+                                                    <option value="line" ${type === 'line' ? 'selected' : ''}>Línea</option>
+                                                    <option value="bar" ${type === 'bar' ? 'selected' : ''}>Barras</option>
+                                                    <option value="scatter" ${type === 'scatter' ? 'selected' : ''}>Disp.</option>
+                                                 </select>`;
+                            controls.appendChild(ctrlDiv);
 
-                            // Add Canvas
                             const canvasDiv = document.createElement('div');
-                            canvasDiv.className = "bg-white rounded border border-slate-200 relative p-1 h-full flex flex-col min-h-0";
-                            canvasDiv.innerHTML = `<div class="absolute top-0.5 right-1.5 text-[8px] font-mono text-slate-300 font-bold">axes[${i}]</div>
-                                                   <canvas id="c-dynamic-${i}" class="flex-grow"></canvas>`;
+                            canvasDiv.className = "bg-white rounded border border-slate-200 relative p-1 h-full flex flex-col min-h-[40px] shadow-sm transition-all duration-300";
+                            // Force some "identity" to overlapping boxes
+                            canvasDiv.style.zIndex = 10 + i;
+                            if (gap < 0) {
+                                canvasDiv.style.boxShadow = "0 4px 12px rgba(0,0,0,0.15)";
+                                canvasDiv.style.borderColor = "#94a3b8"; // Darker border when overlapping
+                            }
+
+                            canvasDiv.innerHTML = `<div class="absolute top-0 right-1 text-[9px] text-slate-400 font-bold font-mono">ax[${i}]</div>
+                                                   <canvas id="c-dynamic-${i}" style="width:100%; height:100%"></canvas>`;
                             container.appendChild(canvasDiv);
 
-                            // Python Code Generation
                             const axisIndex = total === 1 ? 'axes' : (R === 1 || C === 1 ? `axes[${i}]` : `axes[${Math.floor(i / C)}, ${i % C}]`);
                             const method = type === 'line' ? 'plot' : (type === 'bar' ? 'bar' : 'scatter');
                             const colorName = colors[i % colors.length];
 
-                            pythonCode += `<span class="text-slate-400"># Gráfico ${i + 1}</span><br>`;
-                            pythonCode += `${axisIndex}.<span class="text-blue-600 font-bold">${method}</span>(datos, color='${colorName}')<br>`;
-                            pythonCode += `${axisIndex}.set_title('Subplot ${i + 1}')<br><br>`;
+                            let dataStr = "";
+                            const varIdx = i % 4;
+                            if (type === 'line') { dataStr = `[${[[10, 25, 15, 30, 20], [30, 10, 25, 5, 15], [5, 15, 5, 20, 10], [20, 25, 30, 25, 20]][varIdx].join(', ')}]`; }
+                            else if (type === 'bar') { dataStr = `['A','B','C','D'], [${[[15, 30, 20, 25], [35, 15, 25, 10], [10, 10, 40, 30], [25, 35, 15, 20]][varIdx].join(', ')}]`; }
+                            else if (type === 'scatter') { const d = [[{ x: 1, y: 10 }, { x: 2, y: 22 }, { x: 3, y: 15 }, { x: 4, y: 28 }], [{ x: 1, y: 30 }, { x: 2, y: 12 }, { x: 3, y: 25 }, { x: 4, y: 8 }], [{ x: 1, y: 5 }, { x: 2, y: 8 }, { x: 3, y: 6 }, { x: 4, y: 12 }], [{ x: 1, y: 15 }, { x: 2, y: 15 }, { x: 3, y: 15 }, { x: 4, y: 15 }]][varIdx]; dataStr = `[${d.map(p => p.x).join(',')}], [${d.map(p => p.y).join(',')}]`; }
+
+                            pythonCode += `<span class="text-slate-400"># Plot ${i + 1}</span><br>${axisIndex}.<span class="text-blue-600 font-bold">${method}</span>(${dataStr}, color='${colorName}')<br><br>`;
                         }
 
-                        pythonCode += `plt.<span class="text-blue-600 font-bold">tight_layout</span>()<br>`;
-                        pythonCode += `plt.<span class="text-blue-600 font-bold">show</span>()`;
+                        pythonCode += `plt.tight_layout()<br>plt.show()`;
                         codeDisplay.innerHTML = pythonCode;
-
-                        // Add Listeners to new axis selects
                         controls.querySelectorAll('.axis-type').forEach(s => s.addEventListener('change', update));
 
-                        // Wait for DOM then Init Charts
                         setTimeout(() => {
                             const axisSelects = controls.querySelectorAll('.axis-type');
                             for (let i = 0; i < total; i++) {
                                 const type = axisSelects[i].value;
                                 const config = getChartData(type, i);
-                                config.options = {
-                                    responsive: true,
-                                    maintainAspectRatio: false,
-                                    plugins: { legend: { display: false } },
-                                    scales: config.options?.scales || {
-                                        y: { beginAtZero: true, ticks: { display: false }, grid: { display: false } },
-                                        x: { ticks: { display: false }, grid: { display: false } }
-                                    }
-                                };
+                                config.options = { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: config.options?.scales || { y: { display: false }, x: { display: false } } };
                                 const canvas = document.getElementById(`c-dynamic-${i}`);
                                 if (canvas) subChartInstances.push(new Chart(canvas, config));
                             }
-                        }, 60);
+                        }, 50);
                     };
 
                     rowsSel.addEventListener('change', update);
                     colsSel.addEventListener('change', update);
+                    wInput.addEventListener('input', update);
+                    hInput.addEventListener('input', update);
                     update();
                 }
             },
             {
                 id: 'end', render: () => `
-                <div class="flex flex-col items-center justify-center h-full text-center space-y-6">
-                    <div class="w-20 h-20 bg-green-100 text-green-600 rounded-full flex items-center justify-center text-4xl mb-4">✓</div>
-                    <h1 class="text-4xl font-bold text-brand-primary">¡Módulo Completado!</h1>
-                    <button onclick="goToSlide(0)" class="mt-8 px-8 py-3 bg-action-default text-white rounded-lg hover:bg-action-hover shadow-lg font-bold">Volver al Inicio</button>
+                <div class="flex flex-col h-full bg-white px-8 py-12">
+                    <div class="flex-grow flex flex-col items-center justify-center text-center space-y-4">
+                        <div class="w-16 h-16 border-2 border-brand-primary text-brand-primary rounded-full flex items-center justify-center mb-4">
+                            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                        </div>
+                        
+                        <div class="space-y-1">
+                            <h2 class="text-slate-400 font-bold uppercase tracking-[0.15em] text-xs">Fin Unidad 3</h2>
+                            <h1 class="text-4xl font-bold text-slate-900 tracking-tight">Módulo 01: <span class="text-brand-primary">pyplot</span></h1>
+                            <p class="text-lg text-slate-500">Introducción práctica a matplotlib.pyplot</p>
+                        </div>
+
+                        <div class="flex gap-4 pt-6">
+                            <button onclick="goToSlide(0)" class="px-8 py-2 border border-slate-300 text-slate-600 rounded-lg hover:bg-slate-50 transition-all font-bold text-sm">Reiniciar Módulo</button>
+                        </div>
+                    </div>
+
+                    <!-- Simplified Footer -->
+                    <div class="mt-auto pt-6 border-t border-slate-100 flex justify-between items-center text-slate-600">
+                        <div class="text-left">
+                            <span class="block text-sm font-bold text-slate-800">Universidad de Valparaíso</span>
+                            <span class="text-[10px] uppercase font-bold tracking-widest opacity-60">Escuela de Ingeniería Civil</span>
+                        </div>
+
+                        <div class="text-right">
+                            <span class="block text-[11px] font-bold uppercase tracking-widest text-brand-primary">Programación 1 | PRO121</span>
+                            <span class="text-[10px] italic">Unidad 3: pyplot (Finalizado)</span>
+                        </div>
+                    </div>
                 </div>`
             }
         ];
