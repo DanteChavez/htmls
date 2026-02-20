@@ -117,9 +117,16 @@
             <!-- Slide 1: Portada -->
             <section id="slide-1"
                 class="slide active absolute inset-0 flex-col items-center justify-center p-8 text-center bg-surface-main overflow-y-auto custom-scrollbar">
+                <div
+                    class="text-action-default font-bold tracking-wider mb-3 text-lg uppercase flex items-center gap-2 justify-center">
+                    <span class="w-8 h-0.5 bg-action-default opacity-50 block"></span>
+                    Unidad 3
+                    <span class="w-8 h-0.5 bg-action-default opacity-50 block"></span>
+                </div>
                 <h1
                     class="text-4xl md:text-5xl font-extrabold text-brand-primary mb-6 drop-shadow-sm leading-tight max-w-5xl">
-                    Ejercicios: Elige el gráfico adecuado con pyplot</h1>
+                    Módulo 01: pyplot ejercicios
+                </h1>
                 <p class="text-xl md:text-2xl text-text-deep mb-4 max-w-4xl leading-relaxed">Practica distinguiendo qué
                     tipo de gráfico usar según el problema y los datos (plot, bar, scatter, step).</p>
                 <div
@@ -144,20 +151,50 @@
             <!-- Slide 5: Cierre -->
             <section id="slide-5"
                 class="slide absolute inset-0 flex-col items-center justify-center p-8 text-center bg-surface-main overflow-y-auto custom-scrollbar">
-                <div
-                    class="w-24 h-24 bg-green-100 rounded-full flex items-center justify-center mb-6 text-green-600 shadow-inner">
-                    <svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="3">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"></path>
-                    </svg>
+
+                <div class="max-w-3xl w-full flex flex-col items-center z-10 mb-16">
+                    <div
+                        class="w-24 h-24 bg-green-100 rounded-full flex items-center justify-center mb-8 text-green-600 shadow-inner">
+                        <svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="3">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"></path>
+                        </svg>
+                    </div>
+
+                    <h1 class="text-3xl md:text-5xl font-extrabold text-brand-primary mb-6 tracking-tight">¡Módulo
+                        Completado!</h1>
+                    <p class="text-xl md:text-2xl text-text-deep mb-12 leading-relaxed font-medium">Has practicado con
+                        éxito la
+                        selección del gráfico adecuado según la estructura subyacente de los datos y el objetivo del
+                        problema.</p>
+
+                    <button onclick="reiniciarModulo()"
+                        class="px-10 py-4 bg-text-deep hover:bg-black text-white text-lg rounded-xl shadow-md font-bold transition-transform transform hover:scale-105 flex items-center gap-3">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15">
+                            </path>
+                        </svg>
+                        Reiniciar Módulo
+                    </button>
                 </div>
-                <h1 class="text-4xl md:text-5xl font-extrabold text-brand-primary mb-6">¡Felicidades!</h1>
-                <p class="text-xl md:text-2xl text-text-deep mb-10 max-w-3xl leading-relaxed">Has practicado con éxito
-                    la selección del gráfico adecuado según la estructura subyacente de los datos y el objetivo del
-                    problema.</p>
-                <button onclick="volverAlModulo()"
-                    class="px-10 py-5 bg-text-deep hover:bg-black text-white text-xl rounded-xl shadow font-bold transition-transform transform hover:scale-105">Volver
-                    al módulo teórico</button>
-            </section>
+
+                <!-- Footer Institucional de Módulo -->
+                <div
+                    class="absolute bottom-0 w-full px-6 py-5 md:px-10 md:py-8 flex flex-col md:flex-row justify-between items-end bg-surface-muted border-t border-border-light text-sm text-text-muted font-medium z-0">
+                    <div class="text-left w-full md:w-auto mb-4 md:mb-0">
+                        <p class="font-bold text-brand-primary text-base mb-0.5 tracking-tight">Universidad de
+                            Valparaíso</p>
+                        <p>Escuela de Ingeniería Civil</p>
+                    </div>
+                    <div class="text-left md:text-right w-full md:w-auto">
+                        <p class="text-text-deep mb-0.5 font-bold tracking-tight">Programación 1 | PRO121</p>
+                        <p class="mt-1">Unidad 3: ejercicios pyplot (Finalizado)</p>
+                    </div>
+                </div>
+
+        </div>
+
+        </section>
 
         </div>
 
@@ -170,28 +207,172 @@
 
         const ejercicios = {
             lvl1: [
-                { id: '1-1', title: 'Tendencia de temperatura diaria', desc: 'Monitoreo de temperatura en una ciudad durante 31 días consecutivos. Se busca observar la evolución temporal continua.', x: 'días (1 a 31)', y: 'grados Celsius', correct: 'plot', failMsg: 'No se comparan categorías independientes (bar) y la temperatura es una función continua del tiempo, ideal para plot.' },
-                { id: '1-2', title: 'Ventas por producto', desc: 'Comparativa de ventas totales acumuladas de 6 productos diferentes en un trimestre.', x: 'nombres de los productos', y: 'unidades vendidas', correct: 'bar', failMsg: 'Los productos son categorías diferentes no relacionadas secuencialmente. "bar" permite compararlos como magnitudes independientes.' },
-                { id: '1-3', title: 'Evolución del precio del dólar', desc: 'Valor oficial del dólar día a día durante el año. Se busca ver las fluctuaciones.', x: 'días (fechas)', y: 'precio en pesos', correct: 'plot', failMsg: 'Es la clásica serie de tiempo. Unir los puntos con una línea (plot) facilita apreciar la tendencia global.' },
-                { id: '1-4', title: 'Puntaje promedio por sección', desc: 'Rendimiento en una prueba estandarizada de 4 secciones independientes (A, B, C y D) de un mismo nivel.', x: 'sección del curso', y: 'puntaje promedio', correct: 'bar', failMsg: 'Cada sección es un grupo discreto (categoría). La cantidad se visualiza con barras.' },
-                { id: '1-5', title: 'Crecimiento de una planta', desc: 'Altura de un brote medida cada fin de semana durante 2 meses para registrar su desarrollo.', x: 'semanas transcurridas', y: 'altura (cm)', correct: 'plot', failMsg: 'Es un progreso continuo en el tiempo, una serie temporal. Debe usarse "plot".' }
+                {
+                    id: '1-1',
+                    title: 'Tendencia de temperatura diaria',
+                    desc: 'Monitoreo de temperatura en una ciudad durante 31 días consecutivos. Se busca observar la evolución temporal continua.',
+                    data_x: "[1, 2, 3, 4, ...]",
+                    data_y: "[22.5, 23.1, 21.8, 24.0, ...]",
+                    correct: 'plot',
+                    failMsg: 'Fíjate en los datos: representan una secuencia ininterrumpida en el tiempo. ¿Qué gráfico es el estándar para unir estos puntos y revelar la tendencia?'
+                },
+                {
+                    id: '1-2',
+                    title: 'Ventas por producto',
+                    desc: 'Comparativa de ventas totales acumuladas de 6 productos diferentes en un trimestre. Queremos comparar magnitudes independientes.',
+                    data_x: "['Laptop', 'Mouse', 'Teclado', 'Monitor', ...]",
+                    data_y: "[150, 320, 120, 85, ...]",
+                    correct: 'bar',
+                    failMsg: 'Observa el eje X. Son categorías de texto (nombres), no una secuencia numérica. ¿Cuál es la mejor forma de comparar el tamaño o volumen de grupos separados?'
+                },
+                {
+                    id: '1-3',
+                    title: 'Evolución del precio del dólar',
+                    desc: 'Valor oficial del dólar día a día durante el año. Se busca ver las fluctuaciones uniendo los puntos.',
+                    data_x: "['01-Ene', '02-Ene', '03-Ene', '04-Ene', ...]",
+                    data_y: "[850.5, 852.1, 849.0, 855.3, ...]",
+                    correct: 'plot',
+                    failMsg: 'Esta es una serie de tiempo clásica. Para apreciar cómo sube y baja un valor día a día, necesitamos un gráfico que trace un camino continuo.'
+                },
+                {
+                    id: '1-4',
+                    title: 'Puntaje promedio por sección',
+                    desc: 'Rendimiento en una prueba estandarizada de 4 secciones independientes (A, B, C y D) de un mismo nivel. Se comparan grupos.',
+                    data_x: "['Sección A', 'Sección B', 'Sección C', 'Sección D']",
+                    data_y: "[85, 92, 78, 88]",
+                    correct: 'bar',
+                    failMsg: 'Cada sección es un grupo discreto que no tiene relación secuencial con el siguiente. Piensa en cómo se visualizan mejor las cantidades por categoría.'
+                },
+                {
+                    id: '1-5',
+                    title: 'Crecimiento de una planta',
+                    desc: 'Altura de un brote medida cada fin de semana durante 2 meses para registrar su desarrollo como progreso continuo.',
+                    data_x: "['Sem 1', 'Sem 2', 'Sem 3', 'Sem 4', ...]",
+                    data_y: "[2.1, 4.5, 7.8, 12.0, ...]",
+                    correct: 'plot',
+                    failMsg: 'El crecimiento es un proceso que no se detiene. ¿Qué herramienta visual te permite mostrar esa continuidad temporal?'
+                }
             ],
             lvl2: [
-                { id: '2-1', title: 'Horas de estudio vs Notas', desc: 'Analizar la posible correlación entre cuánto estudia cada alumno y la nota final que obtuvo, sin agrupar.', x: 'horas invertidas', y: 'nota final', correct: 'scatter', failMsg: 'Se buscan correlaciones entre dos métricas en múltiples sujetos independientes. "scatter" forma nubes de puntos.' },
-                { id: '2-2', title: 'Cantidad de matriculados por carrera', desc: 'Total inscritos en las diferentes carreras de una facultad.', x: 'nombre de la carrera', y: 'cantidad de alumnos', correct: 'bar', failMsg: 'Cantidades separadas por categoría. Se usa "bar".' },
-                { id: '2-3', title: 'Nivel de stock en bodega', desc: 'Inventario de una pieza que se mantiene constante hasta que se realiza un consumo, cayendo abruptamente.', x: 'días corrientes', y: 'unidades en stock', correct: 'step', failMsg: 'La pendiente no cambia suavemente entre días (plot). El valor se mantiene y da "saltos". Se prefiere "step".' },
-                { id: '2-4', title: 'Rendimiento de 5 modelos de IA', desc: 'Tasa de éxito (Accuracy) comparativa entre los algoritmos A, B, C, D y E en un mismo problema.', x: 'nombre de algoritmo', y: 'accuracy %', correct: 'bar', failMsg: 'Los algoritmos son opciones. Las barras permiten comparar estos volúmenes directamente.' },
-                { id: '2-5', title: 'Ganancias mensuales esperadas vs reales', desc: 'Comparativa de evolución de dinero a lo largo del año calendario actual.', x: 'mes', y: 'pesos chilenos', correct: 'plot', failMsg: 'Los meses componen una secuencia temporal. Para ver la curva a lo largo del tiempo, "plot".' },
-                { id: '2-6', title: 'Edad vs Frecuencia Cardíaca', desc: 'Mediciones tomadas a 100 personas de distintas edades para ver si se agrupan en algún patrón biológico.', x: 'edad en años', y: 'pulsaciones ppm', correct: 'scatter', failMsg: 'Buscamos patrones o concentraciones en dos variables numéricas, sin orden temporal. "scatter".' }
+                {
+                    id: '2-1',
+                    title: 'Horas de estudio vs Notas',
+                    desc: 'Analizar la posible correlación y dispersión entre cuánto estudia cada alumno y la nota final que obtuvo, sin agrupar.',
+                    data_x: "[2.5, 4.0, 1.5, 6.0, ...]",
+                    data_y: "[4.5, 6.0, 3.2, 7.0, ...]",
+                    correct: 'scatter',
+                    failMsg: 'Buscamos ver si existe un patrón o relación entre dos variables numéricas independientes para muchos individuos. ¿Qué gráfico dibuja puntos libres en el plano?'
+                },
+                {
+                    id: '2-2',
+                    title: 'Cantidad de matriculados por carrera',
+                    desc: 'Comparación del total de alumnos inscritos en las diferentes carreras de una facultad.',
+                    data_x: "['Medicina', 'Ingeniería', 'Leyes', 'Arte', ...]",
+                    data_y: "[450, 600, 320, 150, ...]",
+                    correct: 'bar',
+                    failMsg: 'Las carreras son categorías distintas y queremos comparar el tamaño de cada grupo. Una línea sugeriría continuidad temporal entre carreras, lo cual es incorrecto.'
+                },
+                {
+                    id: '2-3',
+                    title: 'Nivel de stock en bodega',
+                    desc: 'Inventario de una pieza que se mantiene constante durante el tiempo hasta que ocurre un consumo, cayendo abruptamente.',
+                    data_x: "[1, 2, 3, 4, 5, ...]",
+                    data_y: "[100, 100, 85, 85, 50, ...]",
+                    correct: 'step',
+                    failMsg: 'Piensa en cómo cambia el stock: no disminuye poco a poco de forma diagonal y fluida, sino que se mantiene plano y da "saltos" cuando alguien saca materiales.'
+                },
+                {
+                    id: '2-4',
+                    title: 'Rendimiento de 5 modelos de IA',
+                    desc: 'Tasa de éxito (Accuracy) comparativa para evaluar cuál de los algoritmos A, B, C, D o E es mejor en un mismo problema.',
+                    data_x: "['Modelo A', 'Modelo B', 'Modelo C', 'Modelo D', 'Modelo E']",
+                    data_y: "[85.2, 91.4, 78.9, 88.1, 95.0]",
+                    correct: 'bar',
+                    failMsg: 'Estamos comparando el desempeño final de entidades separadas. Al igual que con las ventas por producto, necesitamos visualizar magnitudes independientes.'
+                },
+                {
+                    id: '2-5',
+                    title: 'Ganancias mensuales esperadas vs reales',
+                    desc: 'Evolución cronológica del dinero a lo largo del año calendario actual para ver la curva de crecimiento.',
+                    data_x: "['Ene', 'Feb', 'Mar', 'Abr', ...]",
+                    data_y: "[1.2, 1.5, 1.4, 1.8, ...]",
+                    correct: 'plot',
+                    failMsg: 'El tiempo avanza mes a mes formando una secuencia ininterrumpida. Queremos ver la "ruta" o el camino que trazaron las ganancias.'
+                },
+                {
+                    id: '2-6',
+                    title: 'Edad vs Frecuencia Cardíaca',
+                    desc: 'Mediciones tomadas a 100 personas distintas para descubrir si las edades y las pulsaciones se agrupan formando algún patrón biológico.',
+                    data_x: "[25, 42, 18, 65, 30, ...]",
+                    data_y: "[75, 82, 68, 90, 72, ...]",
+                    correct: 'scatter',
+                    failMsg: 'Tenemos pares de datos numéricos de personas aleatorias, sin un orden temporal. Queremos ver dónde se ubica y concentra cada individuo en el gráfico.'
+                }
             ],
             lvl3: [
-                { id: '3-1', title: 'Peso vs Altura en deportistas', desc: 'Cruce de dos mediciones físicas en 200 atletas olímpicos.', x: 'peso (kg)', y: 'altura (cm)', correct: 'scatter', failMsg: 'Un plot formaría una maraña sin sentido, bar no sirve para pares bi-numéricos. "scatter" permite observar la distribución espacial y correlacional.' },
-                { id: '3-2', title: 'Tarifa de estacionamiento por hora', desc: 'Tarifa que cobra valores enteros dependientes de rangos de minutos (ej. $1000 de 0 a 60 min, $2000 de 61 a 120, etc).', x: 'tiempo (minutos)', y: 'costo acumulado', correct: 'step', failMsg: 'El cobro avanza en escalones exactos manteniendo planos intermedios. No es línea proporcional (plot). Debe ser modelado con "step".' },
-                { id: '3-3', title: 'Espectro de ondas sonoras', desc: 'Alta densidad de puntos a lo largo del tiempo de un sonido analógico convertido a digital.', x: 'tiempo (ms)', y: 'amplitud oscilante', correct: 'plot', failMsg: 'Representación física que forma ondas sinusoidales en un eje temporal continuo. "plot" dibuja perfectamente esa línea.' },
-                { id: '3-4', title: 'Bugs fatales en Módulos de Software', desc: 'Total de caídas detectadas en 5 diferentes microservicios (Backend, Auth, DB, Frontend, Queue) el mes pasado.', x: 'nombre de servicio', y: 'caídas registradas', correct: 'bar', failMsg: 'Los microservicios son elementos discretos inconexos. "bar" es la forma predeterminada para conteo por categorías.' },
-                { id: '3-5', title: 'Registro de valor de Ethereum', desc: 'El precio segundo a segundo de una criptomoneda altamente volátil en un día muy agitado.', x: 'tiempo (hora)', y: 'precio US$', correct: 'plot', failMsg: 'Puramente una serie de tiempo. Unir la varianza con "plot" ayuda a ver el recorrido histórico.' },
-                { id: '3-6', title: 'Mapa sísmico: Latitud y Longitud', desc: 'Ubicación de coordenadas geográficas de sismos de magnitud >6 registrados globalmente.', x: 'longitud', y: 'latitud', correct: 'scatter', failMsg: 'Se necesita posicionar cada suceso como un punto independiente sobre los ejes espaciales. "scatter".' },
-                { id: '3-7', title: 'Estados lógicos de un procesador', desc: 'Señal digital que salta inmediatamente entre 0 y 5 Voltios y se mantiene plana allí durante ciclos.', x: 'tiempo (ns)', y: 'voltaje (V)', correct: 'step', failMsg: 'Las señales digitales son el ejemplo base de funciones escalón (cambios instantáneos y estados constantes). Requiere "step".' }
+                {
+                    id: '3-1',
+                    title: 'Producción anual de Cobre',
+                    desc: 'Reporte ejecutivo para premiar el mejor año de la década en la mina. Requiere contrastar el volumen total extraído en cada año de forma aislada para ver rápidamente al ganador.',
+                    data_x: "[2015, 2016, 2017, 2018, ...]",
+                    data_y: "[1.2, 1.1, 1.5, 1.4, ...]",
+                    correct: 'bar',
+                    failMsg: '¡Cuidado con la trampa! Aunque el eje X tiene años, el objetivo del negocio no es ver la tendencia continua, sino aislar cada año como un "bloque" independiente para premiar un volumen total.'
+                },
+                {
+                    id: '3-2',
+                    title: 'Tarifa de estacionamiento',
+                    desc: 'Sistema de cobro automático. La tarifa aumenta $1000 al cumplirse cada bloque exacto de 60 minutos, sin cobros proporcionales intermedios.',
+                    data_x: "[15, 45, 60, 61, 110, 120, 121, ...]",
+                    data_y: "[1000, 1000, 1000, 2000, 2000, 2000, 3000, ...]",
+                    correct: 'step',
+                    failMsg: 'El costo no sube diagonalmente minuto a minuto. Analiza cómo el precio se congela y luego cambia drásticamente al cruzar el límite de la hora.'
+                },
+                {
+                    id: '3-3',
+                    title: 'Onda sonora de motor industrial',
+                    desc: 'Registro de la vibración mecánica de una turbina muestreada cada milisegundo para análisis de frecuencias.',
+                    data_x: "[1, 2, 3, 4, 5, ...]",
+                    data_y: "[0.1, 0.8, -0.4, -0.9, 0.2, ...]",
+                    correct: 'plot',
+                    failMsg: 'Hablamos de una señal analógica digitalizada de alta frecuencia. Los datos describen la forma física ininterrumpida de una onda.'
+                },
+                {
+                    id: '3-4',
+                    title: 'Mapa de eventos microsísmicos',
+                    desc: 'Coordenadas topográficas (Este y Norte) donde se han detectado liberaciones de energía subterránea durante el último mes.',
+                    data_x: "[450200, 450250, 450180, ...]",
+                    data_y: "[6350100, 6350150, 6350120, ...]",
+                    correct: 'scatter',
+                    failMsg: 'Las variables son coordenadas espaciales. Unir los puntos con una línea crearía un garabato sin sentido, necesitamos posicionar cada evento libremente en el plano.'
+                },
+                {
+                    id: '3-5',
+                    title: 'Bugs fatales en Microservicios',
+                    desc: 'Auditoría del sistema del mes pasado. Total de caídas detectadas en el Backend, Auth, DB, Frontend y Queue.',
+                    data_x: "['Backend', 'Auth', 'DB', 'Frontend', 'Queue']",
+                    data_y: "[12, 3, 0, 5, 2]",
+                    correct: 'bar',
+                    failMsg: 'Analiza los elementos del eje X. No tienen relación temporal ni espacial entre ellos, son subsistemas distintos.'
+                },
+                {
+                    id: '3-6',
+                    title: 'Métricas biométricas en atletas',
+                    desc: 'Cruce de mediciones de peso y altura tomadas a 200 competidores olímpicos en la fase de clasificación.',
+                    data_x: "[70.5, 82.1, 65.3, 90.0, ...]",
+                    data_y: "[175, 188, 160, 195, ...]",
+                    correct: 'scatter',
+                    failMsg: 'Considera que los datos de un atleta no dependen del anterior ni del siguiente. Estamos buscando cómo se distribuye una población respecto a dos variables continuas.'
+                },
+                {
+                    id: '3-7',
+                    title: 'Señales lógicas de control',
+                    desc: 'Monitoreo de un bus de datos digital donde el voltaje alterna instantáneamente entre nivel bajo (0V) y alto (5V) según el reloj.',
+                    data_x: "[10, 20, 30, 40, 50, ...]",
+                    data_y: "[0, 5, 5, 0, 5, ...]",
+                    correct: 'step',
+                    failMsg: 'En electrónica digital las transiciones son (teóricamente) instantáneas, no hay voltajes intermedios válidos. Se requiere representar estados retenidos y cambios abruptos.'
+                }
             ]
         };
 
@@ -229,9 +410,17 @@
                         </div>
                         
                         <!-- Panel Derecho: Dropzones -->
-                        <div class="lg:w-2/3 flex flex-col gap-4 overflow-y-auto overflow-x-hidden custom-scrollbar pr-1 lg:pr-3 lg:h-full pb-4">
+                        <div class="lg:w-2/3 flex flex-col gap-4 overflow-y-auto overflow-x-hidden custom-scrollbar pr-1 lg:pr-3 lg:h-full pb-4 relative">
                             
-                            <div id="feedback-${sd.id}" class="hidden flex-shrink-0 rounded-lg p-4 shadow-sm border border-l-4 text-sm transition-all duration-300 transform scale-95 origin-top" role="alert" aria-live="polite"></div>
+                            <!-- Floating Feedback Modal -->
+                            <div id="feedback-${sd.id}" class="hidden fixed top-8 left-1/2 -translate-x-1/2 w-[90%] md:w-auto max-w-2xl z-[100] rounded-xl p-5 shadow-2xl border-2 transition-all duration-300 transform -translate-y-8 opacity-0" role="alert" aria-live="polite">
+                                <div class="flex justify-between items-start gap-4 mb-2">
+                                    <div id="feedback-${sd.id}-content" class="w-full"></div>
+                                    <button onclick="closeFeedback('${sd.id}')" class="text-gray-400 hover:text-gray-700 transition-colors bg-white rounded-full p-1 shadow-sm border border-gray-100 flex-shrink-0" aria-label="Cerrar mensaje">
+                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"></path></svg>
+                                    </button>
+                                </div>
+                            </div>
                             
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-4 flex-grow min-h-0">
                                 <!-- Plot -->
@@ -305,8 +494,8 @@
                                     <span class="ml-1 text-[11px] text-gray-500 font-sans tracking-tight font-medium opacity-90">datos.py</span>
                                 </div>
                                 <div class="p-2.5 font-mono text-sm tracking-tight space-y-1">
-                                    <div><span class="text-[#0000ff]">x</span> <span class="text-gray-500">=</span> <span class="text-[#a31515]">'${item.x}'</span></div>
-                                    <div><span class="text-[#0000ff]">y</span> <span class="text-gray-500">=</span> <span class="text-[#a31515]">'${item.y}'</span></div>
+                                    <div><span class="text-[#0000ff]">x</span> <span class="text-gray-500">=</span> <span class="text-[#098658]">${item.data_x || '\'' + item.x + '\''}</span></div>
+                                    <div><span class="text-[#0000ff]">y</span> <span class="text-gray-500">=</span> <span class="text-[#098658]">${item.data_y || '\'' + item.y + '\''}</span></div>
                                 </div>
                             </div>
                         </div>
@@ -330,6 +519,9 @@
             document.addEventListener('click', (e) => {
                 const tarjeta = e.target.closest('.tarjeta');
                 if (tarjeta) {
+                    // Do not expand if card is inside a dropzone
+                    if (tarjeta.closest('.dropzone')) return;
+
                     const details = tarjeta.querySelector('.card-details');
                     const icon = tarjeta.querySelector('.toggle-icon');
                     if (details) {
@@ -406,6 +598,16 @@
             return ejercicios[dataKey].find(item => item.id === id);
         }
 
+        function closeFeedback(levelId) {
+            const feedbackDiv = document.getElementById(`feedback-${levelId}`);
+            if (feedbackDiv) {
+                feedbackDiv.classList.add('opacity-0', '-translate-y-8');
+                setTimeout(() => {
+                    feedbackDiv.classList.add('hidden');
+                }, 300);
+            }
+        }
+
         // Logic
         function verificarNivel(nivelNum, levelId) {
             const pool = document.getElementById(`pool-${levelId}`);
@@ -423,7 +625,7 @@
                         pool.appendChild(card); // Move visual card to pool
                         errores++;
                         const item = findItem(levelId, card.dataset.id);
-                        retroalimentacion.push(`<li class="mb-2"><strong>${item.title}:</strong> Debería ser <span class="uppercase font-bold text-gray-900">${item.correct}</span>. ${item.failMsg}</li>`);
+                        retroalimentacion.push(`<li class="mb-3 border-b border-gray-200 pb-2 last:border-0"><strong class="text-gray-800">${item.title}:</strong> ${item.failMsg}</li>`);
                     }
                 });
             });
@@ -433,58 +635,64 @@
 
             // Compose Feedback Message
             const feedbackDiv = document.getElementById(`feedback-${levelId}`);
-            feedbackDiv.classList.remove('hidden', 'scale-95');
+            const feedbackContent = document.getElementById(`feedback-${levelId}-content`);
+
+            feedbackDiv.classList.remove('hidden');
+
+            // Force reflow for enter animation
+            void feedbackDiv.offsetWidth;
+            feedbackDiv.classList.remove('opacity-0', '-translate-y-8');
 
             // Reset colors
             feedbackDiv.className = feedbackDiv.className.replace(/\bbg-\w+-\d+\b/g, '')
                 .replace(/\bborder-\w+-\d+\b/g, '')
-                .replace(/\btext-\w+-\d+\b/g, '');
-
-            feedbackDiv.classList.add('flex-shrink-0', 'rounded-lg', 'p-4', 'shadow-sm', 'border', 'border-l-4', 'text-sm', 'transition-all', 'duration-300', 'transform', 'scale-100', 'origin-top', 'mb-4');
+                .replace(/\bsideboard-\w+-\d+\b/g, '');
 
             if (errores === 0 && pool.children.length === 0) {
                 const btnText = levelId === 'lvl3' ? 'Ir al cierre' : 'Siguiente dificultad';
-                feedbackDiv.classList.add('bg-green-50', 'border-green-500', 'text-green-900');
-                feedbackDiv.innerHTML = `
-                    <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 w-full">
-                        <div class="flex items-start gap-3">
-                            <svg class="w-6 h-6 text-green-600 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                feedbackDiv.classList.add('bg-white', 'border-green-500');
+                feedbackContent.innerHTML = `
+                    <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6 w-full">
+                        <div class="flex items-start gap-4">
+                            <div class="bg-green-100 rounded-full p-2 flex-shrink-0 mt-1">
+                                <svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"></path></svg>
+                            </div>
                             <div>
-                                <p class="font-extrabold text-base mb-0.5">¡Perfecto!</p>
-                                <p class="opacity-90">Has clasificado todas las tarjetas correctamente en este nivel. Ya puedes avanzar.</p>
+                                <p class="font-bold text-xl text-green-800 mb-1 tracking-tight">¡Misión Cumplida!</p>
+                                <p class="text-gray-600 font-medium">Has clasificado todas las tarjetas correctamente en este nivel.</p>
                             </div>
                         </div>
-                        <button onclick="nextSlide()" class="self-end sm:self-auto px-6 py-2.5 bg-green-600 hover:bg-green-700 text-white font-bold rounded-xl shadow-md transition-transform transform hover:scale-105 whitespace-nowrap">${btnText}</button>
+                        <button onclick="nextSlide(); closeFeedback('${levelId}')" class="w-full sm:w-auto self-end sm:self-auto px-8 py-3 bg-action-default hover:bg-action-hover text-white text-lg font-bold rounded-xl shadow-md transition-all transform hover:scale-105 whitespace-nowrap">${btnText}</button>
                     </div>
                 `;
             } else if (errores === 0 && pool.children.length > 0) {
-                feedbackDiv.classList.add('bg-yellow-50', 'border-yellow-400', 'text-yellow-900');
-                feedbackDiv.innerHTML = `
-                    <div class="flex items-start gap-3">
-                        <svg class="w-6 h-6 text-yellow-600 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+                feedbackDiv.classList.add('bg-white', 'border-yellow-400');
+                feedbackContent.innerHTML = `
+                    <div class="flex items-start gap-4">
+                        <div class="bg-yellow-100 rounded-full p-2 flex-shrink-0 mt-1">
+                            <svg class="w-6 h-6 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+                        </div>
                         <div>
-                            <p class="font-extrabold text-base mb-0.5">Vas por buen camino</p>
-                            <p class="opacity-90 text-[13.5px]">La clasificación actual es correcta, pero aún te faltan <span class="font-bold">${pool.children.length}</span> tarjetas por colocar.</p>
+                            <p class="font-bold text-xl text-yellow-800 mb-1 tracking-tight">Vas por buen camino</p>
+                            <p class="text-gray-600 font-medium">La clasificación actual es correcta, pero aún te faltan <span class="font-bold text-gray-800 bg-gray-100 px-2 py-0.5 rounded">${pool.children.length}</span> tarjetas por colocar.</p>
                         </div>
                     </div>
                 `;
             } else {
-                feedbackDiv.classList.add('bg-red-50', 'border-red-500', 'text-red-900');
-                feedbackDiv.innerHTML = `
-                    <div class="flex items-start gap-3">
-                        <svg class="w-6 h-6 text-red-600 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                feedbackDiv.classList.add('bg-white', 'border-red-500');
+                feedbackContent.innerHTML = `
+                    <div class="flex items-start gap-4">
+                        <div class="bg-red-100 rounded-full p-2 flex-shrink-0 mt-1">
+                            <svg class="w-6 h-6 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                        </div>
                         <div class="w-full">
-                            <p class="font-bold text-base mb-2">Tienes ${errores} tarjeta(s) en la categoría equivocada:</p>
-                            <ul class="list-disc pl-5 opacity-90 text-[13.5px]">${retroalimentacion.join('')}</ul>
-                            <p class="mt-3 font-medium text-red-800 text-[13.5px]">Las tarjetas incorrectas han vuelto al panel de disponibles.</p>
+                            <p class="font-bold text-xl text-red-800 mb-2 tracking-tight">Oops! ${errores} tarjeta(s) en la categoría equivocada</p>
+                            <p class="mb-4 font-medium text-gray-600">Las tarjetas incorrectas han vuelto al panel lateral. Revisa los siguientes consejos e inténtalo de nuevo:</p>
+                            <ul class="list-none text-[14.5px] leading-snug bg-gray-50 p-4 border border-gray-100 rounded-lg shadow-inner max-h-[30vh] overflow-y-auto">${retroalimentacion.join('')}</ul>
                         </div>
                     </div>
                 `;
             }
-
-            // Scroll to top of right panel so user can see feedback on mobile
-            const rightPanel = document.getElementById(`feedback-${levelId}`).parentElement;
-            rightPanel.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
         // Navigation Controller
@@ -507,9 +715,17 @@
             }
         }
 
-        function volverAlModulo() {
-            alert("Redirigiendo al módulo teórico Módulo 01... (Funcionalidad final dependiendo del entorno LMS)");
+        function reiniciarModulo() {
+            // Reinicia todo localmente recargando la página, o simplemente volviendo a la slide 1
+            location.reload();
         }
+
+        // Debug helper in console
+        window.finishModule = function () {
+            currentSlide = totalSlides;
+            switchSlide(currentSlide);
+            console.log("Módulo finalizado vía consola. Mostrando diapositiva de cierre.");
+        };
 
         // Initialize execution chain
         document.addEventListener('DOMContentLoaded', () => {
