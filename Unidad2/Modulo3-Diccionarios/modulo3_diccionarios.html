@@ -41,7 +41,6 @@
 
         .slide {
             display: none;
-            height: 100%;
             width: 100%;
             opacity: 0;
             transition: opacity 0.5s ease-in-out;
@@ -50,6 +49,9 @@
         .slide.active {
             display: flex;
             opacity: 1;
+            flex: 1;
+            overflow-y: auto;
+            min-height: 0;
         }
 
         /* VS Code Theme */
@@ -384,7 +386,7 @@
                     </div>
                 </div>
 
-                <div class="grid grid-cols-2 gap-8 h-[500px]">
+                <div class="grid grid-cols-2 gap-8 h-[420px]">
                     <!-- Interactive Console -->
                     <div class="bg-[#1e1e1e] rounded-xl p-4 font-mono text-sm text-gray-300 flex flex-col shadow-xl">
                         <div class="flex gap-2 mb-4 border-b border-gray-700 pb-2">
@@ -465,7 +467,7 @@
                 </div>
             </div>
 
-            <div class="grid grid-cols-2 gap-8 h-[500px]">
+            <div class="grid grid-cols-2 gap-8 h-[420px]">
                 <!-- Interactive Console -->
                 <div class="bg-[#1e1e1e] rounded-xl p-4 font-mono text-sm text-gray-300 flex flex-col shadow-xl">
                     <div class="flex gap-2 mb-4 border-b border-gray-700 pb-2">
@@ -499,9 +501,9 @@
         <h2 class="text-3xl font-bold text-primary mb-8">Recorrido de Diccionarios</h2>
 
         <div
-            class="max-w-5xl w-full bg-white rounded-3xl border border-border shadow-xl p-8 min-h-[500px] flex flex-col">
+            class="max-w-7xl w-full bg-white rounded-3xl border border-border shadow-xl p-8 min-h-[500px] flex flex-col">
             <!-- Tabs -->
-            <div class="flex gap-4 mb-8 border-b border-border pb-4">
+            <div class="flex gap-4 mb-6 border-b border-border pb-4">
                 <button onclick="setLoopMode('keys')" id="btn-keys"
                     class="flex-1 py-3 rounded-xl bg-muted font-bold text-gray-500 hover:bg-gray-200 transition-colors">.keys()</button>
                 <button onclick="setLoopMode('values')" id="btn-values"
@@ -510,9 +512,9 @@
                     class="flex-1 py-3 rounded-xl bg-muted font-bold text-gray-500 hover:bg-gray-200 transition-colors">.items()</button>
             </div>
 
-            <div class="flex gap-12 flex-1">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 flex-1 mt-4">
                 <!-- Explanation & Code -->
-                <div class="w-1/2">
+                <div class="lg:col-span-4 flex flex-col justify-center">
                     <h3 id="loop-title" class="text-xl font-bold text-action mb-2">Recorrer Claves</h3>
                     <p id="loop-desc" class="text-gray-500 text-sm mb-6 leading-relaxed">
                         Este método es útil cuando solo necesitas las etiquetas. Es el comportamiento por defecto de un
@@ -530,21 +532,21 @@
                         </div>
                     </div>
                     <button onclick="runLoopAnim()"
-                        class="mt-6 bg-primary text-white px-6 py-2 rounded-lg font-bold hover:bg-primary/90 transition-transform active:scale-95 flex items-center gap-2">
+                        class="mt-6 justify-center bg-primary text-white px-6 py-3 rounded-lg font-bold hover:bg-primary/90 transition-transform active:scale-95 flex items-center gap-2">
                         <span>▶</span> Ejecutar Bucle
                     </button>
                 </div>
 
                 <!-- Right Side: Visualization & Console -->
-                <div class="w-1/2 flex flex-col gap-4">
+                <div class="lg:col-span-8 grid grid-cols-1 lg:grid-cols-2 gap-6">
                     <!-- Visualization -->
                     <div
-                        class="flex-1 bg-gray-50 rounded-xl p-6 border border-dashed border-gray-300 flex flex-col items-center justify-center relative">
+                        class="bg-gray-50 rounded-xl p-6 border border-dashed border-gray-300 flex flex-col items-center justify-start relative overflow-y-auto">
                         <div class="absolute top-4 left-4 text-xs font-bold text-gray-400 uppercase tracking-widest">
                             Memoria</div>
 
                         <!-- Dictionary Name Display -->
-                        <div class="w-full max-w-xs mb-2 flex items-center gap-2 justify-center">
+                        <div class="w-full max-w-xs mb-2 mt-6 flex items-center gap-2 justify-center">
                             <span class="font-mono text-sm font-bold text-primary">Curso</span>
                         </div>
 
@@ -561,7 +563,7 @@
 
                     <!-- Console -->
                     <div
-                        class="h-48 bg-[#1e1e1e] rounded-xl p-4 font-mono text-sm text-gray-300 flex flex-col shadow-xl overflow-hidden">
+                        class="bg-[#1e1e1e] rounded-xl p-4 font-mono text-sm text-gray-300 flex flex-col shadow-xl overflow-hidden min-h-[350px]">
                         <div class="flex gap-2 mb-2 border-b border-gray-700 pb-2 shrink-0">
                             <div class="w-2 h-2 rounded-full bg-red-500/50"></div>
                             <div class="w-2 h-2 rounded-full bg-yellow-500/50"></div>
@@ -583,17 +585,17 @@
         <h2 class="text-3xl font-bold text-primary mb-2">Diccionarios Anidados</h2>
         <p class="text-gray-500 mb-8">Modelando estructuras jerárquicas complejas.</p>
 
-        <div class="flex gap-12 max-w-6xl w-full h-auto min-h-[600px]">
+        <div class="flex gap-8 max-w-6xl w-full h-[500px]">
             <!-- Mac-style Code Editor -->
             <div class="w-1/2 flex flex-col">
-                <div class="bg-[#1e1e1e] rounded-t-xl p-3 flex items-center gap-2 border-b border-gray-700">
+                <div class="bg-[#1e1e1e] rounded-t-xl p-3 flex items-center gap-2 border-b border-gray-700 shrink-0">
                     <div class="w-3 h-3 rounded-full bg-[#ff5f56]"></div>
                     <div class="w-3 h-3 rounded-full bg-[#ffbd2e]"></div>
                     <div class="w-3 h-3 rounded-full bg-[#27c93f]"></div>
                     <span class="text-xs text-gray-400 font-mono ml-2">estudiante.py</span>
                 </div>
                 <div
-                    class="bg-white border-l border-r border-b border-gray-300 rounded-b-xl p-6 overflow-y-auto flex-1 font-mono text-sm leading-relaxed shadow-lg">
+                    class="bg-white border-l border-r border-b border-gray-300 rounded-b-xl p-4 overflow-y-auto flex-1 font-mono text-xs leading-relaxed shadow-lg">
                     <span class="text-primary font-bold">estudiante</span> = {<br>
                     &nbsp;&nbsp;<span class="text-primary">"nombre"</span>: <span
                         class="text-green-600">"Pedro"</span>,<br>
