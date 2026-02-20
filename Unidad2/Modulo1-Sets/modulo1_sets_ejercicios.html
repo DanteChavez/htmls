@@ -214,7 +214,7 @@
                         </div>
 
                         <!-- Current Question Panel -->
-                        <div
+                        <div id="question-box-1"
                             class="bg-white/50 border border-border p-5 rounded-2xl space-y-3 shadow-sm shadow-accent/5">
                             <div class="flex justify-between items-center">
                                 <span class="text-[10px] font-bold text-accent uppercase tracking-tighter">Pregunta
@@ -388,7 +388,7 @@
                         </div>
 
                         <!-- Current Question Panel -->
-                        <div
+                        <div id="question-box-2"
                             class="bg-white/50 border border-border p-5 rounded-2xl space-y-3 shadow-sm shadow-accent/5">
                             <div class="flex justify-between items-center">
                                 <span class="text-[10px] font-bold text-accent uppercase tracking-tighter">Pregunta
@@ -560,7 +560,7 @@
                         </div>
 
                         <!-- Current Question Panel -->
-                        <div
+                        <div id="question-box-3"
                             class="bg-white/50 border border-border p-5 rounded-2xl space-y-3 shadow-sm shadow-highlight/5">
                             <div class="flex justify-between items-center">
                                 <span class="text-[10px] font-bold text-highlight uppercase tracking-tighter">Pregunta
@@ -757,7 +757,7 @@
                         </div>
 
                         <!-- Current Question Panel -->
-                        <div
+                        <div id="question-box-4"
                             class="bg-white/50 border border-border p-5 rounded-2xl space-y-3 shadow-sm shadow-highlight/5">
                             <div class="flex justify-between items-center">
                                 <span class="text-[10px] font-bold text-highlight uppercase tracking-tighter">Pregunta
@@ -1397,6 +1397,7 @@
         let selectedExercises1 = [];
         let selectedExercises3 = [];
         let currentQuestions = { 1: 0, 2: 0, 3: 0, 4: 0 };
+        const solvedStates = { 1: {}, 2: {}, 3: {}, 4: {} };
         let tokens1 = [], tokens2 = [], tokens3 = [], tokens4 = [];
         let activeSets = {
             1: { A: new Set(), B: new Set() },
@@ -1497,8 +1498,22 @@
             const iconId = slide >= 3 ? `logic-result-icon-${slide}` : `logic-result-icon-${slide}`;
 
             document.getElementById(terminalId).innerHTML = '<div class="text-slate-600 italic">Esperando expresión...</div>';
+            document.getElementById(insightId).classList.remove('opacity-100');
             document.getElementById(insightId).classList.add('opacity-0');
-            document.getElementById(iconId).classList.add('opacity-0');
+
+            const iconEl = document.getElementById(iconId);
+            iconEl.classList.remove('opacity-100');
+            iconEl.classList.add('opacity-0');
+
+            // Update Question Box Highlight
+            const qBox = document.getElementById(`question-box-${slide}`);
+            if (solvedStates[slide][qIdx]) {
+                qBox.classList.add('bg-green-100', 'border-green-300');
+                qBox.classList.remove('bg-white/50', 'border-border');
+            } else {
+                qBox.classList.remove('bg-green-100', 'border-green-300');
+                qBox.classList.add('bg-white/50', 'border-border');
+            }
 
             renderVenn(slide, '');
         }
@@ -1615,6 +1630,12 @@
                     insight.classList.replace('opacity-0', 'opacity-100');
                     document.getElementById(`insight-text-${slide}`).innerText = q.explicacion;
                     document.getElementById(`logic-result-icon-${slide}`).classList.replace('opacity-0', 'opacity-100');
+
+                    // Mark as solved and highlight
+                    solvedStates[slide][currentQuestions[slide]] = true;
+                    const qBox = document.getElementById(`question-box-${slide}`);
+                    qBox.classList.add('bg-green-100', 'border-green-300');
+                    qBox.classList.remove('bg-white/50', 'border-border');
                 } else {
                     term.innerHTML += `<div class="text-red-400 ml-6">ERR: El resultado no coincide con el objetivo.</div>`;
                     insight.classList.replace('opacity-100', 'opacity-0');
@@ -1722,6 +1743,12 @@
                     insight.classList.replace('opacity-0', 'opacity-100');
                     document.getElementById(`insight-text-${slide}`).innerText = q.explicacion;
                     document.getElementById(`logic-result-icon-${slide}`).classList.replace('opacity-0', 'opacity-100');
+
+                    // Mark as solved and highlight
+                    solvedStates[slide][currentQuestions[slide]] = true;
+                    const qBox = document.getElementById(`question-box-${slide}`);
+                    qBox.classList.add('bg-green-100', 'border-green-300');
+                    qBox.classList.remove('bg-white/50', 'border-border');
                 } else {
                     term.innerHTML += `<div class="text-red-400 ml-6">LOGIC_ERROR: No se cumple el objetivo.</div>`;
                     insight.classList.replace('opacity-100', 'opacity-0');
